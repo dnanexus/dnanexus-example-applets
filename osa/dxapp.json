@@ -1,0 +1,24 @@
+{
+  "name": "OSA",
+  "title": "Omicsoft Sequence Aligner",
+  "summary": "An alignment tool for RNA-seq data",
+  "description": "",
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {"name": "mappings", "class": "gtable", "type": "LetterMappings"},
+    {"name": "genome", "class": "record", "type": "ContigSet"},
+    {"name": "output_name", "class": "string", "default": ""}
+  ],
+  "outputSpec": [
+    {"name": "stats", "class": "record", "type": "DNAnexusMappingsStatistics"}
+  ],
+  "runSpec": {
+    "file": "osa.py",
+    "interpreter": "python2.7",
+    "execDepends": [
+      {"name": "mono-complete"}
+    ]
+  },
+  "resources": [],
+  "version": "1.0.2"
+}
