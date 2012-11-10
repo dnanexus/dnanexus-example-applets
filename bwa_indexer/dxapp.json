@@ -1,0 +1,17 @@
+{
+  "name": "bwa_indexer",
+  "runSpec": {
+    "interpreter": "bash",
+    "code": "/run.sh"
+  },
+  "inputSpec": [
+   { "name": "fastagz", "class": "file" },
+   { "name": "output_name", "class": "string"} 
+  ],
+  "access": {
+    "network": ["*"],
+    "project": "ADMINISTER",
+    "allProjects": "ADMINISTER",
+    "developer": true
+  }
+}
