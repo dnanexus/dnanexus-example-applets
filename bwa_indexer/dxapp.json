@@ -5,13 +5,9 @@
     "code": "/run.sh"
   },
   "inputSpec": [
-   { "name": "fastagz", "class": "file" },
-   { "name": "output_name", "class": "string"} 
+   { "name": "fastagz", "class": "file" }
   ],
-  "access": {
-    "network": ["*"],
-    "project": "ADMINISTER",
-    "allProjects": "ADMINISTER",
-    "developer": true
-  }
+  "outputSpec": [
+   {"name": "index_targz", "class": "file" }
+  ]
 }

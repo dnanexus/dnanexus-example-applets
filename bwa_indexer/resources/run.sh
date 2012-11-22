@@ -7,11 +7,10 @@ HOME="`pwd`"
 # Inputs
 #
 
-input_file="`jshon -e fastagz -e '$dnanexus_link' -u < job_input.json`"
-output_name="`jshon -e output_name -u < job_input.json`"
+input_id="`jshon -e fastagz -e '$dnanexus_link' -u < job_input.json`"
+input_name="`dx describe $input_id --name`"
 
-mkdir inputs
-dx download "$input_file" -o inputs/reference.fasta.gz --no-progress
+dx download "$input_id" -o reference.fasta.gz --no-progress
 
 #
 # Processing
@@ -25,11 +24,12 @@ else
   bwa index -a is reference.fasta
 fi
 
-tar zcf reference.bwa6.tgz reference.fasta*
+tar zcf reference.bwa062-index.tar.gz reference.fasta*
 
 #
 #  Outputs
 #
-output_file=`ua reference.bwa6.tgz -n "$output_name" --do-not-compress`
+output_name="${input_name%.fasta.gz}.bwa062-index.tar.gz"
+output_file=`dx upload reference.bwa062-index.tar.gz -o "$output_name" --brief --no-progress`
 
-echo '{"file": {"$dnanexus_link": "'$output_file'"}}' > "$HOME/job_output.json"
+echo '{"index_targz": {"$dnanexus_link": "'$output_file'"}}' > "$HOME/job_output.json"
