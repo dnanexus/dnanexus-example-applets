@@ -17,7 +17,7 @@ dx download "$input_id" -o reference.fasta.gz --no-progress
 #
 
 gunzip reference.fasta.gz
-bowtie-build --quiet reference.fasta reference.fasta
+bowtie2-build --quiet reference.fasta reference.fasta
 
 tar zcf reference.bowtie-index.tar.gz reference.fasta.*
 
