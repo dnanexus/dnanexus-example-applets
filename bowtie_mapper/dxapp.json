@@ -1,0 +1,16 @@
+{
+  "name": "bowtie_mapper",
+  "runSpec": {
+    "interpreter": "bash",
+    "code": "/run.sh"
+  },
+  "inputSpec": [
+   { "name": "readsgz", "class": "file" },
+   { "name": "reads2gz", "class": "file", "optional": true },
+   { "name": "index_targz", "class": "file" },
+   { "name": "params", "class": "string", "optional": true }
+  ],
+  "outputSpec": [
+   { "name": "sorted_bam", "class": "file" }
+  ]
+}
