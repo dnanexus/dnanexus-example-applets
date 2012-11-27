@@ -1,0 +1,14 @@
+{
+  "name": "fastq_splitter",
+  "runSpec": {
+    "interpreter": "bash",
+    "code": "/run.sh"
+  },
+  "inputSpec": [
+   { "name": "fastqgz", "class": "file" },
+   { "name": "reads_per_chunk", "class": "int", "default": 25000000}
+  ],
+  "outputSpec": [
+   {"name": "fastqgz_chunks", "class": "array:file" }
+  ]
+}
