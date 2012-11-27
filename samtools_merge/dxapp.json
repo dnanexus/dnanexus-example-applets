@@ -1,0 +1,13 @@
+{
+  "name": "samtools_merge",
+  "runSpec": {
+    "interpreter": "bash",
+    "code": "/run.sh"
+  },
+  "inputSpec": [
+   { "name": "sorted_bam_files", "class": "array:file" }
+  ],
+  "outputSpec": [
+   { "name": "merged_bam", "class": "file" }
+  ]
+}
