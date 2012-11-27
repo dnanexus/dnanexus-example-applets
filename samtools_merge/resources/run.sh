@@ -6,7 +6,6 @@ HOME="`pwd`"
 #
 # Inputs
 #
-
 index=0
 for file_id in `jshon -e sorted_bam_files -a -e '$dnanexus_link' -u < job_input.json`
 do
@@ -17,6 +16,7 @@ do
 
   dx download "$file_id" -o $local_name --no-progress
 done
+params="`jshon -e params -u < job_input.json 2>/dev/null || echo ''`"
 
 output_name="${common_prefix%.bam}"
 output_name="${output_name%.}"
@@ -27,7 +27,7 @@ output_name="${output_name}.bam"
 # Processing
 #
 
-samtools merge out.bam file*.bam
+samtools merge $params out.bam file*.bam
 
 #
 # Outputs

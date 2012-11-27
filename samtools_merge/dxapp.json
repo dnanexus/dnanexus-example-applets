@@ -5,7 +5,8 @@
     "code": "/run.sh"
   },
   "inputSpec": [
-   { "name": "sorted_bam_files", "class": "array:file" }
+   { "name": "sorted_bam_files", "class": "array:file" },
+   { "name": "params", "class": "string", "optional": true }
   ],
   "outputSpec": [
    { "name": "merged_bam", "class": "file" }
