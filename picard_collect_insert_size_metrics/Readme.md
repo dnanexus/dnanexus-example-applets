@@ -1,0 +1,1 @@
+This applet calls the Picard Command CollectInsertSizeMetrics and outputs both a text and PDF summary of the insert distribution.  If single ended mappings are supplied as input the applet will fail.
