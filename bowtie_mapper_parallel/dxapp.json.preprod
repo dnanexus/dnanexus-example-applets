@@ -1,0 +1,21 @@
+{
+  "name": "bowtie_mapper_parallel",
+  "runSpec": {
+    "interpreter": "bash",
+    "code": "source /run.sh",
+    "bundledDepends": [{"name": "samtools_merge", "id": {"$dnanexus_link": "applet-B2pbB487z11Gz0V2x840001p"}},
+                       {"name": "fastq_splitter", "id": {"$dnanexus_link": "applet-B2pb9zj7z115kkfJxQ40005v"}},
+                       {"name": "bowtie_mapper", "id": {"$dnanexus_link": "applet-B2p2BVY31FKJK9v4x440004F"}}]
+  },
+  "inputSpec": [
+   { "name": "readsgz", "class": "file" },
+   { "name": "reads2gz", "class": "file", "optional": true },
+   { "name": "index_targz", "class": "file" },
+   { "name": "bowtie_params", "class": "string", "optional": true },
+   { "name": "merge_params", "class": "string", "optional": true },
+   { "name": "reads_per_chunk", "class": "int", "default": 25000000}
+  ],
+  "outputSpec": [
+   { "name": "sorted_bam", "class": "file" }
+  ]
+}
