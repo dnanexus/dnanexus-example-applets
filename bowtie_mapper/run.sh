@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 # The following line causes bash to exit at any point if there is any error
 # and to output each line as it is executed -- useful for debugging
@@ -25,8 +25,10 @@ fi
 samtools view -bS out.sam > out.bam
 samtools sort out.bam out.sorted
 
-#  Outputs
+# Outputs
 #
+# Make a nice name for the output: start with the name of the reads file
+# then strip any '.gz', '.fq', '.fastq', '_1' suffixes, and add '.bam'
 reads_name=`dx describe "$readsgz" --name`
 output_name="$reads_name"
 output_name="${output_name%.gz}"

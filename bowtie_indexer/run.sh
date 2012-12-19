@@ -17,6 +17,8 @@ tar zcf reference.bowtie-index.tar.gz reference.fasta.*
 
 # Outputs
 #
+# Make a nice name for the output, by taking the input filename,
+# removing '.fasta.gz' from the end, and adding '.bowtie-index.tar.gz'
 input_name=`dx describe "$fastagz" --name`
 output_name="${input_name%.fasta.gz}.bowtie-index.tar.gz"
 output_file_id=`dx upload reference.bowtie-index.tar.gz -o "$output_name" --brief --no-progress`
