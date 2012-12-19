@@ -2,7 +2,7 @@
   "name": "bowtie_indexer",
   "runSpec": {
     "interpreter": "bash",
-    "code": "/run.sh"
+    "file": "run.sh"
   },
   "inputSpec": [
    { "name": "fastagz", "class": "file" }

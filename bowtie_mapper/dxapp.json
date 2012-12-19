@@ -2,7 +2,7 @@
   "name": "bowtie_mapper",
   "runSpec": {
     "interpreter": "bash",
-    "code": "/run.sh"
+    "file": "run.sh"
   },
   "inputSpec": [
    { "name": "readsgz", "class": "file" },
