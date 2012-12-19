@@ -2,7 +2,7 @@
   "name": "fastq_splitter",
   "runSpec": {
     "interpreter": "bash",
-    "code": "/run.sh"
+    "file": "run.sh"
   },
   "inputSpec": [
    { "name": "fastqgz", "class": "file" },
