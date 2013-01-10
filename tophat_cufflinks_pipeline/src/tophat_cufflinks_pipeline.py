@@ -89,7 +89,7 @@ def main(fastqs, reference, indexed_ref, gene_model, tophat_options="", cufflink
     # the same name as your output fields.
 
     output = {}
-    output["mappings"] = dxpy.dxlink(mappings)
+    output["BAM_file"] = dxpy.dxlink(mappings)
     output["cufflinks_out"] = dxpy.dxlink(cufflinks_out)
 
     return output
