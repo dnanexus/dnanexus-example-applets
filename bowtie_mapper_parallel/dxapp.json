@@ -2,10 +2,7 @@
   "name": "bowtie_mapper_parallel",
   "runSpec": {
     "interpreter": "bash",
-    "code": "source /run.sh",
-    "bundledDepends": [{"name": "samtools_merge", "id": {"$dnanexus_link": "XXX"}},
-                       {"name": "fastq_splitter", "id": {"$dnanexus_link": "XXX"}},
-                       {"name": "bowtie_mapper", "id": {"$dnanexus_link": "XXX"}}]
+    "file": "run.sh"
   },
   "inputSpec": [
    { "name": "readsgz", "class": "file" },
