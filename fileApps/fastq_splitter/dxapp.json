@@ -1,0 +1,15 @@
+{
+  "name": "fastq_splitter",
+  "title": "Fastq Splitter",
+  "runSpec": {
+    "interpreter": "bash",
+    "code": "/run.sh"
+  },
+  "inputSpec": [
+   { "name": "fastqgz", "class": "file", "label": "Fastq Gzipped File"},
+   { "name": "reads_per_chunk", "class": "int", "default": 10000000}
+  ],
+  "outputSpec": [
+   {"name": "fastqgz_chunks", "class": "array:file", "label": "Split Fastq Gzipped Files" }
+  ]
+}

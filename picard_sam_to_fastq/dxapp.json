@@ -1,0 +1,50 @@
+{
+  "name": "picard_sam_to_fastq",
+  "title": "BAM or SAM to Fastq (Picard)",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "details": {
+    "contactUrl": "http://wiki.dnanexus.com/Apps/picard_sam_to_fastq"
+  },
+  "resources": [],
+  "inputSpec": [
+    {
+      "name": "input_bam",
+      "label": "SAM/BAM File",
+      "class": "file",
+      "optional": false
+    },
+    {
+      "name": "paired",
+      "label": "paired",
+      "class": "boolean",
+      "optional": true,
+      "default": true
+    },
+    {
+      "name": "params",
+      "label": "Parameters",
+      "class": "string",
+      "optional": true,
+      "default": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "fastq_file",
+      "label": "Fastq File",
+      "class": "file"
+    },
+    {
+      "name": "paired_fastq_file",
+      "label": "Paired Fastq File",
+      "optional": true,
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "interpreter": "python2.7",
+    "file": "src/picard_sam_to_fastq.py",
+    "execDepends": [{"name": "openjdk-6-jre-headless"}]
+  }
+}

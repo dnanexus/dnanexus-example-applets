@@ -1,0 +1,100 @@
+{
+  "name": "gatk_variant_recalibration_pipeline",
+  "title": "GATK Variant Recalibration Pipeline",
+  "summary": "Runs GATK VariantRecalibrator and ApplyRecalibration Applets",
+  "description": "The GATK Variant Recalibration Pipelines runs the VariantRecalibrator and ApplyRecalibration modules to recalibrate the quality score of variant calls and. The GATK VariantRecalibrator constructs a model which attempts to estimate the properties of variant calls that are true as opposed to those that are false positives. It produces model files that can then be applied to a VCF files to filter variant calls by desired specificity. The resources files  (known, training, and truth) provide example sites used in model construction. Put all files that should have label "Known" into the known input array, all files that should have label "Training" into the training array, and all "Truth" into the truth array. If a file should be labelled with more than one (e.g. training and truth), put the file into both arrays, it will only be extracted once and with the appropriate combinations of labels.",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "details": {
+    "contactUrl": "http://wiki.dnanexus.com/Apps/gatk_variant_recalibration_pipeline"
+  },
+  "resources": [],
+  "inputSpec": [
+    {
+      "label": "VCF Files",
+      "optional": false,
+      "name": "vcf_files",
+      "class": "array:file"
+    },
+    {
+      "label": "Reference",
+      "optional": false,
+      "name": "reference",
+      "class": "file"
+    },
+    {
+      "label": "Known Resources",
+      "optional": false,
+      "name": "known_resources",
+      "class": "array:file"
+    },
+    {
+      "label": "Training Resources",
+      "optional": false,
+      "name": "training_resources",
+      "class": "array:file"
+    },
+    {
+      "label": "Truth Resources",
+      "optional": false,
+      "name": "truth_resources",
+      "class": "array:file"
+    },
+    {
+      "label": "Priors",
+      "optional": false,
+      "name": "priors",
+      "class": "array:float"
+    },
+    {
+      "default": "-mode SNP",
+      "label": "Variant Recalibrator Parameters",
+      "optional": true,
+      "name": "variant_recalibrator_params",
+      "class": "string"
+    },
+    {
+      "default": "-an QD -an HaplotypeScore -an MQRankSum -an ReadPosRankSum -an FS -an MQ -an DP --maxGaussians 4 --percentBadVariants 0.05",
+      "label": "Annotations",
+      "optional": true,
+      "name": "annotations",
+      "class": "string"
+    },
+    {
+      "default": 95.0,
+      "label": "Filter Level (% specificity)",
+      "optional": true,
+      "name": "filter_level",
+      "class": "float"
+    },
+    {
+      "default": "-mode SNP",
+      "label": "Apply Recalibration Parameters",
+      "optional": true,
+      "name": "apply_recalibration_params",
+      "class": "string"
+    }
+   ],
+  "outputSpec": [
+    {
+      "name": "tranches_file",
+      "class": "file"
+    },
+    {
+      "name": "recalibration_file",
+      "class": "file"
+    },
+    {
+      "name": "r_plot",
+      "class": "file"
+    },
+    {
+      "name": "recalibrated_variants",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "interpreter": "python2.7",
+    "file": "src/gatk_variant_recalibration_pipeline.py"
+  }
+}

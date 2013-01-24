@@ -1,0 +1,38 @@
+{
+  "name": "bwa_indexer",
+  "title": "BWA Indexer",
+  "summary": "Indexes a genome for use by BWA",
+  "description": "Indexes a genome for use by BWA",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "details": {
+    "contactUrl": "http://wiki.dnanexus.com/Apps/bwa_indexer"
+  },
+  "resources": [],
+  "inputSpec": [
+    {
+      "label": "Reference Genome (.gz)",
+      "optional": false,
+      "name": "reference",
+      "class": "file"
+    },
+    {
+      "default": "-a bwtsw",
+      "label": "parameters",
+      "optional": true,
+      "name": "params",
+      "class": "string"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "indexed_reference",
+      "label": "Indexed Reference",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "interpreter": "python2.7",
+    "file": "src/bwa_indexer.py"
+  }
+}

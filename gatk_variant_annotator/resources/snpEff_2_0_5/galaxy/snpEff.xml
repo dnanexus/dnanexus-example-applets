@@ -1,0 +1,356 @@
+<tool id="snpEff" name="SnpEff" version="1.0">
+	<description>for each SNP in a file</description>
+	<!-- 
+	    You will need to change the path to wherever your installation is.
+		You can change the amount of memory used by snpEff, just change the -Xmx parameter (e.g. use -Xmx2G for 2Gb of memory)
+	<command>java -Xmx6G -jar /path/to/your/snpEff/snpEff.jar eff -c /path/to/your/snpEff/snpEff/snpEff.config $inputFormat $offset -upDownStreamLen $udLength $filterIn $filterHomHet -no $filterOut -stats $statsFile $genomeVersion $input > $output </command>
+	-->
+	<command>java -Xmx6G -jar /Users/pablocingolani/snpEff/snpEff.jar eff -c /Users/pablocingolani/snpEff/snpEff.config -i $inputFormat -o $outputFormat -upDownStreamLen $udLength $filterIn $filterHomHet -no $filterOut -stats $statsFile $genomeVersion $input > $output </command>
+	<inputs>
+		<param format="Tabular" name="input" type="data" label="Sequence changes (SNPs, MNPs, InDels)"/>
+
+		<param name="inputFormat" type="select" label="Input format">
+			<option value="vcf">VCF</option>
+			<option value="txt">Tabular</option>
+			<option value="pileup">Pileup</option>
+			<option value="bed">BED</option>
+		</param>
+
+		<param name="outputFormat" type="select" label="Output format">
+			<option value="txt">Tabular</option>
+			<option value="vcf">VCF (only if input is VCF)</option>
+			<option value="bed">BED</option>
+			<option value="bedAnn">BED Annotations</option>
+		</param>
+
+		<param name="genomeVersion" type="select" label="Genome">
+				<option value="AnoCar2.0.63">AnoCar2.0.63:Anolis_carolinensis.AnoCar2.0.63</option>
+				<option value="AnoCar2.0.64">AnoCar2.0.64:Anolis_carolinensis</option>
+				<option value="BDGP5.25.63">BDGP5.25.63:Drosophila_melanogaster.BDGP5.25.63</option>
+				<option value="BDGP5.25.64">BDGP5.25.64:Drosophila_melanogaster</option>
+				<option value="BROADD2.63">BROADD2.63:Canis_familiaris.BROADD2.63</option>
+				<option value="BROADD2.64">BROADD2.64:Canis_familiaris</option>
+				<option value="BROADO5.63">BROADO5.63:Monodelphis_domestica.BROADO5.63</option>
+				<option value="BROADO5.64">BROADO5.64:Monodelphis_domestica</option>
+				<option value="BROADS1.63">BROADS1.63:Gasterosteus_aculeatus.BROADS1.63</option>
+				<option value="BROADS1.64">BROADS1.64:Gasterosteus_aculeatus</option>
+				<option value="BUSHBABY1.63">BUSHBABY1.63:Otolemur_garnettii.BUSHBABY1.63</option>
+				<option value="BUSHBABY1.64">BUSHBABY1.64:Otolemur_garnettii</option>
+				<option value="Btau_4.0.63">Btau_4.0.63:Bos_taurus.Btau_4.0.63</option>
+				<option value="CAT.63">CAT.63:Felis_catus.CAT.63</option>
+				<option value="CAT.64">CAT.64:Felis_catus</option>
+				<option value="CHIMP2.1.63">CHIMP2.1.63:Pan_troglodytes.CHIMP2.1.63</option>
+				<option value="CHIMP2.1.64">CHIMP2.1.64:Pan_troglodytes</option>
+				<option value="COMMON_SHREW1.63">COMMON_SHREW1.63:Sorex_araneus.COMMON_SHREW1.63</option>
+				<option value="COMMON_SHREW1.64">COMMON_SHREW1.64:Sorex_araneus</option>
+				<option value="CSAV2.0.63">CSAV2.0.63:Ciona_savignyi.CSAV2.0.63</option>
+				<option value="CSAV2.0.64">CSAV2.0.64:Ciona_savignyi</option>
+				<option value="C_jacchus3.2.1.63">C_jacchus3.2.1.63:Callithrix_jacchus.C_jacchus3.2.1.63</option>
+				<option value="C_jacchus3.2.1.64">C_jacchus3.2.1.64:Callithrix_jacchus</option>
+				<option value="DEVIL7.0.64">DEVIL7.0.64:Sarcophilus_harrisii</option>
+				<option value="EF3.63">EF3.63:Saccharomyces_cerevisiae.EF3.63</option>
+				<option value="EF3.64">EF3.64:Saccharomyces_cerevisiae</option>
+				<option value="EquCab2.63">EquCab2.63:Equus_caballus.EquCab2.63</option>
+				<option value="EquCab2.64">EquCab2.64:Equus_caballus</option>
+				<option value="FUGU4.63">FUGU4.63:Takifugu_rubripes.FUGU4.63</option>
+				<option value="FUGU4.64">FUGU4.64:Takifugu_rubripes</option>
+				<option value="GRCh37.63">GRCh37.63:Homo_sapiens.GRCh37.63</option>
+				<option value="GRCh37.64">GRCh37.64:Homo_sapiens</option>
+				<option value="HEDGEHOG.63">HEDGEHOG.63:Erinaceus_europaeus.HEDGEHOG.63</option>
+				<option value="HEDGEHOG.64">HEDGEHOG.64:Erinaceus_europaeus</option>
+				<option value="JGI2.63">JGI2.63:Ciona_intestinalis.JGI2.63</option>
+				<option value="JGI2.64">JGI2.64:Ciona_intestinalis</option>
+				<option value="JGI_4.2.63">JGI_4.2.63:Xenopus_tropicalis.JGI_4.2.63</option>
+				<option value="JGI_4.2.64">JGI_4.2.64:Xenopus_tropicalis</option>
+				<option value="MEDAKA1.63">MEDAKA1.63:Oryzias_latipes.MEDAKA1.63</option>
+				<option value="MEDAKA1.64">MEDAKA1.64:Oryzias_latipes</option>
+				<option value="MMUL_1.63">MMUL_1.63:Macaca_mulatta.MMUL_1.63</option>
+				<option value="MMUL_1.64">MMUL_1.64:Macaca_mulatta</option>
+				<option value="Meug_1.0.63">Meug_1.0.63:Macropus_eugenii.Meug_1.0.63</option>
+				<option value="Meug_1.0.64">Meug_1.0.64:Macropus_eugenii</option>
+				<option value="Myoluc2.0.63">Myoluc2.0.63:Myotis_lucifugus.Myoluc2.0.63</option>
+				<option value="Myoluc2.0.64">Myoluc2.0.64:Myotis_lucifugus</option>
+				<option value="NCBIM37.63">NCBIM37.63:Mus_musculus.NCBIM37.63</option>
+				<option value="NCBIM37.64">NCBIM37.64:Mus_musculus</option>
+				<option value="NC_000913">NC_000913:Escherichia_coli</option>
+				<option value="Nleu1.0.63">Nleu1.0.63:Nomascus_leucogenys.Nleu1.0.63</option>
+				<option value="Nleu1.0.64">Nleu1.0.64:Nomascus_leucogenys</option>
+				<option value="OANA5.63">OANA5.63:Ornithorhynchus_anatinus.OANA5.63</option>
+				<option value="OANA5.64">OANA5.64:Ornithorhynchus_anatinus</option>
+				<option value="PPYG2.63">PPYG2.63:Pongo_abelii.PPYG2.63</option>
+				<option value="PPYG2.64">PPYG2.64:Pongo_abelii</option>
+				<option value="Petromyzon_marinus_7.0.64">Petromyzon_marinus_7.0.64:Petromyzon_marinus</option>
+				<option value="RGSC3.4.63">RGSC3.4.63:Rattus_norvegicus.RGSC3.4.63</option>
+				<option value="RGSC3.4.64">RGSC3.4.64:Rattus_norvegicus</option>
+				<option value="SIVmac239">SIVmac239:HIV</option>
+				<option value="SQUIRREL.63">SQUIRREL.63:Spermophilus_tridecemlineatus.SQUIRREL.63</option>
+				<option value="SQUIRREL.64">SQUIRREL.64:Spermophilus_tridecemlineatus</option>
+				<option value="Sscrofa9.63">Sscrofa9.63:Sus_scrofa.Sscrofa9.63</option>
+				<option value="Sscrofa9.64">Sscrofa9.64:Sus_scrofa</option>
+				<option value="TENREC.63">TENREC.63:Echinops_telfairi.TENREC.63</option>
+				<option value="TENREC.64">TENREC.64:Echinops_telfairi</option>
+				<option value="TETRAODON8.63">TETRAODON8.63:Tetraodon_nigroviridis.TETRAODON8.63</option>
+				<option value="TETRAODON8.64">TETRAODON8.64:Tetraodon_nigroviridis</option>
+				<option value="TREESHREW.63">TREESHREW.63:Tupaia_belangeri.TREESHREW.63</option>
+				<option value="TREESHREW.64">TREESHREW.64:Tupaia_belangeri</option>
+				<option value="UMD2.63">UMD2.63:Meleagris_gallopavo.UMD2.63</option>
+				<option value="UMD2.64">UMD2.64:Meleagris_gallopavo</option>
+				<option value="UMD3.1.64">UMD3.1.64:Bos_taurus</option>
+				<option value="UMD3_1">UMD3_1:Bos_taurus</option>
+				<option value="WASHUC2.63">WASHUC2.63:Gallus_gallus.WASHUC2.63</option>
+				<option value="WASHUC2.64">WASHUC2.64:Gallus_gallus</option>
+				<option value="WS220.63">WS220.63:Caenorhabditis_elegans.WS220.63</option>
+				<option value="WS220.64">WS220.64:Caenorhabditis_elegans</option>
+				<option value="Zv9.63">Zv9.63:Danio_rerio.Zv9.63</option>
+				<option value="Zv9.64">Zv9.64:Danio_rerio</option>
+				<option value="agam">agam:Anopheles_gambiae</option>
+				<option value="ailMel1.63">ailMel1.63:Ailuropoda_melanoleuca.ailMel1.63</option>
+				<option value="ailMel1.64">ailMel1.64:Ailuropoda_melanoleuca</option>
+				<option value="ailmel1.61">ailmel1.61:Ailuropoda_melanoleuca</option>
+				<option value="alyrata1">alyrata1:Arabidopsis_lyrata</option>
+				<option value="alyrata107">alyrata107:Arabidopsis_lyrata</option>
+				<option value="amel2">amel2:Bee</option>
+				<option value="anoCar1.0.60">anoCar1.0.60:Anolis_carolinensis</option>
+				<option value="anoCar2.0.61">anoCar2.0.61:Anolis_carolinensis</option>
+				<option value="aquiCoer">aquiCoer:Aquilegia_coerulea</option>
+				<option value="athaliana130">athaliana130:Arabidopsis_Thaliana</option>
+				<option value="athalianaTair10">athalianaTair10:Arabidopsis_Thaliana</option>
+				<option value="athalianaTair9">athalianaTair9:Arabidopsis_Thaliana</option>
+				<option value="btau4.0.59">btau4.0.59:Bos_taurus</option>
+				<option value="btau4.0.60">btau4.0.60:Bos_taurus</option>
+				<option value="btau4.0.61">btau4.0.61:Bos_taurus</option>
+				<option value="bushBaby1.60">bushBaby1.60:Otolemur_garnettii</option>
+				<option value="bushBaby1.61">bushBaby1.61:Otolemur_garnettii</option>
+				<option value="cAlbicansv21">cAlbicansv21:Candida_albicans_SC5314</option>
+				<option value="cInt2.60">cInt2.60:Ciona_intestinalis</option>
+				<option value="cInt2.61">cInt2.61:Ciona_intestinalis</option>
+				<option value="cSav2.0.60">cSav2.0.60:Ciona_savignyi</option>
+				<option value="cSav2.0.61">cSav2.0.61:Ciona_savignyi</option>
+				<option value="calJac3.2.1.60">calJac3.2.1.60:Callithrix_jacchus</option>
+				<option value="calJac3.2.1.61">calJac3.2.1.61:Callithrix_jacchus</option>
+				<option value="canFam2.59">canFam2.59:Canis_familiaris</option>
+				<option value="canFam2.60">canFam2.60:Canis_familiaris</option>
+				<option value="canFam2.61">canFam2.61:Canis_familiaris</option>
+				<option value="cat1.60">cat1.60:Felis_catus</option>
+				<option value="cat1.61">cat1.61:Felis_catus</option>
+				<option value="cavPor3.60">cavPor3.60:Cavia_porcellus</option>
+				<option value="cavPor3.61">cavPor3.61:Cavia_porcellus</option>
+				<option value="cavPor3.63">cavPor3.63:Cavia_porcellus.cavPor3.63</option>
+				<option value="cavPor3.64">cavPor3.64:Cavia_porcellus</option>
+				<option value="ce.WS201">ce.WS201:Caenorhabditis_elegans</option>
+				<option value="ce.WS210.60">ce.WS210.60:Caenorhabditis_elegans</option>
+				<option value="ce.WS220.61">ce.WS220.61:Caenorhabditis_elegans</option>
+				<option value="chimp2.1.59">chimp2.1.59:Pan_troglodytes</option>
+				<option value="chimp2.1.60">chimp2.1.60:Pan_troglodytes</option>
+				<option value="chimp2.1.61">chimp2.1.61:Pan_troglodytes</option>
+				<option value="choHof1.60">choHof1.60:Choloepus_hoffmanni</option>
+				<option value="choHof1.61">choHof1.61:Choloepus_hoffmanni</option>
+				<option value="choHof1.63">choHof1.63:Choloepus_hoffmanni.choHof1.63</option>
+				<option value="choHof1.64">choHof1.64:Choloepus_hoffmanni</option>
+				<option value="crubella">crubella:Capsella_rubella_v1.0</option>
+				<option value="danRer8.59">danRer8.59:Danio_rerio</option>
+				<option value="danRer9.60">danRer9.60:Danio_rerio</option>
+				<option value="danRer9.61">danRer9.61:Danio_rerio</option>
+				<option value="dasNov2.60">dasNov2.60:Dasypus_novemcinctus</option>
+				<option value="dasNov2.61">dasNov2.61:Dasypus_novemcinctus</option>
+				<option value="dasNov2.63">dasNov2.63:Dasypus_novemcinctus.dasNov2.63</option>
+				<option value="dasNov2.64">dasNov2.64:Dasypus_novemcinctus</option>
+				<option value="dipOrd1.60">dipOrd1.60:Dipodomys_ordii</option>
+				<option value="dipOrd1.61">dipOrd1.61:Dipodomys_ordii</option>
+				<option value="dipOrd1.63">dipOrd1.63:Dipodomys_ordii.dipOrd1.63</option>
+				<option value="dipOrd1.64">dipOrd1.64:Dipodomys_ordii</option>
+				<option value="dm5.12">dm5.12:Drosophila_melanogaster</option>
+				<option value="dm5.22">dm5.22:Drosophila_melanogaster</option>
+				<option value="dm5.25.59">dm5.25.59:Drosophila_melanogaster</option>
+				<option value="dm5.25.60">dm5.25.60:Drosophila_melanogaster</option>
+				<option value="dm5.25.61">dm5.25.61:Drosophila_melanogaster</option>
+				<option value="dm5.25.63">dm5.25.63:Drosophila_melanogaster</option>
+				<option value="dm5.30">dm5.30:Drosophila_melanogaster</option>
+				<option value="dm5.31">dm5.31:Drosophila_melanogaster</option>
+				<option value="dm5.32">dm5.32:Drosophila_melanogaster</option>
+				<option value="dm5.34">dm5.34:Drosophila_melanogaster</option>
+				<option value="dm5.40">dm5.40:Drosophila_melanogaster</option>
+				<option value="equCab2.60">equCab2.60:Equus_caballus</option>
+				<option value="equCab2.61">equCab2.61:Equus_caballus</option>
+				<option value="eriEur1.60">eriEur1.60:Erinaceus_europaeus</option>
+				<option value="eriEur1.61">eriEur1.61:Erinaceus_europaeus</option>
+				<option value="fugu4.60">fugu4.60:Takifugu_rubripes</option>
+				<option value="fugu4.61">fugu4.61:Takifugu_rubripes</option>
+				<option value="gacu1.60">gacu1.60:Gasterosteus_aculeatus</option>
+				<option value="gacu1.61">gacu1.61:Gasterosteus_aculeatus</option>
+				<option value="ggallus2.59">ggallus2.59:Gallus_gallus</option>
+				<option value="ggallus2.60">ggallus2.60:Gallus_gallus</option>
+				<option value="ggallus2.61">ggallus2.61:Gallus_gallus</option>
+				<option value="gmax1.09">gmax1.09:Glycine_Max</option>
+				<option value="gorGor3.1.64">gorGor3.1.64:Gorilla_gorilla</option>
+				<option value="gorGor3.60">gorGor3.60:Gorilla_gorilla</option>
+				<option value="gorGor3.61">gorGor3.61:Gorilla_gorilla</option>
+				<option value="gorGor3.63">gorGor3.63:Gorilla_gorilla.gorGor3.63</option>
+				<option value="hg19">hg19:Homo_sapiens</option>
+				<option value="hg36.54">hg36.54:Homo_sapiens</option>
+				<option value="hg37.59">hg37.59:Homo_sapiens</option>
+				<option value="hg37.60">hg37.60:Homo_sapiens</option>
+				<option value="hg37.61">hg37.61:Homo_sapiens</option>
+				<option value="hg37.63">hg37.63:Homo_sapiens</option>
+				<option value="hiv">hiv:hiv</option>
+				<option value="loxAfr3.60">loxAfr3.60:Loxodonta_africana</option>
+				<option value="loxAfr3.61">loxAfr3.61:Loxodonta_africana</option>
+				<option value="loxAfr3.63">loxAfr3.63:Loxodonta_africana.loxAfr3.63</option>
+				<option value="loxAfr3.64">loxAfr3.64:Loxodonta_africana</option>
+				<option value="maizeZmB73">maizeZmB73:Maize_ZmB73</option>
+				<option value="medaka1.60">medaka1.60:Oryzias_latipes</option>
+				<option value="medaka1.61">medaka1.61:Oryzias_latipes</option>
+				<option value="meug1.0.60">meug1.0.60:Macropus_eugenii</option>
+				<option value="meug1.0.61">meug1.0.61:Macropus_eugenii</option>
+				<option value="micMur1.60">micMur1.60:Microcebus_murinus</option>
+				<option value="micMur1.61">micMur1.61:Microcebus_murinus</option>
+				<option value="micMur1.63">micMur1.63:Microcebus_murinus.micMur1.63</option>
+				<option value="micMur1.64">micMur1.64:Microcebus_murinus</option>
+				<option value="mm37.59">mm37.59:Mus_musculus</option>
+				<option value="mm37.60">mm37.60:Mus_musculus</option>
+				<option value="mm37.61">mm37.61:Mus_musculus</option>
+				<option value="mm37">mm37:Mus_musculus</option>
+				<option value="mmul1.60">mmul1.60:Macaca_mulatta</option>
+				<option value="mmul1.61">mmul1.61:Macaca_mulatta</option>
+				<option value="monDom5.60">monDom5.60:Monodelphis_domestica</option>
+				<option value="monDom5.61">monDom5.61:Monodelphis_domestica</option>
+				<option value="myco_fh">myco_fh:Mycoplasma_pneumoninae_FH</option>
+				<option value="myco_m129">myco_m129:Mycoplasma_pneumoninae_M129</option>
+				<option value="myoLuc1.60">myoLuc1.60:Myotis_lucifugus</option>
+				<option value="myoLuc1.61">myoLuc1.61:Myotis_lucifugus</option>
+				<option value="ncrassa">ncrassa:Neurospora_Crassa</option>
+				<option value="oana5.60">oana5.60:Ornithorhynchus_anatinus</option>
+				<option value="oana5.61">oana5.61:Ornithorhynchus_anatinus</option>
+				<option value="ochPri2.60">ochPri2.60:Ochotona_princeps</option>
+				<option value="ochPri2.61">ochPri2.61:Ochotona_princeps</option>
+				<option value="oryCun2.60">oryCun2.60:Oryctolagus_cuniculus</option>
+				<option value="oryCun2.61">oryCun2.61:Oryctolagus_cuniculus</option>
+				<option value="oryCun2.63">oryCun2.63:Oryctolagus_cuniculus.oryCun2.63</option>
+				<option value="oryCun2.64">oryCun2.64:Oryctolagus_cuniculus</option>
+				<option value="paeru.PA01">paeru.PA01:Pseudomonas_aeruginosa</option>
+				<option value="paeru.PA14">paeru.PA14:Pseudomonas_aeruginosa</option>
+				<option value="peromyscus">peromyscus:Peromyscusleucopus</option>
+				<option value="pfluo.SBW25.NC_009444">pfluo.SBW25.NC_009444:Pseudomonas_fluorescens</option>
+				<option value="pfluo.SBW25.NC_012660">pfluo.SBW25.NC_012660:Pseudomonas_fluorescens</option>
+				<option value="pika.63">pika.63:Ochotona_princeps.pika.63</option>
+				<option value="pika.64">pika.64:Ochotona_princeps</option>
+				<option value="plasmo72">plasmo72:Plasmodium_falciparum</option>
+				<option value="ppersica139">ppersica139:Peach</option>
+				<option value="ppyg2.60">ppyg2.60:Pongo_pygmaeus</option>
+				<option value="ppyg2.61">ppyg2.61:Pongo_pygmaeus</option>
+				<option value="proCap1.60">proCap1.60:Procavia_capensis</option>
+				<option value="proCap1.61">proCap1.61:Procavia_capensis</option>
+				<option value="proCap1.63">proCap1.63:Procavia_capensis.proCap1.63</option>
+				<option value="proCap1.64">proCap1.64:Procavia_capensis</option>
+				<option value="pteVam1.60">pteVam1.60:Pteropus_vampyrus</option>
+				<option value="pteVam1.61">pteVam1.61:Pteropus_vampyrus</option>
+				<option value="pteVam1.63">pteVam1.63:Pteropus_vampyrus.pteVam1.63</option>
+				<option value="pteVam1.64">pteVam1.64:Pteropus_vampyrus</option>
+				<option value="rat3.4.59">rat3.4.59:Rattus_norvegicus</option>
+				<option value="rat3.4.60">rat3.4.60:Rattus_norvegicus</option>
+				<option value="rat3.4.61">rat3.4.61:Rattus_norvegicus</option>
+				<option value="rice5">rice5:Rice_v5</option>
+				<option value="rice6.1">rice6.1:Rice_v6_1</option>
+				<option value="sScrofa9.60">sScrofa9.60:Sus_scrofa</option>
+				<option value="sScrofa9.61">sScrofa9.61:Sus_scrofa</option>
+				<option value="sacCer2.59">sacCer2.59:Saccharomyces_cerevisiae</option>
+				<option value="sacCer2.60">sacCer2.60:Saccharomyces_cerevisiae</option>
+				<option value="sacCer2.61">sacCer2.61:Saccharomyces_cerevisiae</option>
+				<option value="sacCer2">sacCer2:Saccharomyces_cerevisiae</option>
+				<option value="sorAra1.60">sorAra1.60:Sorex_araneus</option>
+				<option value="sorAra1.61">sorAra1.61:Sorex_araneus</option>
+				<option value="speTri1.60">speTri1.60:Spermophilus_tridecemlineatus</option>
+				<option value="speTri1.61">speTri1.61:Spermophilus_tridecemlineatus</option>
+				<option value="spombe">spombe:Schizosaccharomyces_pombe</option>
+				<option value="taeGut3.2.4.60">taeGut3.2.4.60:Taeniopygia_guttata</option>
+				<option value="taeGut3.2.4.61">taeGut3.2.4.61:Taeniopygia_guttata</option>
+				<option value="taeGut3.2.4.63">taeGut3.2.4.63:Taeniopygia_guttata.taeGut3.2.4.63</option>
+				<option value="taeGut3.2.4.64">taeGut3.2.4.64:Taeniopygia_guttata</option>
+				<option value="tarSyr1.60">tarSyr1.60:Tarsius_syrichta</option>
+				<option value="tarSyr1.61">tarSyr1.61:Tarsius_syrichta</option>
+				<option value="tarSyr1.63">tarSyr1.63:Tarsius_syrichta.tarSyr1.63</option>
+				<option value="tarSyr1.64">tarSyr1.64:Tarsius_syrichta</option>
+				<option value="tenrec1.60">tenrec1.60:Echinops_telfairi</option>
+				<option value="tenrec1.61">tenrec1.61:Echinops_telfairi</option>
+				<option value="test">test:test</option>
+				<option value="testCase">testCase:Human</option>
+				<option value="testHg3761Chr15">testHg3761Chr15:Human_Chr15</option>
+				<option value="testHg3761Chr16">testHg3761Chr16:Human_Chr16</option>
+				<option value="testHg3763Chr1">testHg3763Chr1:Human_Chr1</option>
+				<option value="testHg3763Chr20">testHg3763Chr20:Human_Chr20</option>
+				<option value="testHg3763ChrY">testHg3763ChrY:Human_ChrY</option>
+				<option value="test_ENSG00000158062">test_ENSG00000158062:Human_Chr1_ENSG00000158062</option>
+				<option value="tetraodon8.60">tetraodon8.60:Tetraodon_nigroviridis</option>
+				<option value="tetraodon8.61">tetraodon8.61:Tetraodon_nigroviridis</option>
+				<option value="tupBel1.60">tupBel1.60:Tupaia_belangeri</option>
+				<option value="tupBel1.61">tupBel1.61:Tupaia_belangeri</option>
+				<option value="turTru1.60">turTru1.60:Tursiops_truncatus</option>
+				<option value="turTru1.61">turTru1.61:Tursiops_truncatus</option>
+				<option value="turTru1.63">turTru1.63:Tursiops_truncatus.turTru1.63</option>
+				<option value="turTru1.64">turTru1.64:Tursiops_truncatus</option>
+				<option value="turkey.UMD2.61">turkey.UMD2.61:Meleagris_gallopavo</option>
+				<option value="vacwr">vacwr:Vaccinia_Western_Reserve</option>
+				<option value="vibrio">vibrio:VibrioCholerae</option>
+				<option value="vicPac1.60">vicPac1.60:Vicugna_pacos</option>
+				<option value="vicPac1.61">vicPac1.61:Vicugna_pacos</option>
+				<option value="vicPac1.63">vicPac1.63:Vicugna_pacos.vicPac1.63</option>
+				<option value="vicPac1.64">vicPac1.64:Vicugna_pacos</option>
+				<option value="xtrop4.1.60">xtrop4.1.60:Xenopus_tropicalis</option>
+				<option value="xtrop4.1.61">xtrop4.1.61:Xenopus_tropicalis</option>
+				<option value="xtrop7.1">xtrop7.1:Xenopus_tropicalis</option>
+		</param>
+
+		<param name="udLength" type="select" label="Upstream / Downstream length">
+			<option value="0">No upstream / downstream intervals (0 bases)</option>
+			<option value="200">200 bases</option>
+			<option value="500">500 bases</option>
+			<option value="1000">1000 bases</option>
+			<option value="2000">2000 bases</option>
+			<option value="5000" selected="true">5000 bases</option>
+			<option value="10000">10000 bases</option>
+			<option value="20000">20000 bases</option>
+		</param>
+
+        <param name="filterHomHet" type="select" display="radio" label="Filter homozygous / heterozygous changes">
+			<option value="">No filter (analyze everything)</option>
+			<option value="-hom">Analyze homozygous sequence changes only </option>
+			<option value="-het">Analyze heterozygous sequence changes only </option>
+        </param>
+
+        <param name="filterIn" type="select" display="radio" label="Filter sequence changes">
+			<option value="">No filter (analyze everything)</option>
+			<option value="-del">Analyze deletions only </option>
+			<option value="-ins">Analyze insertions only </option>
+			<option value="-nmp">Only MNPs (multiple nucleotide polymorphisms) </option>
+			<option value="-snp">Only SNPs (single nucleotide polymorphisms) </option>
+        </param>
+
+        <param name="filterOut" type="select" display="checkboxes" multiple="true" optional="false" value="None" label="Filter output">
+			<option value="None" selected="true">None</option>
+			<option value="downstream">Do not show DOWNSTREAM changes </option>
+			<option value="intergenic">Do not show INTERGENIC changes </option>
+			<option value="intron">Do not show INTRON changes </option>
+			<option value="upstream">Do not show UPSTREAM changes </option>
+			<option value="utr">Do not show 5_PRIME_UTR or 3_PRIME_UTR changes </option>
+        </param>
+
+        <param name="offset" type="select" display="radio" optional="true" label="Chromosomal position">
+			<option value="">Use default (based on input type)</option>
+			<option value="-0">Force zero-based positions (both input and output)</option>
+			<option value="-1">Force one-based positions (both input and output)</option>
+		</param>
+	</inputs>
+	<outputs>
+		<data format="tabular" name="output" />
+		<data format="html" name="statsFile" />
+	</outputs>
+
+	<help>
+
+This tool calculate the effect of variants (SNPs/MNPs/Insertions) and deletions.
+
+For details about this tool, please go to http://snpEff.sourceforge.net
+
+	</help>
+</tool>
+

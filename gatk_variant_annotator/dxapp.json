@@ -1,0 +1,88 @@
+{
+  "name": "gatk_variant_annotator_applet",
+  "title": "GATK Variant Annotator Applet",
+  "summary": "Annotates a VCF file with any or all of dbSNP, an annotation VCF, or snpEff",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "details": {
+    "contactUrl": "http://wiki.dnanexus.com/Apps/gatk_variant_annotator"
+  },
+  "resources": [],
+  "inputSpec": [
+    {
+      "label": "Input VCF",
+      "optional": false,
+      "name": "input_vcf",
+      "class": "file"
+    },
+    {
+      "label": "Reference",
+      "optional": false,
+      "name": "reference",
+      "class": "file"
+    },
+    {
+      "label": "Genes File",
+      "optional": true,
+      "name": "genes",
+      "class": "file"
+    },
+    {
+      "label": "dbSNP File",
+      "optional": true,
+      "name": "dbsnp",
+      "class": "file"
+    },
+    {
+      "label": "Annotation VCF",
+      "optional": true,
+      "name": "annotation_vcf",
+      "class": "file"
+    },
+    {
+      "label": "Comparison VCF",
+      "optional": true,
+      "name": "comparison_vcf",
+      "class": "file"
+    },
+    {
+      "label": "BAM File",
+      "optional": true,
+      "name": "input_bam",
+      "class": "file"
+    },
+    {
+      "default": "",
+      "label": "GATK Annotator Parameters",
+      "optional": true,
+      "name": "gatk_annotator_params",
+      "class": "string"
+    },
+    
+    {
+      "default": "-gtf22 -v",
+      "label": "snpEff Build Parameters",
+      "optional": true,
+      "name": "snpeff_build_params",
+      "class": "string"
+    },
+    {
+      "default": "-v -onlyCoding true -i vcf -o vcf",
+      "label": "snpEff Annotate Parameters",
+      "optional": true,
+      "name": "snpeff_annotate_params",
+      "class": "string"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "annotated_variants",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "interpreter": "python2.7",
+    "file": "src/gatk_variant_annotator.py",
+    "execDepends": [{"name": "openjdk-6-jre-headless"}, {"name": "tabix"}]
+  }
+}

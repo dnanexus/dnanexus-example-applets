@@ -1,0 +1,127 @@
+{
+  "name": "bwa_recalibration_pipeline",
+  "title": "BWA-GATK Align and Recalibrate Pipeline",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "details": {
+    "contactUrl": "http://wiki.dnanexus.com/Apps/bwa_recalibration_pipeline"
+  },
+  "resources": [],
+  "inputSpec": [
+    {
+      "label": "Reads Per Chunk",
+      "optional": false,
+      "name": "reads_per_chunk",
+      "class": "int",
+      "default": 10000000
+    },
+    {
+      "label": "Genome Splits",
+      "optional": false,
+      "name": "genome_splits",
+      "class": "int",
+      "default": 10
+    },
+    {
+      "label": "Left Reads",
+      "optional": false,
+      "name": "left_reads",
+      "class": "array:file"
+    },
+    {
+      "label": "Right Reads",
+      "optional": false,
+      "name": "right_reads",
+      "class": "array:file"
+    },
+    {
+      "label": "Reference (.gz)",
+      "optional": false,
+      "name": "reference",
+      "class": "file"
+    },
+    {
+      "label": "Reference Indexed for BWA",
+      "optional": false,
+      "name": "indexed_reference",
+      "class": "file"
+    },
+    {
+      "default": "",
+      "label": "BWA Align Parameters",
+      "optional": true,
+      "name": "aln_params",
+      "class": "string"
+    },
+    {
+      "default": "-r '@RG\\tID:1\\tPL:ILLUMINA\\tPU:None\\tLB:1\\tSM:1'",
+      "label": "Samse/Sampe Parameters",
+      "optional": true,
+      "name": "samse_sampe_params",
+      "class": "string"
+    },
+    {
+      "default": "ASSUME_SORTED=true VALIDATION_STRINGENCY=LENIENT",
+      "label": "Mark Duplicates Parameters",
+      "optional": true,
+      "name": "mark_duplicates_params",
+      "class": "string"
+    },
+    {
+      "label": "dbSNP File",
+      "optional": false,
+      "name": "dbsnp",
+      "class": "file"
+    },
+    {
+      "label": "Known Indels",
+      "optional": false,
+      "name": "known_indels",
+      "class": "array:file"
+    },
+    {
+      "default": "",
+      "label": "Count Covariates Parameters",
+      "optional": true,
+      "name": "count_covariates_params",
+      "class": "string"
+    },
+    {
+      "default": "",
+      "label": "Target Creator Parameters",
+      "optional": true,
+      "name": "target_creator_params",
+      "class": "string"
+    },
+    {
+      "default": "",
+      "label": "Indel Realigner Parameters",
+      "optional": true,
+      "name": "indel_realigner_params",
+      "class": "string"
+    },
+    {
+      "default": "",
+      "label": "Table Recalibrator Parameters",
+      "optional": true,
+      "name": "table_recalibrator_params",
+      "class": "string"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "raw_bam",
+      "label": "Raw BAM",
+      "class": "file"
+    },
+    {
+      "name": "recalibrated_bam",
+      "label": "Recalibrated BAM",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "interpreter": "python2.7",
+    "file": "src/bwa_recalibration_pipeline.py"
+  }
+}

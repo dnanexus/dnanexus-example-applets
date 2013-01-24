@@ -1,0 +1,29 @@
+{
+  "name": "contigset_to_fasta_gz",
+  "title": "ContigSet to Gzipped Fasta",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "details": {
+    "contactUrl": "http://wiki.dnanexus.com/Apps/contigset_to_fasta_gz"
+  },
+  "resources": [],
+  "inputSpec": [
+    {
+      "label": "Genome",
+      "optional": false,
+      "name": "contig_set",
+      "class": "record"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "fasta_gz",
+      "label": "Gzipped Fasta",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "interpreter": "python2.7",
+    "file": "src/contigset_to_fasta_gz.py"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "picard_mark_duplicates",
+  "title": "Picard Mark Duplicates",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "details": {
+    "contactUrl": "http://wiki.dnanexus.com/Apps/picard_mark_duplicates"
+  },
+  "resources": [],
+  "inputSpec": [
+    {
+      "label": "BAM",
+      "optional": false,
+      "name": "BAM",
+      "class": "file"
+    },
+    {
+      "default": "ASSUME_SORTED=true VALIDATION_STRINGENCY=LENIENT",
+      "label": "Parameters",
+      "optional": true,
+      "name": "params",
+      "class": "string"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "BAM",
+      "class": "file"
+    },
+    {
+      "name": "metrics",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "interpreter": "python2.7",
+    "file": "src/picard_mark_duplicates.py",
+    "execDepends": [{"name": "openjdk-6-jre"}]
+  }
+}
