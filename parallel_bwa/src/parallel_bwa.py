@@ -53,7 +53,7 @@ def main(fastq_gz_left_reads, fastq_gz_right_reads, indexed_reference, reads_per
     bwa_subjobs = []
     for x, y in zip(fastq_gz_left_reads, fastq_gz_right_reads):
         left_job = splitter.run({"fastqgz": x, "reads_per_chunk": reads_per_chunk})
-        right_job = splitter.run({"fastqgz": x, "reads_per_chunk": reads_per_chunk})
+        right_job = splitter.run({"fastqgz": y, "reads_per_chunk": reads_per_chunk})
         bwa_controller_input["left_reads"].append(left_job.get_id())
         bwa_controller_input["right_reads"].append(right_job.get_id())
         bwa_subjobs.extend([left_job, right_job])
