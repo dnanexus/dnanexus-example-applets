@@ -12,7 +12,8 @@
       "label": "Genome",
       "optional": false,
       "name": "contig_set",
-      "class": "record"
+      "class": "record",
+      "type": "ContigSet"
     }
   ],
   "outputSpec": [
