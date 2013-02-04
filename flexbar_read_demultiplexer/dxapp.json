@@ -1,0 +1,50 @@
+{
+  "name": "flexbar_read_demultiplexer",
+  "title": "Flexbar Read Demultiplexer",
+  "summary": "Demultiplexes barcoded reads",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "left_reads",
+      "label": "The reads to be demultiplexed (or the left reads, for read pairs)",
+      "class": "file",
+      "optional": false
+    },
+    {
+      "name": "right_reads",
+      "label": "The right reads to be demultiplexed, for read pairs",
+      "class": "file",
+      "optional": true
+    },
+    {
+      "name": "barcode_reads",
+      "label": "The barcode reads, if separate barcode reads are created",
+      "class": "file",
+      "optional": true
+    },
+    {
+      "name": "barcode_fasta",
+      "label": "The barcode specificiation (sequences given as an uncompressed fasta)",
+      "class": "file",
+      "optional": false
+    },
+    {
+      "name": "params",
+      "label": "Other command-line parameters to pass to the flexbar executable",
+      "class": "string",
+      "default": "-be LEFT_TAIL -u 10 -n 2"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "results",
+      "label": "An array containing all resulting files",
+      "class": "array:file"
+    }
+  ],
+  "runSpec": {
+    "interpreter": "bash",
+    "file": "src/flexbar_read_demultiplexer.sh"
+  }
+}
