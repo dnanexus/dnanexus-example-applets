@@ -3,7 +3,7 @@
   "title": "Flexbar Read Demultiplexer",
   "summary": "Demultiplexes barcoded reads",
   "dxapi": "1.0.0",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "inputSpec": [
     {
       "name": "left_reads",
@@ -25,7 +25,7 @@
     },
     {
       "name": "barcode_fasta",
-      "label": "The barcode specificiation (sequences given as an uncompressed fasta)",
+      "label": "The barcode specification (sequences given as an uncompressed fasta)",
       "class": "file",
       "optional": false
     },
@@ -33,7 +33,7 @@
       "name": "params",
       "label": "Other command-line parameters to pass to the flexbar executable",
       "class": "string",
-      "default": "-be LEFT_TAIL -u 10 -n 2"
+      "default": "-f fastq -be LEFT_TAIL -u 10 -n 2"
     }
   ],
   "outputSpec": [

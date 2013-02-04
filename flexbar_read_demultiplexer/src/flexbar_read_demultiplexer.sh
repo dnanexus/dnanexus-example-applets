@@ -1,8 +1,5 @@
 #!/bin/bash
 
-set -e -x
-
-
 # The following line causes bash to exit at any point if there is any error
 # and to output each line as it is executed -- useful for debugging
 set -e -x
@@ -29,7 +26,7 @@ fi
 dx download "$barcode_fasta" -o barcodes.fa
 cmd="$cmd -b barcodes.fa"
 
-flexbar $cmd -f fastq -t output $params
+flexbar $cmd -t output $params
 
 for file in output_*
 do

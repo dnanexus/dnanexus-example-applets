@@ -23,6 +23,8 @@ parameters that can tweak the demultiplexing behavior:
 http://sourceforge.net/p/flexbar/wiki/Manual/
 
 The default parameters are the following:
+* `-f fastq`: Assumes PHRED-33 encoding of the quality scores. Option `-f` is required to
+run flexbar; use `-f fastq-illumina1.3` if your quality scores are encoded in PHRED-64.
 * `-n 2`: Uses 2 threads.
 * `-be LEFT_TAIL`: Expects the barcode to be at the left (5-prime) end of the read. IMPORTANT:
 Depending on your protocol you may have to change this to `LEFT`, `RIGHT`, `RIGHT_TAIL`, or `ANY`.
@@ -35,7 +37,7 @@ bases will be filtered out and not considered for demultiplexing.
 * **The reads to be demultiplexed (or the left reads, for read pairs)** ``left_reads``: ``file``
 * **The right reads to be demultiplexed, for read pairs** ``right_reads``: ``file``
 * **The barcode reads, if separate barcode reads are created** ``barcode_reads``: ``file``
-* **The barcode specificiation (sequences given as an uncompressed fasta)** ``barcode_fasta``: ``file``
+* **The barcode specification (sequences given as an uncompressed fasta)** ``barcode_fasta``: ``file``
 * **Other command-line parameters to pass to the flexbar executable** ``params``: ``string``
 
 ## Outputs
