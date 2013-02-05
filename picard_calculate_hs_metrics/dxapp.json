@@ -1,0 +1,56 @@
+{
+  "name": "picard_calculate_hs_metrics",
+  "title": "Picard CalculateHsMetrics",
+  "summary": "Calculates hybrid selection metrics using the Picard CalculateHsMetrics tool",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "baits",
+      "label": "Baits interval file",
+      "help": "A text file (in Picard Interval format) with the coordinates of the baits.",
+      "class": "file",
+      "optional": false
+    },
+    {
+      "name": "targets",
+      "label": "Targets interval file",
+      "help": "A text file (in Picard Interval format) with the coordinates of the targets.",
+      "class": "file",
+      "optional": false
+    },
+    {
+      "name": "bam",
+      "label": "BAM file",
+      "help": "The BAM file containing the aligments on which metrics will be calculated.",
+      "class": "file",
+      "optional": false
+    },
+    {
+      "name": "reference_fastagz",
+      "label": "Reference gzipped fasta file",
+      "help": "A gzipped fasta file with the reference genome sequence.",
+      "class": "file",
+      "optional": false
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "hsmetrics_file",
+      "label": "Hybrid selection metrics",
+      "help": "A text file containing the hybrid selection metrics, as explained on the Picard website.",
+      "class": "file"
+    },
+    {
+      "name": "pertarget_hsmetrics_file",
+      "label": "Per-target metrics",
+      "help": "A text file containing metrics calculated per target",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "interpreter": "bash",
+    "file": "src/picard_calculate_hs_metrics.sh",
+    "execDepends":[{"name":"openjdk-6-jre-headless"}]
+  }
+}
