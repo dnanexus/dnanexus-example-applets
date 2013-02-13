@@ -31,8 +31,8 @@ def main(contig_set):
     name = contig_set.describe()['name'].replace(".fa", "")
 
     # Fill in your application code here.
-    
-    subprocess.check_call("contigset2fasta %s %s.fa" % (contig_set.get_id(), name), shell=True)
+
+    subprocess.check_call("dx-contigset-to-fasta %s %s.fa" % (contig_set.get_id(), name), shell=True)
     subprocess.check_call("gzip %s.fa" % name, shell=True)
 
     # The following line(s) use the Python bindings to upload your file outputs
