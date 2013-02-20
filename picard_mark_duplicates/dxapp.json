@@ -3,9 +3,6 @@
   "title": "Picard Mark Duplicates",
   "dxapi": "1.0.0",
   "version": "0.0.1",
-  "details": {
-    "contactUrl": "http://wiki.dnanexus.com/Apps/picard_mark_duplicates"
-  },
   "resources": [],
   "inputSpec": [
     {

@@ -4,9 +4,6 @@
   "summary": "Performs read mapping and transcript abundance analysis using the Tophat and Cufflinks suite of tools.",
   "dxapi": "1.0.0",
   "version": "0.0.1",
-  "details": {
-    "contactUrl": "http://wiki.dnanexus.com/Apps/tophat_cufflinks_pipeline"
-  },
   "resources": [],
   "inputSpec": [
     {

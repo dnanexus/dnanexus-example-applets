@@ -5,9 +5,6 @@
   "description": "This app calls the Picard DownsampleSam routine to process a SAM file.  Both inputs are SAM file objects and not DNAnexus Mappings tables.  See [Picard documentation](http://picard.sourceforge.net/command-line-overview.shtml#DownsampleSam) for more info.",
   "dxapi": "1.0.0",
   "version": "0.0.1",
-  "details": {
-    "contactUrl": "http://wiki.dnanexus.com/Apps/picard_downsample_sam_file"
-  },
   "resources": [],
   "inputSpec": [
     {

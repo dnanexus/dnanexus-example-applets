@@ -3,9 +3,6 @@
   "title": "BWA-GATK Align and Recalibrate Pipeline",
   "dxapi": "1.0.0",
   "version": "0.0.1",
-  "details": {
-    "contactUrl": "http://wiki.dnanexus.com/Apps/bwa_recalibration_pipeline"
-  },
   "resources": [],
   "inputSpec": [
     {

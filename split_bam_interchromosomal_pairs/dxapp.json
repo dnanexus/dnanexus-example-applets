@@ -3,9 +3,6 @@
   "title": "Split BAM Interchromosomal Pairs",
   "dxapi": "1.0.0",
   "version": "0.0.1",
-  "details": {
-    "contactUrl": "http://wiki.dnanexus.com/Apps/split_bam_interchromosomal_pairs"
-  },
   "resources": [],
   "inputSpec": [
     {

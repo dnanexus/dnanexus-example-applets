@@ -5,9 +5,6 @@
   "description": "The parallel BWA app wraps the applets Fastq Splitter, BWA Aligner, and Picard Merge Sam Files. Based on the number of reads in the input fastq files, the applet will start a number of jobs to process the files into a single aligned BAM file",
   "dxapi": "1.0.0",
   "version": "0.0.1",
-  "details": {
-    "contactUrl": "http://wiki.dnanexus.com/Apps/parallel_bwa"
-  },
   "resources": [],
   "inputSpec": [
     {

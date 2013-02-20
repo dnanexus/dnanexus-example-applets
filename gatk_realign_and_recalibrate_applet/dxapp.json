@@ -5,9 +5,6 @@
   "description": "GATK Realign and Recalibrate runs a set of 4 GATK modules as recommended in the Broad Institutes best practices in variant calling. This includes CountCovariants, RealignerTargetCreator, IndelRealigner, and TableRecalibrator. This acts on a SAM file to produce a new SAM file which has been realigned and with recalibrated quality scores.",
   "dxapi": "1.0.0",
   "version": "0.0.1",
-  "details": {
-    "contactUrl": "http://wiki.dnanexus.com/Apps/gatk_realign_and_recalibrate"
-  },
   "resources": [],
   "inputSpec": [
     {

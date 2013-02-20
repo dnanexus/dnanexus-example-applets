@@ -3,9 +3,6 @@
   "title": "ContigSet to Gzipped Fasta",
   "dxapi": "1.0.0",
   "version": "0.0.1",
-  "details": {
-    "contactUrl": "http://wiki.dnanexus.com/Apps/contigset_to_fasta_gz"
-  },
   "resources": [],
   "inputSpec": [
     {

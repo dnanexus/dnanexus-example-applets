@@ -4,9 +4,6 @@
   "summary": "Runs ApplyRecalibration Module of GATK",
   "dxapi": "1.0.0",
   "version": "0.0.1",
-  "details": {
-    "contactUrl": "http://wiki.dnanexus.com/Apps/gatk_apply_variant_recalibration"
-  },
   "resources": [],
   "inputSpec": [
     {

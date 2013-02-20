@@ -3,9 +3,6 @@
   "title": "BAM or SAM to Fastq (Picard)",
   "dxapi": "1.0.0",
   "version": "0.0.1",
-  "details": {
-    "contactUrl": "http://wiki.dnanexus.com/Apps/picard_sam_to_fastq"
-  },
   "resources": [],
   "inputSpec": [
     {

@@ -5,9 +5,6 @@
   "description": "Runs the GATK UnifiedGenotyper on a BAM file to produce a VCF file containing the variant calls",
   "dxapi": "1.0.0",
   "version": "0.0.1",
-  "details": {
-    "contactUrl": "http://wiki.dnanexus.com/Apps/gatk_variant_caller_file_python"
-  },
   "resources": [],
   "inputSpec": [
     {

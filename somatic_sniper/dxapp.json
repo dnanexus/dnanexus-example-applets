@@ -3,9 +3,6 @@
   "title": "Somatic Sniper",
   "dxapi": "1.0.0",
   "version": "0.0.1",
-  "details": {
-    "contactUrl": "http://wiki.dnanexus.com/Apps/somatic_sniper"
-  },
   "resources": [],
   "inputSpec": [
     {

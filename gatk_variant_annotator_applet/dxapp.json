@@ -4,9 +4,6 @@
   "summary": "Annotates a VCF file with any or all of dbSNP, an annotation VCF, or snpEff",
   "dxapi": "1.0.0",
   "version": "0.0.1",
-  "details": {
-    "contactUrl": "http://wiki.dnanexus.com/Apps/gatk_variant_annotator"
-  },
   "resources": [],
   "inputSpec": [
     {

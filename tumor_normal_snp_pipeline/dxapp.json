@@ -4,9 +4,6 @@
   "summary": "Aligns, recalibrates, and call snps on tumor and normal samples",
   "dxapi": "1.0.0",
   "version": "0.0.1",
-  "details": {
-    "contactUrl": "http://wiki.dnanexus.com/Apps/tumor_normal_snp_pipeline"
-  },
   "resources": [],
   "inputSpec": [
     {
