@@ -25,7 +25,7 @@ def main(BAMs, params='USE_THREADING=true SORT_ORDER=coordinate VALIDATION_STRIN
         dxpy.download_dxfile(fh.get_id(), "input%d.bam" % (i))
 
     name = dxpy.DXFile(BAMs[0]).describe()['name'].rstrip(".bam")
-        
+
     # Fill in your application code here.
 
     command = "java -Xmx4g -jar /opt/jar/MergeSamFiles.jar OUTPUT=%s.bam %s" % (name, params)

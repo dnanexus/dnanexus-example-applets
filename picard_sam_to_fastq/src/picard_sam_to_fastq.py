@@ -32,7 +32,7 @@ def main(input_bam, paired=True, params=''):
     dxpy.download_dxfile(input_bam.get_id(), "input.bam")
 
     # Fill in your application code here.
-    
+
     command = "java -Xmx6g -jar /opt/jar/SamToFastq.jar INPUT=input.bam F=%s_1.fastq" % base_name
     if paired:
         command += " F2=%s_2.fastq" % base_name

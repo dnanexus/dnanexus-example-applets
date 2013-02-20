@@ -48,7 +48,7 @@ def process(tableId, BAM, job_id, chunks):
 
     complement_table = string.maketrans("ATGCatgc", "TACGtacg")
 
-   
+
     return { "output": tableId }
 
 @dxpy.entry_point('main')
@@ -67,7 +67,7 @@ def main(BAM, reference, mb_per_chunk):
     # Split your work into parallel tasks.  As an example, the
     # following generates 10 subjobs running with the same dummy
     # input.
-    
+
     chunks = int(dxpy.DXFile(BAM).describe()['size']/(1000000*mb_per_chunk))
     if chunks < 1:
         chunks = 1
@@ -77,7 +77,7 @@ def main(BAM, reference, mb_per_chunk):
 
     schema = [
         {"name": "sequence", "type":"string"},
-        {"name": "chr", "type": "string"}, 
+        {"name": "chr", "type": "string"},
         {"name": "lo", "type": "int32"},
         {"name": "hi", "type": "int32"},
         {"name": "negative_strand", "type": "boolean"},
@@ -88,12 +88,12 @@ def main(BAM, reference, mb_per_chunk):
     mappingsTable.add_types(["Mappings"])
 
     mappingsTable.set_details({"original_contigset":dxpy.dxlink(reference)})
-    
+
     subjobs = []
     for i in range(chunks):
 
         #subprocess.check_call("samtools view -b input.bam -F 4 -o subset.bam %s" % (" ".join(chromosomes[i::chunks])), shell=True)
-        #jobFile = dxpy.upload_local_file("subset.bam").get_id() 
+        #jobFile = dxpy.upload_local_file("subset.bam").get_id()
 
         subjob_input = { "tableId": mappingsTable.get_id(),
                          "BAM": BAM,

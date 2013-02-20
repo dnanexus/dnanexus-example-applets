@@ -33,7 +33,7 @@ def main(vcf_files, reference, known_resources, training_resources, truth_resour
         dxpy.download_dxfile(fh.get_id(), fh.describe()['name'])
 
     resources_files = {}
-        
+
     try:
         entry = 0
         for x in known_resources:
@@ -49,7 +49,7 @@ def main(vcf_files, reference, known_resources, training_resources, truth_resour
                 entry += 1
             else:
                 resources_files[name]["training"] = "true"
-        
+
         for x in truth_resources:
             name = dxpy.DXFile(x).describe()['name']
             if resources_files.get(name) == None:
@@ -62,7 +62,7 @@ def main(vcf_files, reference, known_resources, training_resources, truth_resour
         raise dxpy.AppError("There were fewer entries for priors than there were unique resources files: %d unique resource files and %d priors" % (len(resource_files), len(priors)))
     if len(priors) > entry:
         raise dxpy.AppError("There were more entries for priors than there were unique resources files: %d unique resource files and %d priors" % (len(resource_files), len(priors)))
-    
+
     resources_command = ''
     for name, properties in resources_files.iteritems():
         if name[-3:] == ".gz":
@@ -71,7 +71,7 @@ def main(vcf_files, reference, known_resources, training_resources, truth_resour
         resources_command += " -resource:%s,known=%s,training=%s,truth=%s,prior=%f %s" % (name, properties["known"], properties["training"], properties["truth"], properties["prior"], name)
 
     p = subprocess.Popen("java -Xmx6g -jar /opt/jar/GenomeAnalysisTK.jar -T VariantRecalibrator -R ref.fa -recalFile %s.recal -tranchesFile %s.tranches -rscriptFile %s.plots.R --num_threads %d %s %s %s %s" % (base_name, base_name, base_name, cpu_count(), input_command, resources_command, annotations, params), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
-  
+
     try:
         p.wait()
         print p.stdout.read()
@@ -79,7 +79,7 @@ def main(vcf_files, reference, known_resources, training_resources, truth_resour
     except:
         print p.stdout.read()
         print p.stderr.read()
-    
+
     # Fill in your application code here.
 
     # The following line(s) use the Python bindings to upload your file outputs

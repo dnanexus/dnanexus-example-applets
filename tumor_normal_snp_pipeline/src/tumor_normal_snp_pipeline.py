@@ -28,12 +28,12 @@ def main(tumor_left_reads, tumor_right_reads, normal_left_reads, normal_right_re
                                                                      "reads_per_chunk": reads_per_chunk, "aln_params": aln_params, "samse_sampe_params": samse_sampe_params,
                                                                      "dbsnp": dbsnp, "known_indels": known_indels, "mark_duplicates_params": mark_duplicates_params, "count_covariates_params": count_covariates_params,
                                                                      "table_recalibrator_params": table_recalibrator_params})
-    
+
     somatic_sniper_job = applet("somatic_sniper").run({"tumor_bam": {"job": tumor_alignment_job.get_id(), "field": "recalibrated_bam"}, "normal_bam": {"job": normal_alignment_job.get_id(), "field": "recalibrated_bam"},
                                                         "reference": reference, "params": somatic_sniper_params})
-    
+
     output = {"tumor_bam": {"job": tumor_alignment_job.get_id(), "field": "recalibrated_bam"}, "normal_bam": {"job": normal_alignment_job.get_id(), "field": "recalibrated_bam"}, "snps": {"job": somatic_sniper_job.get_id(), "field": "snps"}}
-    
+
     return output
 
 def applet(name):

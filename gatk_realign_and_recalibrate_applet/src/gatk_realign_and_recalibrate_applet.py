@@ -47,7 +47,7 @@ def main(BAM, reference, dbsnp, known_indels,  count_covariates_params='', targe
         dxpy.download_dxfile(known_indels_array[i].get_id(), "indels" + str(i) + ".vcf.gz")
 
     # Fill in your application code here.
-    
+
     subprocess.check_call("gzip -d ref.fa.gz", shell=True)
 
     # Prepare the reference genome

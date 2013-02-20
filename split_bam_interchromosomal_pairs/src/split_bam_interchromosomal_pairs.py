@@ -44,7 +44,7 @@ def main(BAM):
     # after you have created them on the local file system.  It assumes that you
     # have used the output field name for the filename for each output, but you
     # can change that behavior to suit your needs.
-    
+
     interchromosomal_BAM = dxpy.upload_local_file("%s.inter.bam" % name);
     intrachromosomal_BAM = dxpy.upload_local_file("%s.intra.bam" % name);
 

@@ -27,9 +27,9 @@ def main(reads_per_chunk, left_reads, right_reads, reference, dbsnp, known_indel
     split_interchromosomal_job = applet("split_bam_interchromosomal_pairs").run({"BAM": {"job": parallel_bwa_job.get_id(), "field": "BAM"} })
     best_practices_jobs = []
 
-    #Run deduplication and best practices on the mappings of interchromosomally mapped read pairs    
+    #Run deduplication and best practices on the mappings of interchromosomally mapped read pairs
     best_practices_jobs.append(run_best_practices_jobs({"job": split_interchromosomal_job.get_id(), "field": "interchromosomal_BAM"}, mark_duplicates_params, reference, dbsnp, known_indels, count_covariates_params, target_creator_params, indel_realigner_params, table_recalibrator_params))
-    
+
     #Run deduplication and best practices on the mappings of intrachromosomally mapped read pairs
     for x in split_genome(dxpy.DXFile(reference), genome_splits):
         view_options = "-h -b " + " ".join(x)
@@ -60,7 +60,7 @@ def run_best_practices_jobs(BAM, mark_duplicates_params, reference, dbsnp, known
                     "target_creator_params": target_creator_params,
                     "indel_realigner_params": indel_realigner_params,
                     "table_recalibrator_params": table_recalibrator_params})
-    
+
 
 def split_genome(reference, splits):
 

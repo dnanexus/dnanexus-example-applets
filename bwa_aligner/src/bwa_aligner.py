@@ -54,7 +54,7 @@ def main(left_reads, indexed_reference, right_reads=None, samse_sampe_params="-r
 
     subprocess.check_call("samtools view -bS output.sam > output.bam", shell=True)
     subprocess.check_call("samtools sort output.bam %s" % name, shell=True)
-    
+
     # The following line(s) use the Python bindings to upload your file outputs
     # after you have created them on the local file system.  It assumes that you
     # have used the output field name for the filename for each output, but you

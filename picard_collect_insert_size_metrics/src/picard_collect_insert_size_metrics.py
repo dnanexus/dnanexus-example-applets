@@ -52,7 +52,7 @@ def main(input_SAM, deviations=None, histogram_width=None, min_percent=None, met
     print "Executing:"
     print command
 
-    # CALL the command here:  
+    # CALL the command here:
     subprocess.check_call(command, shell=True)
 
     # The following line(s) use the Python bindings to upload your file outputs

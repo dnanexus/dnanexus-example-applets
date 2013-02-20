@@ -57,7 +57,7 @@ def main(fastq_gz_left_reads, fastq_gz_right_reads, indexed_reference, reads_per
         bwa_controller_input["left_reads"].append(left_job.get_id())
         bwa_controller_input["right_reads"].append(right_job.get_id())
         bwa_subjobs.extend([left_job, right_job])
-        
+
     bwa_controller_job = dxpy.new_dxjob(fn_input=bwa_controller_input, fn_name='bwa_controller', depends_on=bwa_subjobs)
 
     picard_merge_job = picard_merge.run({"BAMs": {"job": bwa_controller_job.get_id(), "field": "BAMs"}})

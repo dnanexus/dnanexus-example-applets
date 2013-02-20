@@ -46,7 +46,7 @@ def main(tumor_bam, normal_bam, reference, params='-F vcf'):
         name += ".snp"
 
     # Fill in your application code here.
-    
+
     subprocess.check_call("gzip -d ref.fa.gz", shell=True)
     subprocess.check_call("bam-somaticsniper -f ref.fa %s tumor.bam normal.bam %s" % (params, name), shell=True)
 

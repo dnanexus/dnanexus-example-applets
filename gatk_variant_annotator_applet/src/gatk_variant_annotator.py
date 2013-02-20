@@ -66,11 +66,11 @@ def main(input_vcf, reference, input_bam=None, annotation_vcf=None, comparison_v
         dxpy.download_dxfile(dbsnp.get_id(), "%s" % dbsnp_name)
     if input_bam != None:
         dxpy.download_dxfile(input_bam.get_id(), "%s" % bam_name)
-                        
+
     # Fill in your application code here.
 
     subprocess.check_call("gzip -d %s.gz" % ref_name, shell=True)
-    
+
     if genes != None:
         subprocess.check_call("mv %s /snpEff_2_0_5/data/genomes/%s" % (ref_name, ref_name), shell=True)
         genes_file = open("/snpEff_2_0_5/snpEff.config", "a+")
@@ -83,13 +83,13 @@ def main(input_vcf, reference, input_bam=None, annotation_vcf=None, comparison_v
         # Produce snpeff annotation file
         subprocess.check_call("java -Xmx4g -jar /snpEff_2_0_5/snpEff.jar -c /snpEff_2_0_5/snpEff.config %s %s %s > snpeff.vcf" % (snpeff_annotate_params, ref_name.replace(".fa", ""), vcf_name), shell=True)
         ref_name = "/snpEff_2_0_5/data/genomes/%s"
-        
+
     try:
         subprocess.check_call("tabix -p vcf %s" % dbsnp_name, shell=True)
     except:
         print "Tried tabix indexing dbsnp file and failed. Proceeding as though file is uncompressed VCF"
-        
-    
+
+
     annotate_command = "java -Xmx4g -jar /opt/jar/GenomeAnalysisTK.jar -T VariantAnnotator -R %s --variant %s -L %s -o %s_annotated.vcf %s" % (ref_name, vcf_name, vcf_name, base_name, gatk_annotator_params)
     if dbsnp != None:
         annotate_command += " --dbsnp %s" % dbsnp_name
@@ -101,9 +101,9 @@ def main(input_vcf, reference, input_bam=None, annotation_vcf=None, comparison_v
         annotate_command += " -resource %s" % annotation_vcf
     if comparison_vcf != None:
         annotate_command += " -comp %s" % comparison_name
-    
+
     subprocess.check_call(annotate_command, shell=True)
-        
+
     # The following line(s) use the Python bindings to upload your file outputs
     # after you have created them on the local file system.  It assumes that you
     # have used the output field name for the filename for each output, but you
