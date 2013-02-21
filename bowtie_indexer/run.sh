@@ -1,4 +1,10 @@
 #!/bin/bash
+#
+# Copyright (C) 2013 DNAnexus, Inc.
+#
+#   This file is part of dnanexus-example-applets.
+#   You may use the file under the terms of the Apache License, Version 2.0;
+#   see the License.md file for more information.
 
 # The following line causes bash to exit at any point if there is any error
 # and to output each line as it is executed -- useful for debugging
