@@ -6,20 +6,20 @@ import re
 
 import string
 
-def main():    
+def main():
     table_id = sys.argv[1]
     job_id = int(sys.argv[2])
     chunks = int(sys.argv[3])
-    
+
     complement_table = string.maketrans("ATGCatgc", "TACGtacg")
     table = dxpy.open_dxgtable(table_id)
-    
+
     count = 0
     for line in sys.stdin:
         if line[0] != "@":
             if count%chunks == job_id:
                 entries = line.split("\t")
-    
+
                 sequence = entries[9]
                 chromosome = entries[2]
                 flag = int(entries[1])
@@ -39,7 +39,7 @@ def main():
                             length += int(cigar_elements[p-1])
                     lo = pos - 1
                     hi = lo + length
-                
+
                     table.add_rows([[sequence, chromosome, lo, hi, negative_strand, cigar]])
                 else:
                     table.add_rows([[sequence, '', 0, 0, False, '']])
