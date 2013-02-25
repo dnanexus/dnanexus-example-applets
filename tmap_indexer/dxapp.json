@@ -1,0 +1,33 @@
+{
+  "name": "tmap_indexer",
+  "title": "TMAP Genome Indexer",
+  "summary": "Uses TMAP to index a FASTA file",
+  "dxapi": "1.0.0",
+  "version": "1.0.1",
+  "inputSpec": [
+    {
+      "name": "reference",
+      "label": "Reference Genome (GZipped FASTA file)",
+      "class": "file",
+      "optional": false
+    },
+    {
+      "name": "options",
+      "label": "Indexing Options",
+      "class": "string",
+      "optional": true,
+      "default": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "indexed_ref",
+      "label": "Indexed Genome Archive",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "interpreter": "bash",
+    "file": "src/tmap_indexer.sh"
+  }
+}
