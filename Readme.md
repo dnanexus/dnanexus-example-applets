@@ -31,6 +31,8 @@ as parts of larger pipelines.
 
 **<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/fastq_splitter">fastq_splitter</a>**: Takes a gzipped fastq file and splits it by number of reads into several smaller files. Useful to parallelize aligning reads. Illustrates: bash
 
+**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/sff_splitter">sff_splitter</a>**: Takes a gzipped sff file and splits it by number of reads into several smaller files. Useful to parallelize aligning reads. Illustrates: python
+
 **<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/flexbar_read_demultiplexer">flexbar_read_demultiplexer</a>**: Demultiplexes indexed (barcoded) reads. Illustrates: bash
 
 **<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/flexbar_read_trimmer">flexbar_read_trimmer</a>**: Trims reads by quality score and/or position. Illustrates: bash
@@ -64,6 +66,10 @@ as parts of larger pipelines.
 **<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/bwa_recalibration_pipeline">bwa_recalibration_pipeline</a>**: Wraps parallel_bwa, split_bam_interchromosomal_pairs, picard_mark_duplicates, gatk_realign_and_recalibrate_applet, and picard_merge_sam_files to align and recalibrate reads in parallel. Illustrates: Python
 
 **<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/parallel_bwa">parallel_bwa</a>**: Wraps fastq_splitter, bwa_aligner, and picard_merge_sam_files to align reads in parallel. Defaults to providing a worker for every 10,000,000 reads. Illustrates: Python, multiple entry points
+
+**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/tmap_indexer">tmap_indexer</a>**: Takes a gzipped fasta file and produces a .tar.gz file that tmap_aligner will take as input. Illustrates: bash
+
+**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/tmap_aligner">tmap_aligner</a>**: Takes an SFF file to be mapped and a reference genome indexed by the 'tmap_indexer' applet.  The reads will be chunked into smaller parts by the 'sff_splitter' applet and mapped in parallel.  The number of reads per mapping job is a parameter of the applet.  Illustrates: bash using scatter-gather template
 
 ### Recalibration and Variant Calling
 
