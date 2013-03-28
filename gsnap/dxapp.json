@@ -1,0 +1,59 @@
+{
+  "name": "gsnap",
+  "title": "GSNAP aligner",
+  "summary": "Aligns DNA or RNA to a genome.  Outputs a BAM file",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "fastq_1",
+      "label": "FASTQ (gzipped)",
+      "class": "file",
+      "optional": false
+    },
+    {
+      "name": "fastq_2",
+      "label": "2nd FASTQ (gzipped) (if paired)",
+      "class": "file",
+      "optional": true
+    },
+    {
+      "name": "genome_db",
+      "label": "Genome Database",
+      "class": "file",
+      "optional": false
+    },
+    {
+      "name": "gene_model",
+      "label": "UCSC Gene Model",
+      "class": "file",
+      "optional": false
+    },
+    {
+      "name": "params",
+      "label": "Parameters",
+      "class": "string",
+      "optional": true,
+      "default": ""
+    },
+    {
+      "name": "output_name",
+      "label": "Name for output BAM file",
+      "class": "string",
+      "default": "aligned_reads"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "bam_file",
+      "label": "BAM Alignment File",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "interpreter": "bash",
+    "file": "src/gsnap.sh",
+    "execDepends":[{"name":"samtools"}],
+    "systemRequirements":{"main":{"instanceType":"dx_c1.xlarge"}}
+  }
+}
