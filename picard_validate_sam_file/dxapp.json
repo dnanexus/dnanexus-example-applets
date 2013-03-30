@@ -1,0 +1,46 @@
+{
+  "name": "picard_validate_sam_file",
+  "title": "Picard ValidateSamFile",
+  "summary": "Checks a SAM or BAM file for validity; produces a report listing errors and warnings.",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "input_file",
+      "label": "Input file",
+      "class": "file",
+      "optional": false
+    },
+    {
+      "name": "output_name",
+      "label": "Output name",
+      "class": "string",
+      "optional": false
+    },
+    {
+      "name": "max_output",
+      "label": "Maximum number of lines output",
+      "class": "int",
+      "optional": true
+    },
+    {
+      "name": "mode",
+      "label": "Mode",
+      "class": "string",
+      "optional": true,
+      "choices": ["VERBOSE", "SUMMARY"]
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "output_file",
+      "label": "Output file",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "interpreter": "bash",
+    "file": "src/picard_validate_sam_file.sh",
+    "execDepends": [{"name": "openjdk-6-jre-headless"}]
+  }
+}
