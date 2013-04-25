@@ -1,0 +1,115 @@
+#!/usr/bin/env python
+
+'''
+Auto-generate DNAnexus app specifications for BEDtools commands.
+'''
+
+import os, sys, json, argparse, re, subprocess, logging
+from subprocess import Popen, check_output
+from pprint import pformat
+
+import jinja2
+from dxpy.utils import OrderedDefaultdict
+
+logger = logging.getLogger(__name__)
+
+parser = argparse.ArgumentParser(description=__doc__)
+#parser.add_argument('--json-file', help='')
+args = parser.parse_args()
+
+code_template = '''
+from subprocess import check_call
+
+@dxpy.entry_point('main')
+def main(**kwargs):
+    positionals = {{positionals}}
+    command = ['bedtools', '{{tool}}']
+    for arg in positionals:
+        dxpy.download_dxfile(kwargs[arg], arg)
+        command.append('-'+arg)
+        command.append(arg)
+
+    for arg in kwargs:
+        if arg not in positionals:
+            command.append('-'+arg)
+            if kwargs[arg] != '':
+                command.append(kwargs[arg])
+
+    with open('output', 'w') as fh:
+        print 'Running', ' '.join(command)
+        check_call(command, stdout=fh)
+
+    return {'output': dxpy.upload_local_file('output', name='Output of bedtools {{tool}}')}
+'''
+
+def get_tool_names():
+    tool_names = []
+    for line in check_output("bedtools").splitlines():
+        if line.startswith("    "):
+            line = re.split("\s+", line, maxsplit=2)
+            if not line[1].startswith('--'):
+                tool_names.append(line[1])
+    return tool_names
+
+for tool in get_tool_names():
+    tool_spec = OrderedDefaultdict(OrderedDefaultdict)
+    tool_spec['name'] = 'bedtools_'+tool
+    positionals = []
+    help = Popen(["bedtools", tool, '--help'], stderr=subprocess.PIPE).communicate()[1]
+    for line in help.splitlines():
+        if line.startswith('Tool:'):
+            tool_spec['title'] = re.split("\s+", line, maxsplit=1)[1]
+        elif line.startswith('Version:'):
+            tool_spec['version'] = re.split("\s+", line, maxsplit=1)[1].lstrip('v')
+        elif line.startswith('Summary:'):
+            tool_spec['summary'] = re.split("\s+", line, maxsplit=1)[1].rstrip('.')
+            tool_spec['description'] = '\n'.join(['    '+l for l in help.splitlines() if not ('ERROR' in l or l == '*****')])
+        elif line.startswith('Usage:'):
+            line = re.split("\s+", line)
+            assert(line[1] == tool or line[2] == tool)
+            if line[1] == tool:
+                usage = line[2:]
+            else:
+                usage = line[3:]
+            if usage[0] == '[OPTIONS]':
+                usage = usage[1:]
+            while True:
+                if len(usage) > 1 and usage[0].startswith('-') and usage[1].startswith('<'):
+                    arg, arg_help = usage[0], usage[1]
+                    usage = usage[2:]
+                    input_spec = OrderedDefaultdict()
+                    input_spec['name'] = arg.lstrip('-')
+                    input_spec['class'] = 'file'
+                    input_spec['help'] = arg_help
+                    if arg_help == '<bed/gff/vcf>':
+                        input_spec['patterns'] = ['*.bed', '*.gff', '*.vcf']
+                    tool_spec.setdefault('inputSpec', [])
+                    tool_spec['inputSpec'].append(input_spec)
+                    positionals.append(input_spec['name'])
+                else:
+                    break
+        elif line.startswith('\t-'):
+            prefix, option, help = re.split("\s+", line, maxsplit=2)
+            input_spec = OrderedDefaultdict()
+            input_spec['name'] = option.lstrip('-')
+            input_spec['class'] = 'string'
+            input_spec['help'] = help
+            input_spec['optional'] = True
+            tool_spec.setdefault('inputSpec', [])
+            tool_spec['inputSpec'].append(input_spec)
+    tool_spec['outputSpec'] = [{'name': 'output', 'class': 'file'}]
+    tool_spec['runSpec']['interpreter'] = 'python2.7'
+    tool_spec['runSpec']['file'] = 'src/code.py'
+    # tool_spec['runSpec']['execDepends'] = [{"name": "bedtools"}]
+    try:
+        os.mkdir(tool)
+        os.mkdir(os.path.join(tool, "src"))
+        os.symlink("../resources", os.path.join(tool, "resources"))
+    except OSError:
+        pass
+    print "Generating app for bedtools", tool
+    with open(os.path.join(tool, 'dxapp.json'), 'w') as fh:
+        json.dump(tool_spec, fh, indent=4)
+    with open(os.path.join(tool, "src", "code.py"), 'w') as fh:
+        jinja2.Template(code_template).stream(positionals=pformat(positionals),
+                                              tool=tool).dump(fh, encoding='utf-8')
