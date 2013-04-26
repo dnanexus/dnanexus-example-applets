@@ -54,6 +54,7 @@ def get_tool_names():
 if not os.path.exists(os.path.join(os.getcwd(), "resources", "usr", "bin", "bedtools")):
     with open(os.path.join(os.getcwd(), "resources", "usr", "bin", "bedtools"), "w") as fh:
         check_call(['unxz', 'bedtools.xz', '--stdout'], stdout=fh)
+    check_call(['chmod', '+x', os.path.join(os.getcwd(), "resources", "usr", "bin", "bedtools")])
 
 for tool in get_tool_names():
     tool_spec = OrderedDefaultdict(OrderedDefaultdict)
