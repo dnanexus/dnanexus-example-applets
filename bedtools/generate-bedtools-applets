@@ -5,7 +5,7 @@ Auto-generate DNAnexus app specifications for BEDtools commands.
 '''
 
 import os, sys, json, argparse, re, subprocess, logging
-from subprocess import Popen, check_output
+from subprocess import Popen, check_call, check_output
 from pprint import pformat
 
 import jinja2
@@ -50,6 +50,10 @@ def get_tool_names():
             if not line[1].startswith('--'):
                 tool_names.append(line[1])
     return tool_names
+
+if not os.path.exists(os.path.join(os.getcwd(), "resources", "usr", "bin", "bedtools")):
+    with open(os.path.join(os.getcwd(), "resources", "usr", "bin", "bedtools"), "w") as fh:
+        check_call(['unxz', 'bedtools.xz', '--stdout'], stdout=fh)
 
 for tool in get_tool_names():
     tool_spec = OrderedDefaultdict(OrderedDefaultdict)
