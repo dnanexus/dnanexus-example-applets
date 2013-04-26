@@ -2,5 +2,5 @@
 
 for applet in *
 do
-  [ -d "$applet" ] && [ "$applet" != "Attic" ] && ./update.sh "$applet"
+  [ -d "$applet" ] && [ "$applet" != "Attic" ] && [ "$applet" != "bedtools" ] && ./update.sh "$applet"
 done
