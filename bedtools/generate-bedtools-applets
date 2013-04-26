@@ -37,7 +37,7 @@ def main(**kwargs):
 
     with open('output', 'w') as fh:
         print 'Running', ' '.join(command)
-        check_call(' '.join(command), shell=True, stdout=fh)
+        check_call(command, stdout=fh)
 
     return {'output': dxpy.upload_local_file('output', name='Output of bedtools {{tool}}')}
 '''
