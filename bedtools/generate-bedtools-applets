@@ -51,10 +51,11 @@ def get_tool_names():
                 tool_names.append(line[1])
     return tool_names
 
-if not os.path.exists(os.path.join(os.getcwd(), "resources", "usr", "bin", "bedtools")):
-    with open(os.path.join(os.getcwd(), "resources", "usr", "bin", "bedtools"), "w") as fh:
+bedtools_exec = os.path.join(os.getcwd(), "resources", "usr", "bin", "bedtools")
+if not os.path.exists(bedtools_exec):
+    with open(bedtools_exec, "w") as fh:
         check_call(['unxz', 'bedtools.xz', '--stdout'], stdout=fh)
-    check_call(['chmod', '+x', os.path.join(os.getcwd(), "resources", "usr", "bin", "bedtools")])
+    check_call(['chmod', '+x', bedtools_exec])
 
 for tool in get_tool_names():
     tool_spec = OrderedDefaultdict(OrderedDefaultdict)
@@ -68,7 +69,7 @@ for tool in get_tool_names():
             tool_spec['version'] = re.split("\s+", line, maxsplit=1)[1].lstrip('v')
         elif line.startswith('Summary:'):
             tool_spec['summary'] = re.split("\s+", line, maxsplit=1)[1].rstrip('.')
-            tool_spec['description'] = '\n'.join(['    '+l for l in help.splitlines() if not ('ERROR' in l or l == '*****')])
+            tool_spec['description'] = '\n'.join(['    '+l for l in help.splitlines() if not l.startswith('*****')])
         elif line.startswith('Usage:'):
             line = re.split("\s+", line)
             assert(line[1] == tool or line[2] == tool)
