@@ -42,6 +42,10 @@ def main(**kwargs):
     return {'output': dxpy.upload_local_file('output', name='Output of bedtools {{tool}}')}
 '''
 
+description_preamble = '''
+**Note:** To enable an option which is a flag with no arguments, enter a space in that option's text box.
+'''
+
 def get_tool_names():
     tool_names = []
     for line in check_output("bedtools").splitlines():
@@ -61,15 +65,27 @@ for tool in get_tool_names():
     tool_spec = OrderedDefaultdict(OrderedDefaultdict)
     tool_spec['name'] = 'bedtools_'+tool
     positionals = []
-    help = Popen(["bedtools", tool, '--help'], stderr=subprocess.PIPE).communicate()[1]
-    for line in help.splitlines():
+    help = Popen(["bedtools", tool, '--help'], stderr=subprocess.PIPE).communicate()[1].splitlines()
+    unwrapped_help = []
+
+    i, prev_whitespace_len = 0, 0
+    while i < len(help):
+        whitespace_len = len(re.match("^\s*", help[i]).group(0))
+        if whitespace_len <= prev_whitespace_len or help[i-1].startswith('Options:') or len(help[i-1]) == 0:
+            unwrapped_help.append(help[i])
+            prev_whitespace_len = whitespace_len
+        else:
+            unwrapped_help[-1] += '\n' + re.sub('^\s*', ' ', help[i])
+        i += 1
+
+    for line in unwrapped_help:
         if line.startswith('Tool:'):
             tool_spec['title'] = re.split("\s+", line, maxsplit=1)[1]
         elif line.startswith('Version:'):
             tool_spec['version'] = re.split("\s+", line, maxsplit=1)[1].lstrip('v')
         elif line.startswith('Summary:'):
             tool_spec['summary'] = re.split("\s+", line, maxsplit=1)[1].rstrip('.')
-            tool_spec['description'] = '\n'.join(['    '+l for l in help.splitlines() if not l.startswith('*****')])
+            tool_spec['description'] = description_preamble + '\n'.join(['    '+l for l in help if not l.startswith('*****')])
         elif line.startswith('Usage:'):
             line = re.split("\s+", line)
             assert(line[1] == tool or line[2] == tool)
@@ -95,11 +111,17 @@ for tool in get_tool_names():
                 else:
                     break
         elif line.startswith('\t-'):
-            prefix, option, help = re.split("\s+", line, maxsplit=2)
+            prefix, option, opt_help = re.split("\s+", line, maxsplit=2)
+            option = option.lstrip('-')
+            if option in positionals:
+                for spec in tool_spec['inputSpec']:
+                    if spec['name'] == option:
+                        spec['help'] = opt_help
+                continue
             input_spec = OrderedDefaultdict()
-            input_spec['name'] = option.lstrip('-')
+            input_spec['name'] = option
             input_spec['class'] = 'string'
-            input_spec['help'] = help
+            input_spec['help'] = opt_help
             input_spec['optional'] = True
             tool_spec.setdefault('inputSpec', [])
             tool_spec['inputSpec'].append(input_spec)
