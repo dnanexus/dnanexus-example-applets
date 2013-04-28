@@ -56,10 +56,6 @@ def get_tool_names(bedtools_exec):
     return tool_names
 
 bedtools_exec = os.path.join(os.getcwd(), "resources", "usr", "bin", "bedtools")
-if not os.path.exists(bedtools_exec):
-    with open(bedtools_exec, "w") as fh:
-        check_call(['unxz', 'bedtools.xz', '--stdout'], stdout=fh)
-    check_call(['chmod', '+x', bedtools_exec])
 
 for tool in get_tool_names(bedtools_exec):
     tool_spec = OrderedDefaultdict(OrderedDefaultdict)
