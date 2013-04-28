@@ -46,9 +46,9 @@ description_preamble = '''
 **Note:** To enable an option which is a flag with no arguments, enter a space in that option's text box.
 '''
 
-def get_tool_names():
+def get_tool_names(bedtools_exec):
     tool_names = []
-    for line in check_output("bedtools").splitlines():
+    for line in check_output(bedtools_exec).splitlines():
         if line.startswith("    "):
             line = re.split("\s+", line, maxsplit=2)
             if not line[1].startswith('--'):
@@ -61,11 +61,11 @@ if not os.path.exists(bedtools_exec):
         check_call(['unxz', 'bedtools.xz', '--stdout'], stdout=fh)
     check_call(['chmod', '+x', bedtools_exec])
 
-for tool in get_tool_names():
+for tool in get_tool_names(bedtools_exec):
     tool_spec = OrderedDefaultdict(OrderedDefaultdict)
     tool_spec['name'] = 'bedtools_'+tool
     positionals = []
-    help = Popen(["bedtools", tool, '--help'], stderr=subprocess.PIPE).communicate()[1].splitlines()
+    help = Popen([bedtools_exec, tool, '--help'], stderr=subprocess.PIPE).communicate()[1].splitlines()
     unwrapped_help = []
 
     i, prev_whitespace_len = 0, 0
@@ -88,8 +88,8 @@ for tool in get_tool_names():
             tool_spec['description'] = description_preamble + '\n'.join(['    '+l for l in help if not l.startswith('*****')])
         elif line.startswith('Usage:'):
             line = re.split("\s+", line)
-            assert(line[1] == tool or line[2] == tool)
-            if line[1] == tool:
+            assert(line[1].lower() == tool or line[2].lower() == tool)
+            if line[1].lower() == tool:
                 usage = line[2:]
             else:
                 usage = line[3:]
