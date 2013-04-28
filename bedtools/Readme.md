@@ -1,6 +1,6 @@
 # BEDTools applets
 
-This directory contains a script, `generate-bedtools-applets`, which automatically generates a file-based applet for each (BEDTools)[https://code.google.com/p/bedtools/) subcommand. It does so by parsing the help printed by each tool into an applet spec.
+This directory contains a script, `generate-bedtools-applets`, which automatically generates a DNAnexus file-based applet for each [BEDTools](https://code.google.com/p/bedtools/) subcommand. It does so by parsing the help printed by each tool into an applet spec.
 
 #### Generating the applets
 
