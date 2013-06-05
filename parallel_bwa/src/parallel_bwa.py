@@ -14,7 +14,7 @@
 # "postprocess" stage that will perform any additional computations as
 # necessary.
 #
-# See http://wiki.dnanexus.com/Developer-Tutorials/Build-Your-First-DNAnexus-App
+# See http://wiki.dnanexus.com/Developer-Tutorials/Intro-to-Building-Apps
 # for instructions on how to modify this file.
 #
 # DNAnexus Python Bindings (dxpy) documentation:
