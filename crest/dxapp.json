@@ -9,7 +9,7 @@
       "name": "tumor_bam",
       "label": "Tumor BAM file",
       "class": "file",
-      "optional": false
+      "optional": true
     },
     {
       "name": "normal_bam",

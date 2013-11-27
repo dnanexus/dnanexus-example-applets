@@ -31,7 +31,9 @@ main() {
     # with it that it takes ~10 minutes to set up the worker
     apt-get install --no-install-recommends -y libbio-samtools-perl
 
-    dx download "$tumor_bam" -o tumor.bam
+    if [ "$tumor_bam" != "" ]; then
+      dx download "$tumor_bam" -o tumor.bam
+    fi
     dx download "$normal_bam" -o normal.bam
     dx download "$reference" -o ref.fa.gz
     dx download "$ref_2bit" -o ref.2bit
@@ -43,8 +45,10 @@ main() {
 
     echo "Unzipping reference"
     gunzip ref.fa.gz
-
-    samtools index tumor.bam
+    
+    if [ -e tumor.bam ]; then
+      samtools index tumor.bam
+    fi
     samtools index normal.bam
 
     #echo "looking in /usr/bin"
@@ -54,7 +58,11 @@ main() {
     ls -l /usr/lib/perl5
 
     echo "Extracting soft masked mappings..."
-    extractSClip.pl -i tumor.bam --ref_genome ref.fa
+    if [ -e tumor.bam ]; then
+      extractSClip.pl -i tumor.bam --ref_genome ref.fa
+    else
+      extractSClip.pl -i normal.bam --ref_genome ref.fa
+    fi
 
     # block until our Blat server is up:
     RETVAL=255
@@ -73,7 +81,11 @@ main() {
     ls -l
 
     echo "Starting CREST..."
-    cmd="CREST.pl -f tumor.bam.cover -d tumor.bam -g normal.bam --ref_genome ref.fa -t `pwd`/ref.2bit --2bitdir `pwd` --blatserver localhost --blatport 1234 $params"
+    if [ -e tumor.bam ]; then
+      cmd="CREST.pl -f tumor.bam.cover -d tumor.bam -g normal.bam --ref_genome ref.fa -t `pwd`/ref.2bit --2bitdir `pwd` --blatserver localhost --blatport 1234 $params"
+    else
+      cmd="CREST.pl -f normal.bam.cover -d normal.bam --ref_genome ref.fa -t `pwd`/ref.2bit --2bitdir `pwd` --blatserver localhost --blatport 1234 $params"
+    fi
     echo "executing: $cmd"
     $cmd
 
