@@ -38,10 +38,13 @@ main() {
     dx download "$reference" -o ref.fa.gz
     dx download "$ref_2bit" -o ref.2bit
 
+    if [ "$reference_index" != "" ]; then
+      dx download "$reference_index" -o ref.fa.fai
+    fi
     # Fill in your application code here.
 
     echo "Starting Blat server..."
-    gfServer start localhost 1234 ref.2bit &
+    gfServer start localhost 1234 ref.2bit -log=gfServer.log&
 
     echo "Unzipping reference"
     gunzip ref.fa.gz
@@ -87,7 +90,7 @@ main() {
       cmd="CREST.pl -f normal.bam.cover -d normal.bam --ref_genome ref.fa -t `pwd`/ref.2bit --2bitdir `pwd` --blatserver localhost --blatport 1234 $params"
     fi
     echo "executing: $cmd"
-    $cmd
+    $cmd >crest.log 2>&1
 
     echo "CREST complete!  Uploading SV calls..."
 
@@ -119,6 +122,7 @@ main() {
     # to see more options to set metadata.
 
     sv_file=$(dx upload *.predSV.txt --brief)
+    log_file=$(dx upload crest.log --brief)
 
     # The following line(s) use the utility dx-jobutil-add-output to format and
     # add output variables to your job's output as appropriate for the output
@@ -126,4 +130,5 @@ main() {
     # does.
 
     dx-jobutil-add-output sv_file "$sv_file" --class=file
+    dx-jobutil-add-output log_file "$log_file" --class=file
 }

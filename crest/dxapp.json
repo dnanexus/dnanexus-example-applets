@@ -23,6 +23,12 @@
       "class": "file"
     },
     {
+      "name": "reference_index",
+      "label": "Reference Genome index",
+      "class": "file",
+      "optional": true
+    },
+    {
       "name": "ref_2bit",
       "lable": "Reference Genome (2bit format)",
       "class": "file"
@@ -40,12 +46,18 @@
       "name": "sv_file",
       "label": "Structural Variant Predictions",
       "class": "file"
+    },
+    {
+      "name": "log_file",
+      "label": "Crest log output",
+      "class": "file"
     }
   ],
   "runSpec": {
     "interpreter": "bash",
     "file": "src/crest.sh",
     "execDepends":[{"name":"samtools"},
-	           {"name":"liblist-moreutils-perl"}]
+	           {"name":"liblist-moreutils-perl"},
+               {"name":"libc6-i386"}]
   }
 }
