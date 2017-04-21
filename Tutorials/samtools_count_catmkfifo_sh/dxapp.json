@@ -1,0 +1,45 @@
+{
+  "name": "samtools_count_catmkfifo_sh",
+  "title": "SAMtools count with mkfifo and dx cat (bash)",
+  "summary": "SAMtools count using mkfifo files and dx cat download stream (bash)",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "mappings_bam",
+      "label": "Mapping",
+      "class": "file",
+      "patterns": [
+        "*.bam"
+      ],
+      "help": "BAM format file."
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "counts_txt",
+      "class": "file",
+      "label": "Read count file",
+      "patterns": [
+        "*.txt"
+      ],
+      "help": "Output file with Total reads as the first line."
+    }
+  ],
+  "runSpec": {
+    "interpreter": "bash",
+    "file": "src/code.sh",
+    "timeoutPolicy": {
+      "*": {
+        "hours": 12
+      }
+    },
+    "systemRequirements": {
+      "*": {
+        "instanceType": "mem1_ssd1_x2"
+      }
+    },
+    "distribution": "Ubuntu",
+    "release": "14.04"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "name": "samtools_count_subprocess_py",
+  "title": "SAMtools count with subprocess (python)",
+  "summary": "Performs a SAMtools count using subprocess calls in python",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "mappings_bam",
+      "label": "Mapping",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": "BAM format file."
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "counts_txt",
+      "label": "Read count file",
+      "class": "file",
+      "patterns": [
+        "*.txt"
+      ],
+      "help": "Output file with Total reads as the first line."
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 3
+      }
+    },
+    "interpreter": "python2.7",
+    "file": "src/code.py",
+    "systemRequirements": {
+      "*": {
+        "instanceType": "mem1_ssd1_x2"
+      }
+    },
+    "execDepends": [{"name": "samtools"}],
+    "distribution": "Ubuntu",
+    "release": "14.04"
+  }
+}

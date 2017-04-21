@@ -1,0 +1,70 @@
+{
+  "name": "samtools_count_dist_region_py",
+  "title": "SAMtools count scatter gather based on regions (python)",
+  "summary": "Count number of reads in SAM or BAM format file using a distributed scatter gather approach.  Subjobs perform count in parallel based on regions",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "mappings_bam",
+      "label": "Alignment file",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": "Alignment BAM file."
+    },
+    {
+      "name": "index_file",
+      "label": "Index file",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*.bam.bai"
+      ],
+      "help": "(Optional) *.bam.bai companion index file file."
+    },
+    {
+      "name": "region_size",
+      "label": "Region split size",
+      "class": "int",
+      "optional": false,
+      "help": "Max regions to run in subjobs."
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "count_file",
+      "label": "Read count file",
+      "class": "file",
+      "patterns": [
+      "*.txt"
+    ],
+      "help": "Text file containing number of reads per chromosome."
+    }
+  ],
+  "runSpec": {
+    "interpreter": "python2.7",
+    "file": "src/code.py",
+    "timeoutPolicy": {
+      "*": {
+        "hours": 12
+      }
+    },
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem1_ssd1_x2"
+      },
+      "samtoolscount_bam": {
+        "instanceType": "mem1_ssd1_x4"
+      },
+      "combine_files": {
+        "instanceType": "mem1_ssd1_x2"
+      }
+    },
+    "execDepends": [{"name": "samtools"}],
+    "distribution": "Ubuntu",
+    "release": "14.04"
+  }
+}
