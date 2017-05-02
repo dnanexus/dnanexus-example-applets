@@ -1,0 +1,58 @@
+# Side bar for tutorial pages
+
+entries:
+- title: sidebar
+  product: Tutorials
+  folders:
+
+  - title: General
+    output: web
+    folderitems:
+
+      - title: Overview
+        url: overview_tutorial
+        output: web
+
+      - title: Basic Applet Structure
+        url: basic_applet_structure.html
+        output: web
+
+      - title: Do You Need an Applet?
+        url: do_you_need_an_applet.html
+        output: web
+
+      - title: Dependencies
+        url: general_tutorial
+        output: web
+
+  - title: Bash
+    output: web
+    folderitems:
+
+      - title: Basic
+        url: bash_basic_tutorial
+        output: web
+
+      - title: Parallel
+        url: bash_parallel_tutorial
+        output: web
+
+      - title: Distributed
+        url: bash_distributed_tutorial
+        output: web
+
+  - title: Python
+    output: web
+    folderitems:
+
+      - title: Basic
+        url: python_basic_tutorial
+        output: web
+
+      - title: Parallel
+        url: python_parallel_tutorial
+        output: web
+
+      - title: Distributed
+        url: python_distributed_tutorial
+        output: web

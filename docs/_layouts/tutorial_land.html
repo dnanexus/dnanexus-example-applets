@@ -1,0 +1,36 @@
+---
+layout: default
+source_dir: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/
+---
+<h1>{{ page.language | capitalize }} Tutorials</h1>
+
+<div class="tutorial_snippet">
+	{% for tut in site.tutorials %}
+	{% if tut.language != page.language or tut.tutorial_type != page.tutorial_type %}
+	{% continue %}
+	{% endif %}
+	<!-- Fix this accordian to activate on click anywhere in the panel -->
+	<div class="tutorial_snippets">
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a data-toggle="collapse" data-parent="#accordion" href="#{{ tut.source }}">
+						<h1 class="panel-title">{{ tut.title }}</h1>
+					</a>
+				</div>
+				<div id="{{ tut.source }}" class="panel-collapse collapse">
+					<div class="panel-body" id="{{ tut.source }}">
+						<p>{{ tut.content }}</p>
+					</div>
+					<div><br>
+						<a href="#{{ tut.source }}"><i class="fa fa-chevron-up"></i> Section top</a>
+						<span class="pull-right">
+							<a href="{{ layout.source_dir }}{{tut.source}}">Github sourcecode</a>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
