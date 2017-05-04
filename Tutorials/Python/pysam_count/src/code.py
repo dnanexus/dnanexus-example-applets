@@ -13,6 +13,7 @@ import unicodedata
 import re
 
 
+# CODE-SECTION: Get chromosomes helper
 def get_chr(bam_alignment, canonical=False):
     """Helper function to return canonical chromosomes from SAM/BAM header
 
@@ -37,12 +38,12 @@ def get_chr(bam_alignment, canonical=False):
             regions[i] = seq_elem['SN']
 
     return regions
-
+    # CODE-SECTION-END
 
 @dxpy.entry_point('main')
 def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
     #
-    # Download inputs
+    # CODE-SECTION: Download inputs   
     # --------------------------------------------------------------------------
     # mappings_sorted_bam and mappings_sorted_bai are passed to the main function
     # as parameters for our job. mappings_sorted_bam and mappings_sorted_bai are
@@ -62,7 +63,7 @@ def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
     sorted_bam_name = mappings_sorted_bam.name
     dxpy.download_dxfile(mappings_sorted_bam.get_id(),
                          sorted_bam_name)
-    ascii_bam_name = unicodedata.normalize(
+    ascii_bam_name = unicodedata.normalize(  # Pysam requires ASCII not Unicode string.
         'NFKD', sorted_bam_name).encode('ascii', 'ignore')
 
     if mappings_sorted_bai is not None:
@@ -71,9 +72,10 @@ def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
                              mappings_sorted_bai.name)
     else:
         pysam.index(ascii_bam_name)
+    # CODE-SECTION-END
 
     #
-    # Get chromosomes regions
+    # CODE-SECTION: Get chromosomes regions
     # --------------------------------------------------------------
     # Generate Pysam Alignmentfile object.
     #
@@ -83,7 +85,7 @@ def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
     regions = get_chr(mappings_obj, canonical_chr)
 
     #
-    # Perform basic pysam count.
+    # CODE-SECTION: Perform basic pysam count.
     # --------------------------------------------------------------
     # Iterate over regions and sum results of pysam.count().
 
@@ -101,7 +103,7 @@ def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
         f.write("Total reads: {sum_counts}".format(sum_counts=total_count))
 
     #
-    # Output
+    # CODE-SECTION:Output
     # ----------------------------------------------------------------------------
     # Upload generated count file as counts_txt output specified in the dxapp.json
 

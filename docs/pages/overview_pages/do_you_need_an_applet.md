@@ -7,7 +7,7 @@ layout: default
 ---
 
 ##  Alternatives to Applets
-
+<!-- And here's some code! :+1: -->
 Before we start implementing our HISAT2 applet, we should recall that you can
 run tools on DNAnexus without creating an applet at all. This is helpful when
 you are performing a one-off task or just want to do some exploration. These
