@@ -1,4 +1,3 @@
-import dxpy
 import argparse
 import os
 import json
@@ -6,7 +5,7 @@ import re
 from __future__ import print_function
 from multiprocessing import Pool
 from itertools import izip
-from helpers import FrontMatter, SectionParser
+from helpers import FrontMatter, SectionParser, InvalidSection
 from global_helper_vars import TUTORIAL_TYPES_SEARCH, SUPPORTED_INTERPRETERS, NUM_CORES
 
 
@@ -22,6 +21,10 @@ def _rehydrate_site(user_args):
     status = md_maker.map(create_jekyll_markdown_tutorial, tutorial_dicts)
     md_maker.close()
     md_maker.join()
+    for i in xrange(status):
+        msg = "SUCCESS: {title}" if status[i] else "FAIL: {title}"
+        print(msg.format(title=tutorial_dicts[i]["title"]))
+
 
 def _resolve_applet(dxapp_path):
     """Moved to top level due to Pool.map() inability to use nested func"""
@@ -83,9 +86,6 @@ def create_jekyll_markdown_tutorial(tutorial_dict):
     :type overwrite: boolean
     TODO switch back to mapping once multiprocessing is implementended using Processing
     """
-    class InvalidSection(Exception):
-        pass
-
     def _write_front_matter(dxapp_obj, file_handle):
         """Generate and write liquid front matter"""
         frontmatter = FrontMatter(
@@ -103,11 +103,16 @@ def create_jekyll_markdown_tutorial(tutorial_dict):
 
     def _write_kmarkdown(fh_md, readme_md_path, section_parser={}):
         """Creates Kramdown webpage"""
-        section_match = re.compile(r'')
+        section_match = re.compile(r'.*<!--CODE-SECTION:\s*\b.*-->')
         with open(readme_md_path):
             for line in readme_md_path:
-
-        pass
+                match = section_match.match(line)
+                if match:
+                    section = match.group(1).strip()
+                    section = section_parser[section]
+                    fh_md.write(section)
+                else:
+                    fh_md.write(line)
 
     target_file = os.path.join(
         tutorial_dict["site_pages_dir"], tutorial_dict["name"].strip() + ".md")

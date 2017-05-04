@@ -6,6 +6,10 @@ SectionParser:src/code parser class
 from global_helper_vars import LANG_COMMENT, CODE_SECTION_SEARCH, SUPPORTED_INTERPRETERS
 
 
+class InvalidSection(Exception):
+    pass
+
+
 class FrontMatter(object):
     """ Extend func as needed
     Front matter is the part of the markdown file that looks like:
@@ -61,7 +65,7 @@ class SectionParser(object):
         # print("Adding section: {0}".format(value)) change to logging
         value = value.strip() if value is not None else None
         if value in self._section_mapping:
-            raise Exception("You Only Add Secions Once. Give sections unique names")
+            raise InvalidSection("You Only Add Secions Once. Give sections unique names")
         if self._tempsection:
             code = "{start}{content}{end}".format(
                 start="```{language}\n".format(language=self.language),
