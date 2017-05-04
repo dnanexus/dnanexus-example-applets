@@ -1,11 +1,11 @@
 from multiprocessing import cpu_count
-import re
+import re  # re-read docs and make re not greedy
 
 NUM_CORES = cpu_count()
 
 TUTORIAL_TYPES_SEARCH = {
-    "parallel": re.compile(r'[para]'),
-    "distributed": re.compile(r'[distr|distributed]')  # distr is good enough
+    "parallel": re.compile(r'.*para.*'),
+    "distributed": re.compile(r'.*distr.*')
 }
 
 SUPPORTED_INTERPRETERS = {  # dxapp.json supported interpreters. switch case setup

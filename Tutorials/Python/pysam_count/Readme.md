@@ -6,7 +6,6 @@ This applet performs a SAMtools count on an input BAM using Pysam, a python wrap
 mappings_sorted_bam and mappings_sorted_bai are passed to the main function as parameters for our job. mappings_sorted_bam and mappings_sorted_bai are dictionary objects with key value `{"$dnanexus_link": "<file>-<xxxx>"}`.  
 We handle file objects from the platform through [DXFile](http://autodoc.dnanexus.com/bindings/python/current/dxpy_dxfile.html?highlight=dxfile#module-dxpy.bindings.dxfile) handles. If an index file is not supplied then a _*.bai_ index will be created.
 <!--CODE-SECTION: Download inputs -->
-Get chromosomes
 ## Working with Pysam
 Pysam provides several methods
 `execDepends` value is a JSON array of dependencies to resolve before the applet src code is run. In this applet, we specify `pip` as our package manager and `pysam version 0.9.1.4` as the dependency to resolve. Pysam is installed to `/usr/local/lib/python2.7/dist-packages` and can be imported by out python script.

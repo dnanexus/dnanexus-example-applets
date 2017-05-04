@@ -1,37 +1,25 @@
 ---
-title: Pysam count
 tutorial_type: basic
 source: pysam_count
 language: python
+title: Pysam tools count
 ---
-# Pysam count
-This app performs a Pysam count:
- * Bam file is required
- * If the index *.bai is not provided it will be generated
- * Input bam will be split in smaller bams based on chromosomes
- * Pysam is provided via pip package manager using execDepends
- * in the the dxapp.json
+# Pysam tools count (DNAnexus Platform App)
 
-## Download inputs
------------------
-mappings_sorted_bam and mappings_sorted_bai are passed to the main function
-as parameters for our job. mappings_sorted_bam and mappings_sorted_bai are
-dictionary objects with key=dnanexus_link and `_value=file-xxxx_`.
-We handle file objects from the platform by first creating a DXFile handler.
-Then performing dxpy.download_dxfile.
-If index file is not supplied *.bai index will be created with pysam.index
-DXFIle.name attribute is converted to ASCII since Pysam does not handle Unicode strings.
-```
-@dxpy.entry_point('main')
-def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
-    print mappings_sorted_bai
+This applet performs a SAMtools count on an input BAM using Pysam, a python wrapper for SAMtools.
+
+## Downloading inputs   
+mappings_sorted_bam and mappings_sorted_bai are passed to the main function as parameters for our job. mappings_sorted_bam and mappings_sorted_bai are dictionary objects with key value `{"$dnanexus_link": "<file>-<xxxx>"}`.  
+We handle file objects from the platform through [DXFile](http://autodoc.dnanexus.com/bindings/python/current/dxpy_dxfile.html?highlight=dxfile#module-dxpy.bindings.dxfile) handles. If an index file is not supplied then a _*.bai_ index will be created.
+```python
+print mappings_sorted_bai
     print mappings_sorted_bam
 
     mappings_sorted_bam = dxpy.DXFile(mappings_sorted_bam)
     sorted_bam_name = mappings_sorted_bam.name
     dxpy.download_dxfile(mappings_sorted_bam.get_id(),
                          sorted_bam_name)
-    ascii_bam_name = unicodedata.normalize(
+    ascii_bam_name = unicodedata.normalize(  # Pysam requires ASCII not Unicode string.
         'NFKD', sorted_bam_name).encode('ascii', 'ignore')
 
     if mappings_sorted_bai is not None:
@@ -41,10 +29,16 @@ def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
     else:
         pysam.index(ascii_bam_name)
 ```
-## Get chromosomes regions
------------------------
-Helpers
+## Working with Pysam
+Pysam provides several methods
+`execDepends` value is a JSON array of dependencies to resolve before the applet src code is run. In this applet, we specify `pip` as our package manager and `pysam version 0.9.1.4` as the dependency to resolve. Pysam is installed to `/usr/local/lib/python2.7/dist-packages` and can be imported by out python script.
+Pysam provides several methods that mimic SAMtools commands. In our applet example, we want to focus only on canonical chromosomes.
+```python
+mappings_obj = pysam.AlignmentFile(ascii_bam_name, "rb")
+    regions = get_chr(mappings_obj, canonical_chr)
 ```
+The helper function `get_chr`
+```python
 def get_chr(bam_alignment, canonical=False):
     """Helper function to return canonical chromosomes from SAM/BAM header
 
@@ -70,16 +64,9 @@ def get_chr(bam_alignment, canonical=False):
 
     return regions
 ```
-Generate Pysam Alignmentfile object. Obtain regions to count.
-```
-    mappings_obj = pysam.AlignmentFile(ascii_bam_name, "rb")
-    regions = get_chr(mappings_obj, canonical_chr)
-```
-## Perform basic pysam count.
---------------------------
-Iterate over regions and sum results of pysam.count().
-```
-    total_count = 0
+Now that we have a list of canonical chromosomes we then iterate over them and perform Pysam's version of `samtools view -c`
+```python
+total_count = 0
     count_filename = "{bam_prefix}_counts.txt".format(
         bam_prefix=ascii_bam_name[:-4])
 
@@ -92,17 +79,31 @@ Iterate over regions and sum results of pysam.count().
 
         f.write("Total reads: {sum_counts}".format(sum_counts=total_count))
 ```
-## Output
----------
-Upload generated count file as counts_txt output specified in the dxapp.json
-```
-    counts_txt = dxpy.upload_local_file(count_filename)
+## Uploading Outputs
+We returned our summarized results as the job output. We use the python SDK's [`dxpy.upload_local_file`](http://autodoc.dnanexus.com/bindings/python/current/dxpy_dxfile.html?highlight=upload_local_file#dxpy.bindings.dxfile_functions.upload_local_file) function to upload and generate a DXFile corresponding to our tabulated result file.
+```python
+counts_txt = dxpy.upload_local_file(count_filename)
     output = {}
     output["counts_txt"] = dxpy.dxlink(counts_txt)
 
     return output
-```
-Make sure to actually run this
-```
+
+
 dxpy.run()
+```
+Python job outputs have to be a dictionary of key-value pairs, with the keys being job output names, as defined in the dxapp.json, and the value being the output value for corresponding output class. For files, the output type is a [DXLink](https://wiki.dnanexus.com/api-specification-v1.0.0/Details-and-Links#Linking). We use the [`dxpy.dxlink`](http://autodoc.dnanexus.com/bindings/python/current/dxpy_functions.html?highlight=dxlink#dxpy.bindings.dxdataobject_functions.dxlink) function to generate the appropriate DXLink value.
+## How is Pysam obtained
+
+Pysam is obtained through a `pip install` using the pip package manager in the dxapp.json's `runSpec.execDepends` property:
+<!-- Since JSON can't be commented cannot autogenerate below. YAML looking good right now -->
+```
+ "runSpec": {
+ ...
+    "execDepends": [
+      {"name": "pysam",
+         "package_manager": "pip",
+         "version": "0.9.1.4"
+      }
+    ],
+...
 ```

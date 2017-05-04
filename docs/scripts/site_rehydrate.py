@@ -1,8 +1,9 @@
+from __future__ import print_function
 import argparse
 import os
 import json
 import re
-from __future__ import print_function
+import logging
 from multiprocessing import Pool
 from itertools import izip
 from helpers import FrontMatter, SectionParser, InvalidSection
@@ -10,18 +11,21 @@ from global_helper_vars import TUTORIAL_TYPES_SEARCH, SUPPORTED_INTERPRETERS, NU
 
 
 def _rehydrate_site(user_args):
+    def update_dict(d1, d2):
+        d1.update(d2)
+        return d1
     user_input_dict = {
         "overwrite": user_args.overwrite,
         "ignore_comments": user_args.skip_comments,
         "site_pages_dir": user_args.site_pages_dir
     }
     dxapp_files = find_all_matches(user_args.tutorials_dir, "dxapp.json")
-    tutorial_dicts = [d.update(user_input_dict) for d in _resolve_applets(dxapp_files)]
+    tutorial_dicts = [update_dict(d, user_input_dict) for d in _resolve_applets(dxapp_files)]
     md_maker = Pool(processes=NUM_CORES)
     status = md_maker.map(create_jekyll_markdown_tutorial, tutorial_dicts)
     md_maker.close()
     md_maker.join()
-    for i in xrange(status):
+    for i in xrange(len(status)):
         msg = "SUCCESS: {title}" if status[i] else "FAIL: {title}"
         print(msg.format(title=tutorial_dicts[i]["title"]))
 
@@ -69,10 +73,12 @@ def find_all_matches(tutdir, filename, exclude_dirs=[]):
 def get_parser():
     """Return an argument parser for the script."""
     parser = argparse.ArgumentParser()
-    parser.add_argument("tutorials_dir", help="Directory where tutorials are located", default=os.path.abspath('../../Tutorials'))
-    parser.add_argument("site_pages_dir", help="Directory where site pages are located", default=os.path.abspath('../_tutorials'))
+    parser.add_argument("--tutorials", help="Directory where tutorials are located", default=None, metavar="Tutorials directory", dest="tutorials_dir")
+    parser.add_argument("--site-pages", help="Directory where site pages are located", default=None, metavar="Site Pages directory", dest="site_pages_dir")
     parser.add_argument("--ignore-comments", help="Ignore other comments in code when parsing sections.", action="store_true", dest="skip_comments")
     parser.add_argument("--overwrite-files", help="Overwrites old files with generated files", action="store_true", dest="overwrite")
+    parser.add_argument("-v", help="Verbosity", action="store_true", dest="verbose")
+
     return parser
 
 
@@ -89,26 +95,28 @@ def create_jekyll_markdown_tutorial(tutorial_dict):
     def _write_front_matter(dxapp_obj, file_handle):
         """Generate and write liquid front matter"""
         frontmatter = FrontMatter(
-            {
-                "title": dxapp_obj["title"],
-                "source": dxapp_obj["name"]
-            })
-        for k, v in TUTORIAL_TYPES_SEARCH:
+            title=dxapp_obj["title"],
+            source=dxapp_obj["name"])
+        tut_type = "basic"
+        for k, v in TUTORIAL_TYPES_SEARCH.iteritems():
             if v.match(dxapp_obj["name"]):
-                frontmatter.add_field(k, v)
+                tut_type = k
                 break
+        frontmatter.add_field("tutorial_type", tut_type)
         lang = SUPPORTED_INTERPRETERS.get(dxapp_obj["interpreter"], "none")
         frontmatter.add_field("language", lang)
         file_handle.write(frontmatter.__str__())
+        logging.info("front matter written")
 
     def _write_kmarkdown(fh_md, readme_md_path, section_parser={}):
         """Creates Kramdown webpage"""
-        section_match = re.compile(r'.*<!--CODE-SECTION:\s*\b.*-->')
-        with open(readme_md_path):
-            for line in readme_md_path:
+        section_match = re.compile(r'.*<!--CODE-SECTION:\s*\b(.*)-->')
+        with open(readme_md_path) as readme_md:
+            for line in readme_md:
                 match = section_match.match(line)
                 if match:
                     section = match.group(1).strip()
+                    logging.debug("Kramdown region {0}".format(section))
                     section = section_parser[section]
                     fh_md.write(section)
                 else:
@@ -118,8 +126,10 @@ def create_jekyll_markdown_tutorial(tutorial_dict):
         tutorial_dict["site_pages_dir"], tutorial_dict["name"].strip() + ".md")
     if os.path.exists(target_file):
         if tutorial_dict["overwrite"]:
+            logging.debug("removing: {0}".format(target_file))
             os.remove(target_file)
         else:
+            logging.info("exist: {fn}".format(fn=target_file))
             return True
 
     # Handle JSON for assets at some point, should be easy.
@@ -135,10 +145,10 @@ def create_jekyll_markdown_tutorial(tutorial_dict):
             _write_kmarkdown(
                 fh_md=tutorial_md,
                 readme_md_path=tutorial_dict["readme_md"],
-                section_dict=code_block_dict)
+                section_parser=code_block_dict)
     except InvalidSection as IE:
         # Change to logging
-        print(IE.message)
+        logging.info(IE.message)
         return False
 
     return True
@@ -148,6 +158,18 @@ def main():
     """Script Entry point."""
     parser = get_parser()
     args = parser.parse_args()
+
+    if args.tutorials_dir is None:
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+        assumed_tutorial_path = os.path.join(script_dir, "..", "..", "Tutorials")
+        args.tutorials_dir = os.path.normpath(assumed_tutorial_path)
+    if args.site_pages_dir is None:
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+        assumed_site_page_path = os.path.join(script_dir, "..", "_tutorials")
+        args.site_pages_dir = os.path.normpath(assumed_site_page_path)
+    if args.verbose:
+        logging.basicConfig(level=logging.DEBUG)
+
     _rehydrate_site(args)
 
 
