@@ -12,12 +12,6 @@ SUPPORTED_INTERPRETERS = {  # dxapp.json supported interpreters. switch case set
     "bash": "bash",
     "python2.7": "python"
 }
-"""
-LANG_COMMENT = {
-    "bash": ["#"],
-    "python2.7": ["#", "\"\"\""],
-}
-"""
 LANG_COMMENT = {
     "bash": {"regular_comment": ["#"]},
     "python2.7": {"regular_comment": ["#"], "block_comment": ["\"\"\""]},

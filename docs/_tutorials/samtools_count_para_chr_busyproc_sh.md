@@ -1,6 +1,6 @@
 ---
-tutorial_type: basic
-source: samtools_count_par_chr_busyproc_sh
+tutorial_type: parallel
+source: samtools_count_para_chr_busyproc_sh
 language: bash
 title: SAMtools count parallelized by region
 ---

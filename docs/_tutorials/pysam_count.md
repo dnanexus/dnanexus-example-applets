@@ -29,6 +29,7 @@ print mappings_sorted_bai
     else:
         pysam.index(ascii_bam_name)
 ```
+
 ## Working with Pysam
 Pysam provides several methods
 `execDepends` value is a JSON array of dependencies to resolve before the applet src code is run. In this applet, we specify `pip` as our package manager and `pysam version 0.9.1.4` as the dependency to resolve. Pysam is installed to `/usr/local/lib/python2.7/dist-packages` and can be imported by out python script.
@@ -37,6 +38,7 @@ Pysam provides several methods that mimic SAMtools commands. In our applet examp
 mappings_obj = pysam.AlignmentFile(ascii_bam_name, "rb")
     regions = get_chr(mappings_obj, canonical_chr)
 ```
+
 The helper function `get_chr`
 ```python
 def get_chr(bam_alignment, canonical=False):
@@ -64,6 +66,7 @@ def get_chr(bam_alignment, canonical=False):
 
     return regions
 ```
+
 Now that we have a list of canonical chromosomes we then iterate over them and perform Pysam's version of `samtools view -c`
 ```python
 total_count = 0
@@ -79,6 +82,7 @@ total_count = 0
 
         f.write("Total reads: {sum_counts}".format(sum_counts=total_count))
 ```
+
 ## Uploading Outputs
 We returned our summarized results as the job output. We use the python SDK's [`dxpy.upload_local_file`](http://autodoc.dnanexus.com/bindings/python/current/dxpy_dxfile.html?highlight=upload_local_file#dxpy.bindings.dxfile_functions.upload_local_file) function to upload and generate a DXFile corresponding to our tabulated result file.
 ```python
@@ -91,11 +95,13 @@ counts_txt = dxpy.upload_local_file(count_filename)
 
 dxpy.run()
 ```
+
 Python job outputs have to be a dictionary of key-value pairs, with the keys being job output names, as defined in the dxapp.json, and the value being the output value for corresponding output class. For files, the output type is a [DXLink](https://wiki.dnanexus.com/api-specification-v1.0.0/Details-and-Links#Linking). We use the [`dxpy.dxlink`](http://autodoc.dnanexus.com/bindings/python/current/dxpy_functions.html?highlight=dxlink#dxpy.bindings.dxdataobject_functions.dxlink) function to generate the appropriate DXLink value.
 ## How is Pysam obtained
 
 Pysam is obtained through a `pip install` using the pip package manager in the dxapp.json's `runSpec.execDepends` property:
 <!-- Since JSON can't be commented cannot autogenerate below. YAML looking good right now -->
+
 ```
  "runSpec": {
  ...

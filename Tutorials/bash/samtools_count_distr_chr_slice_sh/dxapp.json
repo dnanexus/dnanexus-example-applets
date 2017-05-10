@@ -1,9 +1,9 @@
 {
-  "name": "samtools_count_par_chr_busyproc_sh",
-  "title": "SAMtools count parallelized by region",
-  "summary": "Parallelized SAMtools count based on regions",
+  "name": "samtools_count_distr_chr_slice_sh",
+  "title": "SAMtools count distributed by Chromosome",
+  "summary": "This applet performs a distributed SAMtools count for each canonical chromosome",
   "dxapi": "1.0.0",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "inputSpec": [
     {
       "name": "mappings_sorted_bam",
@@ -39,20 +39,24 @@
   "runSpec": {
     "interpreter": "bash",
     "file": "src/code.sh",
-  "timeoutPolicy": {
-    "*": {
-      "hours": 12
-    }
-  },
-    "systemRequirements": {
+    "timeoutPolicy": {
       "*": {
+        "hours": 5
+      }
+    },
+    "systemRequirements": {
+      "main": {
+        "instanceType": "mem1_ssd1_x4"
+      },
+      "count_func": {
+        "instanceType": "mem1_ssd1_x2"
+      },
+      "sum_reads": {
         "instanceType": "mem1_ssd1_x4"
       }
     },
+    "execDepends": [{"name": "samtools"}],
     "distribution": "Ubuntu",
-    "release": "14.04",
-    "execDepends": [
-      {"name": "samtools"}
-    ]
+    "release": "14.04"
   }
 }

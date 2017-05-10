@@ -1,5 +1,5 @@
 {
-  "name": "samtools_count_par_chr_subprocess_py",
+  "name": "samtools_count_para_chr_subprocess_py",
   "title": "SAMtools count chromosomes in parallel (py)",
   "summary": "Count number of reads in SAM or BAM format file parallely in the same thread with subprocess",
   "dxapi": "1.0.0",

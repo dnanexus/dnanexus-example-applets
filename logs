@@ -1,0 +1,642 @@
+DEBUG:root:removing: /Users/sosazuwa/dnanexus-example-applets/docs/_tutorials/samtools_count.md
+DEBUG:root:removing: /Users/sosazuwa/dnanexus-example-applets/docs/_tutorials/samtools_count_bashhelper_sh.md
+INFO:root:Code region search
+INFO:root:Code region search
+DEBUG:root:removing: /Users/sosazuwa/dnanexus-example-applets/docs/_tutorials/samtools_count_binary_sh.md
+INFO:root:Section change to: Download bam files
+INFO:root:Section change to: Download bam files
+DEBUG:root:regular comment, line: # ------------------
+INFO:root:Code region search
+DEBUG:root:regular comment, line: # Use dx download to download the bam file. $mappings_bam is a dx_link
+DEBUG:root:regular comment, line: # containing the file_id of that file. By default, when we download a file,
+DEBUG:root:regular comment, line: # we will keep the filename of the object on the platform.
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # ------------------
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # Use dx-download-all-inputs to download the bam file. This script will go
+INFO:root:Section change to: Run samtools view
+DEBUG:root:regular comment, line: # through all inputs and download into folders which have the pattern
+DEBUG:root:regular comment, line: # /home/dnanexus/in/[INPUT]/.
+DEBUG:root:regular comment, line: # -----------------
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # Here, we use the bash helper variable mappings_bam_name. For file inputs,
+INFO:root:Section change to: Download bam files
+DEBUG:root:regular comment, line: # we will set a bash variable [VARIABLE]_name which holds a string representing
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # the filename of the object on the platform. Because we have downloaded the
+INFO:root:Section change to: Create output directory
+DEBUG:root:regular comment, line: # ------------------
+DEBUG:root:regular comment, line: # file by default above, this will be the filename of the object on this
+DEBUG:root:regular comment, line: # Use dx download to download the bam file. $mappings_bam is a dx_link
+DEBUG:root:regular comment, line: # -----------------------
+DEBUG:root:regular comment, line: # worker as well. We further use [VARIABLE]_prefix, which will be the filename
+DEBUG:root:regular comment, line: # containing the file_id of that file. By default, when we download a file,
+DEBUG:root:regular comment, line: # Create an output directory, we will discuss the specifics below
+DEBUG:root:regular comment, line: # of the object, removing any suffixes specified in patterns. In this case,
+DEBUG:root:regular comment, line: # we will keep the filename of the object on the platform.
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # the pattern if '["*.bam"]', so it will remove the trailing ".bam".
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+INFO:root:Section change to: Run samtools view
+DEBUG:root:regular comment, line: # In the case that the filename of the file mappings_bam is "my_mappings.bam",
+DEBUG:root:removing: /Users/sosazuwa/dnanexus-example-applets/docs/_tutorials/samtools_count_catmkfifo_sh.md
+INFO:root:Section change to: Run samtools view
+DEBUG:root:regular comment, line: # mappings_bam_prefix will be "my_mappings"
+DEBUG:root:regular comment, line: # -----------------
+DEBUG:root:regular comment, line: # Here, we use the bash helper variable mappings_bam_path. This bash variable
+DEBUG:root:regular comment, line: # -----------------
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # will point to the location of a file after it has been downloaded using
+DEBUG:root:regular comment, line: # Here, we use the bash helper variable mappings_bam_name. For file inputs,
+INFO:root:Section change to: Upload result
+DEBUG:root:regular comment, line: # dx-download-all-inputs. So for [VARIABLE]_path, this wll point to
+DEBUG:root:regular comment, line: # we will set a bash variable [VARIABLE]_name which holds a string representing
+DEBUG:root:regular comment, line: # -------------
+DEBUG:root:regular comment, line: # /home/dnanexus/in/[VARIABLE]/[VARIABLE_FILENAME].
+DEBUG:root:regular comment, line: # the filename of the object on the platform. Because we have downloaded the
+DEBUG:root:regular comment, line: # We now upload the data to the platform. This will upload it into the
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # file by default above, this will be the filename of the object on this
+DEBUG:root:regular comment, line: # job container, a temporary project which holds onto files associated
+DEBUG:root:regular comment, line: # In the case that the filename of the file mappings_bam is "my_mappings.bam",
+DEBUG:root:regular comment, line: # worker as well. We further use [VARIABLE]_prefix, which will be the filename
+DEBUG:root:regular comment, line: # with the job. when running upload with --brief, it will return just the
+DEBUG:root:regular comment, line: # mappings_bam_path will be "/home/dnanexus/in/mappings_bam/my_mappings.bam".
+DEBUG:root:regular comment, line: # of the object, removing any suffices specified in patterns. In this case,
+DEBUG:root:regular comment, line: # file-id.
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # the pattern if '["*.bam"]', so it will remove the trailing ".bam".
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+INFO:root:Section change to: Upload result
+DEBUG:root:regular comment, line: # In the case that the filename of the file mappings_bam is "my_mappings.bam",
+INFO:root:Section change to: Associate with output
+DEBUG:root:regular comment, line: # mappings_bam_prefix will be "my_mappings"
+DEBUG:root:regular comment, line: # -------------
+DEBUG:root:regular comment, line: # ---------------------
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # We use dx-upload-all-outputs to upload the data to the platform and associate
+INFO:root:Code region search
+DEBUG:root:regular comment, line: # Finally, we tell the system what file should be associated with the output
+DEBUG:root:regular comment, line: # it as the output. dx-upload-all-outputs uses the folder pattern
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # named counts_txt (which was specified in the dxapp.json). The system will then
+DEBUG:root:regular comment, line: # /home/dnanexus/out/[VARIABLE]. It will upload the files in that folder
+INFO:root:Section change to: Upload result
+DEBUG:root:regular comment, line: # move this output into whatever folder was specified at runtime in the project
+DEBUG:root:regular comment, line: # and then mark is as the output corresponding to [VARIABLE]. In this case,
+DEBUG:root:regular comment, line: # -------------
+DEBUG:root:regular comment, line: # the output is called counts_txt. Above, we have made the folder which
+DEBUG:root:regular comment, line: # running the job.
+DEBUG:root:regular comment, line: # We now upload the data to the platform. This will upload it into the
+INFO:root:Section change to: Debugging setup
+DEBUG:root:regular comment, line: # corresponds to this, and put the output there.
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # job container, a temporary project which holds onto files associated
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # with the job. when running upload with --brief, it will return just the
+DEBUG:root:regular comment, line: # ---------------
+INFO:root:Section change to: None
+DEBUG:root:regular comment, line: # The -e flag causes bash to exit at any point if there is any error,
+INFO:root:Section change to: None
+INFO:root:Code regions created
+INFO:root:Code regions created
+DEBUG:root:regular comment, line: # file-id.
+DEBUG:root:regular comment, line: # the -o pipefail flag tells bash to throw an error if it encounters an error within a pipeline,
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # the -x flag causes bash to output each line as it is executed
+INFO:root:Section change to: Associate with output
+DEBUG:root:regular comment, line: #
+DEBUG:root:init FM
+DEBUG:root:regular comment, line: # ---------------------
+DEBUG:root:regular comment, line: # Create a working directory so files are easy to find if ssh is needed
+DEBUG:root:init FM
+DEBUG:root:regular comment, line: # Finally, we tell the system what file should be associated with the output
+DEBUG:root:regular comment, line: #
+INFO:root:Front matter field: source value samtools_count_bashhelper_sh
+DEBUG:root:regular comment, line: # named counts_txt (which was specified in the dxapp.json). The system will then
+DEBUG:root:regular comment, line: # In addition we'll echo the JSON inputs to stdout
+INFO:root:Front matter field: title value SAMtools count w/ Bash Helpers
+DEBUG:root:regular comment, line: # move this output into whatever folder was specified at runtime in the project
+DEBUG:root:regular comment, line: #
+DEBUG:root:done FM
+DEBUG:root:regular comment, line: # running the job.
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+INFO:root:Front matter field: tutorial_type value basic
+INFO:root:Section change to: Downloading as input stream
+DEBUG:root:regular comment, line: # dx-jobutil-add-output counts_txt "${counts_txt_id}" --class=file
+INFO:root:Front matter field: language value bash
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # ---------------------------
+INFO:root:Front matter field: source value samtools_count
+DEBUG:root:regular comment, line: # Using a FIFO special file we create a sequential file stream through cat command
+INFO:root:front matter written
+INFO:root:Front matter field: title value SAMtools count
+INFO:root:Section change to: None
+DEBUG:root:regular comment, line: #
+DEBUG:root:done FM
+INFO:root:Code regions created
+DEBUG:root:regular comment, line: # A fifo file operates as a named pipe.
+DEBUG:root:regular comment, line: # As a result both readinga and writing must happen at the same time.
+INFO:root:Front matter field: tutorial_type value basic
+DEBUG:root:regular comment, line: #
+INFO:root:Front matter field: language value bash
+DEBUG:root:regular comment, line: # After a dx download the downloaded BAM filename is stored in the var $sorted_bam_name
+DEBUG:root:regular comment, line: #
+INFO:root:front matter written
+DEBUG:root:init FM
+DEBUG:root:regular comment, line: # & runs the command in the background and is needed to ensure the foreground execution isn't blocked
+INFO:root:Front matter field: source value samtools_count_binary_sh
+DEBUG:root:regular comment, line: # Remember fifo files need both a stdin and stdout to not block.
+INFO:root:Front matter field: title value SAMtools count w/ Precompiled Binary
+DEBUG:root:done FM
+DEBUG:root:regular comment, line: #
+INFO:root:Section change to: Processing input stream to output stream
+INFO:root:Front matter field: tutorial_type value basic
+DEBUG:root:regular comment, line: # ----------------------------------------------------------
+INFO:root:Front matter field: language value bash
+DEBUG:root:regular comment, line: # samtools view -c can be performed on the established fifo.
+INFO:root:front matter written
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #   Directory structure created here ~/out/counts_txt is required to use dx-upload-all-outputs
+DEBUG:root:regular comment, line: #   All files found in the path ~/out/<output name> will be uploaded to the corresponding
+DEBUG:root:regular comment, line: #   <output name> specified in the dxapp.json.
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # By providing the samtools view as a reader the named pipe can be completed and used here.
+DEBUG:root:Kramdown code region Download bam files
+DEBUG:root:regular comment, line: # we'll establish a stdout to readcount.txt
+DEBUG:root:Kramdown code region Create output directory
+DEBUG:root:regular comment, line: # SAMtools count is performed with &
+DEBUG:root:Kramdown code region Run samtools view
+DEBUG:root:regular comment, line: # without the & this would block this shell execution since readcount.txt fifo has a stdin, but no stdout
+DEBUG:root:Kramdown code region Upload result
+DEBUG:root:regular comment, line: #
+INFO:root:Section change to: Provide job output
+DEBUG:root:Kramdown code region Download bam files
+DEBUG:root:regular comment, line: # ------------------
+DEBUG:root:regular comment, line: # By providing the dx-jobutil-add-output as a reader of readcount.txt
+DEBUG:root:Kramdown code region Run samtools view
+DEBUG:root:regular comment, line: # all fifo special files in our pipeline can be executed and closed.
+DEBUG:root:Kramdown code region Upload result
+DEBUG:root:regular comment, line: #
+DEBUG:root:Kramdown code region Associate with output
+INFO:root:Code region search
+DEBUG:root:regular comment, line: #
+INFO:root:Section change to: Wait for blocked background processes to finish
+DEBUG:root:Kramdown code region Run samtools view
+INFO:root:Section change to: Download and prepare regions for scatter
+DEBUG:root:regular comment, line: # -----------------------------------------------
+DEBUG:root:regular comment, line: # ----------------------------------------
+DEBUG:root:regular comment, line: # Now that all FIFO special files have are open to both
+INFO:root:Code region search
+DEBUG:root:regular comment, line: # reading and writing background processes can finish.
+DEBUG:root:regular comment, line: # To scatter processing into regions of size 10
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+DEBUG:root:removing: /Users/sosazuwa/dnanexus-example-applets/docs/_tutorials/samtools_count_git_sh.md
+INFO:root:Section change to: Downloading inputs and get chromosomes list from headers
+DEBUG:root:regular comment, line: # Get region information from BAM headers
+INFO:root:Section change to: None
+DEBUG:root:regular comment, line: # --------------------------------------------------------
+DEBUG:root:regular comment, line: # The following code will "pass" an array of regions in groups of 10 to the count job
+INFO:root:Code regions created
+DEBUG:root:regular comment, line: # Examine the header of the bam file, pulling out just the @SQ lines (which contain
+DEBUG:root:regular comment, line: #
+INFO:root:Code region search
+DEBUG:root:regular comment, line: # In bash arrays cannot be passed as a parameter.
+DEBUG:root:regular comment, line: # However since an array approach is helpful in distributed and scatter-gather pattern
+DEBUG:root:regular comment, line: # the chromosomes, grab the column with just the chromosome name, and match it to a
+DEBUG:root:regular comment, line: # dx-jobutil-new-job allows an array to be "passed" as a parameter by:
+INFO:root:Code regions created
+DEBUG:root:init FM
+DEBUG:root:regular comment, line: #  passing multiple -i<parameter> with the same name
+DEBUG:root:regular comment, line: # regex designed to capture canonical chromosomes
+INFO:root:Front matter field: source value samtools_count_catmkfifo_sh
+DEBUG:root:regular comment, line: #  The receiving function will combine parameters with the same name to one array
+DEBUG:root:regular comment, line: #
+INFO:root:Front matter field: title value SAMtools count with mkfifo and dx cat (bash)
+DEBUG:root:done FM
+DEBUG:root:regular comment, line: # Loop through regions, for every 10 create a new job with the correct parameters
+DEBUG:root:init FM
+DEBUG:root:regular comment, line: #
+INFO:root:Front matter field: tutorial_type value basic
+INFO:root:Front matter field: source value samtools_count_git_sh
+INFO:root:Section change to: Split bam into multiple chromosomes and send as input to sam_count subjob
+INFO:root:Front matter field: language value bash
+INFO:root:Front matter field: title value SAMtools fetched via Git repo
+DEBUG:root:regular comment, line: # -------------------------------------------------------------------------
+DEBUG:root:regular comment, line: #
+DEBUG:root:done FM
+INFO:root:front matter written
+DEBUG:root:regular comment, line: # Looping through all our chromosomes of interest and seperate to smaller bams.
+INFO:root:Section change to: Merge results
+INFO:root:Front matter field: tutorial_type value basic
+DEBUG:root:regular comment, line: #
+INFO:root:Front matter field: language value bash
+DEBUG:root:regular comment, line: # -------------
+DEBUG:root:regular comment, line: # Both .bam and .bai files are needed to split a bam by chromosome
+INFO:root:front matter written
+DEBUG:root:regular comment, line: # We take a similar approach and "pass" an array of readcount files to the merge job
+DEBUG:root:regular comment, line: # First create an indexed file if one was not provided
+DEBUG:root:regular comment, line: #   We add -ireadfiles="$count_job":counts_txt so the merge job can combine into an array called readfiles
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # "$count_job":counts_txt" is used as a “job-based object reference” [JBOR]
+DEBUG:root:regular comment, line: #   The merge sum_reads job will be able to run using the outputs of the "count_job"
+DEBUG:root:regular comment, line: #
+INFO:root:Section change to: Gather output of count jobs and write to result file
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #------------------------------------------------------
+DEBUG:root:regular comment, line: # Output of single count job is referenced as a job-based object reference
+DEBUG:root:regular comment, line: # Gather reads and merge results
+INFO:root:Code region search
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+INFO:root:Section change to: Debugging boilerplate and input download
+INFO:root:Section change to: Output results
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # -------------------------------------------------
+DEBUG:root:regular comment, line: # --------------
+INFO:root:Section change to: Upload chromosome_results.txt from sum_reads subjob as job output
+DEBUG:root:regular comment, line: # A workspace directory is created to make files
+DEBUG:root:regular comment, line: # The output of our main() funciton is the result of the "sum_reads" job
+DEBUG:root:regular comment, line: # easier to find if ssh to the instance is required
+DEBUG:root:regular comment, line: # -------------------------------------------------
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # Make sure to specify --class=jobref
+DEBUG:root:regular comment, line: # "sum_reads" job is referenced as the output of the main() funciton as
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # a job-based object reference [JBOR]
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: ####################################################################
+DEBUG:root:regular comment, line: #
+DEBUG:root:Kramdown code region Downloading as input stream
+INFO:root:Section change to: Parallel SAMtools count by region
+INFO:root:Section change to: count_func
+DEBUG:root:Kramdown code region Processing input stream to output stream
+DEBUG:root:regular comment, line: # ---------------------------------
+DEBUG:root:regular comment, line: ################################################################################
+DEBUG:root:regular comment, line: # This function will count the number of reads in the input bam file
+DEBUG:root:regular comment, line: # This approach to parallelization in bash requires programatic control of processes
+INFO:root:Section change to: count_func
+DEBUG:root:regular comment, line: #
+DEBUG:root:Kramdown code region Processing input stream to output stream
+DEBUG:root:regular comment, line: # to be done from our side.  We will run called to samtools view in the background using
+DEBUG:root:regular comment, line: # Function that will perform SAMtools count by regions group.
+DEBUG:root:regular comment, line: # Arguments:
+DEBUG:root:regular comment, line: # "&" bash background process.
+DEBUG:root:regular comment, line: # This function will be run on a new instance, as a result variables from other
+DEBUG:root:regular comment, line: #   chr: Specified chromosome for current job
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # other functions, main() for example, will not be accessible here.
+DEBUG:root:Kramdown code region Wait for blocked background processes to finish
+DEBUG:root:regular comment, line: # For the purpose of this tutorial we'll showcase core management
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #   segmentedbam_file: Mapping file for specified chromosome (chr)
+DEBUG:root:regular comment, line: # While running processes in parallel
+DEBUG:root:regular comment, line: # Arguments:
+DEBUG:root:regular comment, line: ####################################################################
+DEBUG:root:regular comment, line: # Get region information from BAM headers
+DEBUG:root:regular comment, line: #   Any needed files must be passed as parameters and downloaded.
+DEBUG:root:regular comment, line: #   Parameters are passed as -i<parameter name>:
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #$(nproc) are the cores in the instance
+DEBUG:root:regular comment, line: #     regions: an array of regions to be counted
+DEBUG:root:regular comment, line: # e.g. mem1_ssd1_x4 instance $(nproc) will equal 4
+DEBUG:root:regular comment, line: #     bam_file: Sorted mapping file
+DEBUG:root:regular comment, line: # Output the readcount to a file. <chromosome name>TAB<readcount result>
+DEBUG:root:regular comment, line: #     bambai_file: Index file
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # ----------------------------------------------------------------------
+DEBUG:root:regular comment, line: #
+INFO:root:Code region search
+DEBUG:root:regular comment, line: # Returns:
+DEBUG:root:regular comment, line: # Upload readcount.txt as job out [readcount_file]
+INFO:root:Section change to: Wait for background processes to complete
+DEBUG:root:regular comment, line: #   outputs a file with the sum of counts in the region as the first line.
+DEBUG:root:regular comment, line: ################################################################################
+DEBUG:root:regular comment, line: # -----------------------------------------
+DEBUG:root:regular comment, line: # Other functions can reference this jobs output as a "job-based object reference” [JBOR]
+DEBUG:root:regular comment, line: # When the last samtools view call is made for the last region
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+INFO:root:Section change to: Download and segment bam file
+DEBUG:root:regular comment, line: # the loop will exit with active process.  This waits until all
+DEBUG:root:regular comment, line: # Download all inputs
+DEBUG:root:regular comment, line: # processes are done.
+DEBUG:root:regular comment, line: # -----------------------------
+DEBUG:root:regular comment, line: # --------------------
+DEBUG:root:regular comment, line: ####################################################################
+DEBUG:root:regular comment, line: # If the input bam was not sorted by coordinate, which we can detect by attempting
+DEBUG:root:regular comment, line: # dx-download-all-inputs will download all input files into
+DEBUG:root:regular comment, line: #
+INFO:root:Section change to: sum_reads
+DEBUG:root:regular comment, line: # to index it, don't fail, but instead attempt to sort and index again.
+DEBUG:root:regular comment, line: # the /home/dnanexus/in directory.  A folder will be created for each
+INFO:root:Section change to: Sum and Upload results
+DEBUG:root:regular comment, line: # This function will *gather* all the readcount.txt files generated
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # input and the file(s) will be download to that directory.
+DEBUG:root:regular comment, line: # --------------
+DEBUG:root:regular comment, line: # by the count_func.  It will return a single output file: chromosome_result.txt
+DEBUG:root:regular comment, line: # A file with the names of each bam file is created for use by xargs
+DEBUG:root:regular comment, line: # path, name, and prefix shell variables will be created for each input.
+DEBUG:root:regular comment, line: # Collect counts from 1st line of each file and sum them
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # Arguments:
+DEBUG:root:regular comment, line: #   Files are aggregated using globs
+DEBUG:root:regular comment, line: # In this example, the following variables are created
+DEBUG:root:regular comment, line: # Proper directory structure has to be created for dx-upload-all-outputs to function correctly
+DEBUG:root:regular comment, line: #   readfiles: Array of dxlinks to files with counts per chromosome
+DEBUG:root:regular comment, line: #sortedbam="${mappings_bam_prefix}_sorted.bam"
+DEBUG:root:regular comment, line: #   bam_file_path: '/home/dnanexus/in/mappings_bam/<bam filename>.bam'
+DEBUG:root:regular comment, line: #   filename: Prefix of initial bam
+DEBUG:root:regular comment, line: #   For this example, the directory structure is: $HOME/out/<output var specified for this job>/<all files here will be uploaded>
+DEBUG:root:regular comment, line: # Pull out chromosomes
+DEBUG:root:regular comment, line: #   mappings_bam_name: <bam filename>.bam
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # --------------------
+DEBUG:root:regular comment, line: #   mappings_bam_prefix: <bam filename>
+DEBUG:root:regular comment, line: # Returns:
+DEBUG:root:regular comment, line: # Upload file
+DEBUG:root:regular comment, line: # Examine the header of the bam file, pulling out just the @SQ lines (which contain
+DEBUG:root:regular comment, line: #   bambai_file_path: /home/dnanexus/in/index_file/<bambai_file name>
+DEBUG:root:regular comment, line: #   read_sum_file: dx link to file containing summary of counts
+DEBUG:root:regular comment, line: # the chromosomes, grab the column with just the chromosome name, and match it to a
+DEBUG:root:regular comment, line: #   bambai_file_name: <bambai_file name>
+DEBUG:root:regular comment, line: ####################################################################
+INFO:root:Section change to: None
+DEBUG:root:regular comment, line: # regex designed to capture canonical chromosomes
+DEBUG:root:regular comment, line: #   bambai_file_prefix: bambai_file ** no extension **
+INFO:root:Code regions created
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #   regions_path: '{region file path} {region file path} {region file path} ...'  # array of region paths
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #   regions_name: '{region file name} {region file name} {region file name} ...'  # array of region names
+DEBUG:root:regular comment, line: # Sum files
+DEBUG:root:regular comment, line: #   regions_prefix: '{region file prefix} {region file prefix} ...'  # array of region paths
+DEBUG:root:regular comment, line: # ---------
+INFO:root:Section change to: Xargs SAMtools count
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # Read files are download to stdout and fed to stdin of the cat command
+DEBUG:root:regular comment, line: # --------------------
+DEBUG:root:init FM
+DEBUG:root:regular comment, line: # A 'dx download -o -' pipe approach can be used with any command that support stdin
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # SAMtools count will be performed in parallel and count summary
+INFO:root:Front matter field: source value samtools_count_para_chr_busyproc_sh
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # SAMtools count on the region group
+DEBUG:root:regular comment, line: # will be written to file.
+INFO:root:Front matter field: title value SAMtools count parallelized by region
+DEBUG:root:regular comment, line: # ----------------------------------
+DEBUG:root:regular comment, line: #
+DEBUG:root:done FM
+DEBUG:root:regular comment, line: # Move bam and bai to same dir
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # View command will be built up from user input view_options
+INFO:root:Front matter field: tutorial_type value parallel
+DEBUG:root:regular comment, line: # Create output dir
+DEBUG:root:regular comment, line: # Upload files
+DEBUG:root:regular comment, line: #   $view_options is not quoted to allow word splitting
+INFO:root:Front matter field: language value bash
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # ------------
+DEBUG:root:regular comment, line: #
+INFO:root:front matter written
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # create output dir
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # count
+INFO:root:Section change to: None
+INFO:root:Section change to: Upload result file
+DEBUG:root:regular comment, line: #
+INFO:root:Code regions created
+DEBUG:root:Kramdown code region Debugging boilerplate and input download
+DEBUG:root:regular comment, line: # ------------------
+DEBUG:root:regular comment, line: # Upload result file
+DEBUG:root:Kramdown code region Parallel SAMtools count by region
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # ------------------
+DEBUG:root:Kramdown code region Wait for background processes to complete
+DEBUG:root:Kramdown code region Sum and Upload results
+INFO:root:Section change to: None
+INFO:root:Code regions created
+DEBUG:root:init FM
+INFO:root:Front matter field: source value samtools_count_distr_chr_slice_sh
+DEBUG:root:regular comment, line: # The output must be specified as counts_txt for other
+INFO:root:Front matter field: title value SAMtools count distributed by Chromosome
+DEBUG:root:init FM
+DEBUG:root:regular comment, line: # functions to reference this job via a JBOR
+DEBUG:root:removing: /Users/sosazuwa/dnanexus-example-applets/docs/_tutorials/pysam_count.md
+DEBUG:root:done FM
+DEBUG:root:regular comment, line: #
+INFO:root:Front matter field: source value samtools_count_para_chr_xargs_sh
+INFO:root:Front matter field: tutorial_type value distributed
+INFO:root:Front matter field: title value SAMtools count using xargs by chromosome
+DEBUG:root:regular comment, line: #####################################################################
+INFO:root:Front matter field: language value bash
+DEBUG:root:done FM
+INFO:root:Section change to: sum_reads
+INFO:root:Front matter field: tutorial_type value parallel
+INFO:root:Code region search
+INFO:root:front matter written
+INFO:root:Front matter field: language value bash
+DEBUG:root:regular comment, line: # This function will *gather* all the readcount.txt files generated
+INFO:root:Section change to: Get chromosomes helper
+INFO:root:front matter written
+DEBUG:root:regular comment, line: # by the count_func.
+DEBUG:root:block comment, line: """
+DEBUG:root:regular comment, line: #
+DEBUG:root:Kramdown code region Downloading inputs and get chromosomes list from headers
+DEBUG:root:Kramdown code region Download and segment bam file
+DEBUG:root:regular comment, line: # Arguments:
+DEBUG:root:Kramdown code region Split bam into multiple chromosomes and send as input to sam_count subjob
+DEBUG:root:block comment, line: """
+DEBUG:root:regular comment, line: #   readfiles: Array of count summary files from scattered jobs
+DEBUG:root:Kramdown code region Upload result file
+DEBUG:root:Kramdown code region Gather output of count jobs and write to result file
+DEBUG:root:regular comment, line: #   filename: String filename of the input file.
+DEBUG:root:Kramdown code region count_func
+DEBUG:root:regular comment, line: #             Used to preserve filename in output.
+INFO:root:Section change to: None
+DEBUG:root:regular comment, line: #
+DEBUG:root:Kramdown code region sum_reads
+DEBUG:root:regular comment, line: # Returns:
+DEBUG:root:regular comment, line: #   read_sum: dxlink to output readcounts file to be referenced as a
+INFO:root:Section change to: Download inputs   
+DEBUG:root:regular comment, line: #             Job-Based Object Reference (JBOR).
+DEBUG:root:regular comment, line: # --------------------------------------------------------------------------
+INFO:root:Code region search
+DEBUG:root:regular comment, line: # mappings_sorted_bam and mappings_sorted_bai are passed to the main function
+DEBUG:root:regular comment, line: #
+INFO:root:Code region search
+DEBUG:root:regular comment, line: # as parameters for our job. mappings_sorted_bam and mappings_sorted_bai are
+DEBUG:root:regular comment, line: #####################################################################
+DEBUG:root:regular comment, line: # dictionary objects with key=dnanexus_link and value=<file-id>.
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # Download inputs
+DEBUG:root:regular comment, line: # We handle file objects from the platform by first creating a DXFile handler.
+DEBUG:root:regular comment, line: # ---------------
+DEBUG:root:regular comment, line: # Then performing dxpy.download_dxfile.
+DEBUG:root:regular comment, line: # Read count_func Download all inputs for an idea of what variables are available
+DEBUG:root:regular comment, line: #
+INFO:root:Code regions created
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # If index file is not supplied *.bai index will be created with pysam.index
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # Sum files
+INFO:root:Code regions created
+DEBUG:root:regular comment, line: # DXFIle.name attribute is converted to ASCII since Pysam does not handle Unicode strings.
+DEBUG:root:init FM
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # Write and upload files
+INFO:root:Front matter field: source value samtools_count_para_chr_subprocess_py
+INFO:root:Front matter field: title value SAMtools count chromosomes in parallel (py)
+DEBUG:root:init FM
+DEBUG:root:regular comment, line: # Again naming the output read_sum is needed so the main() function's output can
+DEBUG:root:done FM
+INFO:root:Front matter field: source value samtools_count_distr_region_py
+DEBUG:root:regular comment, line: # reference read_sum as a “job-based object reference” [JBOR]
+INFO:root:Section change to: None
+INFO:root:Front matter field: tutorial_type value parallel
+INFO:root:Front matter field: title value SAMtools count scatter gather based on regions (python)
+INFO:root:Section change to: Get chromosomes regions
+INFO:root:Section change to: None
+INFO:root:Front matter field: language value python
+DEBUG:root:done FM
+DEBUG:root:regular comment, line: # --------------------------------------------------------------
+INFO:root:Front matter field: tutorial_type value distributed
+INFO:root:front matter written
+DEBUG:root:regular comment, line: # Generate Pysam Alignmentfile object.
+INFO:root:Code regions created
+INFO:root:Front matter field: language value python
+DEBUG:root:regular comment, line: #
+INFO:root:front matter written
+DEBUG:root:regular comment, line: # Obtain regions to count.
+DEBUG:root:init FM
+DEBUG:root:regular comment, line: #
+INFO:root:Front matter field: source value samtools_count_distr_chr_region_sh
+INFO:root:Code region search
+INFO:root:Section change to: Perform basic pysam count.
+INFO:root:Front matter field: title value SAMtools distributed count by region (bash)
+DEBUG:root:regular comment, line: # --------------------------------------------------------------
+DEBUG:root:done FM
+DEBUG:root:regular comment, line: # Iterate over regions and sum results of pysam.count().
+INFO:root:Front matter field: tutorial_type value distributed
+INFO:root:Front matter field: language value bash
+DEBUG:root:removing: /Users/sosazuwa/dnanexus-example-applets/docs/_tutorials/samtools_count_subprocess_py.md
+DEBUG:root:regular comment, line: #
+INFO:root:Code regions created
+INFO:root:front matter written
+INFO:root:Section change to: Output
+DEBUG:root:regular comment, line: # ----------------------------------------------------------------------------
+DEBUG:root:regular comment, line: # Upload generated count file as counts_txt output specified in the dxapp.json
+INFO:root:Code region search
+INFO:root:Section change to: Download bam files
+DEBUG:root:init FM
+INFO:root:Section change to: None
+DEBUG:root:Kramdown code region Download and prepare regions for scatter
+DEBUG:root:regular comment, line: # ------------------
+INFO:root:Front matter field: source value samtools_count_para_reg_multiprocess_py
+INFO:root:Code regions created
+DEBUG:root:Kramdown code region Merge results
+DEBUG:root:regular comment, line: # In order to download the input BAM file we:
+INFO:root:Front matter field: title value SAMtools count regions in parallel (multiple cores)
+DEBUG:root:Kramdown code region Output results
+DEBUG:root:regular comment, line: #  - Establish a DXFile handle by providing a DXLink to dxpy.DXFile()
+DEBUG:root:done FM
+DEBUG:root:regular comment, line: #    - mappings_bam is a DXLink containing the file-id of the input BAM.
+DEBUG:root:Kramdown code region count_func
+INFO:root:Front matter field: tutorial_type value parallel
+DEBUG:root:init FM
+DEBUG:root:regular comment, line: #    - DXFIle handles have the attribute 'name', the filename on the platform.
+INFO:root:Front matter field: language value python
+INFO:root:Front matter field: source value pysam_count
+DEBUG:root:Kramdown code region sum_reads
+DEBUG:root:regular comment, line: #      We will use the name attribute to retain the filename programmatically.
+INFO:root:front matter written
+INFO:root:Front matter field: title value Pysam tools count
+DEBUG:root:regular comment, line: #  - Download the file to the worker by providing a file-id to dxpy.download_dxfile
+DEBUG:root:Kramdown code region Output results
+DEBUG:root:done FM
+DEBUG:root:regular comment, line: #    - DXFIle handle's 'get_id()' function returns the file-id on the platform
+INFO:root:Front matter field: tutorial_type value basic
+DEBUG:root:regular comment, line: #
+INFO:root:Front matter field: language value python
+INFO:root:front matter written
+DEBUG:root:regular comment, line: #
+DEBUG:root:Kramdown code region Download inputs
+INFO:root:Section change to: Run samtools view
+DEBUG:root:Kramdown code region Get chromosomes regions
+DEBUG:root:regular comment, line: # -----------------
+DEBUG:root:Kramdown code region Get chromosomes helper
+DEBUG:root:regular comment, line: # Subprocess takes either a string command or an array of commands that will be
+DEBUG:root:Kramdown code region Perform basic pysam count.
+DEBUG:root:regular comment, line: # joined to a string. shell=True causes subprocess to use run a string command using
+DEBUG:root:Kramdown code region Output
+DEBUG:root:regular comment, line: # the program specified by the SHELL environmental variable. The default shell
+DEBUG:root:regular comment, line: # parameter value is False. If an array command is used set shell=False. If a string command
+DEBUG:root:regular comment, line: # is used set shell=True.
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # For convenience we construct our command array before executing the
+DEBUG:root:regular comment, line: # subprocess.check_call function. subprocess.check_call waits until the
+DEBUG:root:regular comment, line: # command has executed then either: returns if the command exits 0 or raises a
+DEBUG:root:regular comment, line: # subprocess.CalledProcessError exception.
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: #
+INFO:root:Section change to: Upload result
+DEBUG:root:regular comment, line: # -------------
+DEBUG:root:regular comment, line: # We now upload the counts file to the platform. dxpy.upload_local_file() function
+DEBUG:root:regular comment, line: # will upload the file to the job container, a temporary project which holds onto files
+DEBUG:root:regular comment, line: # associated with this job. dxpy.upload_local_file returns a DXFile object handle for the
+DEBUG:root:regular comment, line: # uploaded file.
+DEBUG:root:regular comment, line: #
+INFO:root:Section change to: Associate with output
+DEBUG:root:regular comment, line: # ---------------------
+DEBUG:root:regular comment, line: # Finally, we create our output dictionary. The output dictionary should contain
+DEBUG:root:regular comment, line: # keys corresponding to job output names, specified in the dxapp.json. The value
+DEBUG:root:regular comment, line: # is a DXLink corresponding to the output file.
+DEBUG:root:regular comment, line: #
+DEBUG:root:regular comment, line: # output = {}
+DEBUG:root:regular comment, line: # output["counts_txt"] = dxpy.dxlink(counts_txt)#
+DEBUG:root:regular comment, line: #
+INFO:root:Section change to: None
+INFO:root:Code regions created
+DEBUG:root:init FM
+INFO:root:Front matter field: source value samtools_count_subprocess_py
+INFO:root:Front matter field: title value SAMtools count with subprocess (python)
+DEBUG:root:done FM
+INFO:root:Front matter field: tutorial_type value basic
+INFO:root:Front matter field: language value python
+INFO:root:front matter written
+DEBUG:root:Kramdown code region Download bam files
+DEBUG:root:Kramdown code region Run samtools view
+DEBUG:root:Kramdown code region Upload result
+DEBUG:root:Kramdown code region Associate with output
+SUCCESS: SAMtools count
+SUCCESS: SAMtools count w/ Bash Helpers
+SUCCESS: SAMtools count w/ Precompiled Binary
+SUCCESS: SAMtools count with mkfifo and dx cat (bash)
+SUCCESS: SAMtools distributed count by region (bash)
+SUCCESS: SAMtools count distributed by Chromosome
+SUCCESS: SAMtools fetched via Git repo
+SUCCESS: SAMtools count parallelized by region
+SUCCESS: SAMtools count using xargs by chromosome
+SUCCESS: Pysam tools count
+SUCCESS: SAMtools count scatter gather based on regions (python)
+SUCCESS: SAMtools count chromosomes in parallel (py)
+SUCCESS: SAMtools count regions in parallel (multiple cores)
+SUCCESS: SAMtools count with subprocess (python)

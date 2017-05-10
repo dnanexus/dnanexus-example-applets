@@ -1,8 +1,8 @@
 ---
-title: SAMtools fetched via Git repo
-tutorial_type: general
+tutorial_type: basic
 source: samtools_count_git_sh
 language: bash
+title: SAMtools fetched via Git repo
 ---
 # SAMtools fetched via Git repo
 

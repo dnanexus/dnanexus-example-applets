@@ -58,6 +58,29 @@ def _resolve_applets(dxapp_paths):
     return mapping_list
 
 
+def _write_kmarkdown(fh_md, readme_md_path, section_parser={}):
+    """Creates Kramdown webpage"""
+    def _section_match(match):
+        section = match.group(1).strip()
+        logging.debug("Kramdown code region {0}".format(section))
+        return section_parser[section]
+
+    def _force_line_match(match):
+        return match.group(1).strip()
+    special_match = {
+        re.compile(r'.*<!--\s*SECTION:\s*\b(.*)-->'): _section_match,
+        re.compile(r'.*<!--\s*INCLUDE:\s*(\S.*)-->'): _force_line_match,
+    }
+    with open(readme_md_path) as readme_md:
+        for line in readme_md:
+            for matcher, func in special_match.iteritems():
+                match = matcher.match(line)
+                if match is not None:
+                    line = func(match)
+                    break
+            fh_md.write(line)
+
+
 def find_all_matches(tutdir, filename, exclude_dirs=[]):
     """Return list of """
     matches = []
@@ -107,26 +130,6 @@ def create_jekyll_markdown_tutorial(tutorial_dict):
         frontmatter.add_field("language", lang)
         file_handle.write(frontmatter.__str__())
         logging.info("front matter written")
-
-    def _write_kmarkdown(fh_md, readme_md_path, section_parser={}):
-        """Creates Kramdown webpage"""
-        # Consider creating k, v where k = re.match and v = callback that returns text to write
-        section_match = re.compile(r'.*<!--\s*SECTION:\s*\b(.*)-->')
-        force_include_line = re.compile(r'.*<!--\s*INCLUDE:\s*(\S.*)-->')
-        with open(readme_md_path) as readme_md:
-            for line in readme_md:
-                match_sec = section_match.match(line)
-                force_include_match = force_include_line.match(line)
-                if match_sec:
-                    section = match_sec.group(1).strip()
-                    logging.debug("Kramdown region {0}".format(section))
-                    section = section_parser[section]
-                    fh_md.write(section)
-                elif force_include_match:
-                    fh_md.write(
-                        force_include_match.group(1).strip())
-                else:
-                    fh_md.write(line)
 
     target_file = os.path.join(
         tutorial_dict["site_pages_dir"], tutorial_dict["name"].strip() + ".md")

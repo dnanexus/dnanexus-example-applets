@@ -1,6 +1,6 @@
 ---
-tutorial_type: basic
-source: samtools_count_par_reg_multiprocess_py
+tutorial_type: parallel
+source: samtools_count_para_reg_multiprocess_py
 language: python
 title: SAMtools count regions in parallel (multiple cores)
 ---

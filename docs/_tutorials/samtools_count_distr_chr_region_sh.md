@@ -1,6 +1,6 @@
 ---
-tutorial_type: basic
-source: samtools_count_dist_chr_region_sh
+tutorial_type: distributed
+source: samtools_count_distr_chr_region_sh
 language: bash
 title: SAMtools distributed count by region (bash)
 ---

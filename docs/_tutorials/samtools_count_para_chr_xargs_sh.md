@@ -1,6 +1,6 @@
 ---
-tutorial_type: basic
-source: samtools_count_par_chr_xargs_sh
+tutorial_type: parallel
+source: samtools_count_para_chr_xargs_sh
 language: bash
 title: SAMtools count using xargs by chromosome
 ---

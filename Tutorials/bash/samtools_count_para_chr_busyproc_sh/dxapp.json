@@ -1,9 +1,9 @@
 {
-  "name": "samtools_count_dist_chr_region_sh",
-  "title": "SAMtools distributed count by region (bash)",
-  "summary": "Shell implementation",
+  "name": "samtools_count_para_chr_busyproc_sh",
+  "title": "SAMtools count parallelized by region",
+  "summary": "Parallelized SAMtools count based on regions",
   "dxapi": "1.0.0",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "inputSpec": [
     {
       "name": "mappings_sorted_bam",
@@ -39,14 +39,14 @@
   "runSpec": {
     "interpreter": "bash",
     "file": "src/code.sh",
-      "timeoutPolicy": {
+  "timeoutPolicy": {
     "*": {
       "hours": 12
     }
   },
     "systemRequirements": {
       "*": {
-        "instanceType": "mem1_ssd1_x2"
+        "instanceType": "mem1_ssd1_x4"
       }
     },
     "distribution": "Ubuntu",

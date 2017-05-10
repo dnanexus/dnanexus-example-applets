@@ -1,6 +1,6 @@
 ---
-tutorial_type: basic
-source: samtools_count_dist_region_py
+tutorial_type: distributed
+source: samtools_count_distr_region_py
 language: python
 title: SAMtools count scatter gather based on regions (python)
 ---

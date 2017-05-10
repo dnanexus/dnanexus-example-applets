@@ -1,5 +1,5 @@
 {
-  "name": "samtools_count_par_reg_multiprocess_py",
+  "name": "samtools_count_para_reg_multiprocess_py",
   "title": "SAMtools count regions in parallel (multiple cores)",
   "summary": "Count number of reads in SAM or BAM format file by running samtools commands on different cores split by region",
   "dxapi": "1.0.0",

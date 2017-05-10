@@ -1,10 +1,11 @@
 ---
-tutorial_type: basic
-source: samtools_count_par_reg_multiprocess_py
+tutorial_type: parallel
+source: samtools_count_para_chr_subprocess_py
 language: python
-title: SAMtools count regions in parallel (multiple cores)
+title: SAMtools count chromosomes in parallel (py)
 ---
-# SAMtools count regions in parallel (multiple cores)
+<!-- dx-header -->
+SAMtools count chromosomes in parallel (py)
 
 Parallel count of reads in BAM format file. 
 
