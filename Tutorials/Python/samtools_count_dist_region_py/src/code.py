@@ -153,7 +153,7 @@ def samtoolscount_bam(region_list, mappings_bam, index_file):
     # Per region perform SAMtools count.
     # --------------------------------------------------------------
     # Output count for regions and return DXLink as job output to
-    # allow other entry points to download job output. 
+    # allow other entry points to download job output.
     #
 
     with open('read_count_regions.txt', 'w') as f:

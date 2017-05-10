@@ -24,7 +24,7 @@ main() {
   set -e -x -o pipefail
 
   #
-  # Downloading inputs and get chromosomes list from headers
+  # SECTION: Downloading inputs and get chromosomes list from headers
   # --------------------------------------------------------
   # Examine the header of the bam file, pulling out just the @SQ lines (which contain
   # the chromosomes, grab the column with just the chromosome name, and match it to a
@@ -35,7 +35,7 @@ main() {
   chromosomes=$(samtools view -H "${mappings_sorted_bam_name}" | grep "\@SQ" | awk -F '\t' '{print $2}' | awk -F ':' '{if ($2 ~ /^chr[0-9XYM]+$|^[0-9XYM]/) {print $2}}')
 
   #
-  # Split bam into multiple chromosomes and send as input to sam_count subjob
+  # SECTION: Split bam into multiple chromosomes and send as input to sam_count subjob
   # -------------------------------------------------------------------------
   # Looping through all our chromosomes of interest and seperate to smaller bams.
   #
@@ -58,7 +58,7 @@ main() {
   done
 
   #
-  # Gather output of count jobs and write to result file
+  # SECTION: Gather output of count jobs and write to result file
   #------------------------------------------------------
   # Output of single count job is referenced as a job-based object reference
   #
@@ -70,7 +70,7 @@ main() {
   sum_reads_job=$(dx-jobutil-new-job "${readfiles[@]}" -ifilename="${mappings_sorted_bam_prefix}" sum_reads)
 
   #
-  # Upload chromosome_results.txt from sum_reads subjob as job output
+  # SECTION: Upload chromosome_results.txt from sum_reads subjob as job output
   # -------------------------------------------------
   # Make sure to specify --class=jobref
   #
@@ -79,6 +79,7 @@ main() {
 }
 
 ####################################################################
+# SECTION: count_func
 # This function will count the number of reads in the input bam file
 #
 # Arguments:
@@ -108,6 +109,7 @@ count_func() {
 }
 
 ####################################################################
+# SECTION: sum_reads
 # This function will *gather* all the readcount.txt files generated
 # by the count_func.  It will return a single output file: chromosome_result.txt
 #

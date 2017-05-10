@@ -2,7 +2,7 @@
 
 This example shows packaging a precompiled binary in the `resources/` directory of an app(let).
 
-## `resources/` Directory
+## Resources Directory
 The SAMtools precompiled binary is placed in the `<Applet dir>/resources/` directory. Any files found in the `resources/` directory will be uploaded so that they will be present in the root directory of workers. In our case:
 ```
 ├── Applet dir
@@ -22,7 +22,8 @@ When this applet is run on a worker the `resources/` directory will be placed in
 ├── home
 │   ├── dnanexus
 ```
-`/usr/bin/` is part of the `$PATH` variable, so in our script, we can reference the samtools command directly, `samtools view -c ...`
+`/usr/bin/` is part of the `$PATH` variable, so in our script, we can reference the samtools command directly, <!--SECTION: Run samtools view -->
+
 
 See [The resources/ directory and its use](https://wiki.dnanexus.com/Developer-Tutorials/App-Build-Process#The-resources/-directory-and-its-use) for more information.
 

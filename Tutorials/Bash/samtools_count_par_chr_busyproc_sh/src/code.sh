@@ -12,7 +12,7 @@
 main() {
 
   #
-  # Debugging boilerplate and input download
+  # SECTION: Debugging boilerplate and input download
   # -------------------------------------------------
   # A workspace directory is created to make files
   # easier to find if ssh to the instance is required
@@ -33,7 +33,7 @@ main() {
   fi
 
   #
-  # Parallel SAMtools count by region
+  # SECTION: Parallel SAMtools count by region
   # ---------------------------------
   # This approach to parallelization in bash requires programatic control of processes
   # to be done from our side.  We will run called to samtools view in the background using
@@ -67,7 +67,7 @@ main() {
   done <bamfiles.txt
 
   #
-  # Wait for background processes to complete
+  # SECTION: Wait for background processes to complete
   # -----------------------------------------
   # When the last samtools view call is made for the last region
   # the loop will exit with active process.  This waits until all
@@ -78,7 +78,7 @@ main() {
   done
 
   #
-  # Sum & Upload results
+  # SECTION: Sum and Upload results
   # --------------
   # Collect counts from 1st line of each file and sum them
   #   Files are aggregated using globs

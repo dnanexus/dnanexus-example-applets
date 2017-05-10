@@ -1,30 +1,26 @@
 #!/bin/bash
 # samtools_count_bashhelper_sh 0.0.1
 
-dx-download-all-inputs
-mkdir -p out/counts_txt
-samtools view -c "${mappings_bam_path}" > out/counts_txt/"${mappings_bam_prefix}.txt"
-dx-upload-all-outputs
-
 #
-# Download bam files
+# SECTION: Download bam files
 # ------------------
 # Use dx-download-all-inputs to download the bam file. This script will go
 # through all inputs and download into folders which have the pattern
 # /home/dnanexus/in/[INPUT]/.
 #
-# dx-download-all-inputs
-#
+
+dx-download-all-inputs
 
 #
-# Create output directory
+# SECTION: Create output directory
 # -----------------------
 # Create an output directory, we will discuss the specifics below
 #
-# mkdir -p out/counts_txt
+
+mkdir -p out/counts_txt
 
 #
-# Run samtools view
+# SECTION: Run samtools view
 # -----------------
 # Here, we use the bash helper variable mappings_bam_path. This bash variable
 # will point to the location of a file after it has been downloaded using
@@ -34,11 +30,11 @@ dx-upload-all-outputs
 # In the case that the filename of the file mappings_bam is "my_mappings.bam",
 # mappings_bam_path will be "/home/dnanexus/in/mappings_bam/my_mappings.bam".
 #
-# samtools view -c "${mappings_bam_path}" > out/counts_txt/"${mappings_bam_prefix}.txt"
-#
+
+samtools view -c "${mappings_bam_path}" > out/counts_txt/"${mappings_bam_prefix}.txt"
 
 #
-# Upload result
+# SECTION: Upload result
 # -------------
 # We use dx-upload-all-outputs to upload the data to the platform and associate
 # it as the output. dx-upload-all-outputs uses the folder pattern
@@ -47,6 +43,5 @@ dx-upload-all-outputs
 # the output is called counts_txt. Above, we have made the folder which
 # corresponds to this, and put the output there.
 #
-# dx-upload-all-outputs
-#
 
+dx-upload-all-outputs

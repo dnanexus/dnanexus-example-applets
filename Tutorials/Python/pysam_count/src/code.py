@@ -13,7 +13,7 @@ import unicodedata
 import re
 
 
-# CODE-SECTION: Get chromosomes helper
+# SECTION: Get chromosomes helper
 def get_chr(bam_alignment, canonical=False):
     """Helper function to return canonical chromosomes from SAM/BAM header
 
@@ -38,12 +38,12 @@ def get_chr(bam_alignment, canonical=False):
             regions[i] = seq_elem['SN']
 
     return regions
-    # CODE-SECTION-END
+    # SECTION-END
 
 @dxpy.entry_point('main')
 def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
     #
-    # CODE-SECTION: Download inputs   
+    # SECTION: Download inputs   
     # --------------------------------------------------------------------------
     # mappings_sorted_bam and mappings_sorted_bai are passed to the main function
     # as parameters for our job. mappings_sorted_bam and mappings_sorted_bai are
@@ -72,10 +72,10 @@ def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
                              mappings_sorted_bai.name)
     else:
         pysam.index(ascii_bam_name)
-    # CODE-SECTION-END
+    # SECTION-END
 
     #
-    # CODE-SECTION: Get chromosomes regions
+    # SECTION: Get chromosomes regions
     # --------------------------------------------------------------
     # Generate Pysam Alignmentfile object.
     #
@@ -85,7 +85,7 @@ def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
     regions = get_chr(mappings_obj, canonical_chr)
 
     #
-    # CODE-SECTION: Perform basic pysam count.
+    # SECTION: Perform basic pysam count.
     # --------------------------------------------------------------
     # Iterate over regions and sum results of pysam.count().
 
@@ -103,7 +103,7 @@ def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
         f.write("Total reads: {sum_counts}".format(sum_counts=total_count))
 
     #
-    # CODE-SECTION:Output
+    # SECTION:Output
     # ----------------------------------------------------------------------------
     # Upload generated count file as counts_txt output specified in the dxapp.json
 

@@ -20,7 +20,7 @@ main() {
   set -e -x -o pipefail
 
   #
-  # Download and segment bam file
+  # SECTION: Download and segment bam file
   # -----------------------------
   # If the input bam was not sorted by coordinate, which we can detect by attempting
   # to index it, don't fail, but instead attempt to sort and index again.
@@ -54,7 +54,7 @@ main() {
   done > bamfiles.txt
 
   #
-  # xargs SAMtools count
+  # SECTION: Xargs SAMtools count
   # --------------------
   # SAMtools count will be performed in parallel and count summary
   # will be written to file.
@@ -69,7 +69,7 @@ main() {
   echo "Total Count: ${sum_reads}" > "${counts_txt_name}"
 
   #
-  # Upload result file
+  # SECTION: Upload result file
   # ------------------
   #
 

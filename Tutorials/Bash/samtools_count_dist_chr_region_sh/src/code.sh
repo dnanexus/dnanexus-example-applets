@@ -36,7 +36,7 @@ main() {
   echo "Value of index file: ${mappings_sorted_bai}"
 
   #
-  # Download and prepare regions for scatter
+  # SECTION: Download and prepare regions for scatter
   # ----------------------------------------
   # To scatter processing into regions of size 10
   #
@@ -73,7 +73,7 @@ main() {
   fi
 
   #
-  # Merge results
+  # SECTION: Merge results
   # -------------
   # We take a similar approach and "pass" an array of readcount files to the merge job
   #   We add -ireadfiles="$count_job":counts_txt so the merge job can combine into an array called readfiles
@@ -95,7 +95,7 @@ main() {
   countsfile_job=$(dx-jobutil-new-job -ifilename="${mappings_sorted_bam_prefix}" "${readfiles[@]}" sum_reads)
 
   #
-  # Output results
+  # SECTION: Output results
   # --------------
   # The output of our main() funciton is the result of the "sum_reads" job
   #
@@ -108,6 +108,7 @@ main() {
 }
 
 ################################################################################
+# SECTION: count_func
 # Function that will perform SAMtools count by regions group.
 # This function will be run on a new instance, as a result variables from other
 # other functions, main() for example, will not be accessible here.
@@ -181,6 +182,7 @@ count_func() {
 }
 
 #####################################################################
+# SECTION: sum_reads
 # This function will *gather* all the readcount.txt files generated
 # by the count_func.
 #

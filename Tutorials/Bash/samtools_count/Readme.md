@@ -1,4 +1,4 @@
-# samtools_count (DNAnexus Platform App)
+# SAMtools count
 
 This app performs a basic SAMtools count.
 
@@ -6,7 +6,7 @@ This app performs a basic SAMtools count.
 Use `dx download` to download the bam file. `$mappings_bam` is a [DNAnexus link (dx link)](https://wiki.dnanexus.com/FAQ#What-are-DNAnexus-links,-and-how-are-they-different-from-using-the-data-object-IDs%3F)
 containing the file_id of that file. By default, when we download a file,
 we will keep the filename of the object on the platform.
-`dx download "${mappings_bam}"`
+<!--SECTION: Download bam files -->
 
 ## SAMtools Count
 Here, we use the bash helper variable `mappings_bam_name`. For file inputs,
@@ -18,21 +18,18 @@ of the object, removing any suffixes specified in patterns. In this case,
 the pattern if *'["*.bam"]'*, so it will remove the trailing *".bam"*.
 In the case that the filename of the file `mappings_bam` is *my_mappings.bam*,
 `mappings_bam_prefix` will be *my_mappings*
-```
-readcount=$(samtools view -c "${mappings_bam_name}")
-echo "Total reads: ${readcount}" > "${mappings_bam_prefix}.txt"
-```
+<!--SECTION: Run samtools view -->
 
 ## Upload Result
 We now upload the data to the platform. This will upload it into the
 job container, a temporary project which holds onto files associated
 with the job. when running upload with `--brief`, it will return just the
 file-id.  
-`counts_txt_id=$(dx upload "${mappings_bam_prefix}.txt" --brief)`
+<!--SECTION: Upload result -->
 
 ## Associate With Output
 Finally, we tell the system what file should be associated with the output
 named `counts_txt` (which was specified in the dxapp.json). The system will then
 move this output into whatever folder was specified at runtime in the project
 running the job.  
-`dx-jobutil-add-output counts_txt "${counts_txt_id}" --class=file`
+<!--SECTION: Associate with output -->

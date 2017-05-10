@@ -18,7 +18,7 @@
 
 main() {
   #
-  # Debugging setup
+  # SECTION: Debugging setup
   # ---------------
   # The -e flag causes bash to exit at any point if there is any error,
   # the -o pipefail flag tells bash to throw an error if it encounters an error within a pipeline,
@@ -33,7 +33,7 @@ main() {
   echo "Value of mappings_bam: '${mappings_bam}'"
 
   #
-  # Downloading as input stream
+  # SECTION: Downloading as input stream
   # ---------------------------
   # Using a FIFO special file we create a sequential file stream through cat command
   #
@@ -52,13 +52,13 @@ main() {
   input_pid="$!"
 
   #
-  # Processing input stream to output stream
+  # SECTION: Processing input stream to output stream
   # ----------------------------------------------------------
   # samtools view -c can be performed on the established fifo.
   #
-  #   Directory structure created here ~/out/read_count is required to use dx-upload-all-outputs
+  #   Directory structure created here ~/out/counts_txt is required to use dx-upload-all-outputs
   #   All files found in the path ~/out/<output name> will be uploaded to the corresponding
-  #   <output name> specified in the dxapp.json
+  #   <output name> specified in the dxapp.json.
   #
 
   mkdir -p ./out/counts_txt/
@@ -74,7 +74,7 @@ main() {
   process_pid="$!"
 
   #
-  # Provide job output
+  # SECTION: Provide job output
   # ------------------
   # By providing the dx-jobutil-add-output as a reader of readcount.txt
   # all fifo special files in our pipeline can be executed and closed.
@@ -84,7 +84,7 @@ main() {
   upload_pid="$!"
 
   #
-  # Wait for blocked background processes to finish
+  # SECTION: Wait for blocked background processes to finish
   # -----------------------------------------------
   # Now that all FIFO special files have are open to both
   # reading and writing background processes can finish.
