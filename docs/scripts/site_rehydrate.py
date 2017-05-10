@@ -75,7 +75,7 @@ def get_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--tutorials", help="Directory where tutorials are located", default=None, metavar="Tutorials directory", dest="tutorials_dir")
     parser.add_argument("--site-pages", help="Directory where site pages are located", default=None, metavar="Site Pages directory", dest="site_pages_dir")
-    parser.add_argument("--ignore-comments", help="Ignore other comments in code when parsing sections.", action="store_true", dest="skip_comments")
+    parser.add_argument("--keep-comments", help="Ignore other comments in code when parsing sections.", action="store_false", dest="skip_comments")
     parser.add_argument("--overwrite-files", help="Overwrites old files with generated files", action="store_true", dest="overwrite")
     parser.add_argument("-v", help="Verbosity", action="store_true", dest="verbose")
 
@@ -110,15 +110,21 @@ def create_jekyll_markdown_tutorial(tutorial_dict):
 
     def _write_kmarkdown(fh_md, readme_md_path, section_parser={}):
         """Creates Kramdown webpage"""
-        section_match = re.compile(r'.*<!--CODE-SECTION:\s*\b(.*)-->')
+        # Consider creating k, v where k = re.match and v = callback that returns text to write
+        section_match = re.compile(r'.*<!--\s*SECTION:\s*\b(.*)-->')
+        force_include_line = re.compile(r'.*<!--\s*INCLUDE:\s*(\S.*)-->')
         with open(readme_md_path) as readme_md:
             for line in readme_md:
-                match = section_match.match(line)
-                if match:
-                    section = match.group(1).strip()
+                match_sec = section_match.match(line)
+                force_include_match = force_include_line.match(line)
+                if match_sec:
+                    section = match_sec.group(1).strip()
                     logging.debug("Kramdown region {0}".format(section))
                     section = section_parser[section]
                     fh_md.write(section)
+                elif force_include_match:
+                    fh_md.write(
+                        force_include_match.group(1).strip())
                 else:
                     fh_md.write(line)
 

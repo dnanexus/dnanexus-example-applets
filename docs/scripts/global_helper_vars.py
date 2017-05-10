@@ -24,6 +24,6 @@ LANG_COMMENT = {
 }
 
 CODE_SECTION_SEARCH = {  # section (STARTre, ENDre), similar for now
-    "bash": (re.compile(r'.*# CODE-SECTION:\s*\b(.+)$'), re.compile(r'.*#\s*CODE-SECTION-END')),
-    "python2.7": (re.compile(r'.*# CODE-SECTION:\s*\b(.+)$'), re.compile(r'.*#\s*CODE-SECTION-END')),
+    "bash": (re.compile(r'.*#\s*SECTION:\s*\b(.+)$'), re.compile(r'.*#\s*SECTION-END')),
+    "python2.7": (re.compile(r'.*#\s*SECTION:\s*\b(.+)$'), re.compile(r'.*#\s*SECTION-END')),
 }
