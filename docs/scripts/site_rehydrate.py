@@ -62,7 +62,7 @@ def _write_kmarkdown(fh_md, readme_md_path, section_parser={}):
     """Creates Kramdown webpage"""
     def _section_match(match):
         section = match.group(1).strip()
-        logging.debug("Kramdown code region {0}".format(section))
+        logging.debug("Kramdown code region in {0} {1}".format(readme_md_path, section))
         return section_parser[section]
 
     def _force_line_match(match):

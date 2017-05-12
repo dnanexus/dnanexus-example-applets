@@ -73,7 +73,7 @@ class SectionParser(object):
         if self._tempsection:
             code = "{start}{content}{end}".format(
                 start="```{language}\n".format(language=self.language),
-                content="".join(self._tempsection).strip(),
+                content="".join(self._tempsection).strip("\n\r"),
                 end="\n```\n")
             self._section_mapping[self.active_section] = code
         self._active_section = value
@@ -84,27 +84,29 @@ class SectionParser(object):
         return self._section_mapping
 
     def parse_file(self):
+        def section_parse(line, flag):
+            if self.active_section is None:
+                match = self.section_start.match(line)
+                if match is not None:
+                    self.active_section = match.group(1)
+            else:
+                end = self.section_end.match(line)
+                start_check = self.section_start.match(line)
+                if start_check is not None:
+                    self.active_section = start_check.group(1).strip()
+                elif end is not None:
+                    self.active_section = None
+                else:
+                    flag = self.is_comment(line, flag)
+                    if not flag:
+                        self._tempsection.append(line)
+            return flag
+
         logging.info("Code region search")
         comment_flag = False  # False,True, or comment flag. Block comment char if needed
         with open(self.code, "r") as f:
             for line in f:
-                if self.active_section is None:
-                    match = self.section_start.match(line)
-                    if match is None:
-                        continue
-                    self.active_section = match.group(1)
-                else:
-                    end = self.section_end.match(line)
-                    start_check = self.section_start.match(line)
-                    if start_check is not None:
-                        self.active_section = start_check.group(1).strip()
-                        continue
-                    elif end is not None:
-                        self.active_section = None
-                        continue
-                    comment_flag = self.is_comment(line, comment_flag)
-                    if end is None and not comment_flag:
-                        self._tempsection.append(line)
+                comment_flag = section_parse(line, comment_flag)
             if self.active_section is not None and self._tempsection:
                 self.active_section = None
         logging.info("Code regions created")
