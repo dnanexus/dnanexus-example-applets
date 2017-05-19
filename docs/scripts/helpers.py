@@ -120,12 +120,15 @@ class SectionParser(object):
             return False
         if not self.ignore_comments:
             return False
+
         line = line.strip()
         if startswith_prefixes(line, self.comment_chars.get("regular_comment", [])):
             logging.debug("regular comment, line: {line_is}".format(line_is=line))
             return comment_flag if comment_flag else True
-        block_str = startswith_prefixes(line.strip(), self.comment_chars.get("block_comment", []))
+        block_str = startswith_prefixes(line, self.comment_chars.get("block_comment", []))
         if type(block_str) is str:
             logging.debug("block comment, line: {0}".format(block_str))
-            return True if block_str == comment_flag else comment_flag
-        return False
+            if True if block_str == comment_flag else block_str:
+                print("Ended block")
+            return True if block_str == comment_flag else block_str
+        return comment_flag if type(comment_flag) is str else False
