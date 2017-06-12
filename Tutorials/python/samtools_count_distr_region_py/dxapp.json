@@ -1,6 +1,6 @@
 {
   "name": "samtools_count_distr_region_py",
-  "title": "SAMtools count scatter gather based on regions (python)",
+  "title": "SAMtools count scatter gather based on regions",
   "summary": "Count number of reads in SAM or BAM format file using a distributed scatter gather approach.  Subjobs perform count in parallel based on regions",
   "dxapi": "1.0.0",
   "version": "0.0.1",

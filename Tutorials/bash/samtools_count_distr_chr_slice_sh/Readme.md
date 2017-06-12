@@ -1,6 +1,6 @@
 # SAMtools count distributed by Chromosome
 
-Documentation to create a distributed applet can be found on the [WIKI](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App). This readme will focus on the details of this applet.
+Documentation to create a distributed applet can be found on the [Developer Tutorials wiki page](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App). This readme will focus on the details of this applet.
 
 ## How is SAMtools dependency provided?
 SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the dxapp.json runSpec.execDepends.
@@ -63,3 +63,5 @@ The *main* entry point triggers this sub job, providing the output of *count_fun
 
 returns read_sum_file as the entry point output.
 <!-- SECTION: sum_reads -->
+<!-- INCLUDE: ## Applet Script -->
+<!-- FUNCTION: FULL SCRIPT -->

@@ -1,6 +1,6 @@
 {
   "name": "samtools_count_subprocess_py",
-  "title": "SAMtools count with subprocess (python)",
+  "title": "SAMtools count with subprocess",
   "summary": "Performs a SAMtools count using subprocess calls in python",
   "dxapi": "1.0.0",
   "version": "0.0.1",

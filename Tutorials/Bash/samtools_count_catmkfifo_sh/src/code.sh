@@ -93,4 +93,5 @@ main() {
   wait -n  # "$input_pid"
   wait -n  # "$process_pid"
   wait -n  # "$upload_pid"
+  # SECTION-END
 }

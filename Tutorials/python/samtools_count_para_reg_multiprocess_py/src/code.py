@@ -119,7 +119,7 @@ def main(mappings_sorted_bam, mappings_sorted_bai):
     worker_pool.close()
     worker_pool.join()
 
-    verify_pool_status(results):
+    verify_pool_status(results)
 
     # Write results to file
     resultfn = inputs['mappings_sorted_bam_name'][0]

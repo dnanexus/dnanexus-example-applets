@@ -75,4 +75,5 @@ main() {
 
   counts_txt_id=$(dx upload "${counts_txt_name}" --brief)
   dx-jobutil-add-output counts_txt "${counts_txt_id}" --class=file
+  # SECTION-END
 }

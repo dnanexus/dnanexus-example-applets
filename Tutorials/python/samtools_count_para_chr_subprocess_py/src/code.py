@@ -13,6 +13,7 @@ class NotIndexedException(Exception):
     pass
 
 
+# SECTION: Find Regions
 def parseSAM_header_for_region(bamfile_path):
     """
     Helper function to match SN regions contained in SAM header
@@ -29,6 +30,7 @@ def parseSAM_header_for_region(bamfile_path):
     return regions
 
 
+# SECTION: Subprocess command
 def run_cmd(cmd_arr):
     """
     Run shell command. Raises OSError if command specified (index 0 in cmd_arr) isn't valid.
@@ -55,8 +57,11 @@ def run_cmd(cmd_arr):
     return proc_tuple
 
 
+# SECTION: Generate Index
 def create_index_file(bam_filename):
-    """Create Index file.  Sort BAM if needed."""
+    """Create Index file.
+    Sorts BAM if needed.
+    """
     print "Creating Index file."
     cmd_index = ['samtools', 'index', bam_filename]
     sorted_filename = bam_filename
@@ -79,6 +84,7 @@ def create_index_file(bam_filename):
         return sorted_filename
 
 
+# SECTION: Verify Pool Worker
 def verify_pool_status(proc_tuples):
     """
     Helper to verify worker succeeded.
@@ -87,19 +93,19 @@ def verify_pool_status(proc_tuples):
     to the job_error.json file. This file will be printed to the platform
     job log on App failure.
     """
-    all_succeed = True
     err_msgs = []
     for proc in proc_tuples:
         if proc[2] != 0:
-            all_succeed = False
             err_msgs.append(proc[1])
     if err_msgs:
         raise dxpy.exceptions.AppInternalError("\n".join(err_msgs))
 
 
+# SECTION: Region Command
 def create_region_view_cmd(input_bam, region):
     view_cmd = ['samtools', 'view', '-c', input_bam, region]
     return view_cmd
+# SECTION-END
 
 
 @dxpy.entry_point('main')
@@ -108,14 +114,13 @@ def main(mappings_bam):
     os.mkdir(u'workspace')
     os.chdir(u'workspace')
 
-    #
-    # Download Inputs
+    # SECTION: Download Inputs
     # -------------------------------------------------------------------
     # dxpy.download_all_inputs will download all input files into
     # the /home/dnanexus/in directory.  A folder will be created for each
     # input and the file(s) will be download to that directory.
     #
-    # In this example out dictionary inputs has the following key, value pairs
+    # In this example our dictionary inputs has the following key, value pairs
     #     mappings_bam_path: [u'/home/dnanexus/in/mappings_bam/SRR504516.bam']
     #     mappings_bam_name: [u'SRR504516.bam']
     #     mappings_bam_prefix: [u'SRR504516']
@@ -125,10 +130,9 @@ def main(mappings_bam):
     #
 
     inputs = dxpy.download_all_inputs()
-
     shutil.move(inputs['mappings_bam_path'][0], os.getcwd())
 
-    # Parallel by Chromosome using Subprocess.Popen()
+    # SECTION: Parallel by Chromosome using Subprocess.Popen
     # ----------------------------------------------------------
     # Create view commands based on regions.
     # Verify results
@@ -156,7 +160,7 @@ def main(mappings_bam):
     verify_pool_status(results)
 
     #
-    # Gather results and generate applet output
+    # SECTION: Gather results and generate applet output
     # -----------------------------------------
     # Format and create output file
     #
@@ -179,6 +183,7 @@ def main(mappings_bam):
     output["count_file"] = dxpy.dxlink(count_file)
 
     return output
+    # SECTION-END
 
 
 dxpy.run()

@@ -225,4 +225,5 @@ sum_reads() {
   # reference read_sum as a “job-based object reference” [JBOR]
   read_sum_id=$(dx upload "${filename}_counts.txt" --brief)
   dx-jobutil-add-output read_sum "${read_sum_id}" --class=file
+  # SECTION-END
 }

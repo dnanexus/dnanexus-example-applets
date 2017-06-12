@@ -14,7 +14,6 @@ main() {
   #    mappings_bam_prefix : basename of the file without the file extension
   #    mappings_bam_path   : *[value only valid with dx-download-all]
   #                           Full path up to and including the downloaded file
-
   dx download "$mappings_bam"
 
   #
@@ -33,7 +32,6 @@ main() {
   # specified by the $PATH variable. If desired you can modify the PATH variable:
   #    PATH="${PATH}:\home\dnanexus\samtools"
   #
-
   count_filename="${mappings_bam_prefix}.txt"
   readcount=$(samtools/samtools view -c "${mappings_bam_name}")
   echo "Total reads: ${readcount}" > "${count_filename}"
@@ -41,7 +39,6 @@ main() {
   # Upload results
   # --------------
   #
-
   count_txt=$(dx upload "${count_filename}" --brief)
   dx-jobutil-add-output count_txt "${count_txt}" --class=file
 }

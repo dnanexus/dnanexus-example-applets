@@ -8,7 +8,6 @@
 # containing the file_id of that file. By default, when we download a file,
 # we will keep the filename of the object on the platform.
 #
-
 dx download "${mappings_bam}"
 
 #
@@ -25,7 +24,6 @@ dx download "${mappings_bam}"
 # In the case that the filename of the file mappings_bam is "my_mappings.bam",
 # mappings_bam_prefix will be "my_mappings"
 #
-
 samtools view -c "${mappings_bam_name}" > "${mappings_bam_prefix}.txt"
 
 #
@@ -36,7 +34,6 @@ samtools view -c "${mappings_bam_name}" > "${mappings_bam_prefix}.txt"
 # with the job. when running upload with --brief, it will return just the
 # file-id.
 #
-
 counts_txt_id=$(dx upload "${mappings_bam_prefix}.txt" --brief)
 
 #
@@ -49,5 +46,4 @@ counts_txt_id=$(dx upload "${mappings_bam_prefix}.txt" --brief)
 #
 # dx-jobutil-add-output counts_txt "${counts_txt_id}" --class=file
 #
-
 dx-jobutil-add-output counts_txt "${counts_txt_id}" --class=file

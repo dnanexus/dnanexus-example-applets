@@ -1,6 +1,6 @@
 # SAMtools distributed count by region
 
-Documentation to create a distributed applet can be found on the [WIKI](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App). This readme will focus on the details of this example.
+Documentation to create a distributed applet can be found on the [Developer Tutorials wiki page](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App). This readme will focus on the details of this example.
 
 ## Entry points
 
@@ -34,3 +34,5 @@ returns read_sum as a JBOR, which is then referenced as job output.
 <!-- SECTION: sum_reads -->
 <!-- INCLUDE: Then in the main function the output is referenced -->
 <!-- SECTION: Output results -->
+<!-- INCLUDE: ## Applet Script -->
+<!-- FUNCTION: FULL SCRIPT -->

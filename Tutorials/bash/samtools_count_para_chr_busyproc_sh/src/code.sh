@@ -89,6 +89,6 @@ main() {
   mkdir -p "${outputdir}"
   cat count* | awk '{sum+=$1} END{print "Total reads = ",sum}' > "${outputdir}/${mappings_sorted_bam_prefix}_count.txt"
 
-  # Upload file
   dx-upload-all-outputs
+  # SECTION-END
 }

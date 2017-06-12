@@ -82,6 +82,7 @@ def main(mappings_bam):
     output["counts_txt"] = dxpy.dxlink(counts_txt)
 
     return output
+    # SECTION-END
 
 
 dxpy.run()

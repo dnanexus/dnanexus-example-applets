@@ -43,7 +43,7 @@ def get_chr(bam_alignment, canonical=False):
 @dxpy.entry_point('main')
 def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
     #
-    # SECTION: Download inputs   
+    # SECTION: Download inputs
     # --------------------------------------------------------------------------
     # mappings_sorted_bam and mappings_sorted_bai are passed to the main function
     # as parameters for our job. mappings_sorted_bam and mappings_sorted_bai are
@@ -112,6 +112,6 @@ def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
     output["counts_txt"] = dxpy.dxlink(counts_txt)
 
     return output
-
+    # SECTION-END
 
 dxpy.run()
