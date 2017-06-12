@@ -22,4 +22,4 @@ topnav_dropdowns:
         - title: DNAnexus dx-toolkit
           external_url: https://github.com/dnanexus/dx-toolkit
         - title: DNAnexus autodocs
-          external_url: http://autodoc.dnanexus.com
+          external_url: http://autodoc.dnanexus.com/bindings/python/current/

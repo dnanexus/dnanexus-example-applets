@@ -3,6 +3,7 @@ Frontmatter helper class.
 SectionParser:src/code parser class
 ---
 """
+from __future__ import print_function
 from global_helper_vars import LANG_COMMENT, CODE_SECTION_SEARCH, SUPPORTED_INTERPRETERS
 import logging
 
@@ -53,12 +54,12 @@ class SectionParser(object):
     def __init__(self, code_file_path, ignore_comments=True, interpreter=""):
         self.code = code_file_path
         self._active_section = None
-        self._section_mapping = {}
-        self._tempsection = []
+        self._section_mapping, self._func_mapping = {}, {}
         self.section_start, self.section_end = CODE_SECTION_SEARCH[interpreter]
         self.language = SUPPORTED_INTERPRETERS.get(interpreter, "")
         self.comment_chars = LANG_COMMENT.get(interpreter, [])
         self.ignore_comments = ignore_comments
+        self._tempsection = []
 
     @property
     def active_section(self):
@@ -79,11 +80,15 @@ class SectionParser(object):
         self._active_section = value
         self._tempsection = []
 
-    def get_section_dict(self):
+    def get_parse_dict(self):
         """Maybe validate."""
-        return self._section_mapping
+        return self._section_mapping, self._func_mapping
 
     def parse_file(self):
+        """
+        FIXME: Doc strings done on the same line not correctly parsed. Throws
+               entire document parsing off.
+        """
         def section_parse(line, flag):
             if self.active_section is None:
                 match = self.section_start.match(line)
@@ -97,18 +102,30 @@ class SectionParser(object):
                 elif end is not None:
                     self.active_section = None
                 else:
-                    flag = self.is_comment(line, flag)
                     if not flag:
                         self._tempsection.append(line)
-            return flag
+
+        def func_parse(line, flag):
+            pass
 
         logging.info("Code region search")
         comment_flag = False  # False,True, or comment flag. Block comment char if needed
+        # func_flag = (0, 0)  # ( Int number of space chars, newline count )
+        all_code = []
         with open(self.code, "r") as f:
             for line in f:
-                comment_flag = section_parse(line, comment_flag)
-            if self.active_section is not None and self._tempsection:
-                self.active_section = None
+                comment_flag = self.is_comment(line, comment_flag)
+                # func_flag = self.is_in_func(line, func_flag, comment_flag)
+                section_parse(line, comment_flag)
+                if not comment_flag:  # move into c
+                    all_code.append(line)
+        if self.active_section is not None and self._tempsection:
+            self.active_section = None
+
+        self._func_mapping["FULL SCRIPT"] = "{code_start}{code_blk}{code_end}".format(
+            code_start="\n```{lang}\n".format(lang=self.language),
+            code_blk="".join(all_code).strip(),
+            code_end="\n```\n")
         logging.info("Code regions created")
         return self
 
@@ -125,10 +142,24 @@ class SectionParser(object):
         if startswith_prefixes(line, self.comment_chars.get("regular_comment", [])):
             logging.debug("regular comment, line: {line_is}".format(line_is=line))
             return comment_flag if comment_flag else True
+        # block comment code block
         block_str = startswith_prefixes(line, self.comment_chars.get("block_comment", []))
         if type(block_str) is str:
             logging.debug("block comment, line: {0}".format(block_str))
-            if True if block_str == comment_flag else block_str:
-                print("Ended block")
             return True if block_str == comment_flag else block_str
         return comment_flag if type(comment_flag) is str else False
+
+        def is_in_func(self, line, func_flag, comment_flag):
+            def _count_prefix_spaces(sentence):
+                curr_spaces = 0
+                for ch in sentence:
+                    if ch == " ":
+                        curr_spaces += 1
+                    elif ch == "#":
+                        return False
+                    else:
+                        break
+                return curr_spaces
+            func_space_count, newline_count = func_flag
+            curr_spaces = _count_prefix_spaces(line)
+        #  TODO logic to see when a file ends

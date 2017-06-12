@@ -6,9 +6,9 @@ title: SAMtools count distributed by Chromosome
 ---
 # SAMtools count distributed by Chromosome
 
-Documentation to create a distributed applet can be found on the [WIKI](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App). This readme will focus on the details of this applet.
+Documentation to create a distributed applet can be found on the [Developer Tutorials wiki page](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App). This readme will focus on the details of this applet.
 
-## How is SAMtools dependency provided?
+<hr>## How is SAMtools dependency provided?
 SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the dxapp.json runSpec.execDepends.
 ```
   "runSpec": {
@@ -20,7 +20,7 @@ SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.co
 ```
 For additional information, please refer to the [execDepends wiki page](https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages).
 
-## Entry points
+<hr>## Entry points
 Distributed bash-interpreter apps use bash functions to [declare entry points](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App#Adding-Entry-Points-to-Your-Code). This app has the following entry points specified as bash functions:
 
 * *main* 
@@ -45,17 +45,17 @@ Entry points are executed on a new worker with their own system requirements. In
     ...
   }
 ```
-## Overview
+<hr>## Overview
 ### main
 The *main* function slices the initial `*.bam`, generates an index `*.bai` if needed, into smaller `*.bam` files containing only reads from canonical chromosomes. First the main function downloads the BAM file and gets the headers.
 ```bash
-dx download "${mappings_sorted_bam}"
+  dx download "${mappings_sorted_bam}"
   chromosomes=$(samtools view -H "${mappings_sorted_bam_name}" | grep "\@SQ" | awk -F '\t' '{print $2}' | awk -F ':' '{if ($2 ~ /^chr[0-9XYM]+$|^[0-9XYM]/) {print $2}}')
 ```
 
 Sliced `*.bam` files are uploaded and their file id is passed to the *count_func* entry point using [dx-jobutil-new-job](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-jobutil-new-job) command.
 ```bash
-if [ -z "${mappings_sorted_bai}" ]; then
+  if [ -z "${mappings_sorted_bai}" ]; then
     samtools index "${mappings_sorted_bam_name}"
   else
     dx download "${mappings_sorted_bai}" -o "${mappings_sorted_bam_name}".bai
@@ -73,7 +73,7 @@ if [ -z "${mappings_sorted_bai}" ]; then
 
 Outputs from the *count_func* entry points are referenced as Job Based Object References ([JBOR](https://wiki.dnanexus.com/API-Specification-v1.0.0/Job-Input-and-Output#Job-Dependencies)) and used as inputs for the *sum_reads* entry point.
 ```bash
-for job in "${count_jobs[@]}"; do
+  for job in "${count_jobs[@]}"; do
     readfiles+=("-ireadfiles=${job}:counts_txt")
   done
 
@@ -108,6 +108,84 @@ The *main* entry point triggers this sub job, providing the output of *count_fun
 
 returns read_sum_file as the entry point output.
 ```bash
+sum_reads() {
+
+  set -e -x -o pipefail
+
+  printf "Value of read file array %s" "${readfiles[@]}"
+  echo "Filename: ${filename}"
+
+
+  echo "Summing values in files and creating output read file"
+  for read_f in "${readfiles[@]}"; do
+    echo "${read_f}"
+    dx download "${read_f}" -o - >> chromosome_result.txt
+  done
+
+  count_file="${filename}_chromosome_count.txt"
+  total=$(awk '{s+=$2} END {print s}' chromosome_result.txt)
+  echo "Total reads: ${total}" >> "${count_file}"
+
+
+  readfile_name=$(dx upload "${count_file}" --brief)
+  dx-jobutil-add-output read_sum_file "${readfile_name}" --class=file
+}
+```
+<hr>
+## Applet Script
+
+```bash
+main() {
+
+
+  set -e -x -o pipefail
+
+
+  dx download "${mappings_sorted_bam}"
+  chromosomes=$(samtools view -H "${mappings_sorted_bam_name}" | grep "\@SQ" | awk -F '\t' '{print $2}' | awk -F ':' '{if ($2 ~ /^chr[0-9XYM]+$|^[0-9XYM]/) {print $2}}')
+
+
+  if [ -z "${mappings_sorted_bai}" ]; then
+    samtools index "${mappings_sorted_bam_name}"
+  else
+    dx download "${mappings_sorted_bai}" -o "${mappings_sorted_bam_name}".bai
+  fi
+
+  count_jobs=()
+  for chr in $chromosomes; do
+    seg_name="${mappings_sorted_bam_prefix}_${chr}".bam
+    samtools view -b "${mappings_sorted_bam_name}" "${chr}" > "${seg_name}"
+    bam_seg_file=$(dx upload "${seg_name}" --brief)
+    count_jobs+=($(dx-jobutil-new-job -isegmentedbam_file="${bam_seg_file}" -ichr="${chr}" count_func))
+  done
+
+
+  for job in "${count_jobs[@]}"; do
+    readfiles+=("-ireadfiles=${job}:counts_txt")
+  done
+
+  sum_reads_job=$(dx-jobutil-new-job "${readfiles[@]}" -ifilename="${mappings_sorted_bam_prefix}" sum_reads)
+
+  echo "Uploading file output"
+  dx-jobutil-add-output counts_txt "${sum_reads_job}:read_sum_file" --class=jobref
+}
+
+count_func() {
+
+  echo "Value of segmentedbam_file: '${segmentedbam_file}'"
+  echo "Chromosome being counted '${chr}'"
+
+  dx download "${segmentedbam_file}"
+
+  readcount=$(samtools view -c "${segmentedbam_file_name}")
+
+
+  >"${segmentedbam_file_prefix}.txt" printf "${chr}:\t%s\n" "${readcount}"
+
+  readcount_file=$(dx upload "${segmentedbam_file_prefix}".txt --brief)
+  dx-jobutil-add-output counts_txt "${readcount_file}" --class=file
+}
+
 sum_reads() {
 
   set -e -x -o pipefail

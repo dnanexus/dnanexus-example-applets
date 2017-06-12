@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from __future__ import print_function
 import argparse
 import os
@@ -6,8 +7,18 @@ import re
 import logging
 from multiprocessing import Pool
 from itertools import izip
-from helpers import FrontMatter, SectionParser, InvalidSection
+from helpers import FrontMatter, SectionParser
 from global_helper_vars import TUTORIAL_TYPES_SEARCH, SUPPORTED_INTERPRETERS, NUM_CORES
+
+
+def _create_code_block_dict(tutorial_dict):
+    code_block_dict, func_dict = {}, {}
+    if SUPPORTED_INTERPRETERS.get(tutorial_dict["interpreter"]) is not None:
+        code_block_dict, func_dict = SectionParser(
+            code_file_path=tutorial_dict["src_code"],
+            ignore_comments=tutorial_dict["ignore_comments"],
+            interpreter=tutorial_dict["interpreter"]).parse_file().get_parse_dict()
+    return code_block_dict, func_dict
 
 
 def _rehydrate_site(user_args):
@@ -26,12 +37,15 @@ def _rehydrate_site(user_args):
     md_maker.close()
     md_maker.join()
     for i in xrange(len(status)):
-        msg = "SUCCESS: {title}" if status[i] else "FAIL: {title}"
+        msg = "SUCCESS: {title}" if status[i][0] else "FAIL: {title}"
         print(msg.format(title=tutorial_dicts[i]["title"]))
+        if not status[i][0]:
+            print(status[i][1])
+            #logging.info(status[i][1])
 
 
 def _resolve_applet(dxapp_path):
-    """Moved to top level due to Pool.map() inability to use nested func"""
+    """Moved to top level due to Pool.map() inability to use nested func or output dict"""
     with open(dxapp_path, "r") as dxf:
         dxapp_obj = json.load(dxf)
     src_code = os.path.join(dxapp_path[:-11], dxapp_obj["runSpec"]["file"])  # pretty sure this is a required field
@@ -58,21 +72,42 @@ def _resolve_applets(dxapp_paths):
     return mapping_list
 
 
-def _write_kmarkdown(fh_md, readme_md_path, section_parser={}):
-    """Creates Kramdown webpage"""
+def _write_kmarkdown(fh_md, readme_md_path, section_parser={}, func_parser={}):
+    """Creates Kramdown webpage
+
+    Notes: Add {match: func(line)} to dictionary in order to handle special matches
+    """
     def _section_match(match):
         section = match.group(1).strip()
         logging.debug("Kramdown code region in {0} {1}".format(readme_md_path, section))
         return section_parser[section]
 
     def _force_line_match(match):
-        return match.group(1).strip()
-    special_match = {
+        return "\n{insert}\n".format(insert=match.group(1).strip())
+
+    def _func_match(match):
+        func = match.group(1).strip()
+        return func_parser[func]
+
+    def _opt_header2_match(match):
+        fh_md.write('<hr>')
+
+    special_match = {  # Only one of these matches can be used. TODO flag multiple matches
         re.compile(r'.*<!--\s*SECTION:\s*\b(.*)-->'): _section_match,
         re.compile(r'.*<!--\s*INCLUDE:\s*(\S.*)-->'): _force_line_match,
+        re.compile(r'.*<!--\s*FUNCTION:\s*(\S.*)-->'): _func_match
     }
+
+    optional_match = {  # As many of these matches can be present in one line
+        re.compile(r'^\#\#\s.*|.*<!--\s*INCLUDE:\s*\#\#\s.*-->'): _opt_header2_match
+    }
+
     with open(readme_md_path) as readme_md:
         for line in readme_md:
+            for matcher, opt_func in optional_match.iteritems():
+                match = matcher.match(line)
+                if match is not None:
+                    opt_func(match)
             for matcher, func in special_match.iteritems():
                 match = matcher.match(line)
                 if match is not None:
@@ -115,22 +150,6 @@ def create_jekyll_markdown_tutorial(tutorial_dict):
     :type overwrite: boolean
     TODO switch back to mapping once multiprocessing is implementended using Processing
     """
-    def _write_front_matter(dxapp_obj, file_handle):
-        """Generate and write liquid front matter"""
-        frontmatter = FrontMatter(
-            title=dxapp_obj["title"],
-            source=dxapp_obj["name"])
-        tut_type = "basic"
-        for k, v in TUTORIAL_TYPES_SEARCH.iteritems():
-            if v.match(dxapp_obj["name"]):
-                tut_type = k
-                break
-        frontmatter.add_field("tutorial_type", tut_type)
-        lang = SUPPORTED_INTERPRETERS.get(dxapp_obj["interpreter"], "none")
-        frontmatter.add_field("language", lang)
-        file_handle.write(frontmatter.__str__())
-        logging.info("front matter written")
-
     target_file = os.path.join(
         tutorial_dict["site_pages_dir"], tutorial_dict["name"].strip() + ".md")
     if os.path.exists(target_file):
@@ -138,29 +157,42 @@ def create_jekyll_markdown_tutorial(tutorial_dict):
             logging.debug("removing: {0}".format(target_file))
             os.remove(target_file)
         else:
-            logging.info("exist: {fn}".format(fn=target_file))
+            logging.info("Exist: {fn}".format(fn=target_file))
             return True
 
-    # Handle JSON for assets at some point, should be easy.
-    code_block_dict = {}
-    if SUPPORTED_INTERPRETERS.get(tutorial_dict["interpreter"]) is not None:
-        code_block_dict = SectionParser(
-            code_file_path=tutorial_dict["src_code"],
-            ignore_comments=tutorial_dict["ignore_comments"],
-            interpreter=tutorial_dict["interpreter"]).parse_file().get_section_dict()
+    code_block_dict, func_dict = _create_code_block_dict(tutorial_dict)
+
     try:
         with open(target_file, "w") as tutorial_md:
             _write_front_matter(tutorial_dict, tutorial_md)
             _write_kmarkdown(
                 fh_md=tutorial_md,
                 readme_md_path=tutorial_dict["readme_md"],
-                section_parser=code_block_dict)
-    except InvalidSection as IE:
-        # Change to logging
-        logging.info(IE.message)
-        return False
+                section_parser=code_block_dict,
+                func_parser=func_dict)
+    except Exception as e:
+        return False, e.message
 
-    return True
+    return True, ""
+
+
+def _write_front_matter(dxapp_obj, file_handle=None):
+    """Generate and write liquid front matter"""
+    frontmatter = FrontMatter(
+        title=dxapp_obj["title"],
+        source=dxapp_obj["name"])
+    tut_type = "basic"
+    for k, v in TUTORIAL_TYPES_SEARCH.iteritems():
+        if v.match(dxapp_obj["name"]):
+            tut_type = k
+            break
+    frontmatter.add_field("tutorial_type", tut_type)
+    lang = SUPPORTED_INTERPRETERS.get(dxapp_obj["interpreter"], "none")
+    frontmatter.add_field("language", lang)
+    if file_handle is None:
+        return frontmatter.__str__()
+    file_handle.write(frontmatter.__str__())
+    logging.info("front matter written")
 
 
 def main():

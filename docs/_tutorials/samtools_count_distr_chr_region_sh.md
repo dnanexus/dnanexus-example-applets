@@ -2,13 +2,13 @@
 tutorial_type: distributed
 source: samtools_count_distr_chr_region_sh
 language: bash
-title: SAMtools distributed count by region (bash)
+title: SAMtools distributed count by region
 ---
 # SAMtools distributed count by region
 
-Documentation to create a distributed applet can be found on the [WIKI](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App). This readme will focus on the details of this example.
+Documentation to create a distributed applet can be found on the [Developer Tutorials wiki page](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App). This readme will focus on the details of this example.
 
-## Entry points
+<hr>## Entry points
 
 Distributed bash-interpreter apps use bash functions to [declare entry points](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App#Adding-Entry-Points-to-Your-Code). Entry points are executed on a new worker with their own system requirements. This app has the following entry points specified as bash functions:
 
@@ -16,11 +16,11 @@ Distributed bash-interpreter apps use bash functions to [declare entry points](h
 * *count_func*
 * *sum_reads*
 
-## Overview
+<hr>## Overview
 ### main
 The *main* function takes the initial `*.bam`, generates an index `*.bai` if needed, and obtains the list of regions from the `*.bam`. Every 10 regions will be sent, as input, to the *count_func* entry point using [dx-jobutil-new-job](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-jobutil-new-job) command.
 ```bash
-regions=$(samtools view -H "${mappings_sorted_bam_name}" | grep "\@SQ" | sed 's/.*SN:\(\S*\)\s.*/\1/')
+  regions=$(samtools view -H "${mappings_sorted_bam_name}" | grep "\@SQ" | sed 's/.*SN:\(\S*\)\s.*/\1/')
 
   echo "Segmenting into regions"
   count_jobs=()
@@ -45,7 +45,7 @@ regions=$(samtools view -H "${mappings_sorted_bam_name}" | grep "\@SQ" | sed 's/
 
 Job outputs from the *count_func* entry point are referenced as Job Based Object References ([JBOR](https://wiki.dnanexus.com/API-Specification-v1.0.0/Job-Input-and-Output#Job-Dependencies)) and used as inputs for the *sum_reads* entry point.
 ```bash
-echo "Merge count files, jobs:"
+  echo "Merge count files, jobs:"
   echo "${count_jobs[@]}"
   readfiles=()
   for count_job in "${count_jobs[@]}"; do
@@ -59,7 +59,7 @@ echo "Merge count files, jobs:"
 
 Job outputs of the *sum_reads* entry point is used as the output of the *main* entry point via JBOR reference in [dx-jobutil-add-output](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-jobutil-add-output) command.
 ```bash
-echo "Specifying output file"
+  echo "Specifying output file"
   dx-jobutil-add-output counts_txt "${countsfile_job}:read_sum" --class=jobref
 }
 ```
@@ -120,10 +120,118 @@ sum_reads() {
 
   read_sum_id=$(dx upload "${filename}_counts.txt" --brief)
   dx-jobutil-add-output read_sum "${read_sum_id}" --class=file
+```
+
+Then in the main function the output is referenced
+```bash
+  echo "Specifying output file"
+  dx-jobutil-add-output counts_txt "${countsfile_job}:read_sum" --class=jobref
 }
 ```
-Then in the main function the output is referenced```bash
-echo "Specifying output file"
+<hr>
+## Applet Script
+
+```bash
+main() {
+
+
+  set -e -x -o pipefail
+  echo "Value of mappings_sorted_bam: '${mappings_sorted_bam}'"
+
+
+  dx download "${mappings_sorted_bam}"
+
+  if [ -z "${mappings_sorted_bai}" ]; then
+    samtools index "${mappings_sorted_bam_name}"
+    mappings_sorted_bai=$(dx upload "${mappings_sorted_bam_name}.bai" --brief)
+  fi
+
+  echo "Value of index file: ${mappings_sorted_bai}"
+
+
+  regions=$(samtools view -H "${mappings_sorted_bam_name}" | grep "\@SQ" | sed 's/.*SN:\(\S*\)\s.*/\1/')
+
+  echo "Segmenting into regions"
+  count_jobs=()
+  counter=0
+  temparray=()
+  for r in $(echo $regions); do
+    if [[ "${counter}" -ge 10 ]]; then
+      echo "${temparray[@]}"
+      count_jobs+=($(dx-jobutil-new-job -ibam_file="${mappings_sorted_bam}" -ibambai_file="${mappings_sorted_bai}" "${temparray[@]}" count_func))
+      temparray=()
+      counter=0
+    fi
+    temparray+=("-iregions=${r}") # Here we add to an array of -i<parameter>'s
+    counter=$((counter+1))
+  done
+
+  if [[ counter -gt 0 ]]; then # Previous loop will miss last iteration  if its < 10
+    echo "${temparray[@]}"
+    count_jobs+=($(dx-jobutil-new-job -ibam_file="${mappings_sorted_bam}" -ibambai_file="${mappings_sorted_bai}" "${temparray[@]}" count_func))
+  fi
+
+
+  echo "Merge count files, jobs:"
+  echo "${count_jobs[@]}"
+  readfiles=()
+  for count_job in "${count_jobs[@]}"; do
+    readfiles+=("-ireadfiles=${count_job}:counts_txt")
+  done
+  echo "file name: ${sorted_bamfile_name}"
+  echo "Set file, readfile variables:"
+  echo "${readfiles[@]}"
+  countsfile_job=$(dx-jobutil-new-job -ifilename="${mappings_sorted_bam_prefix}" "${readfiles[@]}" sum_reads)
+
+
+  echo "Specifying output file"
   dx-jobutil-add-output counts_txt "${countsfile_job}:read_sum" --class=jobref
+}
+
+count_func() {
+
+  set -e -x -o pipefail
+
+  echo "Value of bam_file: '${bam_file}'"
+  echo "Value of bambai_file: '${bambai_file}'"
+  echo "Regions being counted '${regions[@]}'"
+
+
+  dx-download-all-inputs
+
+
+  mkdir workspace
+  cd workspace || exit
+  mv "${bam_file_path}" .
+  mv "${bambai_file_path}" .
+  outputdir="./out/samtool/count"
+  mkdir -p "${outputdir}"
+  samtools view -c "${bam_file_name}" "${regions[@]}" >> "${outputdir}/readcounts.txt"
+
+
+  counts_txt_id=$(dx upload "${outputdir}/readcounts.txt" --brief)
+  dx-jobutil-add-output counts_txt "${counts_txt_id}" --class=file
+}
+
+sum_reads() {
+
+  set -e -x -o pipefail
+  echo "$filename"
+
+  echo "Value of read file array '${readfiles[@]}'"
+  dx-download-all-inputs
+  echo "Value of read file path array '${readfiles_path[@]}'"
+
+  echo "Summing values in files"
+  readsum=0
+  for read_f in "${readfiles_path[@]}"; do
+    temp=$(cat "$read_f")
+    readsum=$((readsum + temp))
+  done
+
+  echo "Total reads: ${readsum}" > "${filename}_counts.txt"
+
+  read_sum_id=$(dx upload "${filename}_counts.txt" --brief)
+  dx-jobutil-add-output read_sum "${read_sum_id}" --class=file
 }
 ```

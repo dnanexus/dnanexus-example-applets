@@ -17,12 +17,12 @@ LANG_COMMENT = {
     "python2.7": {"regular_comment": ["#"], "block_comment": ["\"\"\""]},
 }
 
+LANG_FUNC_SECTION_SEARCH = {  # multilple match groups
+    "python2.7": re.compile(r'^(\s*)\bdef\s\b(.+)\(.+:'),
+    "bash": re.compile(r'^\s*\b(.+)\(.+{|^\s*\bfunction\s(.+){')
+}
+
 CODE_SECTION_SEARCH = {  # section (STARTre, ENDre), similar for now
     "bash": (re.compile(r'.*#\s*SECTION:\s*\b(.+)$'), re.compile(r'.*#\s*SECTION-END')),
     "python2.7": (re.compile(r'.*#\s*SECTION:\s*\b(.+)$'), re.compile(r'.*#\s*SECTION-END')),
-}
-
-FUNC_SECTION_SEARCH = {  # multilple match groups
-    "python2.7": re.compile(r'^(\s*)\bdef\s\b(.+)\(.+:'),
-    "bash": re.compile(r'^\s*\b(.+)\(.+{|^\s*\bfunction\s(.+){')
 }

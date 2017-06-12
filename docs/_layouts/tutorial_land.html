@@ -4,18 +4,16 @@ source_dir: https://github.com/Damien-Black/dnanexus-example-applets/tree/master
 ---
 <!-- <h1>{{ page.language | capitalize }} Tutorials</h1> -->
 <hr>
-<div class="tutorial_snippet">
+<div class="panel-group" id="accordion">
 	{% for tut in site.tutorials %}
 	{% if tut.language != page.language or tut.tutorial_type != page.tutorial_type %}
 	{% continue %}
 	{% endif %}
 	<!-- Get include working for maintainability -->
-	<!-- nclude accordian.html content=tut.content source=tut.source title=tut.title -->
-	<div class="tutorial_snippets">
-		<div class="panel-group" id="accordion">
+	<!-- include accordian.html content=tut.content source=tut.source title=tut.title -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<a data-toggle="collapse" data-parent="#accordion" href="#{{ tut.source }}">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#{{ tut.source }}">
 						<h1 class="panel-title">{{ tut.title }}</h1>
 					</a>
 				</div>
@@ -31,7 +29,5 @@ source_dir: https://github.com/Damien-Black/dnanexus-example-applets/tree/master
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 	{% endfor %}
 </div>

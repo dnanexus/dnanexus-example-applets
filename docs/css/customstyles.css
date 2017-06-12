@@ -439,25 +439,36 @@ html {
   position: relative;
   min-height: 100%;
 }
-
+/*
 body {
   font-size:15px;
+  margin-bottom: 60px;
+}
+*/
+body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
 }
+/*
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  /* Set the fixed height of the footer here
-  height: 60px;*/
   background-color: #f5f5f5;
-  /* Footer text info */
   text-align: left;
   font-size: smaller;
   height: 60px;
 }
-
+*/
+/* temp stick foot */
+.footer {
+  display: inline-block;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
 
 /* Custom page CSS
 -------------------------------------------------- */
@@ -699,8 +710,8 @@ div.tags {padding: 10px 5px;}
 
 hr {
     background: #999;
-    margin: 30px 0px;
-    width: 90%;
+    margin: 10px 0px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
