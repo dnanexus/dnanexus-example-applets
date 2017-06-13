@@ -435,9 +435,8 @@ span.projectTitle {
 /* Sticky footer styles - https://getbootstrap.com/examples/sticky-footer/
 Going with: http://stackoverflow.com/questions/42294/how-do-you-get-the-footer-to-stay-at-the-bottom-of-a-web-page
 --------------------------------------------------*/
-html {
-  position: relative;
-  min-height: 100%;
+html, body {
+  height: 100%;
 }
 /*
 body {
@@ -445,10 +444,6 @@ body {
   margin-bottom: 60px;
 }
 */
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
 /*
 .footer {
   position: absolute;
@@ -461,13 +456,12 @@ body {
 }
 */
 /* temp stick foot */
+.footer, .container:after {
+  height: 142px; 
+}
 .footer {
-  display: inline-block;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
   background-color: #f5f5f5;
+  margin-bottom: 0;
 }
 
 /* Custom page CSS
@@ -486,6 +480,16 @@ body > .container {
   padding-left: 15px;
 }
 */
+.container {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -142px; 
+}
+.container:after {
+  content: "";
+  display: block;
+}
+
 code {
   font-size: 80%;
 }
