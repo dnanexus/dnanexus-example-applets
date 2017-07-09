@@ -222,7 +222,7 @@ def main(mappings_bam, region_size, index_file=None):
     dxpy.download_dxfile(mappings_bam_h.get_id(), filename)
 
     #
-    # Scatter
+    # SECTION: Scatter
     # ------------------------------------------------------
     # Split regions into list of <region size> list
     #
@@ -231,7 +231,6 @@ def main(mappings_bam, region_size, index_file=None):
     #   Sort BAM if necessary.
     #   Upload dx file to pass to distributed jobs
     #
-
     regions = parseSAM_header_for_region(filename)
     split_regions = [regions[i:i + region_size]
                      for i in xrange(0, len(regions), region_size)]
@@ -240,7 +239,7 @@ def main(mappings_bam, region_size, index_file=None):
         mappings_bam, index_file = create_index_file(filename, mappings_bam)
 
     #
-    # Processing
+    # SECTION: Processing
     # -----------------------------------------------------------------------
     # Run subjob for each distributed region.
     #
@@ -256,7 +255,6 @@ def main(mappings_bam, region_size, index_file=None):
     #    create optimized instance types.  dxpy.new_dxjob takes the optional
     #    parameter: instance_type
     #
-
     print 'creating subjobs'
     subjobs = [dxpy.new_dxjob(
                fn_input={"region_list": split,
@@ -269,14 +267,13 @@ def main(mappings_bam, region_size, index_file=None):
                    for subjob in subjobs]
 
     #
-    # Gather (Post-processing)
+    # SECTION: Gather (Post-processing)
     # -------------------------------------------------------------------------
     # Pass DNAnexus object references to post processing job to combine outputs
     #
     # Create dictionary to be returned as output for the job
     # Dictionary must contain keys matching outputs set in dxapp.json
     #
-
     print 'combining outputs'
     postprocess_job = dxpy.new_dxjob(
         fn_input={"countDXlinks": fileDXLinks, "resultfn": filename},
