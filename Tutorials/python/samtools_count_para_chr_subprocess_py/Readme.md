@@ -11,7 +11,7 @@ This applet tutorial code is simalar to the [_Parallel Cores SAMtools count tuto
 
 ## How is SAMtools dependency provided?
 SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the dxapp.json runSpec.execDepends.
-```
+```json
   "runSpec": {
     ...
     "execDepends": [
