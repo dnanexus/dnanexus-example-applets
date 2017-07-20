@@ -8,6 +8,7 @@ Pysam is obtained through a `pip install` using the pip package manager in the d
 <!-- Since JSON can't be commented cannot autogenerate below. YAML looking good right now -->
 
 ```json
+{
  "runSpec": {
     ...
     "execDepends": [
@@ -15,9 +16,11 @@ Pysam is obtained through a `pip install` using the pip package manager in the d
          "package_manager": "pip",
          "version": "0.9.1.4"
       }
-    ],
+    ]
     ...
+ }
 ```
+
 `execDepends` value is a JSON array of dependencies to resolve before the applet src code is run. In this applet, we specify `pip` as our package manager and `pysam version 0.9.1.4` as the dependency to resolve. Pysam is installed to `/usr/local/lib/python2.7/dist-packages` and can be imported by our python script.
 
 ## Downloading inputs   
