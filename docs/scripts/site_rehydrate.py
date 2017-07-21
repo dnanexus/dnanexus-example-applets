@@ -11,13 +11,13 @@ from helpers import FrontMatter, SectionParser
 from global_helper_vars import TUTORIAL_TYPES_SEARCH, SUPPORTED_INTERPRETERS, NUM_CORES
 
 
-def _create_code_block_dict(tutorial_dict):
+def _create_code_block_dict(tutorial_dict, logger):
     code_block_dict, func_dict = {}, {}
     if SUPPORTED_INTERPRETERS.get(tutorial_dict["interpreter"]) is not None:
         code_block_dict, func_dict = SectionParser(
             code_file_path=tutorial_dict["src_code"],
             ignore_comments=tutorial_dict["ignore_comments"],
-            interpreter=tutorial_dict["interpreter"]).parse_file().get_parse_dict()
+            interpreter=tutorial_dict["interpreter"], logger=logger).parse_file().get_parse_dict()
     return code_block_dict, func_dict
 
 
@@ -72,14 +72,14 @@ def _resolve_applets(dxapp_paths):
     return mapping_list
 
 
-def _write_kmarkdown(fh_md, readme_md_path, section_parser={}, func_parser={}):
+def _write_kmarkdown(fh_md, readme_md_path, logger, section_parser={}, func_parser={}):
     """Creates Kramdown webpage
 
     Notes: Add {match: func(line)} to dictionary in order to handle special matches
     """
     def _section_match(match):
         section = match.group(1).strip()
-        logging.debug("Kramdown code region in {0} {1}".format(readme_md_path, section))
+        logger.debug("Kramdown code region in {0} {1}".format(readme_md_path, section))
         return section_parser[section]
 
     def _force_line_match(match):
@@ -135,7 +135,6 @@ def get_parser():
     parser.add_argument("--site-pages", help="Directory where site pages are located", default=None, metavar="Site Pages directory", dest="site_pages_dir")
     parser.add_argument("--keep-comments", help="Ignore other comments in code when parsing sections.", action="store_false", dest="skip_comments")
     parser.add_argument("--overwrite-files", help="Overwrites old files with generated files", action="store_true", dest="overwrite")
-    parser.add_argument("-v", help="Verbosity", action="store_true", dest="verbose")
 
     return parser
 
@@ -150,35 +149,69 @@ def create_jekyll_markdown_tutorial(tutorial_dict):
     :type overwrite: boolean
     TODO switch back to mapping once multiprocessing is implementended using Processing
     """
+    log_file_unq_name = "{tut_name}_{title}".format(
+        tut_name=tutorial_dict["name"].strip(), title=tutorial_dict["name"].strip())
+    setup_logger(
+        logger_name=log_file_unq_name, log_dir='log_temp_dir',
+        level=logging.DEBUG)
+    proc_logger = logging.getLogger(log_file_unq_name)
+
     target_file = os.path.join(
         tutorial_dict["site_pages_dir"], tutorial_dict["name"].strip() + ".md")
     if os.path.exists(target_file):
         if tutorial_dict["overwrite"]:
-            logging.debug("removing: {0}".format(target_file))
+            proc_logger.debug("removing: {0}".format(target_file))
             os.remove(target_file)
         else:
-            logging.info("Exist: {fn}".format(fn=target_file))
+            proc_logger.info("Exist: {fn}".format(fn=target_file))
             return True
 
-    code_block_dict, func_dict = _create_code_block_dict(tutorial_dict)
+    code_block_dict, func_dict = _create_code_block_dict(tutorial_dict, logger=proc_logger)
 
     try:
         with open(target_file, "w") as tutorial_md:
-            _write_front_matter(tutorial_dict, tutorial_md)
+            _write_front_matter(dxapp_obj=tutorial_dict, logger=proc_logger, file_handle=tutorial_md)
             _write_kmarkdown(
                 fh_md=tutorial_md,
                 readme_md_path=tutorial_dict["readme_md"],
                 section_parser=code_block_dict,
-                func_parser=func_dict)
+                func_parser=func_dict,
+                logger=proc_logger)
     except Exception as e:
-        return False, e.message
+        return False, "Failed with Error:\n{err}\n Review log {logname}".format(
+            err=e.message, logname=log_file_unq_name)
 
     return True, ""
 
 
-def _write_front_matter(dxapp_obj, file_handle=None):
+def setup_logger(logger_name, log_dir, level=logging.INFO):
+    """Create logger instance
+    Inspiration: https://stackoverflow.com/questions/17035077/python-logging-to-multiple-log-files-from-different-classes
+    """
+    try:
+        os.mkdir(log_dir)
+    except OSError:
+        pass
+    if not os.path.exists(log_dir):
+        os.mkdir(log_dir)
+    log_file = os.path.join(log_dir, logger_name)
+    log_instance = logging.getLogger(logger_name)
+    formatter = logging.Formatter('%(asctime)s : %(message)s')
+    fileHandler = logging.FileHandler(log_file, mode='w')
+    fileHandler.setFormatter(formatter)
+    # streamHandler = logging.StreamHandler()
+    # streamHandler.setFormatter(formatter)
+
+    log_instance.setLevel(level)
+    log_instance.addHandler(fileHandler)
+    # log_instance.addHandler(streamHandler)
+
+
+def _write_front_matter(dxapp_obj, logger, file_handle=None):
     """Generate and write liquid front matter"""
+    proc_logger = logger
     frontmatter = FrontMatter(
+        logger=logger,
         title=dxapp_obj["title"],
         source=dxapp_obj["name"])
     tut_type = "basic"
@@ -192,7 +225,7 @@ def _write_front_matter(dxapp_obj, file_handle=None):
     if file_handle is None:
         return frontmatter.__str__()
     file_handle.write(frontmatter.__str__())
-    logging.info("front matter written")
+    proc_logger.info("front matter written")
 
 
 def main():
@@ -208,8 +241,6 @@ def main():
         script_dir = os.path.dirname(os.path.realpath(__file__))
         assumed_site_page_path = os.path.join(script_dir, "..", "_tutorials")
         args.site_pages_dir = os.path.normpath(assumed_site_page_path)
-    if args.verbose:
-        logging.basicConfig(level=logging.DEBUG)
 
     _rehydrate_site(args)
 

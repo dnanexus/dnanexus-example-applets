@@ -24,15 +24,14 @@ class FrontMatter(object):
     """
     allowed_fields = ['title', 'tutorial_type', 'source', 'language']
 
-    def __init__(self, **kwargs):
-        logging.debug("init FM")
+    def __init__(self, logger, **kwargs):
+        self.logger = logger
         self.mapping = {}
         for k, v in kwargs.iteritems():
             self.add_field(k, v)
-        logging.debug("done FM")
 
     def add_field(self, field, value):
-        logging.info("Front matter field: {field} value {val}".format(field=field, val=value))
+        self.logger.info("Front matter field: {field} value {val}".format(field=field, val=value))
         if field not in self.allowed_fields:
             raise Exception("{field} is not a defined frontmatter field. Do you need to add it?".format(field=field))
         if field in self.mapping:
@@ -51,10 +50,11 @@ class SectionParser(object):
     """Parse a src/code.* file for sections.
     TODO handle block comments. and block strings in python
     """
-    def __init__(self, code_file_path, ignore_comments=True, interpreter=""):
+    def __init__(self, code_file_path, logger, ignore_comments=True, interpreter=""):
         self.code = code_file_path
         self._active_section = None
         self._section_mapping, self._func_mapping = {}, {}
+        self.logger = logger
         self.section_start, self.section_end = CODE_SECTION_SEARCH[interpreter]
         self.language = SUPPORTED_INTERPRETERS.get(interpreter, "")
         self.comment_chars = LANG_COMMENT.get(interpreter, [])
@@ -67,7 +67,7 @@ class SectionParser(object):
 
     @active_section.setter
     def active_section(self, value):
-        logging.info("Section change to: {0}".format(value))
+        self.logger.info("Section change to: {0}".format(value))
         value = value.strip() if value is not None else None
         if value in self._section_mapping:
             raise InvalidSection("You Only Add Secions Once. Give sections unique names")
@@ -108,7 +108,7 @@ class SectionParser(object):
         def func_parse(line, flag):
             pass
 
-        logging.info("Code region search")
+        self.logger.info("Code region search")
         comment_flag = False  # False,True, or comment flag. Block comment char if needed
         # func_flag = (0, 0)  # ( Int number of space chars, newline count )
         all_code = []
@@ -126,7 +126,7 @@ class SectionParser(object):
             code_start="\n```{lang}\n".format(lang=self.language),
             code_blk="".join(all_code).strip(),
             code_end="\n```\n")
-        logging.info("Code regions created")
+        self.logger.info("Code regions created")
         return self
 
     def is_comment(self, line, comment_flag=False):
@@ -140,12 +140,12 @@ class SectionParser(object):
 
         line = line.strip()
         if startswith_prefixes(line, self.comment_chars.get("regular_comment", [])):
-            logging.debug("regular comment, line: {line_is}".format(line_is=line))
+            self.logger.debug("regular comment, line: {line_is}".format(line_is=line))
             return comment_flag if comment_flag else True
         # block comment code block
         block_str = startswith_prefixes(line, self.comment_chars.get("block_comment", []))
         if type(block_str) is str:
-            logging.debug("block comment, line: {0}".format(block_str))
+            self.logger.debug("block comment, line: {0}".format(block_str))
             return True if block_str == comment_flag else block_str
         return comment_flag if type(comment_flag) is str else False
 
