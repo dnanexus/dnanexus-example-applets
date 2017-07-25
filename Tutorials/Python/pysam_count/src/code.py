@@ -13,7 +13,6 @@ import unicodedata
 import re
 
 
-# SECTION: Get chromosomes helper
 def get_chr(bam_alignment, canonical=False):
     """Helper function to return canonical chromosomes from SAM/BAM header
 
@@ -38,7 +37,6 @@ def get_chr(bam_alignment, canonical=False):
             regions[i] = seq_elem['SN']
 
     return regions
-    # SECTION-END
 
 @dxpy.entry_point('main')
 def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
@@ -72,7 +70,6 @@ def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
                              mappings_sorted_bai.name)
     else:
         pysam.index(ascii_bam_name)
-    # SECTION-END
 
     #
     # SECTION: Get chromosomes regions
@@ -112,6 +109,6 @@ def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
     output["counts_txt"] = dxpy.dxlink(counts_txt)
 
     return output
-    # SECTION-END
+
 
 dxpy.run()

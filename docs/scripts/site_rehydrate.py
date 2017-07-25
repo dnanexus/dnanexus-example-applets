@@ -7,18 +7,19 @@ import re
 import logging
 from multiprocessing import Pool
 from itertools import izip
-from helpers import FrontMatter, SectionParser
+from FrontMatterClass import FrontMatter
+from SectionParserClass import SectionParser
 from global_helper_vars import TUTORIAL_TYPES_SEARCH, SUPPORTED_INTERPRETERS, NUM_CORES
 
 
-def _create_code_block_dict(tutorial_dict, logger):
-    code_block_dict, func_dict = {}, {}
-    if SUPPORTED_INTERPRETERS.get(tutorial_dict["interpreter"]) is not None:
-        code_block_dict, func_dict = SectionParser(
+def _get_section_parser(tutorial_dict, logger):
+    tutorial_parser = None
+    if SUPPORTED_INTERPRETERS.get(tutorial_dict["interpreter"]):
+        tutorial_parser = SectionParser(
             code_file_path=tutorial_dict["src_code"],
             ignore_comments=tutorial_dict["ignore_comments"],
-            interpreter=tutorial_dict["interpreter"], logger=logger).parse_file().get_parse_dict()
-    return code_block_dict, func_dict
+            interpreter=tutorial_dict["interpreter"], logger=logger)
+    return tutorial_parser
 
 
 def _rehydrate_site(user_args):
@@ -72,25 +73,31 @@ def _resolve_applets(dxapp_paths):
     return mapping_list
 
 
-def _write_kmarkdown(fh_md, readme_md_path, logger, section_parser={}, func_parser={}):
+def _write_kmarkdown(fh_md, readme_md_path, logger, section_parser):
     """Creates Kramdown webpage
 
     Notes: Add {match: func(line)} to dictionary in order to handle special matches
     """
     def _section_match(match):
         section = match.group(1).strip()
-        logger.debug("Kramdown code region in {0} {1}".format(readme_md_path, section))
-        return section_parser[section]
+        logger.debug("Kramdown section in {location} {region_name}".format(
+            location=readme_md_path, region_name=section))
+        return section_dict[section]
 
     def _force_line_match(match):
-        return "\n{insert}\n".format(insert=match.group(1).strip())
+        match = match.group(1).strip()
+        logger.debug("Force line match: {}".format(match))
+        return "\n{insert}\n".format(insert=match)
 
     def _func_match(match):
-        func = match.group(1).strip()
-        return func_parser[func]
+        func_name = match.group(1).strip()
+        logger.debug("Adding Func: {}".format(func_name))
+        return section_parser.get_func_code(func_name)
 
     def _opt_header2_match(match):
         fh_md.write('<hr>')
+
+    section_dict = section_parser.parse_file().get_parse_dict()
 
     special_match = {  # Only one of these matches can be used. TODO flag multiple matches
         re.compile(r'.*<!--\s*SECTION:\s*\b(.*)-->'): _section_match,
@@ -106,11 +113,11 @@ def _write_kmarkdown(fh_md, readme_md_path, logger, section_parser={}, func_pars
         for line in readme_md:
             for matcher, opt_func in optional_match.iteritems():
                 match = matcher.match(line)
-                if match is not None:
+                if match:
                     opt_func(match)
             for matcher, func in special_match.iteritems():
                 match = matcher.match(line)
-                if match is not None:
+                if match:
                     line = func(match)
                     break
             fh_md.write(line)
@@ -164,9 +171,9 @@ def create_jekyll_markdown_tutorial(tutorial_dict):
             os.remove(target_file)
         else:
             proc_logger.info("Exist: {fn}".format(fn=target_file))
-            return True
+            return True, ""
 
-    code_block_dict, func_dict = _create_code_block_dict(tutorial_dict, logger=proc_logger)
+    section_parser = _get_section_parser(tutorial_dict, logger=proc_logger)
 
     try:
         with open(target_file, "w") as tutorial_md:
@@ -174,11 +181,11 @@ def create_jekyll_markdown_tutorial(tutorial_dict):
             _write_kmarkdown(
                 fh_md=tutorial_md,
                 readme_md_path=tutorial_dict["readme_md"],
-                section_parser=code_block_dict,
-                func_parser=func_dict,
+                section_parser=section_parser,
                 logger=proc_logger)
     except Exception as e:
-        return False, "Failed with Error:\n{err}\n Review log {logname}".format(
+        proc_logger.info("Exception: {msg}".format(msg=e))
+        return False, "Failed with Error:\n{err}\n Review logs in log_temp_dir directory: {logname}.".format(
             err=e.message, logname=log_file_unq_name)
 
     return True, ""

@@ -4,162 +4,113 @@ SectionParser:src/code parser class
 ---
 """
 from __future__ import print_function
-from global_helper_vars import LANG_COMMENT, CODE_SECTION_SEARCH, SUPPORTED_INTERPRETERS
-import logging
+import os
+import sys
+from shutil import move
+import re
+from subprocess import check_output, CalledProcessError
+from contextlib import contextmanager
+from importlib import import_module
+from inspect import getsource
+
+
+IMPORT_ERROR_MATCHER = re.compile(r'No module named \b(.+)\b')
+DXPY_RUN_SEARCH = re.compile(r'.*dxpy\.run\(\).*')
+DXPY_DECORATOR = re.compile(r'.*@dxpy\.entry_point\(\S+\).*')
 
 
 class InvalidSection(Exception):
     pass
 
 
-class FrontMatter(object):
-    """ Extend func as needed
-    Front matter is the part of the markdown file that looks like:
-    ---
-    title: SAMtools distributed count by region
-    tutorial_type: distributed
-    source: samtools_count_dist_chr_region_sh
-    language: bash
-    ---
+@contextmanager
+def pushd_popd(abs_dir_context):
+    """Just mimic bash pushd and popd"""
+    curr_dir = os.getcwd()
+    try:
+        os.chdir(abs_dir_context)
+        yield
+    finally:
+        os.chdir(curr_dir)
+
+
+@contextmanager
+def _temp_applet_src_alter(dirpath, module_path):
+    """Temporarily comment out dxpy.run() and alter python path so applet src can be imported
+
+    FIXME seek to dxpy.run() line the second time
+    Inspiration: https://stackoverflow.com/questions/17211078/how-to-temporarily-modify-sys-path-in-python
     """
-    allowed_fields = ['title', 'tutorial_type', 'source', 'language']
+    def file_comment_lines(re_searches, source_path, comment=True):
+        new_path = "{path}_extra".format(path=source_path)
+        with open(new_path, 'w') as nf:
+            with open(source_path, 'r') as f:
+                for line in f:
+                    for re_search in re_searches:
+                        if re_search.match(line):
+                            line = "{pre}{ori}".format(pre="#", ori=line) if comment else line.lstrip("#")
+                    nf.write(line)
+        os.remove(source_path)
+        move(new_path, source_path)
 
-    def __init__(self, logger, **kwargs):
-        self.logger = logger
-        self.mapping = {}
-        for k, v in kwargs.iteritems():
-            self.add_field(k, v)
-
-    def add_field(self, field, value):
-        self.logger.info("Front matter field: {field} value {val}".format(field=field, val=value))
-        if field not in self.allowed_fields:
-            raise Exception("{field} is not a defined frontmatter field. Do you need to add it?".format(field=field))
-        if field in self.mapping:
-            raise Exception("{field} already defined".format(field=field))
-        self.mapping[field] = value
-
-    def __str__(self):
-        frontmatter = "---"
-        for k, v in self.mapping.iteritems():
-            frontmatter += "\n{key}: {value}".format(key=k, value=v)
-        frontmatter += "\n---\n"
-        return frontmatter
+    sys.path.insert(0, dirpath)
+    file_comment_lines(
+        re_searches=[DXPY_RUN_SEARCH, DXPY_DECORATOR], source_path=module_path)
+    yield
+    file_comment_lines(
+        re_searches=[DXPY_RUN_SEARCH, DXPY_DECORATOR], source_path=module_path, comment=False)
+    print("Removing temp PATH")  # How does this work with multiple processes?
+    sys.path.remove(dirpath)
 
 
-class SectionParser(object):
-    """Parse a src/code.* file for sections.
-    TODO handle block comments. and block strings in python
+def resolve_module(module_name, depth=0):
+    """Attempt to import a module, mock failed imports as they occur.
+
+    FIXME: del imports once module resolved
+    FIXME: High risk function, find some other way of parsing source code
+    FIXME: Add proper Mock module and use that instead
+    Module mocking inspiration: https://stackoverflow.com/questions/8658043/how-to-mock-an-import
     """
-    def __init__(self, code_file_path, logger, ignore_comments=True, interpreter=""):
-        self.code = code_file_path
-        self._active_section = None
-        self._section_mapping, self._func_mapping = {}, {}
-        self.logger = logger
-        self.section_start, self.section_end = CODE_SECTION_SEARCH[interpreter]
-        self.language = SUPPORTED_INTERPRETERS.get(interpreter, "")
-        self.comment_chars = LANG_COMMENT.get(interpreter, [])
-        self.ignore_comments = ignore_comments
-        self._tempsection = []
+    try:
+        print('ATTEMPTING')
+        module_import = import_module(name=module_name)
+    except ImportError as ie:
+        print('I ERRED')
+        module_to_mock = IMPORT_ERROR_MATCHER.match(ie.message).group(1)
+        if module_to_mock == module_name:
+            raise ImportError('Circular dependency.')
+        sys.modules[module_to_mock] = import_module('string')  # placeholder module for now, issues?
+        depth += 1
+        return resolve_module(module_name, depth=depth)
+    else:
+        print('Depth {} reached before full resolution'.format(depth))
+        return module_import
 
-    @property
-    def active_section(self):
-        return self._active_section
 
-    @active_section.setter
-    def active_section(self, value):
-        self.logger.info("Section change to: {0}".format(value))
-        value = value.strip() if value is not None else None
-        if value in self._section_mapping:
-            raise InvalidSection("You Only Add Secions Once. Give sections unique names")
-        if self._tempsection:
-            code = "{start}{content}{end}".format(
-                start="```{language}\n".format(language=self.language),
-                content="".join(self._tempsection).strip("\n\r"),
-                end="\n```\n")
-            self._section_mapping[self.active_section] = code
-        self._active_section = value
-        self._tempsection = []
+def get_python_function_by_path(path_to_src, func_name):
+    """https://stackoverflow.com/questions/6677424/how-do-i-import-variable-packages-in-python-like-using-variable-variables-i
 
-    def get_parse_dict(self):
-        """Maybe validate."""
-        return self._section_mapping, self._func_mapping
+    Raises:
+        AttributeError - function doesn't exist
+        OSError
+    """
+    py_path, module_py = os.path.split(path_to_src)
+    module_name = module_py.rstrip('.py')
+    with _temp_applet_src_alter(dirpath=py_path, module_path=path_to_src):
+        with pushd_popd(py_path):
+            print("CURR DIR:", os.getcwd())
+            print("LIST DIR:", os.listdir('.'))
+            module_import = resolve_module(module_name=module_name)
+            print("OUTPUT HERE", module_import)
+            func_obj = getattr(module_import, func_name)
+            return getsource(func_obj)
 
-    def parse_file(self):
-        """
-        FIXME: Doc strings done on the same line not correctly parsed. Throws
-               entire document parsing off.
-        """
-        def section_parse(line, flag):
-            if self.active_section is None:
-                match = self.section_start.match(line)
-                if match is not None:
-                    self.active_section = match.group(1)
-            else:
-                end = self.section_end.match(line)
-                start_check = self.section_start.match(line)
-                if start_check is not None:
-                    self.active_section = start_check.group(1).strip()
-                elif end is not None:
-                    self.active_section = None
-                else:
-                    if not flag:
-                        self._tempsection.append(line)
 
-        def func_parse(line, flag):
-            pass
-
-        self.logger.info("Code region search")
-        comment_flag = False  # False,True, or comment flag. Block comment char if needed
-        # func_flag = (0, 0)  # ( Int number of space chars, newline count )
-        all_code = []
-        with open(self.code, "r") as f:
-            for line in f:
-                comment_flag = self.is_comment(line, comment_flag)
-                # func_flag = self.is_in_func(line, func_flag, comment_flag)
-                section_parse(line, comment_flag)
-                if not comment_flag:  # move into c
-                    all_code.append(line)
-        if self.active_section is not None and self._tempsection:
-            self.active_section = None
-
-        self._func_mapping["FULL SCRIPT"] = "{code_start}{code_blk}{code_end}".format(
-            code_start="\n```{lang}\n".format(lang=self.language),
-            code_blk="".join(all_code).strip(),
-            code_end="\n```\n")
-        self.logger.info("Code regions created")
-        return self
-
-    def is_comment(self, line, comment_flag=False):
-        def startswith_prefixes(word, prefixes):
-            pref_match = [word.startswith(prefix) for prefix in prefixes]
-            if any(pref_match):
-                return prefixes[pref_match.index(True)]
-            return False
-        if not self.ignore_comments:
-            return False
-
-        line = line.strip()
-        if startswith_prefixes(line, self.comment_chars.get("regular_comment", [])):
-            self.logger.debug("regular comment, line: {line_is}".format(line_is=line))
-            return comment_flag if comment_flag else True
-        # block comment code block
-        block_str = startswith_prefixes(line, self.comment_chars.get("block_comment", []))
-        if type(block_str) is str:
-            self.logger.debug("block comment, line: {0}".format(block_str))
-            return True if block_str == comment_flag else block_str
-        return comment_flag if type(comment_flag) is str else False
-
-        def is_in_func(self, line, func_flag, comment_flag):
-            def _count_prefix_spaces(sentence):
-                curr_spaces = 0
-                for ch in sentence:
-                    if ch == " ":
-                        curr_spaces += 1
-                    elif ch == "#":
-                        return False
-                    else:
-                        break
-                return curr_spaces
-            func_space_count, newline_count = func_flag
-            curr_spaces = _count_prefix_spaces(line)
-        #  TODO logic to see when a file ends
+def get_bash_function_by_path(path_to_src, func_name):
+    """https://stackoverflow.com/questions/6916856/can-bash-show-a-functions-definition"""
+    cmd = "source {src_code} &>/dev/null; declare -f {func}".format(
+        src_code=path_to_src, func=func_name)
+    try:
+        return check_output(cmd, shell=True)
+    except CalledProcessError:
+        return

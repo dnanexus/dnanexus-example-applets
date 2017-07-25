@@ -31,7 +31,7 @@ Pysam is obtained through a `pip install` using the pip package manager in the d
 Pysam provides several methods that mimic SAMtools commands. In our applet example, we want to focus only on canonical chromosomes. Pysam's object representation of a BAM file is `pysam.AlignmentFile`.
 <!--SECTION: Get chromosomes regions -->
 <!-- INCLUDE: The helper function `get_chr` -->
-<!--SECTION: Get chromosomes helper -->
+<!-- FUNCTION: get_chr -->
 
 Once we establish a list of canonical chromosomes, we then iterate over them and perform Pysam's version of `samtools view -c`, `pysam.AlignmentFile.count`.
 <!--SECTION: Perform basic pysam count. -->

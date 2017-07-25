@@ -1,0 +1,70 @@
+2017-07-25 16:20:23,276 : removing: /Users/sosazuwa/dnanexus-example-applets/docs/_tutorials/samtools_count_para_chr_subprocess_py.md
+2017-07-25 16:20:23,277 : Front matter field: source value samtools_count_para_chr_subprocess_py
+2017-07-25 16:20:23,277 : Front matter field: title value SAMtools count chromosomes in parallel
+2017-07-25 16:20:23,277 : Front matter field: tutorial_type value parallel
+2017-07-25 16:20:23,277 : Front matter field: language value python
+2017-07-25 16:20:23,277 : front matter written
+2017-07-25 16:20:23,278 : Code region search
+2017-07-25 16:20:23,278 : regular comment, line: #!/usr/bin/env python
+2017-07-25 16:20:23,278 : regular comment, line: # SECTION: Find Regions
+2017-07-25 16:20:23,278 : Section change to: Find Regions
+2017-07-25 16:20:23,279 : block comment, line: """
+2017-07-25 16:20:23,279 : block comment, line: """
+2017-07-25 16:20:23,279 : regular comment, line: # SECTION: Subprocess command
+2017-07-25 16:20:23,279 : Section change to: Subprocess command
+2017-07-25 16:20:23,279 : block comment, line: """
+2017-07-25 16:20:23,280 : block comment, line: """
+2017-07-25 16:20:23,280 : regular comment, line: # SECTION: Generate Index
+2017-07-25 16:20:23,280 : Section change to: Generate Index
+2017-07-25 16:20:23,280 : block comment, line: """
+2017-07-25 16:20:23,280 : block comment, line: """
+2017-07-25 16:20:23,281 : regular comment, line: # SECTION: Verify Pool Worker
+2017-07-25 16:20:23,281 : Section change to: Verify Pool Worker
+2017-07-25 16:20:23,281 : block comment, line: """
+2017-07-25 16:20:23,281 : block comment, line: """
+2017-07-25 16:20:23,281 : regular comment, line: # SECTION: Region Command
+2017-07-25 16:20:23,282 : Section change to: Region Command
+2017-07-25 16:20:23,282 : regular comment, line: # SECTION-END
+2017-07-25 16:20:23,282 : Section change to: None
+2017-07-25 16:20:23,282 : regular comment, line: # SECTION: Download Inputs
+2017-07-25 16:20:23,282 : Section change to: Download Inputs
+2017-07-25 16:20:23,283 : regular comment, line: # -------------------------------------------------------------------
+2017-07-25 16:20:23,283 : regular comment, line: # dxpy.download_all_inputs will download all input files into
+2017-07-25 16:20:23,283 : regular comment, line: # the /home/dnanexus/in directory.  A folder will be created for each
+2017-07-25 16:20:23,283 : regular comment, line: # input and the file(s) will be download to that directory.
+2017-07-25 16:20:23,283 : regular comment, line: #
+2017-07-25 16:20:23,283 : regular comment, line: # In this example our dictionary inputs has the following key, value pairs
+2017-07-25 16:20:23,284 : regular comment, line: #     mappings_bam_path: [u'/home/dnanexus/in/mappings_bam/SRR504516.bam']
+2017-07-25 16:20:23,284 : regular comment, line: #     mappings_bam_name: [u'SRR504516.bam']
+2017-07-25 16:20:23,284 : regular comment, line: #     mappings_bam_prefix: [u'SRR504516']
+2017-07-25 16:20:23,284 : regular comment, line: #     index_file_path: [u'/home/dnanexus/in/index_file/SRR504516.bam.bai']
+2017-07-25 16:20:23,284 : regular comment, line: #     index_file_name: [u'SRR504516.bam.bai']
+2017-07-25 16:20:23,284 : regular comment, line: #     index_file_prefix: [u'SRR504516']
+2017-07-25 16:20:23,284 : regular comment, line: #
+2017-07-25 16:20:23,285 : regular comment, line: # SECTION: Parallel by Chromosome using Subprocess.Popen
+2017-07-25 16:20:23,285 : Section change to: Parallel by Chromosome using Subprocess.Popen
+2017-07-25 16:20:23,285 : regular comment, line: # ----------------------------------------------------------
+2017-07-25 16:20:23,286 : regular comment, line: # Create view commands based on regions.
+2017-07-25 16:20:23,286 : regular comment, line: # Verify results
+2017-07-25 16:20:23,287 : regular comment, line: #
+2017-07-25 16:20:23,287 : regular comment, line: # Regions to parallize
+2017-07-25 16:20:23,287 : regular comment, line: #
+2017-07-25 16:20:23,288 : regular comment, line: # SECTION: Gather results and generate applet output
+2017-07-25 16:20:23,288 : Section change to: Gather results and generate applet output
+2017-07-25 16:20:23,288 : regular comment, line: # -----------------------------------------
+2017-07-25 16:20:23,288 : regular comment, line: # Format and create output file
+2017-07-25 16:20:23,288 : regular comment, line: #
+2017-07-25 16:20:23,289 : regular comment, line: # Create dictionary to be returned as output for the job
+2017-07-25 16:20:23,289 : regular comment, line: # Dictionary must contain keys matching outputs set in dxapp.json
+2017-07-25 16:20:23,289 : regular comment, line: # and contain values matching output patterns
+2017-07-25 16:20:23,289 : regular comment, line: #
+2017-07-25 16:20:23,289 : regular comment, line: # SECTION-END
+2017-07-25 16:20:23,290 : Section change to: None
+2017-07-25 16:20:23,290 : Code regions created
+2017-07-25 16:20:23,290 : Kramdown section in /Users/sosazuwa/dnanexus-example-applets/Tutorials/python/samtools_count_para_chr_subprocess_py/Readme.md Download Inputs
+2017-07-25 16:20:23,290 : Kramdown section in /Users/sosazuwa/dnanexus-example-applets/Tutorials/python/samtools_count_para_chr_subprocess_py/Readme.md Parallel by Chromosome using Subprocess.Popen
+2017-07-25 16:20:23,291 : Kramdown section in /Users/sosazuwa/dnanexus-example-applets/Tutorials/python/samtools_count_para_chr_subprocess_py/Readme.md Verify Pool Worker
+2017-07-25 16:20:23,291 : Force line match: {% include important.html content="In this example we use `subprocess.Popen` to process, then, later on, verify our results in `verify_pool_status`. In general, it is considered good practice to use python's built-in subprocess convenience functions. In this case, `subprocess.check_call` would achieve the same goal." %}
+2017-07-25 16:20:23,291 : Kramdown section in /Users/sosazuwa/dnanexus-example-applets/Tutorials/python/samtools_count_para_chr_subprocess_py/Readme.md Gather results and generate applet output
+2017-07-25 16:20:23,291 : Force line match: ## Applet Script
+2017-07-25 16:20:23,291 : Adding Func: FULL SCRIPT

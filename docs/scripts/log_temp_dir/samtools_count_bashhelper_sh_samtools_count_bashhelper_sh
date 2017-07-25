@@ -1,0 +1,54 @@
+2017-07-25 16:20:23,238 : removing: /Users/sosazuwa/dnanexus-example-applets/docs/_tutorials/samtools_count_bashhelper_sh.md
+2017-07-25 16:20:23,239 : Front matter field: source value samtools_count_bashhelper_sh
+2017-07-25 16:20:23,239 : Front matter field: title value SAMtools count w/ Bash Helpers
+2017-07-25 16:20:23,239 : Front matter field: tutorial_type value basic
+2017-07-25 16:20:23,240 : Front matter field: language value bash
+2017-07-25 16:20:23,240 : front matter written
+2017-07-25 16:20:23,240 : Code region search
+2017-07-25 16:20:23,240 : regular comment, line: #!/bin/bash
+2017-07-25 16:20:23,241 : regular comment, line: # samtools_count_bashhelper_sh 0.0.1
+2017-07-25 16:20:23,241 : regular comment, line: #
+2017-07-25 16:20:23,241 : regular comment, line: # SECTION: Download bam files
+2017-07-25 16:20:23,241 : Section change to: Download bam files
+2017-07-25 16:20:23,242 : regular comment, line: # ------------------
+2017-07-25 16:20:23,242 : regular comment, line: # Use dx-download-all-inputs to download the bam file. This script will go
+2017-07-25 16:20:23,242 : regular comment, line: # through all inputs and download into folders which have the pattern
+2017-07-25 16:20:23,242 : regular comment, line: # /home/dnanexus/in/[INPUT]/.
+2017-07-25 16:20:23,242 : regular comment, line: #
+2017-07-25 16:20:23,242 : regular comment, line: #
+2017-07-25 16:20:23,243 : regular comment, line: # SECTION: Create output directory
+2017-07-25 16:20:23,243 : Section change to: Create output directory
+2017-07-25 16:20:23,243 : regular comment, line: # -----------------------
+2017-07-25 16:20:23,243 : regular comment, line: # Create an output directory, we will discuss the specifics below
+2017-07-25 16:20:23,243 : regular comment, line: #
+2017-07-25 16:20:23,243 : regular comment, line: #
+2017-07-25 16:20:23,244 : regular comment, line: # SECTION: Run samtools view
+2017-07-25 16:20:23,244 : Section change to: Run samtools view
+2017-07-25 16:20:23,244 : regular comment, line: # -----------------
+2017-07-25 16:20:23,244 : regular comment, line: # Here, we use the bash helper variable mappings_bam_path. This bash variable
+2017-07-25 16:20:23,244 : regular comment, line: # will point to the location of a file after it has been downloaded using
+2017-07-25 16:20:23,244 : regular comment, line: # dx-download-all-inputs. So for [VARIABLE]_path, this wll point to
+2017-07-25 16:20:23,245 : regular comment, line: # /home/dnanexus/in/[VARIABLE]/[VARIABLE_FILENAME].
+2017-07-25 16:20:23,245 : regular comment, line: #
+2017-07-25 16:20:23,245 : regular comment, line: # In the case that the filename of the file mappings_bam is "my_mappings.bam",
+2017-07-25 16:20:23,245 : regular comment, line: # mappings_bam_path will be "/home/dnanexus/in/mappings_bam/my_mappings.bam".
+2017-07-25 16:20:23,245 : regular comment, line: #
+2017-07-25 16:20:23,245 : regular comment, line: #
+2017-07-25 16:20:23,246 : regular comment, line: # SECTION: Upload result
+2017-07-25 16:20:23,246 : Section change to: Upload result
+2017-07-25 16:20:23,246 : regular comment, line: # -------------
+2017-07-25 16:20:23,246 : regular comment, line: # We use dx-upload-all-outputs to upload the data to the platform and associate
+2017-07-25 16:20:23,246 : regular comment, line: # it as the output. dx-upload-all-outputs uses the folder pattern
+2017-07-25 16:20:23,246 : regular comment, line: # /home/dnanexus/out/[VARIABLE]. It will upload the files in that folder
+2017-07-25 16:20:23,247 : regular comment, line: # and then mark is as the output corresponding to [VARIABLE]. In this case,
+2017-07-25 16:20:23,247 : regular comment, line: # the output is called counts_txt. Above, we have made the folder which
+2017-07-25 16:20:23,247 : regular comment, line: # corresponds to this, and put the output there.
+2017-07-25 16:20:23,247 : regular comment, line: #
+2017-07-25 16:20:23,247 : Section change to: None
+2017-07-25 16:20:23,247 : Code regions created
+2017-07-25 16:20:23,250 : Kramdown section in /Users/sosazuwa/dnanexus-example-applets/Tutorials/bash/samtools_count_bashhelper_sh/Readme.md Download bam files
+2017-07-25 16:20:23,250 : Kramdown section in /Users/sosazuwa/dnanexus-example-applets/Tutorials/bash/samtools_count_bashhelper_sh/Readme.md Create output directory
+2017-07-25 16:20:23,250 : Kramdown section in /Users/sosazuwa/dnanexus-example-applets/Tutorials/bash/samtools_count_bashhelper_sh/Readme.md Run samtools view
+2017-07-25 16:20:23,254 : Kramdown section in /Users/sosazuwa/dnanexus-example-applets/Tutorials/bash/samtools_count_bashhelper_sh/Readme.md Upload result
+2017-07-25 16:20:23,254 : Force line match: ## Applet Script
+2017-07-25 16:20:23,255 : Adding Func: FULL SCRIPT

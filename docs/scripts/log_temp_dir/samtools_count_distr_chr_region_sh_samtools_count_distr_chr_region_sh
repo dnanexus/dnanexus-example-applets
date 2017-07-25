@@ -1,0 +1,149 @@
+2017-07-25 16:20:23,252 : removing: /Users/sosazuwa/dnanexus-example-applets/docs/_tutorials/samtools_count_distr_chr_region_sh.md
+2017-07-25 16:20:23,252 : Front matter field: source value samtools_count_distr_chr_region_sh
+2017-07-25 16:20:23,253 : Front matter field: title value SAMtools distributed count by region
+2017-07-25 16:20:23,253 : Front matter field: tutorial_type value distributed
+2017-07-25 16:20:23,253 : Front matter field: language value bash
+2017-07-25 16:20:23,253 : front matter written
+2017-07-25 16:20:23,253 : Code region search
+2017-07-25 16:20:23,253 : regular comment, line: #!/bin/bash
+2017-07-25 16:20:23,254 : regular comment, line: #
+2017-07-25 16:20:23,256 : regular comment, line: # This app performs a SAMtools count via the following implementation:
+2017-07-25 16:20:23,256 : regular comment, line: #   - Scatter gather approach is taken
+2017-07-25 16:20:23,256 : regular comment, line: #     - Scatter not in files, but in regions counted with samtools view
+2017-07-25 16:20:23,256 : regular comment, line: #   - Index file is an optional parameter.  If not provided:
+2017-07-25 16:20:23,257 : regular comment, line: #     - Bam will be indexed
+2017-07-25 16:20:23,258 : regular comment, line: #   - SAMtools is provided via execDepends.  Review dxapp.json for usage
+2017-07-25 16:20:23,258 : regular comment, line: #
+2017-07-25 16:20:23,258 : regular comment, line: # Debugging setup
+2017-07-25 16:20:23,258 : regular comment, line: # ---------------
+2017-07-25 16:20:23,258 : regular comment, line: # Echo input variable names for easier review in platform logs
+2017-07-25 16:20:23,258 : regular comment, line: #
+2017-07-25 16:20:23,259 : regular comment, line: #
+2017-07-25 16:20:23,259 : regular comment, line: # Index bam if no index file provided
+2017-07-25 16:20:23,260 : regular comment, line: # -----------------------------------
+2017-07-25 16:20:23,260 : regular comment, line: # Download only the bam, then check for an optional index file.
+2017-07-25 16:20:23,260 : regular comment, line: # Create an index file if needed.
+2017-07-25 16:20:23,260 : regular comment, line: # dx upload is used to generate dx link to pass to distributed jobs.
+2017-07-25 16:20:23,260 : regular comment, line: #
+2017-07-25 16:20:23,260 : regular comment, line: #
+2017-07-25 16:20:23,261 : regular comment, line: # SECTION: Download and prepare regions for scatter
+2017-07-25 16:20:23,261 : Section change to: Download and prepare regions for scatter
+2017-07-25 16:20:23,261 : regular comment, line: # ----------------------------------------
+2017-07-25 16:20:23,261 : regular comment, line: # To scatter processing into regions of size 10
+2017-07-25 16:20:23,261 : regular comment, line: #
+2017-07-25 16:20:23,261 : regular comment, line: # Get region information from BAM headers
+2017-07-25 16:20:23,262 : regular comment, line: # The following code will "pass" an array of regions in groups of 10 to the count job
+2017-07-25 16:20:23,262 : regular comment, line: #
+2017-07-25 16:20:23,262 : regular comment, line: # In bash arrays cannot be passed as a parameter.
+2017-07-25 16:20:23,262 : regular comment, line: # However since an array approach is helpful in distributed and scatter-gather pattern
+2017-07-25 16:20:23,262 : regular comment, line: # dx-jobutil-new-job allows an array to be "passed" as a parameter by:
+2017-07-25 16:20:23,263 : regular comment, line: #  passing multiple -i<parameter> with the same name
+2017-07-25 16:20:23,263 : regular comment, line: #  The receiving function will combine parameters with the same name to one array
+2017-07-25 16:20:23,263 : regular comment, line: # Loop through regions, for every 10 create a new job with the correct parameters
+2017-07-25 16:20:23,263 : regular comment, line: #
+2017-07-25 16:20:23,264 : regular comment, line: # SECTION: Merge results
+2017-07-25 16:20:23,264 : Section change to: Merge results
+2017-07-25 16:20:23,264 : regular comment, line: # -------------
+2017-07-25 16:20:23,264 : regular comment, line: # We take a similar approach and "pass" an array of readcount files to the merge job
+2017-07-25 16:20:23,264 : regular comment, line: #   We add -ireadfiles="$count_job":counts_txt so the merge job can combine into an array called readfiles
+2017-07-25 16:20:23,265 : regular comment, line: #
+2017-07-25 16:20:23,265 : regular comment, line: # "$count_job":counts_txt" is used as a “job-based object reference” [JBOR]
+2017-07-25 16:20:23,265 : regular comment, line: #   The merge sum_reads job will be able to run using the outputs of the "count_job"
+2017-07-25 16:20:23,266 : regular comment, line: #
+2017-07-25 16:20:23,266 : regular comment, line: # Gather reads and merge results
+2017-07-25 16:20:23,266 : regular comment, line: #
+2017-07-25 16:20:23,267 : regular comment, line: # SECTION: Output results
+2017-07-25 16:20:23,267 : Section change to: Output results
+2017-07-25 16:20:23,267 : regular comment, line: # --------------
+2017-07-25 16:20:23,267 : regular comment, line: # The output of our main() funciton is the result of the "sum_reads" job
+2017-07-25 16:20:23,267 : regular comment, line: #
+2017-07-25 16:20:23,267 : regular comment, line: # "sum_reads" job is referenced as the output of the main() funciton as
+2017-07-25 16:20:23,268 : regular comment, line: # a job-based object reference [JBOR]
+2017-07-25 16:20:23,268 : regular comment, line: #
+2017-07-25 16:20:23,268 : regular comment, line: ################################################################################
+2017-07-25 16:20:23,269 : regular comment, line: # SECTION: count_func
+2017-07-25 16:20:23,269 : Section change to: count_func
+2017-07-25 16:20:23,269 : regular comment, line: # Function that will perform SAMtools count by regions group.
+2017-07-25 16:20:23,269 : regular comment, line: # This function will be run on a new instance, as a result variables from other
+2017-07-25 16:20:23,269 : regular comment, line: # other functions, main() for example, will not be accessible here.
+2017-07-25 16:20:23,269 : regular comment, line: #
+2017-07-25 16:20:23,270 : regular comment, line: # Arguments:
+2017-07-25 16:20:23,270 : regular comment, line: #   Any needed files must be passed as parameters and downloaded.
+2017-07-25 16:20:23,270 : regular comment, line: #   Parameters are passed as -i<parameter name>:
+2017-07-25 16:20:23,270 : regular comment, line: #     regions: an array of regions to be counted
+2017-07-25 16:20:23,270 : regular comment, line: #     bam_file: Sorted mapping file
+2017-07-25 16:20:23,270 : regular comment, line: #     bambai_file: Index file
+2017-07-25 16:20:23,270 : regular comment, line: #
+2017-07-25 16:20:23,271 : regular comment, line: # Returns:
+2017-07-25 16:20:23,271 : regular comment, line: #   outputs a file with the sum of counts in the region as the first line.
+2017-07-25 16:20:23,271 : regular comment, line: ################################################################################
+2017-07-25 16:20:23,272 : regular comment, line: #
+2017-07-25 16:20:23,272 : regular comment, line: # Download all inputs
+2017-07-25 16:20:23,272 : regular comment, line: # --------------------
+2017-07-25 16:20:23,272 : regular comment, line: # dx-download-all-inputs will download all input files into
+2017-07-25 16:20:23,272 : regular comment, line: # the /home/dnanexus/in directory.  A folder will be created for each
+2017-07-25 16:20:23,273 : regular comment, line: # input and the file(s) will be download to that directory.
+2017-07-25 16:20:23,273 : regular comment, line: # path, name, and prefix shell variables will be created for each input.
+2017-07-25 16:20:23,273 : regular comment, line: #
+2017-07-25 16:20:23,273 : regular comment, line: # In this example, the following variables are created
+2017-07-25 16:20:23,273 : regular comment, line: #   bam_file_path: '/home/dnanexus/in/mappings_bam/<bam filename>.bam'
+2017-07-25 16:20:23,273 : regular comment, line: #   mappings_bam_name: <bam filename>.bam
+2017-07-25 16:20:23,274 : regular comment, line: #   mappings_bam_prefix: <bam filename>
+2017-07-25 16:20:23,274 : regular comment, line: #   bambai_file_path: /home/dnanexus/in/index_file/<bambai_file name>
+2017-07-25 16:20:23,274 : regular comment, line: #   bambai_file_name: <bambai_file name>
+2017-07-25 16:20:23,274 : regular comment, line: #   bambai_file_prefix: bambai_file ** no extension **
+2017-07-25 16:20:23,274 : regular comment, line: #   regions_path: '{region file path} {region file path} {region file path} ...'  # array of region paths
+2017-07-25 16:20:23,275 : regular comment, line: #   regions_name: '{region file name} {region file name} {region file name} ...'  # array of region names
+2017-07-25 16:20:23,275 : regular comment, line: #   regions_prefix: '{region file prefix} {region file prefix} ...'  # array of region paths
+2017-07-25 16:20:23,275 : regular comment, line: #
+2017-07-25 16:20:23,275 : regular comment, line: #
+2017-07-25 16:20:23,276 : regular comment, line: # SAMtools count on the region group
+2017-07-25 16:20:23,276 : regular comment, line: # ----------------------------------
+2017-07-25 16:20:23,276 : regular comment, line: # Move bam and bai to same dir
+2017-07-25 16:20:23,276 : regular comment, line: # Create output dir
+2017-07-25 16:20:23,277 : regular comment, line: #
+2017-07-25 16:20:23,277 : regular comment, line: # create output dir
+2017-07-25 16:20:23,277 : regular comment, line: # count
+2017-07-25 16:20:23,277 : regular comment, line: #
+2017-07-25 16:20:23,277 : regular comment, line: # Upload result file
+2017-07-25 16:20:23,278 : regular comment, line: # ------------------
+2017-07-25 16:20:23,278 : regular comment, line: # The output must be specified as counts_txt for other
+2017-07-25 16:20:23,278 : regular comment, line: # functions to reference this job via a JBOR
+2017-07-25 16:20:23,278 : regular comment, line: #
+2017-07-25 16:20:23,278 : regular comment, line: #####################################################################
+2017-07-25 16:20:23,279 : regular comment, line: # SECTION: sum_reads
+2017-07-25 16:20:23,279 : Section change to: sum_reads
+2017-07-25 16:20:23,279 : regular comment, line: # This function will *gather* all the readcount.txt files generated
+2017-07-25 16:20:23,279 : regular comment, line: # by the count_func.
+2017-07-25 16:20:23,279 : regular comment, line: #
+2017-07-25 16:20:23,279 : regular comment, line: # Arguments:
+2017-07-25 16:20:23,279 : regular comment, line: #   readfiles: Array of count summary files from scattered jobs
+2017-07-25 16:20:23,280 : regular comment, line: #   filename: String filename of the input file.
+2017-07-25 16:20:23,280 : regular comment, line: #             Used to preserve filename in output.
+2017-07-25 16:20:23,280 : regular comment, line: #
+2017-07-25 16:20:23,280 : regular comment, line: # Returns:
+2017-07-25 16:20:23,280 : regular comment, line: #   read_sum: dxlink to output readcounts file to be referenced as a
+2017-07-25 16:20:23,281 : regular comment, line: #             Job-Based Object Reference (JBOR).
+2017-07-25 16:20:23,281 : regular comment, line: #
+2017-07-25 16:20:23,281 : regular comment, line: #####################################################################
+2017-07-25 16:20:23,281 : regular comment, line: #
+2017-07-25 16:20:23,283 : regular comment, line: # Download inputs
+2017-07-25 16:20:23,283 : regular comment, line: # ---------------
+2017-07-25 16:20:23,283 : regular comment, line: # Read count_func Download all inputs for an idea of what variables are available
+2017-07-25 16:20:23,283 : regular comment, line: #
+2017-07-25 16:20:23,283 : regular comment, line: # Sum files
+2017-07-25 16:20:23,284 : regular comment, line: # Write and upload files
+2017-07-25 16:20:23,284 : regular comment, line: # Again naming the output read_sum is needed so the main() function's output can
+2017-07-25 16:20:23,284 : regular comment, line: # reference read_sum as a “job-based object reference” [JBOR]
+2017-07-25 16:20:23,284 : regular comment, line: # SECTION-END
+2017-07-25 16:20:23,284 : Section change to: None
+2017-07-25 16:20:23,284 : Code regions created
+2017-07-25 16:20:23,285 : Kramdown section in /Users/sosazuwa/dnanexus-example-applets/Tutorials/bash/samtools_count_distr_chr_region_sh/Readme.md Download and prepare regions for scatter
+2017-07-25 16:20:23,285 : Kramdown section in /Users/sosazuwa/dnanexus-example-applets/Tutorials/bash/samtools_count_distr_chr_region_sh/Readme.md Merge results
+2017-07-25 16:20:23,285 : Kramdown section in /Users/sosazuwa/dnanexus-example-applets/Tutorials/bash/samtools_count_distr_chr_region_sh/Readme.md Output results
+2017-07-25 16:20:23,285 : Kramdown section in /Users/sosazuwa/dnanexus-example-applets/Tutorials/bash/samtools_count_distr_chr_region_sh/Readme.md count_func
+2017-07-25 16:20:23,286 : Kramdown section in /Users/sosazuwa/dnanexus-example-applets/Tutorials/bash/samtools_count_distr_chr_region_sh/Readme.md sum_reads
+2017-07-25 16:20:23,286 : Force line match: Then in the main function the output is referenced
+2017-07-25 16:20:23,287 : Kramdown section in /Users/sosazuwa/dnanexus-example-applets/Tutorials/bash/samtools_count_distr_chr_region_sh/Readme.md Output results
+2017-07-25 16:20:23,287 : Force line match: ## Applet Script
+2017-07-25 16:20:23,287 : Adding Func: FULL SCRIPT

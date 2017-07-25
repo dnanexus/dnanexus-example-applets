@@ -1,0 +1,58 @@
+2017-07-25 16:20:23,263 : removing: /Users/sosazuwa/dnanexus-example-applets/docs/_tutorials/samtools_count_para_chr_xargs_sh.md
+2017-07-25 16:20:23,264 : Front matter field: source value samtools_count_para_chr_xargs_sh
+2017-07-25 16:20:23,264 : Front matter field: title value SAMtools count using xargs by chromosome
+2017-07-25 16:20:23,264 : Front matter field: tutorial_type value parallel
+2017-07-25 16:20:23,264 : Front matter field: language value bash
+2017-07-25 16:20:23,265 : front matter written
+2017-07-25 16:20:23,265 : Code region search
+2017-07-25 16:20:23,265 : regular comment, line: #!/bin/bash
+2017-07-25 16:20:23,265 : regular comment, line: # This app performs a SAMtools count via the following implementation:
+2017-07-25 16:20:23,265 : regular comment, line: #   - Bam file is required
+2017-07-25 16:20:23,265 : regular comment, line: #     - If bam is not sorted then will be automatically sorted then indexed
+2017-07-25 16:20:23,266 : regular comment, line: #   - Input bam will be split in smaller bams based on chromosomes
+2017-07-25 16:20:23,267 : regular comment, line: #   - View options will be determined based on user input.
+2017-07-25 16:20:23,267 : regular comment, line: #     - Will be parsed to provided a valid set of inputs
+2017-07-25 16:20:23,267 : regular comment, line: #   - count will be performed in parallel on each bam file using xargs
+2017-07-25 16:20:23,268 : regular comment, line: #   - Samtools is provided as a precompiled binary in resources/usr/bin
+2017-07-25 16:20:23,268 : regular comment, line: #
+2017-07-25 16:20:23,268 : regular comment, line: # Debugging Setup
+2017-07-25 16:20:23,268 : regular comment, line: # ---------------
+2017-07-25 16:20:23,268 : regular comment, line: # Set up logging and exit on error.
+2017-07-25 16:20:23,269 : regular comment, line: #
+2017-07-25 16:20:23,269 : regular comment, line: #
+2017-07-25 16:20:23,269 : regular comment, line: # SECTION: Download and segment bam file
+2017-07-25 16:20:23,269 : Section change to: Download and segment bam file
+2017-07-25 16:20:23,269 : regular comment, line: # -----------------------------
+2017-07-25 16:20:23,269 : regular comment, line: # If the input bam was not sorted by coordinate, which we can detect by attempting
+2017-07-25 16:20:23,270 : regular comment, line: # to index it, don't fail, but instead attempt to sort and index again.
+2017-07-25 16:20:23,270 : regular comment, line: #
+2017-07-25 16:20:23,270 : regular comment, line: # A file with the names of each bam file is created for use by xargs
+2017-07-25 16:20:23,270 : regular comment, line: #
+2017-07-25 16:20:23,270 : regular comment, line: #sortedbam="${mappings_bam_prefix}_sorted.bam"
+2017-07-25 16:20:23,271 : regular comment, line: # Pull out chromosomes
+2017-07-25 16:20:23,271 : regular comment, line: # --------------------
+2017-07-25 16:20:23,271 : regular comment, line: # Examine the header of the bam file, pulling out just the @SQ lines (which contain
+2017-07-25 16:20:23,271 : regular comment, line: # the chromosomes, grab the column with just the chromosome name, and match it to a
+2017-07-25 16:20:23,271 : regular comment, line: # regex designed to capture canonical chromosomes
+2017-07-25 16:20:23,272 : regular comment, line: #
+2017-07-25 16:20:23,272 : regular comment, line: # SECTION: Xargs SAMtools count
+2017-07-25 16:20:23,272 : Section change to: Xargs SAMtools count
+2017-07-25 16:20:23,272 : regular comment, line: # --------------------
+2017-07-25 16:20:23,272 : regular comment, line: # SAMtools count will be performed in parallel and count summary
+2017-07-25 16:20:23,272 : regular comment, line: # will be written to file.
+2017-07-25 16:20:23,273 : regular comment, line: #
+2017-07-25 16:20:23,273 : regular comment, line: # View command will be built up from user input view_options
+2017-07-25 16:20:23,273 : regular comment, line: #   $view_options is not quoted to allow word splitting
+2017-07-25 16:20:23,273 : regular comment, line: #
+2017-07-25 16:20:23,273 : regular comment, line: #
+2017-07-25 16:20:23,273 : regular comment, line: # SECTION: Upload result file
+2017-07-25 16:20:23,274 : Section change to: Upload result file
+2017-07-25 16:20:23,274 : regular comment, line: # ------------------
+2017-07-25 16:20:23,274 : regular comment, line: #
+2017-07-25 16:20:23,274 : regular comment, line: # SECTION-END
+2017-07-25 16:20:23,274 : Section change to: None
+2017-07-25 16:20:23,275 : Code regions created
+2017-07-25 16:20:23,275 : Kramdown section in /Users/sosazuwa/dnanexus-example-applets/Tutorials/bash/samtools_count_para_chr_xargs_sh/Readme.md Download and segment bam file
+2017-07-25 16:20:23,275 : Kramdown section in /Users/sosazuwa/dnanexus-example-applets/Tutorials/bash/samtools_count_para_chr_xargs_sh/Readme.md Upload result file
+2017-07-25 16:20:23,276 : Force line match: ## Applet Script
+2017-07-25 16:20:23,276 : Adding Func: FULL SCRIPT
