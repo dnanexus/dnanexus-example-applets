@@ -35,7 +35,7 @@ First, we download our BAM file and slice it by canonical chromosome, writing th
 
 In order to split a BAM by regions, we need to have a `*.bai` index. You can either create an app(let) which takes the `*.bai` as an input or generate a `*.bai` in the applet. In this tutorial, we generate the `*.bai` on the fly, sorting if necessary.
 
-```bash
+```go
   dx download "${mappings_bam}"
 
   indexsuccess=true
@@ -64,14 +64,13 @@ In the previous section, we recorded the name of each sliced BAM file into a rec
 The results file is uploaded using the standard bash process.
 1.  Upload a file to the job execution's container.
 2.  Provide the DNAnexus link as a job's output using `dx-jobutil-add-output <output name>`
-```bash
+```go
   counts_txt_id=$(dx upload "${counts_txt_name}" --brief)
   dx-jobutil-add-output counts_txt "${counts_txt_id}" --class=file
 ```
 <hr>
 ## Applet Script
-
-```bash
+```go
 main() {
 
 

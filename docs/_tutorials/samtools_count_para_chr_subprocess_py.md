@@ -17,7 +17,7 @@ This applet tutorial code is simalar to the [_Parallel Cores SAMtools count tuto
 
 <hr>## How is SAMtools dependency provided?
 SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the dxapp.json runSpec.execDepends.
-```
+```json
   "runSpec": {
     ...
     "execDepends": [
@@ -112,7 +112,6 @@ For python, job outputs have to be a dictionary of key-value pairs, with the key
 ```
 <hr>
 ## Applet Script
-
 ```python
 import os
 import dxpy
@@ -238,7 +237,4 @@ def main(mappings_bam):
     output["count_file"] = dxpy.dxlink(count_file)
 
     return output
-
-
-dxpy.run()
 ```

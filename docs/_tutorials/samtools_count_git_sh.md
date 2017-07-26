@@ -70,8 +70,7 @@ Because we set `"destdir": "/home/dnanexus"` in our dxapp.json we know the git r
 Our samtools command from out app script is `samtools/samtools`.
 <hr>
 ## Applet Script
-
-```bash
+```go
 main() {
   set -e -x -o pipefail
 

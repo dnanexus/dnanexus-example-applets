@@ -79,7 +79,6 @@ main() {
 }
 
 ####################################################################
-# SECTION: count_func
 # This function will count the number of reads in the input bam file
 #
 # Arguments:
@@ -109,7 +108,6 @@ count_func() {
 }
 
 ####################################################################
-# SECTION: sum_reads
 # This function will *gather* all the readcount.txt files generated
 # by the count_func.  It will return a single output file: chromosome_result.txt
 #

@@ -76,7 +76,6 @@ We then provide the [DXLink](http://autodoc.dnanexus.com/bindings/python/current
 ```
 <hr>
 ## Applet Script
-
 ```python
 import dxpy
 import subprocess
@@ -110,7 +109,4 @@ def main(mappings_bam):
     output["counts_txt"] = dxpy.dxlink(counts_txt)
 
     return output
-
-
-dxpy.run()
 ```

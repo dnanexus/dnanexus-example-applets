@@ -24,6 +24,17 @@ class SectionParser(object):
         self.ignore_comments = ignore_comments
         self._tempsection = []
 
+    @classmethod
+    def create_code_region(cls, code_str, language):
+        code_str = code_str.strip('\n\r')
+        language = "go" if language == "bash" else language
+        content = code_str[:-len('dxpy.run()')].strip("\n\r") if code_str.endswith('dxpy.run()') else code_str  # final section edgecase
+        code = "{start}{content}{end}".format(
+            start="```{language}\n".format(language=language),
+            content=content,
+            end="\n```\n")
+        return code
+
     @property
     def active_section(self):
         return self._active_section
@@ -35,13 +46,8 @@ class SectionParser(object):
         if value in self._section_mapping:
             raise InvalidSection("You Only Add Secions Once. Give sections unique names")
         if self._tempsection:
-            content = "".join(self._tempsection).strip("\n\r")
-            content = content[:-len('dxpy.run()')].strip("\n\r") if content.endswith('dxpy.run()') else content  # final section edgecase
-            code = "{start}{content}{end}".format(
-                start="```{language}\n".format(language=self.language),
-                content=content,
-                end="\n```\n")
-            self._section_mapping[self.active_section] = code
+            self._section_mapping[self.active_section] = self.create_code_region(
+                code_str="".join(self._tempsection), language=self.language)
         self._active_section = value
         self._tempsection = []
 
@@ -61,11 +67,8 @@ class SectionParser(object):
         """Import python source code and get function code through inspect"""
         if func_name == 'FULL SCRIPT':
             return self.applet_full_script
-        code = "{start}{content}{end}".format(
-            start="```{language}\n".format(language=self.language),
-            content=self.func_finder(self.code, func_name),
-            end="\n```\n")
-        return code
+        return self.create_code_region(
+            code_str=self.func_finder(self.code, func_name), language=self.language)
 
     def parse_file(self):
         """
@@ -99,12 +102,9 @@ class SectionParser(object):
                     all_code.append(line)
         if self.active_section is not None and self._tempsection:
             self.active_section = None
-
-        self.applet_full_script = "{code_start}{code_blk}{code_end}".format(
-            code_start="\n```{lang}\n".format(lang=self.language),
-            code_blk="".join(all_code).strip(),
-            code_end="\n```\n")
-        self.logger.info("Code regions created")
+        self.logger.info("Creating code regions")
+        self.applet_full_script = self.create_code_region(
+            code_str="".join(all_code).strip('\n\r'), language=self.language)
         return self
 
     def is_comment(self, line, comment_flag=False):

@@ -34,7 +34,7 @@ When this applet is run on a worker the `resources/` directory will be placed in
 │   	├── applet script
 ```
 We are able to access the SAMtools command because the respective binary is visible from our `$PATH`
-```bash
+```go
 samtools view -c "${mappings_bam_name}" > "${mappings_bam_prefix}.txt"
 ```
 
@@ -43,8 +43,7 @@ See [The resources/ directory and its use](https://wiki.dnanexus.com/Developer-T
 
 <hr>
 ## Applet Script
-
-```bash
+```go
 dx download "${mappings_bam}"
 
 samtools view -c "${mappings_bam_name}" > "${mappings_bam_prefix}.txt"

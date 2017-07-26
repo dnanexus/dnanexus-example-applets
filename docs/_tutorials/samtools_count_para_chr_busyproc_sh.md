@@ -25,7 +25,7 @@ With Bash scripts, you can prevent a lot of headaches with the command `set -e -
 * `-e` causes the shell to immediately exit if a command returns a non-zero exit code.
 * `-x` prints commands as they are executed, very useful for tracking job status or pinpointing exact execution failure.
 * `-o pipefail` normally, the return code of pipes is the exit code of the last command, this can create difficult to debug problems. This option makes the return code the first non-zero exit code.
-```bash
+```go
   set -e -x -o pipefail
   echo "Value of mappings_sorted_bam: '${mappings_sorted_bam}'"
   echo "Value of mappings_sorted_bai: '${mappings_sorted_bai}'"
@@ -45,7 +45,7 @@ The `*.bai` file was an optional job input. We check for a empty or unset `var` 
 ### Parallelized run
 Bash's built-in [job control](http://tldp.org/LDP/abs/html/x9644.html) system allows for easy management of multiple processes. In this example, we run bash commands in the background as we control maximum job executions in the foreground.
 We place processes in the background using an `&` after a command.
-```bash
+```go
   chromosomes=$(samtools view -H "${mappings_sorted_bam_name}" | grep "\@SQ" | awk -F '\t' '{print $2}' | awk -F ':' '{if ($2 ~ /^chr[0-9XYM]+$|^[0-9XYM]/) {print $2}}')
 
   for chr in $chromosomes; do
@@ -67,7 +67,7 @@ We place processes in the background using an `&` after a command.
     busyproc=$((busyproc+1))
   done <bamfiles.txt
 ```
-```bash
+```go
   while [[ "${busyproc}" -gt  0 ]]; do
     wait -n # p_id
     busyproc=$((busyproc-1))
@@ -83,7 +83,7 @@ Once the input bam has been sliced, counted, and summed the output counts_txt is
 ```
 
 In our applet, we accomplish this by
-```bash
+```go
   outputdir="${HOME}/out/counts_txt"
   mkdir -p "${outputdir}"
   cat count* | awk '{sum+=$1} END{print "Total reads = ",sum}' > "${outputdir}/${mappings_sorted_bam_prefix}_count.txt"
@@ -92,8 +92,7 @@ In our applet, we accomplish this by
 ```
 <hr>
 ## Applet Script
-
-```bash
+```go
 main() {
 
 

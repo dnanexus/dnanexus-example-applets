@@ -19,7 +19,7 @@ To approach this use case let's focus on what we want our applet to do:
 
 <hr>## Stream BAM file from the platform to a worker
 First, we establish a named pipe on the worker then stream to *stdin* of the named pipe. Downloading as a stream from the platform using [`dx cat`](https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#cat).
-```bash
+```go
   mkdir workspace
   mappings_fifo_path="workspace/${mappings_bam_name}"
   mkfifo "${mappings_fifo_path}" # FIFO file is created
@@ -33,7 +33,7 @@ First, we establish a named pipe on the worker then stream to *stdin* of the nam
 
 <hr>##  Output BAM file read count
 We have created our FIFO special file representing the streamed BAM, we can just call the `samtools` command as we normally would. The `samtools` command reading the BAM would provide out BAM FIFO file with a *stdout*. However, keep in mind we want to stream the output back to the platform. We must create a named pipe representing our output file too.
-```bash
+```go
   mkdir -p ./out/counts_txt/
 
   counts_fifo_path="./out/counts_txt/${mappings_bam_prefix}_counts.txt"
@@ -55,7 +55,7 @@ All files found in the path `~/out/<output name>` will be uploaded to the corres
 Currently, we've established a stream from the platform, piped into a `samtools` command, and finally outputting to another named pipe. However, our background process is still blocked since we lack a *stdout* for our output file. Luckily, creating an upload stream to the platform will resolve this.
 
 We can upload as a stream to the platform using [dx-upload-all-outputs](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-upload-all-outputs) or [dx upload -](https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands?q=dx-upload-all-outputs#upload). Make sure to specify --buffer-size if needed.
-```bash
+```go
   mkdir -p ./out/counts_txt/
 
   counts_fifo_path="./out/counts_txt/${mappings_bam_prefix}_counts.txt"
@@ -78,7 +78,7 @@ We can upload as a stream to the platform using [dx-upload-all-outputs](https://
 
 <hr>## Wait for background processes
 Now that our background processes have are no longer blocking we simply `wait` in the foreground for those process to finish.
-```bash
+```go
   wait -n  # "$input_pid"
   wait -n  # "$process_pid"
   wait -n  # "$upload_pid"
@@ -112,8 +112,7 @@ When this applet is run on a worker the resources/ folder will be placed in the 
 /usr/bin is part of the `$PATH` variable, so in our script, we can reference the samtools command directly, `samtools view -c ...`
 <hr>
 ## Applet Script
-
-```bash
+```go
 main() {
 
   set -e -x -o pipefail
