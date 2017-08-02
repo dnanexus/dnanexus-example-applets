@@ -69,6 +69,7 @@ def resolve_module(module_name, depth=0):
     FIXME: del imports once module resolved
     FIXME: High risk function, find some other way of parsing source code
     FIXME: Add proper Mock module and use that instead
+    FIXME: After a duh moment, I realize I could just temporarily comment out r'^import.*' lines... duh
     Module mocking inspiration: https://stackoverflow.com/questions/8658043/how-to-mock-an-import
     """
     try:
