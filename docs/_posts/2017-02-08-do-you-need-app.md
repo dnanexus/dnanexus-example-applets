@@ -7,7 +7,7 @@ description: What problem are you solving, is app development the right approach
 type: Document
 ---
 
-Before embarking on a new journey it's important to ask, "Where am I going?" and "What am I looking for?". This page takes a step back and assesses alternative solutions and approaches that may get you to the real answer you want.
+Before embarking on a new journey it's important to ask, *"Where am I going?"* and *"What am I looking for?"*. This page takes a step back and assesses alternative solutions and approaches that may get you to the real answer you want.
 
 Look before you leap.
 
@@ -127,4 +127,4 @@ Watch launched job now? [Y/n] n
 $ dx ssh job-xxxx
 ```
 
-The Cloud Workstation app takes a rather useful approach for exploratory development on the platform. Feel free to look at the app code for Cloud Workstation v1.0.3, which you can obtain with a `dx get app-F40jZqQ9fZF4ggVZ1qGYQz5z`.
+The Cloud Workstation app takes a rather useful approach for exploratory development on the platform. Feel free to look at the app code for Cloud Workstation v1.0.3, which you can obtain with `dx get app-F40jZqQ9fZF4ggVZ1qGYQz5z`.
