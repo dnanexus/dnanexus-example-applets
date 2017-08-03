@@ -1,21 +1,15 @@
-<!-- <footer class="footer">
-	<div class="container row">
-		<div class="col-sm">
-			<p><img src="images/dna_nexus_logo.png" height="60px" alt="DNANexus Logo"/></p>
-		</div>
-		<div class="col-sm">
-			&copy;{{ site.time | date: "%Y"  }} {{site.company_name}}. All rights reserved.<br />{% if page.last_updated %}
-			<span>Page last updated:</span>
-			{{page.last_updated}}<br/>{% endif %} Site last generated: {{ site.time | date: "%b %-d, %Y"  }} <br />
-		</div>
+<footer>
+	<div class="wrapper">
+		<p class="edit-footer"><a class="editor-link btn" href="cloudcannon:collections/_data/footer.yml" class="btn" style="padding: 5px;"><strong>&#9998;</strong> Edit footer</a></p>
+		<ul class="footer-links">
+			{% for link in site.data.footer %}
+				<li><a {% if link.new_window %}target="_blank"{% endif %} href="{% include relative-src.html src=link.link %}" {% if link.social_icon %}class="{{ link.social_icon }}-icon"{% endif %}>
+					{% if link.social_icon %}
+						{% include social-icon.html icon=link.social_icon %}
+					{% endif %}
+					{{ link.name }}</a></li>
+			{% endfor %}
+		</ul>
+		<p class="copyright">&copy; {{ site.title }} {{ site.time | date: "%Y" }}. All rights reserved.</p>
 	</div>
-</footer> -->
-
-<footer class="footer">
-	    <img src="images/dna_nexus_logo.png" height="60px" alt="DNANexus Logo">
-	    <p class="col-sm">
-	    	&copy;{{ site.time | date: "%Y"  }} {{site.company_name}}. All rights reserved.<br />{% if page.last_updated %}
-	    	<span>Page last updated:</span>
-	    	{{page.last_updated}}<br/>{% endif %} Site last generated: {{ site.time | date: "%b %-d, %Y"  }} <br/>
-	    </p>
- </footer>
+</footer>
