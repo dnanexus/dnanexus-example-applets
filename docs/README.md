@@ -1,5 +1,5 @@
 # Base
-<!-- TODO: Alter this readme for DNAnexus website maintenance -->
+<!-- TODO: Alter this readme for DNAnexus website maintenance, delete _screenshot.png when you do -->
 Knowledge base template for Jekyll. Browse through a [live demo](https://orange-ape.cloudvent.net/).
 
 ![Base template screenshot](images/_screenshot.png)
