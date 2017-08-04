@@ -1,0 +1,34 @@
+---
+resources:
+  - name: DNAnexus Platform
+    url: https://platform.dnanexus.com
+    blurb: Powering the Genomics Revolution.
+  - name: DNAnexus Wiki
+    url: https://wiki.dnanexus.com/Home
+    blurb: Collection of detailed guides walking users through the DNAnexus platform 
+  - name: DNAnexus Example Applets
+    url: https://github.com/Damien-Black/dnanexus-example-applets
+    blurb: The GitHub repo this website is generated from.
+  - name: DNAnexus dx-toolkit
+    url: https://github.com/dnanexus/dx-toolkit
+    blurb: The Platform SDK that clients and App developers use to interact and work on our platform.
+  - name:  DNAnexus autodocs
+    url: http://autodoc.dnanexus.com/bindings/python/current/
+    blurb: Auto generated detailed documentation of our platform SDK.
+---
+
+<h1>Resources</h1>
+
+<section class="resources">
+	<ul>
+		{% for item in page.resources %}
+			<li><a href="#{{ item.name | slugify }}">{{ item.name }}</a></li>
+		{% endfor %}
+	</ul>
+
+	{% for item in page.resources %}
+		<h2 id="{{ item.name | slugify}}">{{ item.name }}<a class="header-link" href="#{{ item.name | slugify }}">#</a></h2>
+    <a class="header-link" href="{{ item.url }}">LINK</a>
+		{{ item.blurb | markdownify }}
+	{% endfor %}
+</section>

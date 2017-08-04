@@ -1,1 +1,4 @@
 *~
+_site/
+**/log_temp_dir/
+*.pyc
