@@ -1,6 +1,4 @@
-# SAMtools count with Asset Dependency
-
-This folder details how to build a SAMtools asset. For detailed information on building assets refer to the [Asset Build Process wiki page](https://wiki.dnanexus.com/Developer-Tutorials/Asset-Build-Process).
+This tutorial details how to build a SAMtools asset. For detailed information on building assets refer to the [Asset Build Process wiki page](https://wiki.dnanexus.com/Developer-Tutorials/Asset-Build-Process).
 
 ## Building an Asset
 

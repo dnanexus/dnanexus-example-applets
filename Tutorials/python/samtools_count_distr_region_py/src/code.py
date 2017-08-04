@@ -32,8 +32,7 @@ def create_region_view_cmd(input_bam, region):
 
 
 def run_cmd(cmd_arr):
-    """
-    Run shell command. Raises OSError if command specified (index 0 in cmd_arr) isn't valid.
+    """Run shell command. Raises OSError if command specified (index 0 in cmd_arr) isn't valid.
     The stderr check is due to samtools index returning a 0 exit code when indexing fails
 
     Raises:
@@ -58,7 +57,9 @@ def run_cmd(cmd_arr):
 
 
 def create_index_file(bam_filename, bam_dxlink):
-    """Create Index file.  Sort BAM if needed"""
+    """Create Index file.
+    Sorts BAM if needed
+    """
     print "Creating Index file."
     index_filename = "{bam}.bai".format(bam=bam_filename)
     cmd_index = ['samtools', 'index', bam_filename]

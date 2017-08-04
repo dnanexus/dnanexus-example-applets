@@ -1,6 +1,6 @@
 {
   "name": "samtools_count_distr_chr_slice_sh",
-  "title": "SAMtools count distributed by Chromosome",
+  "title": "Distributed by Chr (sh)",
   "summary": "This applet performs a distributed SAMtools count for each canonical chromosome",
   "dxapi": "1.0.0",
   "version": "0.0.1",

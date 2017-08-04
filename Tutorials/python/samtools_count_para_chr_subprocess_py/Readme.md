@@ -1,5 +1,3 @@
-# SAMtools count
-
 This applet tutorial will perform a SAMtools count using parallel threads.
 
 In order to take full advantage of the scalability that cloud computing offers, our scripts have to implement the correct methodologies. This applet tutorial will:
@@ -7,7 +5,7 @@ In order to take full advantage of the scalability that cloud computing offers, 
 2. Download BAM file
 3. Count Regions in Parallel
 
-This applet tutorial code is simalar to the [_Parallel Cores SAMtools count tutorial_](/python_parallel_tutorial.html#samtools_count_para_reg_subprocess_py), except `multiprocessing.dummy` is used instead of `multiprocessing`.
+This applet tutorial code is similar to the [_Parallel Cores SAMtools count tutorial_](/python_parallel_tutorial.html#samtools_count_para_reg_subprocess_py), except `multiprocessing.dummy` is used instead of `multiprocessing`.
 
 ## How is SAMtools dependency provided?
 SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the dxapp.json runSpec.execDepends.
@@ -23,7 +21,7 @@ For additional information, please refer to the [execDepends wiki page](https://
 
 ## Download BAM file
 
-`dxpy.download_all_inputs()` function downloads all input files into the `/home/dnanexus/in directory`. A folder will be created for each input and the file(s) will be download to that directory. For convenience, the `dxpy.download_all_inputs` function returns a dictionary containing the following keys:
+`dxpy.download_all_inputs()` function downloads all input files into the `/home/dnanexus/in` directory. A folder will be created for each input and the file(s) will be download to that directory. For convenience, the `dxpy.download_all_inputs` function returns a dictionary containing the following keys:
 * `<var>_path` **string** full absolute path to where the file was downloaded.
 * `<var>_name` **string** name of the file, includes extention.
 * `<var>_prefix` **string** name of the file minus the longest mattern pattern found in the dxapp.json I/O pattern field.

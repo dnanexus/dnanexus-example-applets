@@ -1,5 +1,3 @@
-# SAMtools count with mkfifo and dx cat
-
 This applet performs a SAMtools count on an input file while minimizing disk usage. For additional details on using FIFO (named pipes) special files, type `man fifo` into shell.
 
 <!-- INCLUDE: {% include warning.html content="Named pipes require **BOTH** a *stdin* and *stdout* or they will block a process. In these examples, we place incomplete named pipes in background processes so the foreground script process does not block." %} -->

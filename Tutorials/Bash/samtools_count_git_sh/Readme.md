@@ -1,5 +1,3 @@
-# SAMtools fetched via Git repo
-
 ## What does this applet do?
 
 This applet performs a basic SAMtools count of alignments present in an input BAM.

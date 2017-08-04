@@ -1,5 +1,3 @@
-# SAMtools count distributed by Chromosome (DNAnexus Platform App)
-
 Distributed count of reads in BAM format file. Documentation to create a distributed applet can be found on the [DNAnexus wiki](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App). This readme will focus on the details of this applet.
 
 ## How is SAMtools dependency provided?

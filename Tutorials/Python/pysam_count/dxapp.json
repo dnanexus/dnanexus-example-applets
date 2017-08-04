@@ -1,6 +1,6 @@
 {
   "name": "pysam_count",
-  "title": "Pysam tools count",
+  "title": "Pysam",
   "summary": "Counts the number of reads in a BAM file.",
   "dxapi": "1.0.0",
   "version": "0.0.1",

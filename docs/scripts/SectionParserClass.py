@@ -27,7 +27,6 @@ class SectionParser(object):
     @classmethod
     def create_code_region(cls, code_str, language):
         code_str = code_str.strip('\n\r')
-        language = "go" if language == "bash" else language
         content = code_str[:-len('dxpy.run()')].strip("\n\r") if code_str.endswith('dxpy.run()') else code_str  # final section edgecase
         code = "{start}{content}{end}".format(
             start="```{language}\n".format(language=language),

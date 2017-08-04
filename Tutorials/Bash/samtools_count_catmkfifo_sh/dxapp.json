@@ -1,6 +1,6 @@
 {
   "name": "samtools_count_catmkfifo_sh",
-  "title": "SAMtools count w/ mkfifo and dx cat",
+  "title": "Mkfifo and dx cat",
   "summary": "SAMtools count using mkfifo files and dx cat download stream (bash)",
   "dxapi": "1.0.0",
   "version": "0.0.1",

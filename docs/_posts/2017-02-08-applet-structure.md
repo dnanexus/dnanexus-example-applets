@@ -1,6 +1,8 @@
 ---
 date: 2017-08-02
 title: Basic Applet Structure
+set: getting-started
+set_order: 3
 categories:
   - getting-started
 description: Basics of the Applet directory

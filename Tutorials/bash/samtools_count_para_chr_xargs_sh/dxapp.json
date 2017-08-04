@@ -1,6 +1,6 @@
 {
   "name": "samtools_count_para_chr_xargs_sh",
-  "title": "SAMtools count using xargs by chromosome",
+  "title": "Parallel xargs by Chr",
   "summary": "SAMtools parallel count using xargs",
   "dxapi": "1.0.0",
   "version": "0.0.1",

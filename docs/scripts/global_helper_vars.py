@@ -1,7 +1,12 @@
 from multiprocessing import cpu_count
+from collections import namedtuple
 import re  # re-read docs and make re not greedy
 
 NUM_CORES = cpu_count()
+
+AppObj = namedtuple('AppObj', ['readme_md', 'src_code', 'app_name', 'title', 'interpreter'])
+
+frontmatter_tutorial_types = {'basic', 'distributed', 'parallel'}
 
 TUTORIAL_TYPES_SEARCH = {
     "parallel": re.compile(r'.*para.*'),

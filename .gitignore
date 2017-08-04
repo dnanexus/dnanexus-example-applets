@@ -1,4 +1,4 @@
 *~
 _site/
-log_stdout
+**/log_temp_dir/
 *.pyc

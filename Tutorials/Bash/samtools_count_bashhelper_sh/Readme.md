@@ -1,5 +1,3 @@
-# SAMtools Count With Bash Helpers
-
 This applet performs a basic SAMtools count with the aid of bash [helper variables](https://wiki.dnanexus.com/Developer-Tutorials/Sample-Code?bash#Bash-app-helper-variables).
 
 ## Download bam files

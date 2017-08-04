@@ -1,5 +1,3 @@
-# SAMtools count With Precompiled Binary
-
 This example shows packaging a precompiled binary in the `resources/` directory of an app(let).
 
 ## Options for Precompiling Binary

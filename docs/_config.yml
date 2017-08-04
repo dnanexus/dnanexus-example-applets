@@ -36,6 +36,8 @@ exclude:
   - Gemfile.lock
   - README.md
   - LICENCE
+  - .gitignore
+  - scripts/
 
 collections:
   sets:

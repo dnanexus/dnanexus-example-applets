@@ -1,6 +1,6 @@
 {
   "name": "samtools_count_para_chr_busyproc_sh",
-  "title": "SAMtools count parallelized by region",
+  "title": "Parallel by Region (sh)",
   "summary": "Parallelized SAMtools count based on regions",
   "dxapi": "1.0.0",
   "version": "1.0.0",

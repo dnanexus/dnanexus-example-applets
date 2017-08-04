@@ -1,6 +1,8 @@
 ---
 date: 2017-08-02
-title: Assessing Use Cases
+title: Assessing Your Use Case
+set: getting-started
+set_order: 2
 categories:
   - getting-started
 description: What problem are you solving, is app development the right approach?

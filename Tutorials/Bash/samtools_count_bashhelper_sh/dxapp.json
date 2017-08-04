@@ -1,6 +1,6 @@
 {
   "name": "samtools_count_bashhelper_sh",
-  "title": "SAMtools count w/ Bash Helpers",
+  "title": "Bash Helpers",
   "summary": "SAMtools count implementation using bash helper functions",
   "dxapi": "1.0.0",
   "version": "0.0.1",

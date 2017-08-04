@@ -1,5 +1,3 @@
-# Pysam tools count (DNAnexus Platform App)
-
 This applet performs a SAMtools count on an input BAM using Pysam, a python wrapper for SAMtools.
 
 ## How is Pysam obtained

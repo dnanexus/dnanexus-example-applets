@@ -1,24 +1,31 @@
 #!/usr/bin/env python
+"""
+Script that generates site pages in /docs/pages
+
+TODO: Multithreading logger the right way.
+"""
 from __future__ import print_function
 import argparse
 import os
 import json
 import re
 import logging
+import fnmatch
 from multiprocessing import Pool
 from itertools import izip
+from datetime import date
 from FrontMatterClass import FrontMatter
 from SectionParserClass import SectionParser
-from global_helper_vars import TUTORIAL_TYPES_SEARCH, SUPPORTED_INTERPRETERS, NUM_CORES
+from global_helper_vars import TUTORIAL_TYPES_SEARCH, SUPPORTED_INTERPRETERS, NUM_CORES, AppObj
 
 
-def _get_section_parser(tutorial_dict, logger):
+def _get_section_parser(page_dict, logger):
     tutorial_parser = None
-    if SUPPORTED_INTERPRETERS.get(tutorial_dict["interpreter"]):
+    if SUPPORTED_INTERPRETERS.get(page_dict["interpreter"]):
         tutorial_parser = SectionParser(
-            code_file_path=tutorial_dict["src_code"],
-            ignore_comments=tutorial_dict["ignore_comments"],
-            interpreter=tutorial_dict["interpreter"], logger=logger)
+            code_file_path=page_dict["src_code"],
+            ignore_comments=page_dict["ignore_comments"],
+            interpreter=page_dict["interpreter"], logger=logger)
     return tutorial_parser
 
 
@@ -26,23 +33,30 @@ def _rehydrate_site(user_args):
     def update_dict(d1, d2):
         d1.update(d2)
         return d1
+
+    def archived_applets():
+        archiv_applets = os.path.join(os.path.abspath(os.path.join(user_args.tutorials_dir, '..')), 'Example', 'archived')
+        return find_all_matches(archiv_applets, "dxapp.json")
+
     user_input_dict = {
         "overwrite": user_args.overwrite,
         "ignore_comments": user_args.skip_comments,
         "site_pages_dir": user_args.site_pages_dir
     }
     dxapp_files = find_all_matches(user_args.tutorials_dir, "dxapp.json")
-    tutorial_dicts = [update_dict(d, user_input_dict) for d in _resolve_applets(dxapp_files)]
+    # Add non tutorial pages to page dict here
+    dxapp_files.extend(archived_applets())
+    # Added them
+    page_dicts = [update_dict(d, user_input_dict) for d in _resolve_applets(dxapp_files)]
     md_maker = Pool(processes=NUM_CORES)
-    status = md_maker.map(create_jekyll_markdown_tutorial, tutorial_dicts)
+    status = md_maker.map(create_jekyll_markdown_tutorial, page_dicts)
     md_maker.close()
     md_maker.join()
     for i in xrange(len(status)):
         msg = "SUCCESS: {title}" if status[i][0] else "FAIL: {title}"
-        print(msg.format(title=tutorial_dicts[i]["title"]))
+        print(msg.format(title=page_dicts[i]["title"]))
         if not status[i][0]:
             print(status[i][1])
-            #logging.info(status[i][1])
 
 
 def _resolve_applet(dxapp_path):
@@ -51,18 +65,20 @@ def _resolve_applet(dxapp_path):
         dxapp_obj = json.load(dxf)
     src_code = os.path.join(dxapp_path[:-11], dxapp_obj["runSpec"]["file"])  # pretty sure this is a required field
     readme_md = os.path.join(dxapp_path[:-11], "Readme.md")
-    if os.path.exists(src_code) and os.path.exists(readme_md):
-        app_name = dxapp_obj["name"]
-        title = dxapp_obj["title"]
-        interpreter = dxapp_obj["runSpec"]["interpreter"]
-        return (readme_md, src_code, app_name, title, interpreter)
-    return None
+    if not os.path.exists(src_code) or not os.path.exists(readme_md):
+        return None
+    return AppObj(
+        readme_md=os.path.join(dxapp_path[:-11], "Readme.md"),
+        src_code=os.path.join(dxapp_path[:-11], dxapp_obj["runSpec"]["file"]),
+        app_name=dxapp_obj["name"],
+        title=dxapp_obj["title"],
+        interpreter=dxapp_obj["runSpec"]["interpreter"])
 
 
 def _resolve_applets(dxapp_paths):
-    """
+    """Create app tutorial representations to be used downstream
     TODO: just using multiprocessing.processing since mapping pickling issue makes this complex
-    Create app tutorial representations to be used downstream
+    TODO: Use namedtuple throughout code instead of converting to dict
     dictionary keys returned: "readme_md", "src_code", "name", "title", "interpreter"
     """
     workers = Pool(NUM_CORES)
@@ -73,7 +89,7 @@ def _resolve_applets(dxapp_paths):
     return mapping_list
 
 
-def _write_kmarkdown(fh_md, readme_md_path, logger, section_parser):
+def _write_markdown(fh_md, readme_md_path, logger, section_parser):
     """Creates Kramdown webpage
 
     Notes: Add {match: func(line)} to dictionary in order to handle special matches
@@ -106,7 +122,7 @@ def _write_kmarkdown(fh_md, readme_md_path, logger, section_parser):
     }
 
     optional_match = {  # As many of these matches can be present in one line
-        re.compile(r'^\#\#\s.*|.*<!--\s*INCLUDE:\s*\#\#\s.*-->'): _opt_header2_match
+        # re.compile(r'^\#\#\s.*|.*<!--\s*INCLUDE:\s*\#\#\s.*-->'): _opt_header2_match
     }
 
     with open(readme_md_path) as readme_md:
@@ -146,47 +162,65 @@ def get_parser():
     return parser
 
 
-def create_jekyll_markdown_tutorial(tutorial_dict):
-    """
-    :param dxapp_obj: tuple describing an applet.
-        dict keys: "readme_md", "src_code", "name", "title"
-                    "interpreter" "overwrite" "ignore_comments" "site_pages_dir"
-    :type dxapp_obj: dict
-    :overwrite: if target markdown already exist determins if it is overriden.
-    :type overwrite: boolean
+def create_jekyll_markdown_tutorial(page_dict):
+    """Creates a Jekyll site page
+
+    Note:
+        Generate a logger for each multithreaded process created.
+        This can be improved with thread aware logging, TODO.
+
+    Arguments:
+        page_dict: Mapping with the following structure
+            {
+                readme_md: string path to Readme.md file location,
+                src_code: string path to source code location
+                name: string Page Name
+                title: string Page Title
+                interpreter: string Applet interpreter language
+                overwrite: bool is okay to overwrite dest file if it exist?
+                ignore_comments: bool is okay to ignore comments in files
+                site_pages_dir: destination site page
+            }
+
     TODO switch back to mapping once multiprocessing is implementended using Processing
+    TODO support pages that don't need section parsers
     """
-    log_file_unq_name = "{tut_name}_{title}".format(
-        tut_name=tutorial_dict["name"].strip(), title=tutorial_dict["name"].strip())
+    page_basename = page_dict["name"].strip()
     setup_logger(
-        logger_name=log_file_unq_name, log_dir='log_temp_dir',
+        logger_name=page_basename, log_dir='log_temp_dir',
         level=logging.DEBUG)
-    proc_logger = logging.getLogger(log_file_unq_name)
+    proc_logger = logging.getLogger(page_basename)
 
+    curr_date = date.today().isoformat()
+    page_dict['date'] = curr_date
     target_file = os.path.join(
-        tutorial_dict["site_pages_dir"], tutorial_dict["name"].strip() + ".md")
-    if os.path.exists(target_file):
-        if tutorial_dict["overwrite"]:
-            proc_logger.debug("removing: {0}".format(target_file))
-            os.remove(target_file)
-        else:
-            proc_logger.info("Exist: {fn}".format(fn=target_file))
-            return True, ""
+        page_dict["site_pages_dir"], curr_date + '-' + page_basename + ".md")
 
-    section_parser = _get_section_parser(tutorial_dict, logger=proc_logger)
+    for f in os.listdir('.'):  # TODO clean this loop up
+        if fnmatch.fnmatch(f, '*{}*'.format(page_basename)):
+            if page_dict["overwrite"]:
+                proc_logger.debug("Removing: {0}".format(f))
+                os.remove(f)
+            else:
+                proc_logger.info("Exist: {fn}".format(fn=f))
+                return True, ""
+
+    page_dict['ARCHIVE'] = 'archived' in page_dict['readme_md']
+    section_parser = _get_section_parser(page_dict, logger=proc_logger)
+    page_dict['isdocument'] = True  # Until Video support added leave this here
 
     try:
-        with open(target_file, "w") as tutorial_md:
-            _write_front_matter(dxapp_obj=tutorial_dict, logger=proc_logger, file_handle=tutorial_md)
-            _write_kmarkdown(
-                fh_md=tutorial_md,
-                readme_md_path=tutorial_dict["readme_md"],
+        with open(target_file, "w") as target_md:
+            _write_front_matter(page_dict=page_dict, logger=proc_logger, file_handle=target_md)
+            _write_markdown(
+                fh_md=target_md,
+                readme_md_path=page_dict["readme_md"],
                 section_parser=section_parser,
                 logger=proc_logger)
     except Exception as e:
         proc_logger.info("Exception: {msg}".format(msg=e))
         return False, "Failed with Error:\n{err}\n Review logs in log_temp_dir directory: {logname}.".format(
-            err=e.message, logname=log_file_unq_name)
+            err=e.message, logname=page_basename)
 
     return True, ""
 
@@ -214,21 +248,30 @@ def setup_logger(logger_name, log_dir, level=logging.INFO):
     # log_instance.addHandler(streamHandler)
 
 
-def _write_front_matter(dxapp_obj, logger, file_handle=None):
+def _write_front_matter(page_dict, logger, file_handle=None):
     """Generate and write liquid front matter"""
     proc_logger = logger
+    tut_type = None
+    for candidate_tut_type, re_compiled_obj in TUTORIAL_TYPES_SEARCH.iteritems():
+        if re_compiled_obj.match(page_dict["name"]):
+            tut_type = candidate_tut_type
+            break
+
     frontmatter = FrontMatter(
         logger=logger,
-        title=dxapp_obj["title"],
-        source=dxapp_obj["name"])
-    tut_type = "basic"
-    for k, v in TUTORIAL_TYPES_SEARCH.iteritems():
-        if v.match(dxapp_obj["name"]):
-            tut_type = k
-            break
-    frontmatter.add_field("tutorial_type", tut_type)
-    lang = SUPPORTED_INTERPRETERS.get(dxapp_obj["interpreter"], "none")
-    frontmatter.add_field("language", lang)
+        isdocument=page_dict['isdocument'])
+        #source=page_dict["name"])
+
+    frontmatter.add_field(field="date", value=page_dict["date"])
+    frontmatter.add_field(field="title", value=page_dict["title"])
+    language = SUPPORTED_INTERPRETERS.get(page_dict["interpreter"])
+    if not page_dict['ARCHIVE'] and tut_type:
+        frontmatter.add_field(field="categories", value=tut_type)
+    if not page_dict['ARCHIVE'] and language:
+        frontmatter.add_field(field="categories", value=language)
+    if page_dict['ARCHIVE']:
+        frontmatter.add_field('categories', value="Example Applet")
+
     if file_handle is None:
         return frontmatter.__str__()
     file_handle.write(frontmatter.__str__())
@@ -246,7 +289,7 @@ def main():
         args.tutorials_dir = os.path.normpath(assumed_tutorial_path)
     if args.site_pages_dir is None:
         script_dir = os.path.dirname(os.path.realpath(__file__))
-        assumed_site_page_path = os.path.join(script_dir, "..", "_tutorials")
+        assumed_site_page_path = os.path.join(script_dir, "..", "_posts")
         args.site_pages_dir = os.path.normpath(assumed_site_page_path)
 
     _rehydrate_site(args)

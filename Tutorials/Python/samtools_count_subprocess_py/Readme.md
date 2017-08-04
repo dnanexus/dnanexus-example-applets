@@ -1,5 +1,3 @@
-# SAMtools count with subprocess (python)
-
 ## How is SAMtools dependency provided?
 SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) dependency in the dxapp.json runSpec.execDepends.
 ```json

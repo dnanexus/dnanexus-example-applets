@@ -1,4 +1,3 @@
-# SAMtools count using xargs by chromosome
 This applet slices a BAM file by canonical chromosome then performs a parallelized `samtools view -c` using xargs. Type `man xargs` for general usage information.
 
 ## How is SAMtools dependency provided?

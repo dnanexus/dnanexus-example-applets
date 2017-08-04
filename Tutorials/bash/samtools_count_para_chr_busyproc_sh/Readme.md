@@ -1,4 +1,3 @@
-# SAMtools count parallelized by region
 This applet performs a basic SAMtools count on a series of sliced(by canonical chromosome) bam files in parallel using wait (Ubuntu 14.04+).
 
 ## How is SAMtools dependency provided?

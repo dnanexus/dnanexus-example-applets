@@ -1,21 +1,14 @@
-# SAMtools count
-
-This app performs a basic SAMtools count.
-
 ## Download BAM Files
 For bash scripts, inputs to a job execution are made environment variables. From our dxapp.json
 ```json
 {
-	"inputSpec": [
-	  {
-	    "name": "mappings_bam",
-	    "label": "Mapping",
-	    "class": "file",
-	    "patterns": ["*.bam"],
-	    "help": "BAM format file."
-	  }
-	],
-	...
+  "inputSpec": [{
+    "name": "mappings_bam",
+    "label": "Mapping",
+    "class": "file",
+    "patterns": ["*.bam"],
+    "help": "BAM format file."
+  }],
 }
 ```
 `mappings_bam` will be available as an environmental variable. Use `dx download` to download the bam file. `$mappings_bam` is a [DNAnexus link (dx link)](https://wiki.dnanexus.com/FAQ#What-are-DNAnexus-links,-and-how-are-they-different-from-using-the-data-object-IDs%3F)

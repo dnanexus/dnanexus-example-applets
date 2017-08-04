@@ -1,6 +1,6 @@
 {
   "name": "samtools_count_binary_sh",
-  "title": "SAMtools count w/ Precompiled Binary",
+  "title": "Precompiled Binary",
   "summary": "SAMtools count implementation using a precompiled binary",
   "dxapi": "1.0.0",
   "version": "0.0.1",

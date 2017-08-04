@@ -1,6 +1,6 @@
 {
   "name": "samtools_count_git_sh",
-  "title": "SAMtools fetched via Git repo",
+  "title": "Git Dependency",
   "summary": "Fetches and makes samtools via the git repo",
   "dxapi": "1.0.0",
   "version": "0.0.1",
