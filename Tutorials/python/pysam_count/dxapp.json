@@ -1,0 +1,72 @@
+{
+  "name": "pysam_count",
+  "title": "Pysam",
+  "summary": "Counts the number of reads in a BAM file.",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "mappings_sorted_bam",
+      "label": "Mapping",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": "BAM format file."
+    },
+    {
+      "name": "mappings_sorted_bai",
+      "label": "Sorted mappings index",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*.bai"
+      ],
+      "help": "(Optional) Index file for BAM."
+    },
+    {
+      "name": "canonical_chr",
+      "label": "Count only canonical chromosomes?",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "help": "(Optional) Determine if only canonical chromosomes are counted."
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "counts_txt",
+      "label": "Read count file",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": "Output file with Total reads as the first line."
+    }
+  ],
+  "runSpec": {
+    "interpreter": "python2.7",
+    "file": "src/code.py",
+    "execDepends": [
+      {"name": "pysam",
+         "package_manager": "pip",
+         "version": "0.9.1.4"}
+    ],
+  "timeoutPolicy": {
+    "*": {
+      "hours": 1
+    }
+  },
+    "systemRequirements": {
+      "*": {
+        "instanceType": "mem1_ssd1_x2"
+      }
+    },
+    "distribution": "Ubuntu",
+    "release": "14.04"
+  },
+  "access": {
+    "network": ["*"]
+  }
+}

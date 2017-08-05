@@ -1,0 +1,56 @@
+{
+  "name": "samtools_count_para_reg_multiprocess_py",
+  "title": "Parallel by Region (py)",
+  "summary": "Count number of reads in SAM or BAM format file in parallel, by region on multiple cores",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "mappings_sorted_bam",
+      "label": "Sorted mappings",
+      "class": "file",
+      "patterns": [
+        "*.bam"
+      ],
+      "help": "A coordinate-sorted BAM format file."
+    },
+    {
+      "name": "mappings_sorted_bai",
+      "label": "Sorted mappings index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bai"
+      ],
+      "help": "(Optional) Index file for BAM."
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "count_file",
+      "label": "Read count file",
+      "class": "file",
+      "patterns": [
+      "*.txt"
+    ],
+      "help": "Text file containing number of reads per region."
+    }
+  ],
+  "runSpec": {
+    "interpreter": "python2.7",
+    "file": "src/code.py",
+  "timeoutPolicy": {
+    "*": {
+      "hours": 12
+    }
+  },
+    "systemRequirements": {
+      "*": {
+        "instanceType": "mem1_ssd1_x4"
+      }
+    },
+    "execDepends": [{"name": "samtools"}],
+    "distribution": "Ubuntu",
+    "release": "14.04"
+  }
+}

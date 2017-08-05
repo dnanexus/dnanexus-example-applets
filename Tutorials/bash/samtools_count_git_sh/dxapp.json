@@ -1,0 +1,64 @@
+{
+  "name": "samtools_count_git_sh",
+  "title": "Git Dependency",
+  "summary": "Fetches and makes samtools via the git repo",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "mappings_bam",
+      "label": "Mappings file",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": "Sorted mappings file."
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "count_txt",
+      "label": "Counts File",
+      "class": "file",
+      "patterns": [
+        "*.txt"
+      ],
+      "help": ""
+    }
+  ],
+    "access": {
+      "network": ["github.com"]
+    },
+  "runSpec": {
+    "timeoutPolicy": {
+    "*": {
+      "hours": 2
+    }
+  },
+    "execDepends": [
+      {"name": "htslib",
+             "package_manager": "git",
+             "url": "https://github.com/samtools/htslib.git",
+             "tag": "1.3.1",
+             "destdir": "/home/dnanexus"
+      },
+    	{"name": "samtools",
+             "package_manager": "git",
+             "url": "https://github.com/samtools/samtools.git",
+             "tag": "1.3.1",
+             "destdir": "/home/dnanexus",
+             "build_commands": "make samtools"
+    	}
+	],
+    "interpreter": "bash",
+    "file": "src/code.sh",
+    "systemRequirements": {
+      "*": {
+        "instanceType": "mem1_ssd1_x2"
+      }
+    },
+    "distribution": "Ubuntu",
+    "release": "14.04"
+  }
+}
