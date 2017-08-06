@@ -2,6 +2,7 @@
 categories:
 - python
 date: '2017-08-06'
+github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/python/pysam_count
 title: Pysam
 type: Document
 ---
@@ -111,74 +112,3 @@ Our summarized counts are returned as the job output. We use the dx-toolkit pyth
 ```
 
 Python job outputs have to be a dictionary of key-value pairs, with the keys being job output names, as defined in the dxapp.json, and the value being the output value for corresponding output class. For files, the output type is a [DXLink](https://wiki.dnanexus.com/api-specification-v1.0.0/Details-and-Links#Linking). We use the [`dxpy.dxlink`](http://autodoc.dnanexus.com/bindings/python/current/dxpy_functions.html?highlight=dxlink#dxpy.bindings.dxdataobject_functions.dxlink) function to generate the appropriate DXLink value.
-
-
-## Applet Script
-```python
-import dxpy
-import pysam
-import unicodedata
-import re
-
-
-def get_chr(bam_alignment, canonical=False):
-    regions = []
-    headers = bam_alignment.header
-    seq_dict = headers['SQ']
-
-    if canonical:
-        re_canonical_chr = re.compile(r'^chr[0-9XYM]+$|^[0-9XYM]')
-        for seq_elem in seq_dict:
-            if re_canonical_chr.match(seq_elem['SN']):
-                regions.append(seq_elem['SN'])
-    else:
-        regions = [''] * len(seq_dict)
-        for i, seq_elem in enumerate(seq_dict):
-            regions[i] = seq_elem['SN']
-
-    return regions
-
-@dxpy.entry_point('main')
-def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
-    print mappings_sorted_bai
-    print mappings_sorted_bam
-
-    mappings_sorted_bam = dxpy.DXFile(mappings_sorted_bam)
-    sorted_bam_name = mappings_sorted_bam.name
-    dxpy.download_dxfile(mappings_sorted_bam.get_id(),
-                         sorted_bam_name)
-    ascii_bam_name = unicodedata.normalize(  # Pysam requires ASCII not Unicode string.
-        'NFKD', sorted_bam_name).encode('ascii', 'ignore')
-
-    if mappings_sorted_bai is not None:
-        mappings_sorted_bai = dxpy.DXFile(mappings_sorted_bai)
-        dxpy.download_dxfile(mappings_sorted_bai.get_id(),
-                             mappings_sorted_bai.name)
-    else:
-        pysam.index(ascii_bam_name)
-
-
-    mappings_obj = pysam.AlignmentFile(ascii_bam_name, "rb")
-    regions = get_chr(mappings_obj, canonical_chr)
-
-
-    total_count = 0
-    count_filename = "{bam_prefix}_counts.txt".format(
-        bam_prefix=ascii_bam_name[:-4])
-
-    with open(count_filename, "w") as f:
-        for region in regions:
-            temp_count = mappings_obj.count(region=region)
-            f.write("{region_name}: {counts}\n".format(
-                region_name=region, counts=temp_count))
-            total_count += temp_count
-
-        f.write("Total reads: {sum_counts}".format(sum_counts=total_count))
-
-
-    counts_txt = dxpy.upload_local_file(count_filename)
-    output = {}
-    output["counts_txt"] = dxpy.dxlink(counts_txt)
-
-    return output
-```

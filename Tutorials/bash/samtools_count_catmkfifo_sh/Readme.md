@@ -31,7 +31,7 @@ All files found in the path `~/out/<output name>` will be uploaded to the corres
 ## Stream the result file to the platform
 Currently, we've established a stream from the platform, piped into a `samtools` command, and finally outputting to another named pipe. However, our background process is still blocked since we lack a *stdout* for our output file. Luckily, creating an upload stream to the platform will resolve this.
 
-We can upload as a stream to the platform using [dx-upload-all-outputs](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-upload-all-outputs) or [dx upload -](https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands?q=dx-upload-all-outputs#upload). Make sure to specify --buffer-size if needed.
+We can upload as a stream to the platform using [`dx-upload-all-outputs`](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-upload-all-outputs) or [`dx upload -`](https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands?q=dx-upload-all-outputs#upload). Make sure to specify `--buffer-size` if needed.
 <!-- SECTION: Processing input stream to output stream -->
 
 | FIFO | *stdin* | *stdout* |
@@ -39,7 +39,7 @@ We can upload as a stream to the platform using [dx-upload-all-outputs](https://
 | BAM file   | <span style="color: green">**YES**</span>   | <span style="color: green">**YES**</span>   |
 | output file   | <span style="color: green">**YES**</span>   | <span style="color: green">**YES**</span>   |
 
-<!-- INCLUDE: {% include note.html content="Alternatively, `dx upload *-*` can upload directly from *stdin*. In this example, we would no longer need to have the directory structure required for `dx-upload-all-outputs`." %} -->
+<!-- INCLUDE: {% include note.html content="Alternatively, `dx upload -` can upload directly from *stdin*. In this example, we would no longer need to have the directory structure required for `dx-upload-all-outputs`." %} -->
 
 <!-- INCLUDE: {% include warning.html content="When uploading a file that exists on disk `dx upload` is aware of the file size and automatically handles any Cloud Service Provider upload part requirements. When uploading as a stream, the file size is not automatically known and `dx upload` uses default parameters. While these parameters are fine for most use cases, you may need to specify upload part size with the `--buffer-size` option." %} -->
 
@@ -72,5 +72,3 @@ When this applet is run on a worker the resources/ folder will be placed in the 
 ```
 
 /usr/bin is part of the `$PATH` variable, so in our script, we can reference the samtools command directly, `samtools view -c ...`
-<!-- INCLUDE: ## Applet Script -->
-<!-- FUNCTION: FULL SCRIPT -->

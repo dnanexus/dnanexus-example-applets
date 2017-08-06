@@ -1,5 +1,10 @@
+# Site generator script
 **/log_temp_dir/*
+**/_site/*
+
+# General
 *~
+*.pyc
 
 # Ignore docs files
 **/.sass-cache

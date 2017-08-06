@@ -2,6 +2,7 @@
 categories:
 - python
 date: '2017-08-06'
+github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/python/samtools_count_subprocess_py
 title: Subprocess module
 type: Document
 ---
@@ -68,42 +69,6 @@ We then provide the [DXLink](http://autodoc.dnanexus.com/bindings/python/current
 3. `return` the job output dictionary as the entry point function output
 
 ```python
-    output = {}
-    output["counts_txt"] = dxpy.dxlink(counts_txt)
-
-    return output
-```
-
-## Applet Script
-```python
-import dxpy
-import subprocess
-
-
-@dxpy.entry_point('main')
-def main(mappings_bam):
-
-
-    mappings_bam = dxpy.DXFile(mappings_bam)
-    mappings_bam_name = mappings_bam.name
-    dxpy.download_dxfile(mappings_bam.get_id(), mappings_bam_name)
-
-
-    count_txt_name = "{prefix}_count.txt".format(prefix=mappings_bam_name[:-4])
-
-    samtools_view_cmd = ["samtools", "view", "-c", mappings_bam_name]
-    with open(count_txt_name, "w") as f:
-        try:
-            subprocess.check_call(samtools_view_cmd, stdout=f)
-        except subprocess.CalledProcessError as cpe:
-            print "Command failed: {cmd}".format(
-                cmd=cpe.cmd)
-            raise cpe
-
-
-    counts_txt = dxpy.upload_local_file(count_txt_name)
-
-
     output = {}
     output["counts_txt"] = dxpy.dxlink(counts_txt)
 

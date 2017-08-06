@@ -2,6 +2,7 @@
 categories:
 - bash
 date: '2017-08-06'
+github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count
 title: SAMtools count
 type: Document
 ---
@@ -65,17 +66,5 @@ The output of an applet must be declared before the applet is even built. Lookin
 ```
 We declared a **file** type output named `counts_txt`. In the applet script, we must tell the system what file should be associated with the output `counts_txt`. On job completion, usually end of script, this file will be copied from the job container to the Project that launched the job.  
 ```bash
-dx-jobutil-add-output counts_txt "${counts_txt_id}" --class=file
-```
-
-## Applet Script
-```bash
-dx download "${mappings_bam}"
-
-readcount=$(samtools view -c "${mappings_bam_name}")
-echo "Total reads: ${readcount}" > "${mappings_bam_prefix}.txt"
-
-counts_txt_id=$(dx upload "${mappings_bam_prefix}.txt" --brief)
-
 dx-jobutil-add-output counts_txt "${counts_txt_id}" --class=file
 ```

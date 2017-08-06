@@ -1,8 +1,8 @@
-This applet performs a basic SAMtools count on a series of sliced(by canonical chromosome) bam files in parallel using wait (Ubuntu 14.04+).
+This applet performs a basic SAMtools count on a series of sliced(by canonical chromosome) bam files in parallel using `wait` (Ubuntu 14.04+).
 
 ## How is SAMtools dependency provided?
 SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the dxapp.json runSpec.execDepends.
-```
+```json
   "runSpec": {
     ...
     "execDepends": [
@@ -12,8 +12,7 @@ SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.co
 ```
 For additional information, please refer to the [execDepends wiki page](https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages).
 
-## Overview
-### Debugging boilerplate and input download
+## Debugging boilerplate and input download
 With Bash scripts, you can prevent a lot of headaches with the command `set -e -x -o pipefail`:
 * `-e` causes the shell to immediately exit if a command returns a non-zero exit code.
 * `-x` prints commands as they are executed, very useful for tracking job status or pinpointing exact execution failure.
@@ -21,8 +20,8 @@ With Bash scripts, you can prevent a lot of headaches with the command `set -e -
 <!-- SECTION: Debugging boilerplate and input download -->
 The `*.bai` file was an optional job input. We check for a empty or unset `var` using the bash built-in `[[-z ${var}}]]` test. Then download or create a `*.bai` index as needed.
 
-### Parallelized run
-Bash's built-in [job control](http://tldp.org/LDP/abs/html/x9644.html) system allows for easy management of multiple processes. In this example, we run bash commands in the background as we control maximum job executions in the foreground.
+## Parallelized run
+Bash's [job control](http://tldp.org/LDP/abs/html/x9644.html) system allows for easy management of multiple processes. In this example, we run bash commands in the background as we control maximum job executions in the foreground.
 We place processes in the background using an `&` after a command.
 <!-- SECTION: Parallel SAMtools count by region -->
 <!-- SECTION: Wait for background processes to complete -->
@@ -34,7 +33,5 @@ Once the input bam has been sliced, counted, and summed the output counts_txt is
 │       ├── < output name in dxapp.json >
 │           ├── output file
 ```
-<!-- INCLUDE: In our applet, we accomplish this by -->
+<!-- INCLUDE: In our applet, we upload all outputs by: -->
 <!-- SECTION: Sum and Upload results -->
-<!-- INCLUDE: ## Applet Script -->
-<!-- FUNCTION: FULL SCRIPT -->

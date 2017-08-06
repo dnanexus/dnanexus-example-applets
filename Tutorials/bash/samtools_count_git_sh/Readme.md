@@ -10,11 +10,11 @@ The app must have network access to the hostname where the git repository is loc
   "network": ["github.com"]
 }
 ```
-Additional documentation can be found [here](https://wiki.dnanexus.com/Execution-Environment-Reference#Network-Access)
+Additional documentation on `access` and `network` fields can be found on the [Execution Environment Reference](https://wiki.dnanexus.com/Execution-Environment-Reference#Network-Access) wiki page.
 
 ## How is the SAMtools dependency added?
 
-SAMtools master branch is fetched from the [SAMtools GitHub repository](https://github.com/samtools/samtools). Let's take a closer look at the dxapp.json's `runSpec.execDepends` property:
+SAMtools is cloned and built from the [SAMtools GitHub](https://github.com/samtools/samtools) repository. Let's take a closer look at the dxapp.json's `runSpec.execDepends` property:
 ```json
   "runSpec": {
  ...
@@ -29,7 +29,7 @@ SAMtools master branch is fetched from the [SAMtools GitHub repository](https://
         {"name": "samtools",
         "package_manager": "git",
         "url": "https://github.com/samtools/samtools.git",
-        "tag": "0.1.19",
+        "tag": "1.3.1",
         "destdir": "/home/dnanexus",
         "build_commands": "make samtools"
         }
@@ -37,7 +37,7 @@ SAMtools master branch is fetched from the [SAMtools GitHub repository](https://
 ...
   }
 ```
-`execDepends` value is a JSON array of dependencies to resolve before the applet src code is run. In this applet we specify the following git fetch dependency for htslib and SAMtools. Dependencies are resolved in the order they're specified. Here we **must** specify htslib first, before samtools `build_commands`, due to newer versions of SAMtools being dependent on htslib. An overview of the each property in a dependency:
+[`execDepends`](https://wiki.dnanexus.com/Execution-Environment-Reference?q=execDepends#Software-Packages) value is a JSON array of dependencies to resolve before the applet src code is run. In this applet we specify the following git fetch dependency for htslib and SAMtools. Dependencies are resolved in the order they're specified. Here we **must** specify htslib first, before samtools `build_commands`, due to newer versions of SAMtools being dependent on htslib. An overview of the each property in the git dependency:
 
 * `package_manager` - Details the type of dependency and how to resolve.  [supplementary details](https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages).
 * `url` - Must point to the server containing the repository. In this case, a github url.
@@ -61,3 +61,4 @@ Because we set `"destdir": "/home/dnanexus"` in our dxapp.json we know the git r
 Our samtools command from out app script is `samtools/samtools`.
 <!-- INCLUDE: ## Applet Script -->
 <!-- FUNCTION: FULL SCRIPT -->
+<!-- INCLUDE: {% include note.html content="We could've built samtools in a detination within our `$PATH` or added the binary directory to our `$PATH`. Keep this in mind for your app(let) development" %} -->

@@ -75,6 +75,3 @@ return output
 ```
 <!-- INCLUDE: {% include note.html content="The `run_cmd` function return a tuple containing the stdout, stderr, and exit code of the subprocess call. We parse these outputs from our workers to determine a failed or a passed run." %} -->
 <!-- FUNCTION: verify_pool_status -->
-
-<!-- INCLUDE: ## Applet Script -->
-<!-- FUNCTION: FULL SCRIPT -->

@@ -39,5 +39,3 @@ The results file is uploaded using the standard bash process.
 1.  Upload a file to the job execution's container.
 2.  Provide the DNAnexus link as a job's output using `dx-jobutil-add-output <output name>`
 <!-- SECTION: Upload result file -->
-<!-- INCLUDE: ## Applet Script -->
-<!-- FUNCTION: FULL SCRIPT -->

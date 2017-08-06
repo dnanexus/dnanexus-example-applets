@@ -19,6 +19,10 @@ from SectionParserClass import SectionParser
 from global_helper_vars import TUTORIAL_TYPES_SEARCH, SUPPORTED_INTERPRETERS, NUM_CORES, AppObj
 
 
+BASE_URL = "https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials"  # TODO: remove this, was for testing
+# Add path to named AppObj tuple definition
+
+
 def _get_section_parser(page_dict, logger):
     tutorial_parser = None
     if SUPPORTED_INTERPRETERS.get(page_dict["interpreter"]):
@@ -184,6 +188,7 @@ def create_jekyll_markdown_tutorial(page_dict):
 
     TODO switch back to mapping once multiprocessing is implementended using Processing
     TODO support pages that don't need section parsers
+    TODO have global site_pages_dir and unique full path to generated file page_dict
     """
     page_basename = page_dict["name"].strip()
     setup_logger(
@@ -196,11 +201,12 @@ def create_jekyll_markdown_tutorial(page_dict):
     target_file = os.path.join(
         page_dict["site_pages_dir"], curr_date + '-' + page_basename + ".md")
 
-    for f in os.listdir('.'):  # TODO clean this loop up
+    for f in os.listdir(page_dict["site_pages_dir"]):  # TODO clean this loop up
         if fnmatch.fnmatch(f, '*{}*'.format(page_basename)):
             if page_dict["overwrite"]:
                 proc_logger.debug("Removing: {0}".format(f))
-                os.remove(f)
+                os.remove(os.path.join(page_dict["site_pages_dir"], f))
+                break
             else:
                 proc_logger.info("Exist: {fn}".format(fn=f))
                 return True, ""
@@ -269,6 +275,9 @@ def _write_front_matter(page_dict, logger, file_handle=None):
         frontmatter.add_field(field="categories", value=tut_type)
     if not page_dict['ARCHIVE'] and language:
         frontmatter.add_field(field="categories", value=language)
+        link = "{base_url}/{lang}/{tut_name}".format(
+            base_url=BASE_URL, lang=language, tut_name=page_dict['name'])
+        frontmatter.add_field(field="github_link", value=link)
     if page_dict['ARCHIVE']:
         frontmatter.add_field('categories', value="Example Applet")
 

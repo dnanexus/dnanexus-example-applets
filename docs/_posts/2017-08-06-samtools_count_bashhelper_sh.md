@@ -2,51 +2,51 @@
 categories:
 - bash
 date: '2017-08-06'
+github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count_bashhelper_sh
 title: Bash Helpers
 type: Document
 ---
 This applet performs a basic SAMtools count with the aid of bash [helper variables](https://wiki.dnanexus.com/Developer-Tutorials/Sample-Code?bash#Bash-app-helper-variables).
 
-## Download bam files
-This script uses the DNAnexus [`dx-download-all-inputs`](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-download-all-inputs) command to download all job inputs. The `dx-download-all-inputs` command will go through all inputs and download into folders which have the pattern
-`/home/dnanexus/in/[VARIABLE]/[file or subfolder with files]`.  
+## Download BAM Files
+Input files are downloaded using the [`dx-download-all-inputs`](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-download-all-inputs) command. The `dx-download-all-inputs` command will go through all inputs and download into folders with the pattern
+`/home/dnanexus/in/[VARIABLE]/[file or subfolder with files]`.
 ```bash
 dx-download-all-inputs
 ```
 
-## Create output directory
+## Create Output Directory
 
-We create an output directory in preparation for `dx-upload-all-outputs` DNAnexus command.
+We create an output directory in preparation for `dx-upload-all-outputs` DNAnexus command in the (Upload Results)[#Upload Result] section.
 ```bash
 mkdir -p out/counts_txt
 ```
 
-## Run samtools view
+## Run SAMtools View
 
-Here, we use the bash helper variable `mappings_bam_path`. `[VARIABLE]_path` bash variable will point to the location of a file after it has been downloaded using `dx-download-all-inputs`. In our tutorial applet, the input variable name `mappings_bam` with filename `my_mappings.bam` will have a helper variable `mappings_bam_path` with value:
-    `/home/dnanexus/in/mappings_bam/my_mappings.bam` 
+After performing a `dx-download-all-inputs` there are three helper variables created to aid in scripting. For this applet, the input variable name `mappings_bam` with platform filename `my_mappings.bam` will have a helper variables:
+```bash
+# [VARIABLE]_path the absolute string path to the file.
+~ $ echo $mappings_bam_path
+/home/dnanexus/in/mappings_bam/my_mappings.bam
+# [VARIABLE]_prefix the file name minus the longest matching pattern in the dxapp.json
+~ $ echo $mappings_bam_prefix
+my_mappings
+# [VARIABLE]_name the file name from the platform
+~ $ echo $mappings_bam_name
+my_mappings.bam
+```
+We use the bash helper variable `mappings_bam_path` to reference the location of a file after it has been downloaded using `dx-download-all-inputs`.
 ```bash
 samtools view -c "${mappings_bam_path}" > out/counts_txt/"${mappings_bam_prefix}.txt"
 ```
 
-## Upload result
+## Upload Result
 
-We use the `dx-upload-all-outputs` to upload data to the platform and associate
-it as the job's output. `dx-upload-all-outputs` uses the folder pattern
-`/home/dnanexus/out/[VARIABLE]`. It will upload the files in that folder
-and then associate them as the output corresponding to `[VARIABLE]`. In this case,
-the output is called `counts_txt`. [Above](#create-output-directory), we created the folders, and placed the output there.  
+We use the [`dx-upload-all-outputs`](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-upload-all-outputs) to upload data to the platform and associate
+it as the job's output. The `dx-upload-all-outputs` command expects to find file paths matching the pattern
+`/home/dnanexus/out/[VARIABLE]/*`. It will upload matching files and then associate them as the output corresponding to `[VARIABLE]`. In this case,
+the output is called `counts_txt`. [Above](#create-output-directory) and we created the folders, and placed the output there.  <!-- TODO: Add multiple dx upoad all example -->
 ```bash
-dx-upload-all-outputs
-```
-
-## Applet Script
-```bash
-dx-download-all-inputs
-
-mkdir -p out/counts_txt
-
-samtools view -c "${mappings_bam_path}" > out/counts_txt/"${mappings_bam_prefix}.txt"
-
 dx-upload-all-outputs
 ```

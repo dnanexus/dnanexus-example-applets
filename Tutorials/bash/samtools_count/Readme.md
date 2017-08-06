@@ -50,5 +50,3 @@ The output of an applet must be declared before the applet is even built. Lookin
 ```
 We declared a **file** type output named `counts_txt`. In the applet script, we must tell the system what file should be associated with the output `counts_txt`. On job completion, usually end of script, this file will be copied from the job container to the Project that launched the job.  
 <!--SECTION: Associate with output -->
-<!-- INCLUDE: ## Applet Script -->
-<!-- FUNCTION: FULL SCRIPT -->

@@ -73,10 +73,8 @@ def resolve_module(module_name, depth=0):
     Module mocking inspiration: https://stackoverflow.com/questions/8658043/how-to-mock-an-import
     """
     try:
-        print('ATTEMPTING')
         module_import = import_module(name=module_name)
     except ImportError as ie:
-        print('I ERRED')
         module_to_mock = IMPORT_ERROR_MATCHER.match(ie.message).group(1)
         if module_to_mock == module_name:
             raise ImportError('Circular dependency.')
@@ -84,7 +82,7 @@ def resolve_module(module_name, depth=0):
         depth += 1
         return resolve_module(module_name, depth=depth)
     else:
-        print('Depth {} reached before full resolution'.format(depth))
+        print('Import Depth {} reached before full module resolution'.format(depth))
         return module_import
 
 
@@ -99,10 +97,7 @@ def get_python_function_by_path(path_to_src, func_name):
     module_name = module_py.rstrip('.py')
     with _temp_applet_src_alter(dirpath=py_path, module_path=path_to_src):
         with pushd_popd(py_path):
-            print("CURR DIR:", os.getcwd())
-            print("LIST DIR:", os.listdir('.'))
             module_import = resolve_module(module_name=module_name)
-            print("OUTPUT HERE", module_import)
             func_obj = getattr(module_import, func_name)
             return getsource(func_obj)
 

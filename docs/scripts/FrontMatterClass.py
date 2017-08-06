@@ -22,7 +22,7 @@ class FrontMatter(object):
         logger: Explicitly passed logger TODO: remove this an log in parallel correctly
 
     """
-    allowed_inputs = {'title', 'description', 'categories', 'date'}
+    allowed_inputs = {'title', 'description', 'categories', 'date', 'github_link'}
 
     def __init__(self, logger, isdocument, **kwargs):
         self.logger = logger

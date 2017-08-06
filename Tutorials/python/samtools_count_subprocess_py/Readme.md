@@ -43,5 +43,3 @@ We then provide the [DXLink](http://autodoc.dnanexus.com/bindings/python/current
 3. `return` the job output dictionary as the entry point function output
 
 <!-- SECTION: Associate with output -->
-<!-- INCLUDE: ## Applet Script -->
-<!-- FUNCTION: FULL SCRIPT -->
