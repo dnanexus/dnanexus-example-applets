@@ -2,7 +2,7 @@
 # Site
 
 title: DNAnexus Example Applets
-url: "https://damien-black.github.io/dnanexus-example-applets/"
+url: "https://damien-black.github.io/"
 baseurl:
 google_analytics_key:
 disqus_shortname:
@@ -10,15 +10,17 @@ newsletter_action:
 
 # Values for the jekyll-seo-tag gem (https://github.com/jekyll/jekyll-seo-tag)
 logo: /siteicon.png
-description: Knowledge base template for Jekyll.
-author:
-  name:
-  email:
-  twitter: # twitter username without the @ symbol
+description: "dnanexus-example-applets github page."
+author: DNAnexus
+twitter:
+  username: dnanexus
 social:
-  name: Base Template
+  name: DNAnexus
   links:
     - https://platform.dnanexus.com
+    - https://twitter.com/dnanexus
+    - https://www.linkedin.com/company-beta/912957/
+    - https://github.com/DNAnexus
 
 # -----
 # Build
@@ -89,3 +91,16 @@ types:
   - Video
 
 _comments:
+
+# ----------
+# DNAnexus code syntax specifics
+# Rouge is the default (gemfile.lock), but I like being explicit
+#   Adds a tiny bit to site build time, which shouldn't be an issue
+#   If it is delete this section.
+
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge

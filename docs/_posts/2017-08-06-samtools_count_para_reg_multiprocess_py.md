@@ -2,7 +2,7 @@
 categories:
 - python
 - parallel
-date: '2017-08-04'
+date: '2017-08-06'
 title: Parallel by Region (py)
 type: Document
 ---

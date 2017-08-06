@@ -1,7 +1,7 @@
 ---
 categories:
 - python
-date: '2017-08-04'
+date: '2017-08-06'
 title: Subprocess module
 type: Document
 ---

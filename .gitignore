@@ -1,1 +1,6 @@
+**/log_temp_dir/*
 *~
+
+# Ignore docs files
+**/.sass-cache
+**/.sass-cache/*

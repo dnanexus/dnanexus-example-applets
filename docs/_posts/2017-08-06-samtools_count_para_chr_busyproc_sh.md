@@ -2,7 +2,7 @@
 categories:
 - parallel
 - bash
-date: '2017-08-04'
+date: '2017-08-06'
 title: Parallel by Region (sh)
 type: Document
 ---
