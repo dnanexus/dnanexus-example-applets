@@ -1,7 +1,7 @@
 ---
 categories:
 - python
-date: '2017-08-06'
+date: '2017-08-07'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/python/pysam_count
 title: Pysam
 type: Document

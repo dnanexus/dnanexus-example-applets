@@ -2,7 +2,7 @@
 categories:
 - distributed
 - bash
-date: '2017-08-06'
+date: '2017-08-07'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count_distr_chr_slice_sh
 title: Distributed by Chr (sh)
 type: Document

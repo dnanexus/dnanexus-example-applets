@@ -2,7 +2,7 @@
 categories:
 - parallel
 - bash
-date: '2017-08-06'
+date: '2017-08-07'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count_para_chr_xargs_sh
 title: Parallel xargs by Chr
 type: Document

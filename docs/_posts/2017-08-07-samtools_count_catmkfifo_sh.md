@@ -1,7 +1,7 @@
 ---
 categories:
 - bash
-date: '2017-08-06'
+date: '2017-08-07'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count_catmkfifo_sh
 title: Mkfifo and dx cat
 type: Document
