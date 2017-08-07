@@ -32,6 +32,7 @@ gems:
   - jekyll-seo-tag
   - jekyll-feed
   - jekyll-archives
+  - jekyll-extract-element
 
 exclude:
   - Gemfile
@@ -94,7 +95,7 @@ _comments:
 
 # ----------
 # DNAnexus code syntax specifics
-# Rouge is the default (gemfile.lock), but I like being explicit
+# Rouge is the default (GitHub pages), but I like being explicit
 #   Adds a tiny bit to site build time, which shouldn't be an issue
 #   If it is delete this section.
 
