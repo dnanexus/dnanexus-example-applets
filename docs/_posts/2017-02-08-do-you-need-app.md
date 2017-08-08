@@ -91,7 +91,7 @@ Running the Cloud Workstation app from the terminal:
 
 **Set up SSH access with `dx ssh_config`:**
 
-```shell
+```bash
 $ dx ssh_config
 Select an SSH key pair to use when connecting to DNAnexus jobs. The public key will be saved to your
 DNAnexus account (readable only by you). The private key will remain on this computer.                              
@@ -108,9 +108,9 @@ or --debug-on options to launch jobs and connect to them.
     
 **Run the app:**
     
-```shell
+```bash
 $ dx run app-cloud_workstation --allow-ssh                                                
-Select an optional parameter to set< by its # (^D or <ENTER> to finish):        
+Select an optional parameter to set by its # (^D or <ENTER> to finish):        
 [0] Maximum Session Length (suffixes allowed: s, m, h, d, w, M, y) (max_session_length) [default="1h"]                                 
 [1] Files (fids)                                         
               
@@ -125,8 +125,11 @@ Watch launched job now? [Y/n] n
     
 **SSH into the job running the app**
     
-```shell
+```bash
 $ dx ssh job-xxxx
 ```
 
-The Cloud Workstation app takes a rather useful approach for exploratory development on the platform. Feel free to look at the app code for Cloud Workstation v1.0.3, which you can obtain with `dx get app-F40jZqQ9fZF4ggVZ1qGYQz5z`.
+The Cloud Workstation app takes a rather useful approach for exploratory development on the platform. Feel free to look at the app code for Cloud Workstation v1.0.3, which you can obtain with:
+```bash
+dx get app-F40jZqQ9fZF4ggVZ1qGYQz5z
+```

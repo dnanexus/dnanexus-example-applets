@@ -3,7 +3,7 @@
 
 title: DNAnexus Example Applets
 url: "https://damien-black.github.io/dnanexus-example-applets"
-baseurl: "/dnanexus-example-applets/"
+baseurl: "/dnanexus-example-applets/" # The location of those forward slashes is extremely important
 google_analytics_key:
 disqus_shortname:
 newsletter_action:
@@ -24,6 +24,7 @@ social:
 
 # -----
 # Build
+# TODO by 09/15/17: Set a version of these gems, we no longer keep pace with github Jekyll
 
 permalink: /:categories/:title/
 
@@ -71,8 +72,9 @@ defaults:
       path: "index.html"
     values:
       body_class: "show_hero_search"
-# -----------
-# CloudCannon
+# -----------------------
+# CloudCannon defaults: Kept for historical reasons
+# TODO: Video support is pretty neat, would like to add.
 
 social_icons:
   - Facebook
@@ -98,10 +100,3 @@ _comments:
 # Rouge is the default (GitHub pages), but I like being explicit
 #   Adds a tiny bit to site build time, which shouldn't be an issue
 #   If it is delete this section.
-
-markdown: kramdown
-highlighter: rouge
-
-kramdown:
-  input: GFM
-  syntax_highlighter: rouge
