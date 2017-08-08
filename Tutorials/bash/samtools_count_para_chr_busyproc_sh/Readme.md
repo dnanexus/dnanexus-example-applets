@@ -20,7 +20,7 @@ With Bash scripts, you can prevent a lot of headaches with the command `set -e -
 <!-- SECTION: Debugging boilerplate and input download -->
 The `*.bai` file was an optional job input. We check for a empty or unset `var` using the bash built-in `[[-z ${var}}]]` test. Then download or create a `*.bai` index as needed.
 
-## Parallelized run
+## Parallel run
 Bash's [job control](http://tldp.org/LDP/abs/html/x9644.html) system allows for easy management of multiple processes. In this example, we run bash commands in the background as we control maximum job executions in the foreground.
 We place processes in the background using an `&` after a command.
 <!-- SECTION: Parallel SAMtools count by region -->

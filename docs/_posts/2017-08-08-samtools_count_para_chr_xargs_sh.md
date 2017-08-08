@@ -2,12 +2,12 @@
 categories:
 - parallel
 - bash
-date: '2017-08-07'
+date: '2017-08-08'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count_para_chr_xargs_sh
 title: Parallel xargs by Chr
 type: Document
 ---
-This applet slices a BAM file by canonical chromosome then performs a parallelized `samtools view -c` using xargs. Type `man xargs` for general usage information.
+This applet slices a BAM file by canonical chromosome then performs a Parallel `samtools view -c` using xargs. Type `man xargs` for general usage information.
 
 ## How is SAMtools dependency provided?
 SAMtools compiled binary is placed directory in the <Applet dir>/resources directory. Any files found in the resources directory will be uploaded so that they will be present in the root directory of workers. In our case:
@@ -31,7 +31,7 @@ When this applet is run on a worker the resources/ folder will be placed in the 
 ```
 /usr/bin is part of the `$PATH` variable, so in our script, we can reference the samtools command directly, `samtools view -c ...`
 
-## Parallelized run
+## Parallel run
 ### Splice BAM
 First, we download our BAM file and slice it by canonical chromosome, writing the `*bam` file names to another file.
 

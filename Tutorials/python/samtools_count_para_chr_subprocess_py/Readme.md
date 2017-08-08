@@ -40,7 +40,7 @@ The path, name, and prefix key-value pattern is repeated for all applet file cla
 <!-- SECTION: Download Inputs -->
 
 ## Count Regions in Parallel
-Before we can perform our parallelized SAMtools count, we must determine the workload for each thread. We arbitrarily set our number of workers to `10` and set the workload per thread to `1` chromosome at a time. There are various ways to achieve multithreaded processing in python. For the sake of simplicity, we use [`multiprocessing.dummy`](https://docs.python.org/2/library/multiprocessing.html#module-multiprocessing.dummy), a convenient wrapper around Python's threading module.
+Before we can perform our Parallel SAMtools count, we must determine the workload for each thread. We arbitrarily set our number of workers to `10` and set the workload per thread to `1` chromosome at a time. There are various ways to achieve multithreaded processing in python. For the sake of simplicity, we use [`multiprocessing.dummy`](https://docs.python.org/2/library/multiprocessing.html#module-multiprocessing.dummy), a convenient wrapper around Python's threading module.
 <!-- INCLUDE: {% include note.html content="In addition to Python's `multiprocessing.dummy` 
  module we simplify our multithreaded processing with several helper functions. We won't cover all the helper functions here so feel free to review the applet source code in GitHub to see function implementations." %} -->
 <!-- SECTION: Parallel by Chromosome using Subprocess.Popen -->

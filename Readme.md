@@ -1,92 +1,93 @@
-DNAnexus Example Applets
-========================
+Developers new to the [DNAnexus platform](https://platform.dnanexus.com/login) may find it easier to learn by doing. This page contains a collection of simple tutorials and examples intended to showcase common tasks and methodologies when creating an app(let) on the DNAnexus platform.
 
-This repository contains some example low-level applets, suitable for
-developers to use as inspiration when building their own.
+The tutorials pages are not meant to show realistic everyday examples, but rather provide a strong starting point for app(let) developers. A user seeking realistic applications can find DNAnexus developed app(let)s in the Examples pages or the [Developer Applets](https://platform.dnanexus.com/projects/B406G0x2fz2B3GVk65200003/data/) resource project. After reading through the tutorials and examples you should be able to develop app(let)s that:
 
-<b><a href="http://wiki.dnanexus.com/Developer-Tutorials/Example-Applets">More information about these applets (wiki.dnanexus.com)</a></b>
+- **Run efficiently**: make use of cloud computing methodologies.
+- **Are easy to debug**: let developers understand and resolve issues.
+- **Use the scale of the cloud**: take advantage of the DNAnexus platform's flexibility
+- **Are easy to use**: reduce support and enable collaboration.
 
-Applet Categories
------------------
+## Prerequisites
 
-The applets below are labeled with brief "tags" that show any significant
-features that the applet demonstrates, as follows:
+We assume you already have a DNAnexus account and are looking to create app(let)s on the platform. If you need to create an account please visit our [sign up page](https://platform.dnanexus.com/register) and consider giving the [website quickstart](https://wiki.dnanexus.com/UI/Quickstart) a read. Additionally, the DNAnexus SDK, dx-toolkit, must be installed to run several of the commands used in the tutorials and examples.
 
-* bash: the applet is written in bash (shell script).
-* Invokes other applets: the applet invokes other applets.
-* Multiple entry points: the applet makes use of multiple entry points to spawn
-  subjobs (frequently used to facilitate parallelism across multiple
-  computers).
-* Python: the applet is written in Python.
+## Install the DNAnexus SDK
 
-Index of Example Applets
-------------------------
+The DNAnexus SDK, dx-toolkit, provides a collection of tools to aid in the app(let) development process. While it is possible to develop and publish an app(let) using our API directly, we recommend using our SDK:
 
-### Toolkit
+### Download dx-toolkit
 
-These applets implement simple data transformations that are frequently useful
-as parts of larger pipelines.
+dx-toolkit can be found on our wiki [Downloads](https://wiki.dnanexus.com/Downloads#DNAnexus-Platform-SDK) page. Alternatively, it can be built from the [github source code](https://github.com/dnanexus/dx-toolkit).
 
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/contigset_to_fasta_gz">contigset_to_fasta_gz</a>**: Takes a ContigSet object (one of the DNAnexus type objects which are found in the public project "Reference Genomes"), and produces a gzipped fasta file. Illustrates: Python
+```bash
+~ $ curl -O https://wiki.dnanexus.com/images/files/dx-toolkit-v0.228.0-osx.tar.gz
+~ $ tar -xvf dx-toolkit-v0.228.0-osx.tar.gz
+  # A folder dx-toolkit/ will be created in the current directory
+```
 
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/fastq_splitter">fastq_splitter</a>**: Takes a gzipped fastq file and splits it by number of reads into several smaller files. Useful to parallelize aligning reads. Illustrates: bash
+## source the dx-toolkit environment.
 
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/sff_splitter">sff_splitter</a>**: Takes a gzipped sff file and splits it by number of reads into several smaller files. Useful to parallelize aligning reads. Illustrates: python
+```bash
+~ $ source dx-toolkit/environment
+  # You are now ready to use dx commands
+~ $ dx --version
+  # Downloaded dx-toolkit version outputs
+```
 
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/flexbar_read_demultiplexer">flexbar_read_demultiplexer</a>**: Demultiplexes indexed (barcoded) reads. Illustrates: bash
+## Login to the platform
 
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/flexbar_read_trimmer">flexbar_read_trimmer</a>**: Trims reads by quality score and/or position. Illustrates: bash
+From the CLI use [`dx login`](https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#login). You may wish to login with a [token](https://wiki.dnanexus.com/Command-Line-Client/Login-and-Logout#Authentication-Tokens).
 
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/picard_calculate_hs_metrics">picard_calculate_hs_metrics</a>**: Calculates hybrid selection (target enrichment) metrics using the Picard CalculateHsMetrics tool. Illustrates: bash
+```bash
+~ $ dx login
+  Username:  # Platform username
+  Password:  # Platform password
+  # If this is your first-time login you will be prompted to select a project
+  Note: Use dx select --level VIEW or dx select --public to select from projects for
+  which you only have VIEW permissions.
 
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/picard_mark_duplicates">picard_mark_duplicates</a>**: Runs MarkDuplicates on a BAM file. Defaults to discarding duplicate reads instead of marking them. Illustrates: Python
+  Available projects (CONTRIBUTE or higher):
+  0) DNAnexus Example (CONTRIBUTE)
+  1) My Research Project (ADMINISTER)
+  
+  Pick a numbered choice or "m" for more options: 1
+  Setting current project to: My Research Project
+```
 
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/picard_merge_sam_files">picard_merge_sam_files</a>**: Runs Picard module of same name. Useful as the reduce step of a map-reducte strategy. Illustrates: Python
+## Create a test applet
 
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/picard_sam_to_fastq">picard_sam_to_fastq</a>**: Wraps Picard module of the same name. Produces gzipped fastq files. Can convert either BAM or SAM files to fastq. Useful for those who receive sequence data in BAM format. Illustrates: Python
+[`dx-app-wizard`](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-app-wizard) generates the directory structure required to build an app. For now, there will be no inputs or outputs we'll just use the default options when prompted.
 
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/samtools_merge">samtools_merge</a>**: Runs the merge module of samtools. Useful as the reduce step of a map-reduce strategy. Illustrates: bash
+```
+~ $ dx-app-wizard
+DNAnexus App Wizard, API v1.0.0
 
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/samtools_view">samtools_view</a>**: Runs the view module of samtools. Used in the pipeline to split a BAM by region. Could also be used to extract mappings of a certain flag or convert from BAM to SAM. Illustrates: Python
+Basic Metadata
 
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/split_bam_interchromosomal_pairs">split_bam_interchromosomal_pairs</a>**: This is the only applet which wraps custom written code instead of an open-source program. This splits a BAM file by intra and interchromosomal mappings. This is required by picard_mark_duplicates in a strategy which uses map-reduce to split by genome region. All interchromosmally mapped read pairs must be considered together. Illustrates: Python
+Please enter basic metadata fields that will be used to describe your app.  Optional fields are denoted by options with square brackets.  At the end of this wizard, the files necessary for building your app will be generated from the answers you provide.
 
-### Alignment
+  # We'll name our applet "My First Applet"
 
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/bowtie_indexer">bowtie_indexer</a>**: Takes a gzipped fasta file and produces a .tar.gz file that bowtie_mapper will take as input. Illustrates: bash
+  # When the dx-app-wizard is done it'll construct a full, valid, applet directory.
+  # In this case, we'll have the following directory structure:
+  my_first_applet
+  ├── src
+  │   └── my_first_applet.sh
+  │
+  ├── resources/
+  ├── test/
+  ├── dxapp.json
+  ├── Readme.md
+  └── Readme.developer.md
+# As you read out wiki and go through these tutorials you'll understand the role each file and directory plays in a developed app(let)
+```
 
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/bowtie_mapper">bowtie_mapper</a>**: Takes one or two arrays of gzipped fastq files for paired or unpaired reads and an indexed genome from the bowtie_indexer applet and maps them with bowtie. Illustrates: bash
+## Build the sample app(let)
 
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/bowtie_mapper_parallel">bowtie_mapper_parallel</a>**: Wraps fastq_splitter, bowtie_mapper, and samtools_merge to align reads in parallel. Defaults to provide a worker for every 25,000,000 reads. Illustrates: bash, invokes other applets, multiple entry points
+```bash
+~ $ dx build my_first_applet
+{"id": "applet-xxxx"} # This is the entity-ID of the applet created in the project
+  # Next time you or a colleague browse your project, they'll see this applet.
+```
 
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/bwa_indexer">bwa_indexer</a>**: Takes a gzipped fasta file and produces a .tar.gz file that bwa_aligner will take as input. Defaults to using bwtsw. Illustrates: Python
-
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/bwa_aligner">bwa_aligner</a>**: Takes one or two arrays of gzipped fastq files for paired or unpaired reads, and runs bwa aln followed by bwa samse/sampe. Illustrates: Python
-
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/bwa_recalibration_pipeline">bwa_recalibration_pipeline</a>**: Wraps parallel_bwa, split_bam_interchromosomal_pairs, picard_mark_duplicates, gatk_realign_and_recalibrate_applet, and picard_merge_sam_files to align and recalibrate reads in parallel. Illustrates: Python
-
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/parallel_bwa">parallel_bwa</a>**: Wraps fastq_splitter, bwa_aligner, and picard_merge_sam_files to align reads in parallel. Defaults to providing a worker for every 10,000,000 reads. Illustrates: Python, multiple entry points
-
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/tmap_indexer">tmap_indexer</a>**: Takes a gzipped fasta file and produces a .tar.gz file that tmap_aligner will take as input. Illustrates: bash
-
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/tmap_aligner">tmap_aligner</a>**: Takes an SFF file to be mapped and a reference genome indexed by the 'tmap_indexer' applet.  The reads will be chunked into smaller parts by the 'sff_splitter' applet and mapped in parallel.  The number of reads per mapping job is a parameter of the applet.  Illustrates: bash using scatter-gather template
-
-### Recalibration and Variant Calling
-
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/gatk_apply_variant_recalibration">gatk_apply_variant_recalibration</a>**: Runs GATK's ApplyRecalibration on a VCF and a model produced by the gatk_variant_recalibrator applet. This recalibrates the quality of a VCF file and applies a filter to the data. Default filter level is 95% specificity. Illustrates: Python
-
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/gatk_realign_and_recalibrate_applet">gatk_realign_and_recalibrate_applet</a>**: Performs indel realignment and quality recalibration on a BAM file. Requires dbSNP and known indel files which are available in the datasets directory of the Developer Applets project. Illustrates: Python
-
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/gatk_variant_annotator_applet">gatk_variant_annotator_applet</a>**: Wraps GATK module of the same name. Can be used to annotate with dbsnp, annotation or comparison VCFs, or a snpEff VCF. Illustrates: Python
-
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/gatk_variant_caller_applet">gatk_variant_caller_applet</a>**: Runs GATK's UnifiedGenotyper on a BAM file to produce a VCF file. Illustrates: Python
-
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/gatk_variant_recalibration_pipeline">gatk_variant_recalibration_pipeline</a>**: Wraps the gatk_variant_recalibrator and gatk_apply_variant_recalibration applets to build a model from a VCF(s) and apply it to recalibrate the quality of the VCF. Illustrates: Python
-
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/gatk_variant_recalibrator">gatk_variant_recalibrator</a>**: Runs GATK's VariantRecalibrator on VCF(s) to produce model files to use in variant recalibration. Illustrates: Python
-
-### Cancer-related
-
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/tumor_normal_snp_pipeline">tumor_normal_snp_pipeline</a>**: Wraps bwa_recalibration_pipeline and somatic_sniper to align, recalibrate, and call tumor vs. normal snps on two sets of paired reads. Defaults to outputting VCF. Illustrates: Python
-
-**<a href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/somatic_sniper">somatic_sniper</a>**: Runs program of same name which takes a tumor BAM file and a normal BAM file and produces variant calls. Defaults to produce output in VCF format. Illustrates: Python
+If you are able to perform the steps above, you're ready to start creating app(let)s!

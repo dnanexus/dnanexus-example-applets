@@ -2,7 +2,7 @@
 categories:
 - python
 - parallel
-date: '2017-08-07'
+date: '2017-08-08'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/python/samtools_count_para_reg_multiprocess_py
 title: Parallel by Region (py)
 type: Document

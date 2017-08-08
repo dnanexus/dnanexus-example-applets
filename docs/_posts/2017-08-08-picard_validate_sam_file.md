@@ -1,14 +1,14 @@
 ---
 categories:
 - Example Applet
-date: '2017-08-07'
-title: CREST
+date: '2017-08-08'
+title: Picard ValidateSamFile
 type: Document
 ---
 <!-- dx-header -->
-# CREST (DNAnexus Platform App)
+# Picard ValidateSamFile (DNAnexus Platform App)
 
-SV caller
+Checks a SAM or BAM file for validity; produces a report listing errors and warnings.
 
 This is the source code for an app that runs on the DNAnexus Platform.
 For more information about how to run or modify it, see
@@ -34,10 +34,10 @@ below.
 
 ## Inputs
 
-* **Tumor BAM file** ``tumor_bam``: ``file``
-* **Normal BAM file** ``normal_bam``: ``file``
-* **CREST parameter string** ``params``: ``string``
+* **Input file** ``input_file``: ``file``
+* **Output name** ``output_name``: ``file``
+* **Maximum number of lines output** ``max_output``: ``int``
 
 ## Outputs
 
-* **Structural Variant Predictions** ``sv_file``: ``file``
+* **Output file** ``output_file``: ``file``

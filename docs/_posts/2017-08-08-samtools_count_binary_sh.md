@@ -1,7 +1,7 @@
 ---
 categories:
 - bash
-date: '2017-08-07'
+date: '2017-08-08'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count_binary_sh
 title: Precompiled Binary
 type: Document

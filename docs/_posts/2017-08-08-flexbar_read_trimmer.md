@@ -1,7 +1,7 @@
 ---
 categories:
 - Example Applet
-date: '2017-08-07'
+date: '2017-08-08'
 title: Flexbar Read Trimmer
 type: Document
 ---

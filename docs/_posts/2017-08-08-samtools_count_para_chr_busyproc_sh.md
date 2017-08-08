@@ -2,7 +2,7 @@
 categories:
 - parallel
 - bash
-date: '2017-08-07'
+date: '2017-08-08'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count_para_chr_busyproc_sh
 title: Parallel by Region (sh)
 type: Document
@@ -43,7 +43,7 @@ With Bash scripts, you can prevent a lot of headaches with the command `set -e -
 ```
 The `*.bai` file was an optional job input. We check for a empty or unset `var` using the bash built-in `[[-z ${var}}]]` test. Then download or create a `*.bai` index as needed.
 
-## Parallelized run
+## Parallel run
 Bash's [job control](http://tldp.org/LDP/abs/html/x9644.html) system allows for easy management of multiple processes. In this example, we run bash commands in the background as we control maximum job executions in the foreground.
 We place processes in the background using an `&` after a command.
 ```bash

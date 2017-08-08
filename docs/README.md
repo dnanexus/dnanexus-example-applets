@@ -1,77 +1,39 @@
-# Base
-<!-- TODO: Alter this readme for DNAnexus website maintenance, delete _screenshot.png when you do -->
-Knowledge base template for Jekyll. Browse through a [live demo](https://orange-ape.cloudvent.net/).
+# DNAnexus Example Applets GitHub page
 
-![Base template screenshot](images/_screenshot.png)
+This is the auto-generated static site for [DNAnexus Example Applets](https://github.com/dnanexus/dnanexus-example-applets) GitHub page.
 
-Base was made by [CloudCannon](http://cloudcannon.com/), the Cloud CMS for Jekyll.
-Find more templates and themes at [Jekyll Tips](https://learn.cloudcannon.com/jekyll-templates/).
+## Overview
 
-Learn Jekyll with step-by-step tutorials and videos at [CloudCannon Academy](https://learn.cloudcannon.com/).
+Inspiration for this site comes from the Cloud Cannon Knowledge base template for Jekyll. Cloud Cannon [Source](https://github.com/CloudCannon/base-jekyll-template) and [live demo](https://orange-ape.cloudvent.net/).
 
-## Features
+In order to substantially alter this static site, you'll need to learn Jekyll and Liquid. Cloud Cannon has a pretty nice step-by-step tutorial with videos at [CloudCannon Academy](https://learn.cloudcannon.com/).
 
-* Tutorials organised by category
-* Two types of tutorials - text and video
-* Ability to have a "tutorial series"
-* FAQ section
-* Disqus comments
-* Sticky sidebar for main headings in tutorials
-* Optimised for editing in [CloudCannon](http://cloudcannon.com/)
-* RSS/Atom feed
-* SEO tags
-* Google Analytics
+## Basic Build Process
 
-## Setup
+This site is built statically from the Example applets repo. The two branches you'll have to be aware off:
+`master` - Where the documentation and RakeFile lives. The `docs/` directory contains the RakeFile the performs a majority of the build task.
+`gh-pages` - The generated static site. You will rarely have to commit directly to this branch.
 
-1. Add your site and author details in `_config.yml`.
-2. Add your Google Analytics, Disqus and MailChimp keys to `_config.yml`.
-3. Get a workflow going to see your site's output (with [CloudCannon](https://app.cloudcannon.com/) or Jekyll locally).
+On `master` once documentation and other site changes are made, you must first update the `docs/_post` with changed content. The `site_rehydrate.py` script found in `docs/scripts` takes care of parsing through all the applet `dxapp.json`, `Readme.md`, `src/code.*` files in `Tutorials` and `Examples`. A letter section will cover its usage. For now, a simple command:
+```python
+python scripts/site_rehydrate.py --overwrite
+```
 
-## Develop
+Once this is done you'll have to **manually** commit the changes to Master branch. Failure to commit the changes and moving on to the next will update the static site with the new documentation without updating master. More of an annoyance, please commit changes to master.
 
-Base was built with [Jekyll](http://jekyllrb.com/) version 3.4.3, but should support newer versions as well.
+Next the Rakefile, ruby version of a Makefile, found in `docs/RakeFile` must be executed:
+```bash
+cd docs/
+rake site:publish
+``` 
+This Rake file will build `docs/` directory using Jekyll then  *--force* commit to the `gh-pages`. While this process is in development the commits will be forced. Once we lock down the `gh=pages` to only RakeFile commits we can remove *--force*
 
-Install the dependencies with [Bundler](http://bundler.io/):
+There you have it! Once the RakeFile is done you should see an updated commit on the `gh-pages` branch and the static site should be updated.
 
-~~~bash
-$ bundle install
-~~~
+## Updating
 
-Run `jekyll` commands through Bundler to ensure you're using the right versions:
+TODO: how to use `site_rehydrate.py` script.
 
-~~~bash
-$ bundle exec jekyll serve
-~~~
+## Details
 
-## Editing
-
-Base is already optimised for adding, updating and removing tutorials, navigation, footer and FAQ information in CloudCannon.
-
-The sticky sidebar in tutorials in populated by pulling out `<h2>` elements from the content.
-
-### Posts
-
-* Add, update or remove a post in the *Posts* collection.
-* The tutorials page is organised by categories.
-* Change the defaults when new posts are created in `_posts/_defaults.md`.
-
-### Post Series
-To create a new series:
-
-* Add a new document to the `sets` collection.
-* Set the `title` and `description`.
-
-To add a tutorial/post to a series:
-* Add a `set` field to the tutorial front matter which points to the file name of the desired set without the `.md` extention. e.g. If I have a set at `_sets/getting-started.md` I would use this in my tutorial front matter: `set: getting-started`.
-* Add a `set_order` field to the tutorial front matter and specify a number. This is the tutorials order in the set.
-
-### Navigation
-
-* Exposed as a data file to give clients better access.
-* Set in the *Data* / *Navigation* section.
-
-### Footer
-
-* Exposed as a data file to give clients better access.
-* Set in the *Data* / *Footer* section.
+TODO: About CSS nuance (rouge) and any other caveats

@@ -1,7 +1,7 @@
 ---
 categories:
 - Example Applet
-date: '2017-08-07'
+date: '2017-08-08'
 title: GATK Variant Recalibration Pipeline
 type: Document
 ---
