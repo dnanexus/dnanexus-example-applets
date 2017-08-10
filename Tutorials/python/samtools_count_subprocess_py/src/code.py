@@ -40,7 +40,7 @@ def main(mappings_bam):
     # parameter value is False. If an array command is used set shell=False. If a string command
     # is used set shell=True.
     #
-    # For convenience we construct our command array before executing the
+    # For convenience, we construct our command array before executing the
     # subprocess.check_call function. subprocess.check_call waits until the
     # command has executed then either: returns if the command exits 0 or raises a
     # subprocess.CalledProcessError exception.
@@ -60,7 +60,7 @@ def main(mappings_bam):
     #
     # SECTION: Upload result
     # -------------
-    # We now upload the counts file to the platform. dxpy.upload_local_file() function
+    # We now upload the counts file to the platform. The dxpy.upload_local_file() function
     # will upload the file to the job container, a temporary project which holds onto files
     # associated with this job. dxpy.upload_local_file returns a DXFile object handle for the
     # uploaded file.

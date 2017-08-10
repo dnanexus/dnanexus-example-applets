@@ -4,12 +4,12 @@ In order to take full advantage of the scalability that cloud computing offers, 
 1. Install SAMtools
 2. Download BAM file
 3. Split workload
-4. Count Regions in Parallel
+4. Count regions in parallel
 
 This applet tutorial code is extremely similar to the [_Parallel Threads SAMtools count tutorial_](/python_parallel_tutorial.html#samtools_count_para_chr_subprocess_py), except `multiprocessing` is used instead of `multiprocessing.dummy`.
 
-## How is SAMtools dependency provided?
-SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the dxapp.json runSpec.execDepends.
+## How is the SAMtools dependency provided?
+The SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the `dxapp.json` `runSpec.execDepends` field.
 ```json
 {
   "runSpec": {
@@ -37,7 +37,7 @@ inputs
 #     mappings_sorted_bai_prefix: u'SRR504516'
 ```
 ## Split workload
-We parallely process by using the convenient python `multiprocessing` module. A rather simple pattern you can follow to parallely compute:
+We parallely process by using the python `multiprocessing` module. A rather simple pattern you can follow to compute in a parallel manner is shown below:
 ```python
 print "Number of cpus: {0}".format(cpu_count())  # Get cpu count from multiprocessing
 worker_pool = Pool(processes=cpu_count())  # Create a pool of workers, 1 for each core
@@ -46,13 +46,13 @@ results = worker_pool.map(run_cmd, view_cmds)  # map run_cmds to a collection
 worker_pool.close()
 worker_pool.join()  # Make sure to close and join workers when done
 ```
-This convenient pattern allows you to quickly orchestrate jobs on a worker. For more detailed overview of the `multiprocessing` module visit the [python2.7 docs](https://docs.python.org/2/library/multiprocessing.html)
-<!-- INCLUDE: We create several helpers in our applet script to split run process our workload. One helper you may have seen before is `run_cmd`, we use this function to manage or subprocess calls:-->
+This convenient pattern allows you to quickly orchestrate jobs on a worker. For more detailed overview of the `multiprocessing` module, visit the [python2.7 docs](https://docs.python.org/2/library/multiprocessing.html).
+<!-- INCLUDE: We create several helpers in our applet script to manage our workload. One helper you may have seen before is `run_cmd`; we use this function to manage or subprocess calls:-->
 <!-- FUNCTION: run_cmd -->
 <!-- INCLUDE: Before we can split our workload, we need to know what regions are present in our BAM input file. We handle this initial parsing in the `parse_sam_header_for_region` function:-->
 <!-- FUNCTION: parse_sam_header_for_region -->
 
-Once our workload is split and we've started processing we wait and review the status of each `Pool` worker. Then we merge and output our results.
+Once our workload is split and we've started processing, we wait and review the status of each `Pool` worker. Then, we merge and output our results.
 ```python
 # Write results to file
 resultfn = inputs['mappings_sorted_bam_name'][0]
@@ -73,5 +73,5 @@ output = {}
 output["count_file"] = dxpy.dxlink(count_file)
 return output
 ```
-<!-- INCLUDE: {% include note.html content="The `run_cmd` function return a tuple containing the stdout, stderr, and exit code of the subprocess call. We parse these outputs from our workers to determine a failed or a passed run." %} -->
+<!-- INCLUDE: {% include note.html content="The `run_cmd` function returns a tuple containing the stdout, stderr, and exit code of the subprocess call. We parse these outputs from our workers to determine whether the run failed or passed." %} -->
 <!-- FUNCTION: verify_pool_status -->

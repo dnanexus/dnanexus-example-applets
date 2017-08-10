@@ -42,7 +42,7 @@
       "patterns": [
         "*"
       ],
-      "help": "Output file with Total reads as the first line."
+      "help": "Output file with total reads as the first line."
     }
   ],
   "runSpec": {

@@ -18,13 +18,13 @@
   ],
   "outputSpec": [
     {
-      "name": "count_txt",
-      "label": "Counts File",
+      "name": "counts_txt",
       "class": "file",
+      "label": "Read count file",
       "patterns": [
         "*.txt"
       ],
-      "help": ""
+      "help": "Output file with total reads as the first line."
     }
   ],
     "access": {

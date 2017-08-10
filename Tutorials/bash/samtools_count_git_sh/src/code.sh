@@ -39,6 +39,6 @@ main() {
   # Upload results
   # --------------
   #
-  count_txt=$(dx upload "${count_filename}" --brief)
-  dx-jobutil-add-output count_txt "${count_txt}" --class=file
+  counts_txt=$(dx upload "${count_filename}" --brief)
+  dx-jobutil-add-output counts_txt "${counts_txt}" --class=file
 }

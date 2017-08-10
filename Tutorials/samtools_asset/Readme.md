@@ -1,10 +1,10 @@
-This tutorial details how to build a SAMtools asset. For detailed information on building assets refer to the [Asset Build Process wiki page](https://wiki.dnanexus.com/Developer-Tutorials/Asset-Build-Process).
+This tutorial details how to build a SAMtools asset. For detailed information on building assets, refer to the [Asset Build Process wiki page](https://wiki.dnanexus.com/Developer-Tutorials/Asset-Build-Process).
 
 ## Building an Asset
 
-The [`dx build_asset`](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-build-asset) command takes a source directory and builds an asset from the dxasset.json file along with the optional Makefile and resources folder. In this example, we build an asset based on SAMtools version 0.1.19-1 available through [Apt-Get](https://help.ubuntu.com/community/AptGet/Howto) package manager. An overview of the properties present in the dxasset.json can be found on the [Asset metadata wiki page](https://wiki.dnanexus.com/Developer-Tutorials/Asset-Build-Process#dxasset.json-(Asset-metadata)).
+The [`dx build_asset`](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-build-asset) command takes a source directory and builds an asset from the `dxasset.json` file and the optional Makefile and resources folder. In this example, we build an asset based on SAMtools version 0.1.19-1 available through the [Apt-Get](https://help.ubuntu.com/community/AptGet/Howto) package manager. An overview of the properties present in the `dxasset.json` file can be found on the [asset metadata wiki page](https://wiki.dnanexus.com/Developer-Tutorials/Asset-Build-Process#dxasset.json-(Asset-metadata)).
 
-Here, once we've created our directory, samtools_asset, with the dxasset.json file we run the following command from the terminal.
+Here, once we've created the directory `samtools_asset` with the `dxasset.json` file, we run the following command from the terminal:
 ```
 dx build_asset samtools_asset
 ```
@@ -12,7 +12,7 @@ This will trigger the app executable [Create asset bundle for Ubuntu 14.04](http
 
 ## Using the Asset in an App(let)
 
-The generated asset will exist as an [asset bundle](https://wiki.dnanexus.com/Asset-Bundle) on the platform. In `runSpec.assetDepends` portion of the dxapp.json we can reference the created asset bundle by its [record id](https://wiki.dnanexus.com/API-Specification-v1.0.0/Records).
+The generated asset will exist as an [asset bundle](https://wiki.dnanexus.com/Asset-Bundle) on the platform. In the `runSpec.assetDepends` portion of the `dxapp.json` file, we can reference the created asset bundle by its [record ID](https://wiki.dnanexus.com/API-Specification-v1.0.0/Records).
 ```
 "runSpec": {
   ...
@@ -20,6 +20,6 @@ The generated asset will exist as an [asset bundle](https://wiki.dnanexus.com/As
   ...
  }
 ```
-Now, when a worker is running an app(let) that references this record id, the asset bundle *samtools_aptget_asset* will be unarchived before the app(let) script is excecuted and the command `samtools` will be usable within the app(let) script.
+Now, when a worker runs an app(let) referencing this record ID, the asset bundle *samtools_aptget_asset* will be unarchived before the app(let) script is excecuted, and the command `samtools` will be usable within the app(let) script.
 
 [DX BUILD ASSET SOURCE CODE LINK?](https://github.com/dnanexus/dx-toolkit/blob/74542f596747ee9e3c054825138f7b8082e132b0/src/python/dxpy/scripts/dx_build_asset.py)
