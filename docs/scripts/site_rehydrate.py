@@ -2,15 +2,16 @@
 """
 Script that generates site pages in /docs/pages
 
-TODO: Multithreading logger the right way.
+TODO: Refactor Multithreading logger.
 """
 from __future__ import print_function
 import argparse
-import os
 import json
 import re
 import logging
 import fnmatch
+from os import walk, mkdir, listdir, remove
+from os.path import isdir, isfile, join, abspath, dirname, realpath, normpath
 from multiprocessing import Pool
 from itertools import izip
 from datetime import date
@@ -39,7 +40,7 @@ def _rehydrate_site(user_args):
         return d1
 
     def archived_applets():
-        archiv_applets = os.path.join(os.path.abspath(os.path.join(user_args.tutorials_dir, '..')), 'Example', 'archived')
+        archiv_applets = join(abspath(join(user_args.tutorials_dir, '..')), 'Example', 'archived')
         return find_all_matches(archiv_applets, "dxapp.json")
 
     user_input_dict = {
@@ -67,13 +68,13 @@ def _resolve_applet(dxapp_path):
     """Moved to top level due to Pool.map() inability to use nested func or output dict"""
     with open(dxapp_path, "r") as dxf:
         dxapp_obj = json.load(dxf)
-    src_code = os.path.join(dxapp_path[:-11], dxapp_obj["runSpec"]["file"])  # pretty sure this is a required field
-    readme_md = os.path.join(dxapp_path[:-11], "Readme.md")
-    if not os.path.exists(src_code) or not os.path.exists(readme_md):
+    src_code = join(dxapp_path[:-11], dxapp_obj["runSpec"]["file"])  # pretty sure file is a required field
+    readme_md = join(dxapp_path[:-11], "Readme.md")
+    if not isfile(src_code) or not isfile(readme_md):
         return None
     return AppObj(
-        readme_md=os.path.join(dxapp_path[:-11], "Readme.md"),
-        src_code=os.path.join(dxapp_path[:-11], dxapp_obj["runSpec"]["file"]),
+        readme_md=join(dxapp_path[:-11], "Readme.md"),
+        src_code=join(dxapp_path[:-11], dxapp_obj["runSpec"]["file"]),
         app_name=dxapp_obj["name"],
         title=dxapp_obj["title"],
         interpreter=dxapp_obj["runSpec"]["interpreter"])
@@ -81,16 +82,17 @@ def _resolve_applet(dxapp_path):
 
 def _resolve_applets(dxapp_paths):
     """Create app tutorial representations to be used downstream
-    TODO: just using multiprocessing.processing since mapping pickling issue makes this complex
+    TODO: just using multiprocessing.processing. Currently mapping pickling prevents nexted functions and certain return types
     TODO: Use namedtuple throughout code instead of converting to dict
-    dictionary keys returned: "readme_md", "src_code", "name", "title", "interpreter"
+
+    Returns:
+        dictionary with keys returned: "readme_md", "src_code", "name", "title", "interpreter"
     """
     workers = Pool(NUM_CORES)
-    tutorial_tuples = [res for res in workers.map(_resolve_applet, dxapp_paths) if res is not None]
+    tutorial_AppObj = [res for res in workers.map(_resolve_applet, dxapp_paths) if res is not None]
     workers.close()
     workers.join()
-    mapping_list = [{k: v for k, v in izip(("readme_md", "src_code", "name", "title", "interpreter"), tupe)} for tupe in tutorial_tuples]
-    return mapping_list
+    return [{k: v for k, v in izip(("readme_md", "src_code", "name", "title", "interpreter"), appobj)} for appobj in tutorial_AppObj]
 
 
 def _write_markdown(fh_md, readme_md_path, logger, section_parser):
@@ -143,12 +145,12 @@ def _write_markdown(fh_md, readme_md_path, logger, section_parser):
             fh_md.write(line)
 
 
-def find_all_matches(tutdir, filename, exclude_dirs=[]):
-    """Return list of """
+def find_all_matches(target_dir, filename, exclude_dirs=[]):
+    """Return list of files matching filename"""
     matches = []
-    for root, dirs, files in os.walk(tutdir):
+    for root, dirs, files in walk(target_dir):
         if filename in files:
-            matches.append(os.path.join(root, filename))
+            matches.append(join(root, filename))
         for dir_ex in exclude_dirs:
             if dir_ex in dirs:
                 dirs.remove(dir_ex)
@@ -186,34 +188,34 @@ def create_jekyll_markdown_tutorial(page_dict):
                 site_pages_dir: destination site page
             }
 
-    TODO switch back to mapping once multiprocessing is implementended using Processing
+    TODO workarounds for multiprocessing with nested-functions. Use processing directly in the future.
     TODO support pages that don't need section parsers
-    TODO have global site_pages_dir and unique full path to generated file page_dict
+    TODO Certain values in page_dict don't need to repearted in all dicts: site_pages_dir
+            listdir(page_dict["site_pages_dir"]) can be called only once.
+            If script runtime becomes an issue remove repeated calls.
     """
     page_basename = page_dict["name"].strip()
-    setup_logger(
+    proc_logger = setup_logger(
         logger_name=page_basename, log_dir='log_temp_dir',
         level=logging.DEBUG)
-    proc_logger = logging.getLogger(page_basename)
 
     curr_date = date.today().isoformat()
     page_dict['date'] = curr_date
-    target_file = os.path.join(
+    target_file = join(
         page_dict["site_pages_dir"], curr_date + '-' + page_basename + ".md")
 
-    for f in os.listdir(page_dict["site_pages_dir"]):  # TODO clean this loop up
+    for f in listdir(page_dict["site_pages_dir"]):  # TODO site_pages_dir should be function input not page_dict
         if fnmatch.fnmatch(f, '*{}*'.format(page_basename)):
             if page_dict["overwrite"]:
                 proc_logger.debug("Removing: {0}".format(f))
-                os.remove(os.path.join(page_dict["site_pages_dir"], f))
+                remove(join(page_dict["site_pages_dir"], f))
                 break
             else:
                 proc_logger.info("Exist: {fn}".format(fn=f))
                 return True, ""
 
     page_dict['ARCHIVE'] = 'archived' in page_dict['readme_md']
-    section_parser = _get_section_parser(page_dict, logger=proc_logger)
-    page_dict['isdocument'] = True  # Until Video support added leave this here
+    page_dict['isdocument'] = True  # Until Video type page support added leave this here
 
     try:
         with open(target_file, "w") as target_md:
@@ -221,7 +223,7 @@ def create_jekyll_markdown_tutorial(page_dict):
             _write_markdown(
                 fh_md=target_md,
                 readme_md_path=page_dict["readme_md"],
-                section_parser=section_parser,
+                section_parser=_get_section_parser(page_dict, logger=proc_logger),
                 logger=proc_logger)
     except Exception as e:
         proc_logger.info("Exception: {msg}".format(msg=e))
@@ -236,22 +238,30 @@ def setup_logger(logger_name, log_dir, level=logging.INFO):
     Inspiration: https://stackoverflow.com/questions/17035077/python-logging-to-multiple-log-files-from-different-classes
     """
     try:
-        os.mkdir(log_dir)
+        mkdir(log_dir)
     except OSError:
         pass
-    if not os.path.exists(log_dir):
-        os.mkdir(log_dir)
-    log_file = os.path.join(log_dir, logger_name)
+    if not isdir(log_dir):
+        mkdir(log_dir)
+    log_file = join(log_dir, logger_name)
     log_instance = logging.getLogger(logger_name)
     formatter = logging.Formatter('%(asctime)s : %(message)s')
     fileHandler = logging.FileHandler(log_file, mode='w')
     fileHandler.setFormatter(formatter)
-    # streamHandler = logging.StreamHandler()
-    # streamHandler.setFormatter(formatter)
 
     log_instance.setLevel(level)
     log_instance.addHandler(fileHandler)
-    # log_instance.addHandler(streamHandler)
+
+    return log_instance
+
+
+def validate_input_directories(*paths):
+    valid = True
+    for path in paths:
+        if not isdir(path):
+            valid = False
+            print("Invalid path: {}".format(path))
+    return valid
 
 
 def _write_front_matter(page_dict, logger, file_handle=None):
@@ -266,7 +276,6 @@ def _write_front_matter(page_dict, logger, file_handle=None):
     frontmatter = FrontMatter(
         logger=logger,
         isdocument=page_dict['isdocument'])
-        #source=page_dict["name"])
 
     frontmatter.add_field(field="date", value=page_dict["date"])
     frontmatter.add_field(field="title", value=page_dict["title"])
@@ -282,9 +291,10 @@ def _write_front_matter(page_dict, logger, file_handle=None):
         frontmatter.add_field('categories', value="Example Applet")
 
     if file_handle is None:
+        proc_logger.info("front matter returned")
         return frontmatter.__str__()
     file_handle.write(frontmatter.__str__())
-    proc_logger.info("front matter written")
+    proc_logger.info("front matter written to file")
 
 
 def main():
@@ -293,13 +303,15 @@ def main():
     args = parser.parse_args()
 
     if args.tutorials_dir is None:
-        script_dir = os.path.dirname(os.path.realpath(__file__))
-        assumed_tutorial_path = os.path.join(script_dir, "..", "..", "Tutorials")
-        args.tutorials_dir = os.path.normpath(assumed_tutorial_path)
+        script_dir = dirname(realpath(__file__))
+        assumed_tutorial_path = join(script_dir, "..", "..", "Tutorials")
+        args.tutorials_dir = normpath(assumed_tutorial_path)
     if args.site_pages_dir is None:
-        script_dir = os.path.dirname(os.path.realpath(__file__))
-        assumed_site_page_path = os.path.join(script_dir, "..", "_posts")
-        args.site_pages_dir = os.path.normpath(assumed_site_page_path)
+        script_dir = dirname(realpath(__file__))
+        assumed_site_page_path = join(script_dir, "..", "_posts")
+        args.site_pages_dir = normpath(assumed_site_page_path)
+
+    assert validate_input_directories(args.tutorials_dir, args.site_pages_dir)
 
     _rehydrate_site(args)
 

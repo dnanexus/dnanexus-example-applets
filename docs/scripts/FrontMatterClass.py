@@ -1,11 +1,10 @@
 from datetime import date
-from global_helper_vars import frontmatter_tutorial_types
 import yaml
 
 
 class FrontMatter(object):
     """ Extend functionality as needed
-    Front matter is the part of the markdown file that looks like:
+    Front matter is the part of the markdown file at the very top that looks like:
     ---
     date: 2017-08-02
     title: Pysam tools count

@@ -6,6 +6,7 @@ from global_helper_vars import LANG_COMMENT, CODE_SECTION_SEARCH, SUPPORTED_INTE
 class SectionParser(object):
     """Parse a src/code.* file for sections.
     TODO handle block comments. and block strings in python
+    TODO Make matching less sensitive and catch correct block comment start and ends
     """
     func_finders = {
         'bash': get_bash_function_by_path,
