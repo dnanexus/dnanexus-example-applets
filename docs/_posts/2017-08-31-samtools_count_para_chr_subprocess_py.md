@@ -2,7 +2,7 @@
 categories:
 - python
 - parallel
-date: '2017-08-08'
+date: '2017-08-31'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/python/samtools_count_para_chr_subprocess_py
 title: Parallel by Chr (py)
 type: Document

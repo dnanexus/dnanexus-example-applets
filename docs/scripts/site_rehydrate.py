@@ -11,7 +11,7 @@ import re
 import logging
 import fnmatch
 from os import walk, mkdir, listdir, remove
-from os.path import isdir, isfile, join, abspath, dirname, realpath, normpath
+from os.path import isdir, isfile, join, dirname, realpath, normpath
 from multiprocessing import Pool
 from itertools import izip
 from datetime import date
@@ -39,19 +39,12 @@ def _rehydrate_site(user_args):
         d1.update(d2)
         return d1
 
-    def archived_applets():
-        archiv_applets = join(abspath(join(user_args.tutorials_dir, '..')), 'Example', 'archived')
-        return find_all_matches(archiv_applets, "dxapp.json")
-
     user_input_dict = {
         "overwrite": user_args.overwrite,
         "ignore_comments": user_args.skip_comments,
         "site_pages_dir": user_args.site_pages_dir
     }
     dxapp_files = find_all_matches(user_args.tutorials_dir, "dxapp.json")
-    # Add non tutorial pages to page dict here
-    dxapp_files.extend(archived_applets())
-    # Added them
     page_dicts = [update_dict(d, user_input_dict) for d in _resolve_applets(dxapp_files)]
     md_maker = Pool(processes=NUM_CORES)
     status = md_maker.map(create_jekyll_markdown_tutorial, page_dicts)
@@ -214,7 +207,6 @@ def create_jekyll_markdown_tutorial(page_dict):
                 proc_logger.info("Exist: {fn}".format(fn=f))
                 return True, ""
 
-    page_dict['ARCHIVE'] = 'archived' in page_dict['readme_md']
     page_dict['isdocument'] = True  # Until Video type page support added leave this here
 
     try:
@@ -280,15 +272,13 @@ def _write_front_matter(page_dict, logger, file_handle=None):
     frontmatter.add_field(field="date", value=page_dict["date"])
     frontmatter.add_field(field="title", value=page_dict["title"])
     language = SUPPORTED_INTERPRETERS.get(page_dict["interpreter"])
-    if not page_dict['ARCHIVE'] and tut_type:
+    if tut_type:
         frontmatter.add_field(field="categories", value=tut_type)
-    if not page_dict['ARCHIVE'] and language:
+    if language:
         frontmatter.add_field(field="categories", value=language)
         link = "{base_url}/{lang}/{tut_name}".format(
             base_url=BASE_URL, lang=language, tut_name=page_dict['name'])
         frontmatter.add_field(field="github_link", value=link)
-    if page_dict['ARCHIVE']:
-        frontmatter.add_field('categories', value="Example Applet")
 
     if file_handle is None:
         proc_logger.info("front matter returned")
