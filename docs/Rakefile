@@ -5,7 +5,7 @@ require "bundler/setup"
 require "jekyll"
 
 
-# Change your GitHub reponame
+# Change this as needed
 GITHUB_REPONAME = "Damien-Black/dnanexus-example-applets"
 
 
@@ -27,7 +27,7 @@ namespace :site do
       pwd = Dir.pwd
       Dir.chdir tmp
 
-      system "touch .nojekyll"
+      system "touch .nojekyll"  # Prevent Github from trying to render based on _folders
       system "git init"
       system "git add ."
       message = "Site updated at #{Time.now.utc}"
