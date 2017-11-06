@@ -80,8 +80,9 @@
 		display: none;
 		padding: 0 0px 0 0;
 		position: absolute;
-    top: 85px;
+    	top: 85px;
 		width: 200px;
+		height: 100vh;
 
 		@media #{$mid-point} {
 			display: block;
@@ -109,8 +110,13 @@
 			line-height: 1.3em;
 
 			&.active {
-				color: $link-color;
-				transform: translateX(10px);
+				color: $dark-grey;
+				transform: scale(1.1,1.1) translateX(10px);
+			}
+
+			&:hover {
+				color: $link-hover-color;
+				transform: scale(1.1,1.1) translate(10px);
 			}
 		}
 	}

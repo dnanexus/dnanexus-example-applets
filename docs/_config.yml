@@ -72,9 +72,25 @@ defaults:
       path: "index.html"
     values:
       body_class: "show_hero_search"
+      header: "DNAnexus Tutorials"
+      header_blurb: "Developer walkthroughs and resources."
+  -
+    scope:
+      path: "tutorials.html"
+    values:
+      body_class: "show_hero_search"
+      header: "Tutorials"
+      header_blurb: "App(let) development guides and walkthroughs."
+  -
+    scope:
+      path: "example-applets.html"
+    values:
+      body_class: "show_hero_search"
+      header: "Examples"
+      header_blurb: "App(let) source code examples."
 # -----------------------
-# CloudCannon defaults: Kept for historical reasons
 # TODO: Video support is pretty neat, would like to add.
+#   Kept some of the code, but it needs to be worked in correctly (css).
 
 social_icons:
   - Facebook

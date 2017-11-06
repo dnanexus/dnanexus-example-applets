@@ -23,6 +23,8 @@ header {
 	}
 
 	.top-bar {
+		padding-left: 16px;
+
 		@media #{$mid-point} {
 			display: flex;
 		}

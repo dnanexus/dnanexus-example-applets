@@ -1,3 +1,8 @@
+---
+layout: default
+tutorial_page: False
+---
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -11,7 +16,7 @@
 		<link rel="icon" type="image/png" href="{{ site.baseurl }}/touch-icon.png" sizes="192x192">
 		<link rel="icon" type="image/png" href="{{ site.baseurl }}/images/favicon.ico">
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script type="text/javascript" src="{{ site.baseurl }}/js/jquery.min.js"></script>
 
 		{% seo %}
 		{% feed_meta %}
@@ -31,22 +36,24 @@
 
 	<body class="{{ page.body_class }}">
 		<header>
+			<section class="top-bar">
+				<!-- FIXME: Workaround for Jekyll terminal '/' issue -->
+				<div class="logo"><a href="{{ site.baseurl }}/">{% include logo_X_color.html %}</a></div>
+				{% include navigation.html %}
+			</section>
 			<div class="wrapper">
-				<section class="top-bar">
-					<!-- FIXME: Workaround for Jekyll terminal '/' issue -->
-					<div class="logo"><a href="{{ site.baseurl }}/">{% include logo_X_color.html %}</a></div>
-					{% include navigation.html %}
-				</section>
 				<section class="hero_search">
-					<h1>DNAnexus Tutorials and Example Applets</h1>
-					<p>Developer Tutorials and resources.</p>
+					<h1>{{ page.header }}</h1>
+					<p>{{ page.header_blurb }}</p>
+					<!-- TODO: Workaround to hard link. Find first elem in _set getting-started instead -->
+					<button type="button" class="btn btn-success btn-lg" onclick="window.location = '{{ site.url }}{{ site.baseurl }}{% link _posts/2017-02-08-overview.md %}'">Get Started</button>
 					{% include search.html %}
 				</section>
 			</div>
 
 		</header>
 		<section class="content">
-			<div class="wrapper">
+			<div class="wrapper{% if layout.tutorial_page %} wrap_left{% endif %}">
 				{{ content }}
 			</div>
 		</section>
