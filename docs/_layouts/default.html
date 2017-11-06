@@ -46,7 +46,11 @@ tutorial_page: False
 					<h1>{{ page.header }}</h1>
 					<p>{{ page.header_blurb }}</p>
 					<!-- TODO: Workaround to hard link. Find first elem in _set getting-started instead -->
+					<div class=btn-wrapper>
+					{% if page.header == "DNAnexus Tutorials" %}
 					<button type="button" class="btn btn-success btn-lg" onclick="window.location = '{{ site.url }}{{ site.baseurl }}{% link _posts/2017-02-08-overview.md %}'">Get Started</button>
+					{% endif %}
+					</div>
 					{% include search.html %}
 				</section>
 			</div>

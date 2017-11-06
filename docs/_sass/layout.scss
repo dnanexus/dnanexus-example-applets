@@ -54,3 +54,7 @@ dt, h2 {
 		height: 100%;
 	}
 }
+
+.btn-wrapper { /* These div wrapper solutions can't be good practice */
+	min-height: 46px;
+}
