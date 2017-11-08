@@ -1,4 +1,4 @@
 ---
-title: Getting Started
+title: Get Started
 description: This series introduces basic app(let) development concepts on the DNAnexus platform.
 ---

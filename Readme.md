@@ -42,7 +42,7 @@ From the CLI, use the command [`dx login`](https://wiki.dnanexus.com/Command-Lin
 $ dx login
   Username:  # Platform username
   Password:  # Platform password
-  # If this is your first time logging in, you will be prompted to select a project
+  # If this is your first time logging in from the Command Line Interface, you will be prompted to select a project
   Note: Use dx select --level VIEW or dx select --public to select from projects for
   which you only have VIEW permissions.
 

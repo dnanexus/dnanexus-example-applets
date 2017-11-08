@@ -70,7 +70,8 @@ def _resolve_applet(dxapp_path):
         src_code=join(dxapp_path[:-11], dxapp_obj["runSpec"]["file"]),
         app_name=dxapp_obj["name"],
         title=dxapp_obj["title"],
-        interpreter=dxapp_obj["runSpec"]["interpreter"])
+        interpreter=dxapp_obj["runSpec"]["interpreter"],
+        summary=dxapp_obj["summary"])
 
 
 def _resolve_applets(dxapp_paths):
@@ -85,7 +86,7 @@ def _resolve_applets(dxapp_paths):
     tutorial_AppObj = [res for res in workers.map(_resolve_applet, dxapp_paths) if res is not None]
     workers.close()
     workers.join()
-    return [{k: v for k, v in izip(("readme_md", "src_code", "name", "title", "interpreter"), appobj)} for appobj in tutorial_AppObj]
+    return [{k: v for k, v in izip(("readme_md", "src_code", "name", "title", "interpreter", "summary"), appobj)} for appobj in tutorial_AppObj]
 
 
 def _write_markdown(fh_md, readme_md_path, logger, section_parser):
@@ -175,6 +176,7 @@ def create_jekyll_markdown_tutorial(page_dict):
                 src_code: string path to source code location
                 name: string Page Name
                 title: string Page Title
+                summary: string summary in dxapp.json
                 interpreter: string Applet interpreter language
                 overwrite: bool is okay to overwrite dest file if it exist?
                 ignore_comments: bool is okay to ignore comments in files
@@ -183,7 +185,7 @@ def create_jekyll_markdown_tutorial(page_dict):
 
     TODO workarounds for multiprocessing with nested-functions. Use processing directly in the future.
     TODO support pages that don't need section parsers
-    TODO Certain values in page_dict don't need to repearted in all dicts: site_pages_dir
+    TODO Certain values in page_dict don't need to repeated in all dicts: site_pages_dir
             listdir(page_dict["site_pages_dir"]) can be called only once.
             If script runtime becomes an issue remove repeated calls.
     """
@@ -271,6 +273,7 @@ def _write_front_matter(page_dict, logger, file_handle=None):
 
     frontmatter.add_field(field="date", value=page_dict["date"])
     frontmatter.add_field(field="title", value=page_dict["title"])
+    frontmatter.add_field(field="summary", value=page_dict["summary"])
     language = SUPPORTED_INTERPRETERS.get(page_dict["interpreter"])
     if tut_type:
         frontmatter.add_field(field="categories", value=tut_type)

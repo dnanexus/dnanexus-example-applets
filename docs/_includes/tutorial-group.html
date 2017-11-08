@@ -1,0 +1,20 @@
+{% assign name = include.cat[0] %}
+{% assign posts = include.cat[1] %}
+{% assign size = posts | size %}
+<div class="category">
+		<h4>
+			<a href="{{ site.baseurl }}/category/{{ name | slugify }}/">{{ name | replace: "-", " " | capitalize }}</a>
+		</h4>
+	<ul class="tutorial-group">
+		{% assign tutorials = posts | sort: "title" %}
+		{% for tutorial in tutorials %}
+			<li class="tutorial-elem">
+				<div class="doc-icon-container">
+				<a href="{{ site.baseurl }}/{{ tutorial.url }}">{% include document-icon.html icon=tutorial.type %}</a>
+				</div>
+				<h5>{{ tutorial.title }}</h5>
+				<p>{{ tutorial.summary }}</p>
+			</li>
+		{% endfor %}
+	</ul>
+</div>

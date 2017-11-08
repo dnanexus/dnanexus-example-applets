@@ -2,15 +2,17 @@
 categories:
 - python
 - distributed
-date: '2017-08-31'
+date: '2017-11-08'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/python/samtools_count_distr_region_py
+summary: Count number of reads in SAM or BAM format file using a distributed scatter
+  gather approach.  Subjobs perform count in parallel based on regions
 title: Distributed by Region (py)
 type: Document
 ---
-Distributed count of reads in BAM format file. Documentation to create a distributed applet can be found on the [DNAnexus wiki](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App). This readme will focus on the details of this applet.
+The applet will create a count of reads from a BAM format file. Documentation to create a distributed applet can be found on the [DNAnexus wiki](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App). This readme will focus on the details of this applet.
 
-## How is SAMtools dependency provided?
-SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the dxapp.json runSpec.execDepends.
+## How is the SAMtools dependency provided?
+The SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the `dxapp.json` `runSpec.execDepends`.
 ```json
   "runSpec": {
     ...
@@ -19,7 +21,7 @@ SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.co
     ]
   }
 ```
-For additional information, please refer to the [execDepends wiki page](https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages).
+For additional information, please refer to the [`execDepends` wiki page](https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages).
 
 ## Entry Points
 Distributed python-interpreter apps use python decorators on functions to [declare entry points](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App#Adding-Entry-Points-to-Your-Code). This app has the following entry points as decorated functions:
@@ -28,7 +30,7 @@ Distributed python-interpreter apps use python decorators on functions to [decla
 * *samtoolscount_bam*
 * *combine_files*
 
-Entry points are executed on a new worker with their own system requirements. In this example, we *split* and *merge* our files on basic mem1_ssd1_x2 instances and perform our, more intensive, *processing* step on a mem1_ssd1_x4 instance. Instance type can be set in the dxapp.json `runSpec.systemRequirements`:
+Entry points are executed on a new worker with their own system requirements. In this example, we *split* and *merge* our files on basic mem1_ssd1_x2 instances and perform our own, more intensive, *processing* step on a mem1_ssd1_x4 instance. Instance type can be set in the dxapp.json `runSpec.systemRequirements`:
 ```json
   "runSpec": {
     ...
@@ -47,7 +49,7 @@ Entry points are executed on a new worker with their own system requirements. In
   }
 ```
 ## main
-The *main* function scatters by region bins, based on user input. If no `*.bai` file is present, The applet generates an index `*.bai`.
+The *main* function scatters by region bins based on user input. If no `*.bai` file is present, the applet generates an index `*.bai`.
 ```python
     regions = parseSAM_header_for_region(filename)
     split_regions = [regions[i:i + region_size]
@@ -56,7 +58,7 @@ The *main* function scatters by region bins, based on user input. If no `*.bai` 
     if not index_file:
         mappings_bam, index_file = create_index_file(filename, mappings_bam)
 ```
-Regions bins are passed to the *samtoolscount_bam* entry point using [dxpy.new_dxjob](http://autodoc.dnanexus.com/bindings/python/current/dxpy_apps.html?highlight=new_dxjob#dxpy.bindings.dxjob.new_dxjob) function.
+Regions bins are passed to the *samtoolscount_bam* entry point using the [`dxpy.new_dxjob`](http://autodoc.dnanexus.com/bindings/python/current/dxpy_apps.html?highlight=new_dxjob#dxpy.bindings.dxjob.new_dxjob) function.
 ```python
     print 'creating subjobs'
     subjobs = [dxpy.new_dxjob(
@@ -140,9 +142,9 @@ def samtoolscount_bam(region_list, mappings_bam, index_file):
 
     return {"readcount_fileDX": readCountDXlink}
 ```
-This entry point returns `{"readcount_fileDX": readCountDXlink}`, a JBOR referencing an uploaded text file. This approach to scatter gather stores the results in files and uploads/downloads the information as needed. This approach exaggerates a scatter-gather for tutorial purposes. You're able to pass types other than **file** such as **int**.
+This entry point returns `{"readcount_fileDX": readCountDXlink}`, a JBOR referencing an uploaded text file. This approach to scatter-gather stores the results in files and uploads/downloads the information as needed. This approach exaggerates a scatter-gather for tutorial purposes. You're able to pass types other than **file** such as **int**.
 ## combine_files
-The *main* entry point triggers this sub job, providing the output of *samtoolscount_bam* as an input. This entry point gathers all the files generated by the *samtoolscount_bam* jobs and sums them.
+The *main* entry point triggers this subjob, providing the output of *samtoolscount_bam* as an input. This entry point gathers all the files generated by the *samtoolscount_bam* jobs and sums them.
 ```python
 def combine_files(countDXlinks, resultfn):
     """The 'gather' subjob of the applet.

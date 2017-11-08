@@ -2,15 +2,16 @@
 categories:
 - distributed
 - bash
-date: '2017-08-31'
+date: '2017-11-08'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count_distr_chr_slice_sh
+summary: This applet performs a distributed SAMtools count for each canonical chromosome
 title: Distributed by Chr (sh)
 type: Document
 ---
 Documentation to create a distributed applet can be found on the [Developer Tutorials wiki page](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App). This readme will focus on the details of this applet.
 
-## How is SAMtools dependency provided?
-SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the dxapp.json runSpec.execDepends.
+## How is the SAMtools dependency provided?
+The SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the `dxapp.json` file's `runSpec.execDepends`.
 ```json
 {
 ...
@@ -23,16 +24,16 @@ SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.co
 ...
 }
 ```
-For additional information, please refer to the [execDepends](https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages) wiki page.
+For additional information, please refer to the [`execDepends`](https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages) wiki page.
 
-## Entry points
+## Entry Points
 Distributed bash-interpreter apps use bash functions to [declare entry points](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App#Adding-Entry-Points-to-Your-Code). This app has the following entry points specified as bash functions:
 
 * *main* 
 * *count_func*
 * *sum_reads*
 
-Entry points are executed on a new worker with their own system requirements. Instance type can be set in the dxapp.json `runSpec.systemRequirements`:
+Entry points are executed on a new worker with its own system requirements. The instance type can be set in the `dxapp.json` file's `runSpec.systemRequirements`:
 ```json
 {
   "runSpec": {
@@ -53,13 +54,13 @@ Entry points are executed on a new worker with their own system requirements. In
 }
 ```
 ## main
-The *main* function slices the initial `*.bam` and generates an index `*.bai` if needed. The input `*.bam` is sliced into smaller `*.bam` files containing only reads from canonical chromosomes. First the main function downloads the BAM file and gets the headers.
+The *main* function slices the initial `*.bam` file and generates an index `*.bai` if needed. The input `*.bam` is the sliced into smaller `*.bam` files containing only reads from canonical chromosomes. First, the main function downloads the BAM file and gets the headers.
 ```bash
   dx download "${mappings_sorted_bam}"
   chromosomes=$(samtools view -H "${mappings_sorted_bam_name}" | grep "\@SQ" | awk -F '\t' '{print $2}' | awk -F ':' '{if ($2 ~ /^chr[0-9XYM]+$|^[0-9XYM]/) {print $2}}')
 ```
 
-Sliced `*.bam` files are uploaded and their file id is passed to the *count_func* entry point using [`dx-jobutil-new-job`](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-jobutil-new-job) command.
+Sliced `*.bam` files are uploaded and their file IDs are passed to the *count_func* entry point using the [`dx-jobutil-new-job`](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-jobutil-new-job) command.
 ```bash
   if [ -z "${mappings_sorted_bai}" ]; then
     samtools index "${mappings_sorted_bam_name}"
@@ -86,11 +87,11 @@ Outputs from the *count_func* entry points are referenced as Job Based Object Re
   sum_reads_job=$(dx-jobutil-new-job "${readfiles[@]}" -ifilename="${mappings_sorted_bam_prefix}" sum_reads)
 ```
 
-Output of the *sum_reads* entry point is used as the output of the main entry point via JBOR reference in [`dx-jobutil-add-output`](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-jobutil-add-output)
+The output of the *sum_reads* entry point is used as the output of the main entry point via JBOR reference using the command [`dx-jobutil-add-output`](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-jobutil-add-output).
 <!-- Upload chromosome_results.txt from sum_reads subjob as job output -->
 
 ## count_func
-This entry point downloads and runs `samtools view -c` command on the sliced `*.bam`.  Generated counts_txt output is uploaded as the entry points job output via [`dx-jobutil-add-output`](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-jobutil-add-output).
+This entry point downloads and runs the command `samtools view -c` on the sliced `*.bam`. The generated `counts_txt` output file is uploaded as the entry point's job output via the command [`dx-jobutil-add-output`](https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-jobutil-add-output).
 ```bash
 count_func () 
 { 
@@ -105,9 +106,9 @@ count_func ()
 ```
 
 ## sum_reads
-The *main* entry point triggers this sub job, providing the output of *count_func* as an input. This entry point gathers all the files generated by the *count_func* jobs and sums them.
+The *main* entry point triggers this subjob, providing the output of *count_func* as an input. This entry point gathers all the files generated by the *count_func* jobs and sums them.
 
-returns read_sum_file as the entry point output.
+This function returns `read_sum_file` as the entry point output.
 ```bash
 sum_reads () 
 { 

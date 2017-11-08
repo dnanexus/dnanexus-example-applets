@@ -462,3 +462,66 @@
 .alert-danger .alert-link {
   color: #843534;
 }
+
+.tutorial-group {
+	position: static;
+	display: grid;
+	grid-template-rows: 1fr 1fr;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 1px;
+}
+
+.tutorial-elem {
+	display: grid;
+	grid-template-rows: 0.25fr 1fr;
+	grid-template-columns: .1fr 1fr;
+	padding: 5px;
+	margin: 5px 0.5%;
+	letter-spacing: normal;
+
+	& p {
+		color: $light-grey;
+		width: 250px;
+		font-size: 0.75em;
+		grid-column-start: 2;
+		grid-row-start: 2;
+		margin: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	&:hover {
+		svg {
+			fill: $link-hover-color;
+			width: 30px;
+			height: 30px;
+		}
+
+		p {
+				color: $dark-grey;
+		}
+
+		h5 {
+			text-decoration: underline;
+		}
+	}
+
+	& .doc-icon-container  {
+		grid-column-start: 1;
+		grid-column-end: 1;
+		grid-row-start: 1;
+		grid-row-end: 2;
+		position: absolute;
+	}
+
+	& h5 {
+		display: inline-block;
+		color: $dark-grey;
+		width: 250px;
+		grid-column-start: 2;
+		grid-column-end: 2;
+		grid-row-start: 1;
+		grid-row-end: 1;
+	}
+}

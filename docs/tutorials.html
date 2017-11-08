@@ -1,24 +1,19 @@
 ---
 ---
-<section class="categories">
-	{% assign categories = site.categories | sort %}
-	{% for category in categories %}
-		{% assign name = category[0] %}
-		{% assign posts = category[1] %}
-		{% assign size = posts | size %}
-		<section class="category">
-				<h3>
-					<a href="{{ site.baseurl }}/category/{{ name | slugify }}/">{{ name | replace: "-", " " }}</a>
-				</h3>
-			<ul>
-				{% assign tutorials = posts | sort: "title" %}
-				{% for tutorial in tutorials limit: 4 %}
-					<li><a href="{{ site.baseurl }}/{{ tutorial.url }}">{% include document-icon.html icon=tutorial.type %}{{ tutorial.title }}</a></li>
-				{% endfor %}
-				{% if size > 4 %}
-					<li><a href="{{ site.baseurl }}/category/{{ name | slugify }}/">{{ size | minus: 4 }} more...</a></li>
-				{% endif %}
-			</ul>
-		</section>
-	{% endfor %}
-</section>
+{% assign categories = site.categories | sort %}
+{% assign bash_cat = categories | where_exp:"item","item[0] == 'bash'" | first %}
+{% assign python_cat = categories | where_exp:"item", "item[0] == 'python'" | first %}
+{% assign para_cat = categories | where_exp:"item", "item[0] == 'parallel'" | first %}
+{% assign distr_cat = categories | where_exp:"item", "item[0] == 'distributed'" | first %}
+
+<div class="categories">
+	<!--
+	{% include tutorial-group.html cat=python_cat %}
+	{% include tutorial-group.html cat=bash_cat %}
+	-->
+	{% capture concur_blurb %}{% include concurrent-compute-blurb.md %}{% endcapture %}
+	<div class="blurb">
+	{{ concur_blurb | markdownify }}
+	{% include tutorial-group.html cat=para_cat %}
+	{% include tutorial-group.html cat=distr_cat %}
+</div>

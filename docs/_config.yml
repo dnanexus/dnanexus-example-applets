@@ -42,6 +42,7 @@ exclude:
   - LICENCE
   - .gitignore
   - scripts/
+  - log_temp_dir/
 
 collections:
   sets:
@@ -69,7 +70,7 @@ defaults:
       _hide_content: true
   -
     scope:
-      path: "index.html"
+      path: "index.md"
     values:
       body_class: "show_hero_search"
       header: "DNAnexus Tutorials"

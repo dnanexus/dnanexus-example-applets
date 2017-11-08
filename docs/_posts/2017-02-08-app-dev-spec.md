@@ -4,8 +4,6 @@ title: Development Basics
 description: What it means to build an App or Applet
 set: getting-started
 set_order: 4
-categories:
-  - getting-started
 type: Document
 ---
 

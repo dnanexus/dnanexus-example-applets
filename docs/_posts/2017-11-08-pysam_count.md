@@ -1,16 +1,17 @@
 ---
 categories:
 - python
-date: '2017-08-31'
+date: '2017-11-08'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/python/pysam_count
+summary: Counts the number of reads in a BAM file.
 title: Pysam
 type: Document
 ---
 This applet performs a SAMtools count on an input BAM using Pysam, a python wrapper for SAMtools.
 
-## How is Pysam obtained
+## How is Pysam provided?
 
-Pysam is obtained through a `pip install` using the pip package manager in the dxapp.json's `runSpec.execDepends` property:
+Pysam is provided through a `pip install` using the pip package manager in the `dxapp.json`'s `runSpec.execDepends` property:
 <!-- Since JSON can't be commented cannot autogenerate below. YAML looking good right now -->
 
 ```json
@@ -27,10 +28,10 @@ Pysam is obtained through a `pip install` using the pip package manager in the d
  }
 ```
 
-`execDepends` value is a JSON array of dependencies to resolve before the applet src code is run. In this applet, we specify `pip` as our package manager and `pysam version 0.9.1.4` as the dependency to resolve. Pysam is installed to `/usr/local/lib/python2.7/dist-packages` and can be imported by our python script.
+The `execDepends` value is a JSON array of dependencies to resolve before the applet source code is run. In this applet, we specify `pip` as our package manager and `pysam version 0.9.1.4` as the dependency to resolve. Pysam is installed to `/usr/local/lib/python2.7/dist-packages` and can be imported by our python script.
 
-## Downloading inputs   
-`mappings_sorted_bam` and `mappings_sorted_bai` are passed to the main function as parameters for our job. These parameters are dictionary objects with key value `{"$dnanexus_link": "<file>-<xxxx>"}`. We handle file objects from the platform through [DXFile](http://autodoc.dnanexus.com/bindings/python/current/dxpy_dxfile.html?highlight=dxfile#module-dxpy.bindings.dxfile) handles. If an index file is not supplied then a `*.bai` index will be created.
+## Downloading Inputs   
+The fields `mappings_sorted_bam` and `mappings_sorted_bai` are passed to the main function as parameters for our job. These parameters are dictionary objects with key-value pair `{"$dnanexus_link": "<file>-<xxxx>"}`. We handle file objects from the platform through [DXFile](http://autodoc.dnanexus.com/bindings/python/current/dxpy_dxfile.html?highlight=dxfile#module-dxpy.bindings.dxfile) handles. If an index file is not supplied, then a `*.bai` index will be created.
 ```python
     print mappings_sorted_bai
     print mappings_sorted_bam
@@ -85,7 +86,7 @@ def get_chr(bam_alignment, canonical=False):
     return regions
 ```
 
-Once we establish a list of canonical chromosomes, we then iterate over them and perform Pysam's version of `samtools view -c`, `pysam.AlignmentFile.count`.
+Once we establish a list of canonical chromosomes, we can iterate over them and perform Pysam's version of `samtools view -c`, `pysam.AlignmentFile.count`.
 ```python
     total_count = 0
     count_filename = "{bam_prefix}_counts.txt".format(
@@ -102,7 +103,7 @@ Once we establish a list of canonical chromosomes, we then iterate over them and
 ```
 
 ## Uploading Outputs
-Our summarized counts are returned as the job output. We use the dx-toolkit python SDK's [`dxpy.upload_local_file`](http://autodoc.dnanexus.com/bindings/python/current/dxpy_dxfile.html?highlight=upload_local_file#dxpy.bindings.dxfile_functions.upload_local_file) function to upload and generate a DXFile corresponding to our tabulated result file.
+Our summarized counts are returned as the job output. We use the `dx-toolkit` python SDK's [`dxpy.upload_local_file`](http://autodoc.dnanexus.com/bindings/python/current/dxpy_dxfile.html?highlight=upload_local_file#dxpy.bindings.dxfile_functions.upload_local_file) function to upload and generate a DXFile corresponding to our tabulated result file.
 ```python
     counts_txt = dxpy.upload_local_file(count_filename)
     output = {}
@@ -111,4 +112,4 @@ Our summarized counts are returned as the job output. We use the dx-toolkit pyth
     return output
 ```
 
-Python job outputs have to be a dictionary of key-value pairs, with the keys being job output names, as defined in the dxapp.json, and the value being the output value for corresponding output class. For files, the output type is a [DXLink](https://wiki.dnanexus.com/api-specification-v1.0.0/Details-and-Links#Linking). We use the [`dxpy.dxlink`](http://autodoc.dnanexus.com/bindings/python/current/dxpy_functions.html?highlight=dxlink#dxpy.bindings.dxdataobject_functions.dxlink) function to generate the appropriate DXLink value.
+Python job outputs have to be a dictionary of key-value pairs, with the keys being job output names as defined in the `dxapp.json` file and the values being the output values for corresponding output classes. For files, the output type is a [DXLink](https://wiki.dnanexus.com/api-specification-v1.0.0/Details-and-Links#Linking). We use the [`dxpy.dxlink`](http://autodoc.dnanexus.com/bindings/python/current/dxpy_functions.html?highlight=dxlink#dxpy.bindings.dxdataobject_functions.dxlink) function to generate the appropriate DXLink value.

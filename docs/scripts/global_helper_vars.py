@@ -4,7 +4,7 @@ import re  # re-read docs and make re not greedy
 
 NUM_CORES = cpu_count()
 
-AppObj = namedtuple('AppObj', ['readme_md', 'src_code', 'app_name', 'title', 'interpreter'])
+AppObj = namedtuple('AppObj', ['readme_md', 'src_code', 'app_name', 'title', 'interpreter', 'summary'])
 
 TUTORIAL_TYPES_SEARCH = {
     "parallel": re.compile(r'.*para.*'),

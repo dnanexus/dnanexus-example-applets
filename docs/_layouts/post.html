@@ -14,11 +14,11 @@ tutorial_page: True
 	<section class="tutorial-content">
 		{% if page.set %}
 			{% assign set_file_name = "_sets/" | append: page.set | append: ".md" %}
-			{% assign set = site.sets | where: "title", "Getting Started" | first %}
-			{% assign series_posts = site.posts | where: "set", page.set %}
+			{% assign set = site.sets | where: "title", "Get Started" | first %}
+			{% assign series_posts = site.posts | where: "set", page.set | sort: 'set_order' %}
 			<div class="series">
 				<h3>{{ set.title }} - {{ page.title }}</h3>
-				<p>{{ set.description }}</p>
+				<p>{{ page.description }}</p>
 				{% include button-horiz-group.html listings=series_posts numbered=true%}
 			</div>
 		{% else %}
@@ -52,26 +52,6 @@ tutorial_page: True
 		{% endif %}
 	</section>
 </div>
-
-{% if page.set %}
-	{% assign set_file_name = "_sets/" | append: page.set | append: ".md" %}
-	{% assign set = site.sets | where: "title", "Getting Started" | first %}
-	{% assign series_posts = site.posts | where: "set", page.set %}
-	<div class="tutorial-series">
-		<h3>{{ set.title }} - Series</h3>
-		<p>{{ set.description }}</p>
-
-		{% include listings.html listings=series_posts numbered=true%}
-	</div>
-{% endif %}
-{% assign related_posts = site.related_posts %}
-{% assign related_posts_size = related_posts | size %}
-{% if related_posts_size > 0 %}
-	<div class="related">
-		<h3>Related tutorials</h3>
-		{% include listings.html listings=site.related_posts %}
-	</div>
-{% endif %}
 
 {% if site.disqus_shortname and page.comments %}
 	<div id="disqus_thread"></div>
