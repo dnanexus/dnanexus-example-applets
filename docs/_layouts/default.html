@@ -11,12 +11,12 @@ tutorial_page: False
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="generator" content="Jekyll v{{ jekyll.version }}">
 
-		<link rel="stylesheet" href="{{ site.baseurl }}/css/screen.css">
-		<link rel="apple-touch-icon" href="{{ site.baseurl }}apple-touch-icon.png">
-		<link rel="icon" type="image/png" href="{{ site.baseurl }}touch-icon.png" sizes="192x192">
-		<link rel="icon" type="image/png" href="{{ site.baseurl }}images/favicon.ico">
+		<link rel="stylesheet" href="{{ site.url }}{{ site.baseurl }}css/screen.css">
+		<link rel="apple-touch-icon" href="{{ site.url }}{{ site.baseurl }}apple-touch-icon.png">
+		<link rel="icon" type="image/png" href="{{ site.url }}{{ site.baseurl }}touch-icon.png" sizes="192x192">
+		<link rel="icon" type="image/png" href="{{ site.url }}{{ site.baseurl }}images/favicon.ico">
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
-		<script type="text/javascript" src="{{ site.baseurl }}/js/jquery.min.js"></script>
+		<script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}js/jquery.min.js"></script>
 
 		{% seo %}
 		{% feed_meta %}
@@ -38,7 +38,7 @@ tutorial_page: False
 		<header>
 			<section class="top-bar">
 				<!-- FIXME: Workaround for Jekyll terminal '/' issue -->
-				<div class="logo"><a href="{{ site.baseurl }}/">{% include logo_X_color.html %}</a></div>
+				<div class="logo"><a href="{{ site.url }}{{ site.baseurl }}">{% include logo_X_color.html %}</a></div>
 				{% include navigation.html %}
 			</section>
 			<section class="hero_search">
