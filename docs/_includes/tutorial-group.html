@@ -3,7 +3,7 @@
 {% assign size = posts | size %}
 <div class="category">
 		<h4>
-			<a href="{{ site.url }}{{ site.baseurl }}category/{{ name | slugify }}/">{{ name | replace: "-", " " | capitalize }}</a>
+			<a href="{{ site.url }}{{ site.baseurl }}/category/{{ name | slugify }}/">{{ name | replace: "-", " " | capitalize }}</a>
 		</h4>
 	<ul class="tutorial-group">
 		{% assign tutorials = posts | sort: "title" %}

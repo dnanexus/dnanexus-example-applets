@@ -10,11 +10,12 @@ GITHUB_REPONAME = "Damien-Black/dnanexus-example-applets"
 
 
 namespace :site do
-  desc "Generate blog files"
+  desc "Generate GitHub page files"
   task :generate do
     Jekyll::Site.new(Jekyll.configuration({
       "source"      => ".",
-      "destination" => "_site"
+      "destination" => "_site",
+      "baseurl"     => ""
     })).process
   end
 

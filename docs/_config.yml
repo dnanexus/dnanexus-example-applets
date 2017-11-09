@@ -3,7 +3,7 @@
 
 title: DNAnexus Example Applets
 url: "https://damien-black.github.io/dnanexus-example-applets"
-baseurl: "/dnanexus-example-applets/" # The location of those forward slashes is extremely important
+baseurl: "/dnanexus-example-applets" # The location of those forward slashes is extremely important
 google_analytics_key:
 disqus_shortname:
 newsletter_action:
