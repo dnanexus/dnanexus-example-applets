@@ -90,18 +90,22 @@ header {
 				display: inline-block;
 				padding: 7px 0;
 				margin: 0 15px;
-				border-bottom: 2px solid rgba(255, 255, 255, 0)
+				border-bottom: 2px solid rgba(255, 255, 255, 0);
 			}
 
-			&.active, &.active:hover {
-				border-bottom-color: rgba(255, 255, 255, .3);
+			&.active {
+				border-bottom-color: $dnanexus-dark-purple;
+			}
+
+			&.active:hover {
+				border-bottom-color: $link-hover-color;
 			}
 
 			&:hover {
 				text-decoration: none;
 				color: #fff;
 				@media #{$mid-point} {
-					border-bottom-color: rgba(255, 255, 255, .1);
+					border-bottom-color: $link-hover-color;
 				}
 			}
 		}

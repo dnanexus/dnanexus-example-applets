@@ -525,3 +525,18 @@
 		grid-row-end: 1;
 	}
 }
+
+.link-header-text {
+	&:hover h2 {
+		color: $link-hover-color;
+	}
+	p {
+		color: $light-grey;
+	}
+	a {
+		text-decoration: none;
+	}
+	&:hover p {
+		color: $dark-grey;
+	}
+}

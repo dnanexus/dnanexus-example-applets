@@ -11,9 +11,19 @@
 	{% include tutorial-group.html cat=python_cat %}
 	{% include tutorial-group.html cat=bash_cat %}
 	-->
+	<div section="bash-tut">
+	{% capture bash_blurb %}{% include bash-blurb.md %}{% endcapture %}
+	{{ bash_blurb | markdownify }}
+	{% include tutorial-group.html cat=bash_cat %}
+	</div>
+	<div section="python-tut">
+	{% capture python_blurb %}{% include python-blurb.md %}{% endcapture %}
+	{{ python_blurb | markdownify }}
+	{% include tutorial-group.html cat=python_cat %}
+	</div>
+	<div section="concurrent-processing">
 	{% capture concur_blurb %}{% include concurrent-compute-blurb.md %}{% endcapture %}
-	<div class="blurb">
 	{{ concur_blurb | markdownify }}
 	{% include tutorial-group.html cat=para_cat %}
 	{% include tutorial-group.html cat=distr_cat %}
-</div>
+	</div>

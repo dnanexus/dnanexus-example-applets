@@ -11,24 +11,18 @@ resources:
     blurb: The GitHub repo this website is generated from.
   - name: DNAnexus dx-toolkit
     url: https://github.com/dnanexus/dx-toolkit
-    blurb: The Platform SDK that clients and App developers use to interact and work on our platform.
+    blurb: The Platform SDK that clients and App developers use to interact with our platform API.
   - name:  DNAnexus autodocs
     url: http://autodoc.dnanexus.com/bindings/python/current/
     blurb: Auto generated detailed documentation of our platform SDK.
 ---
 
 <h1>Resources</h1>
-
-<section class="resources">
-	<ul>
-		{% for item in page.resources %}
-			<li><a href="#{{ item.name | slugify }}">{{ item.name }}</a></li>
-		{% endfor %}
-	</ul>
-
 	{% for item in page.resources %}
-		<h2 id="{{ item.name | slugify}}">{{ item.name }}<a class="header-link" href="#{{ item.name | slugify }}">#</a></h2>
-    <a class="header-link" href="{{ item.url }}">LINK</a>
-		{{ item.blurb | markdownify }}
+  <div class="link-header-text">
+    <a href="{{ item.url }}">
+  		<h2>{{ item.name }}</h2>
+    </a>
+  	{{ item.blurb | markdownify }}
+  </div>
 	{% endfor %}
-</section>
