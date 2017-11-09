@@ -87,7 +87,7 @@ access to files stored on the DNAnexus platform
 
 Running the Cloud Workstation app from the terminal:
 
-**Set up SSH access with `dx ssh_config`:**
+**Set up SSH access with [`dx ssh_config`](https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#ssh_config):**
 
 ```bash
 $ dx ssh_config

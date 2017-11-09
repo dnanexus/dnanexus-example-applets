@@ -7,10 +7,6 @@
 {% assign distr_cat = categories | where_exp:"item", "item[0] == 'distributed'" | first %}
 
 <div class="categories">
-	<!--
-	{% include tutorial-group.html cat=python_cat %}
-	{% include tutorial-group.html cat=bash_cat %}
-	-->
 	<div section="bash-tut">
 	{% capture bash_blurb %}{% include bash-blurb.md %}{% endcapture %}
 	{{ bash_blurb | markdownify }}
@@ -27,3 +23,13 @@
 	{% include tutorial-group.html cat=para_cat %}
 	{% include tutorial-group.html cat=distr_cat %}
 	</div>
+	<script >
+		$(".subtext").hide();
+		$(".categories").on("mouseenter", "#has-hidden-text", function() {
+		    $( this ).children(".subtext").slideDown();
+		});
+
+		$(".categories").on("mouseleave", "#has-hidden-text", function() {
+		    $( this ).children(".subtext").slideUp();
+		});
+	</script>

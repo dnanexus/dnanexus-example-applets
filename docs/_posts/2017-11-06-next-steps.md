@@ -1,7 +1,7 @@
 ---
 date: 2017-11-06
 title: Next Steps
-description: Distributed versus Parallel Computing
+description: Wrapping up
 set: getting-started
 set_order: 5
 type: Document

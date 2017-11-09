@@ -3,7 +3,7 @@ date: 2017-08-02
 title: Basic Applet Structure
 set: getting-started
 set_order: 3
-description: Basics of the Applet directory
+description: Basics of the app(let) directory
 type: Document
 ---
 Before you are able to [`dx build`](https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#build) an app(let) you must construct a valid app(let) directory. An app(let) directory skeleton looks like:

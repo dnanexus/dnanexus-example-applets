@@ -1,7 +1,7 @@
 ---
 date: 2017-08-02
 title: Development Basics
-description: What it means to build an App or Applet
+description: What it means to build an app or applet
 set: getting-started
 set_order: 4
 type: Document

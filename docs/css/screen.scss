@@ -1,7 +1,6 @@
 ---
 ---
 @import "variable";
-@import "bootstrap-button";
 @import "typography";
 @import "elements";
 @import "tutorials";
@@ -15,3 +14,4 @@
 @import "form";
 @import "cloudcannon";
 @import "syntax";
+@import "bootstrap-button"; /* Note there is a font family here. fix at some point */
