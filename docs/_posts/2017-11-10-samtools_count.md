@@ -1,7 +1,7 @@
 ---
 categories:
 - bash
-date: '2017-11-08'
+date: '2017-11-10'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count
 summary: Basic SAMtools count implementation
 title: SAMtools count

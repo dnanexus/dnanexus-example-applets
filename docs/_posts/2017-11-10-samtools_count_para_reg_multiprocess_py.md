@@ -2,10 +2,10 @@
 categories:
 - python
 - parallel
-date: '2017-11-08'
+date: '2017-11-10'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/python/samtools_count_para_reg_multiprocess_py
-summary: Count number of reads in SAM or BAM format file in parallel, by region on
-  multiple cores
+summary: Count number of reads in SAM format file for all contigs in parallel, by
+  region on multiple cores
 title: Parallel by Region (py)
 type: Document
 ---

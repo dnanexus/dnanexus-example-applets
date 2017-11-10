@@ -1,9 +1,9 @@
 ---
 categories:
 - bash
-date: '2017-11-08'
+date: '2017-11-10'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count_git_sh
-summary: Fetches and makes samtools via the git repo
+summary: Fetches and makes samtools via the GitHub repo
 title: Git Dependency
 type: Document
 ---

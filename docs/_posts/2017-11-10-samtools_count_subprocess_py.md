@@ -1,7 +1,7 @@
 ---
 categories:
 - python
-date: '2017-11-08'
+date: '2017-11-10'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/python/samtools_count_subprocess_py
 summary: SAMtools count with subprocess
 title: Subprocess module

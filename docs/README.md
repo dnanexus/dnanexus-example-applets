@@ -66,7 +66,7 @@ You'll rarely (read never) have to touch the `{Repository root}/docs` folder or 
 
 On `master` once documentation and other site changes are made in `{Repository root}/Example` and `{Repository root}/Tutorials`, you must execute the `site_rehydrate.py` script which updates the `{Repository root}/docs/_post` with changed content.
 
-The `site_rehydrate.py` script found in `{Repository root}/docs/scripts` takes care of parsing through all the applet `dxapp.json`, `Readme.md`, `src/code.*` files in `Tutorials` and `Examples`. The simplest command to auto-generate and overwrite old pages is:
+The `site_rehydrate.py` script found in `{Repository root}/docs/scripts` takes care of parsing through all the applet `dxapp.json`, `Readme.md`, `src/code.*` files in `Tutorials` and `Examples`. PyYaml must be installed (it's used to generate frontmatter for Jekyll). The simplest command to auto-generate and overwrite old pages is:
 ```bash
 python scripts/site_rehydrate.py --overwrite
 # For help use the -h argument

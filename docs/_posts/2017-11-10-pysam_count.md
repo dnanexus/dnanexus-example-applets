@@ -1,7 +1,7 @@
 ---
 categories:
 - python
-date: '2017-11-08'
+date: '2017-11-10'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/python/pysam_count
 summary: Counts the number of reads in a BAM file.
 title: Pysam

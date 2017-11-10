@@ -2,9 +2,9 @@
 categories:
 - distributed
 - bash
-date: '2017-11-08'
+date: '2017-11-10'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count_distr_chr_slice_sh
-summary: This applet performs a distributed SAMtools count for each canonical chromosome
+summary: Distributed SAMtools count for each canonical chromosome
 title: Distributed by Chr (sh)
 type: Document
 ---

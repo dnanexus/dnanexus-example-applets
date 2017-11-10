@@ -1,7 +1,7 @@
 ---
 categories:
 - bash
-date: '2017-11-08'
+date: '2017-11-10'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count_catmkfifo_sh
 summary: SAMtools count using mkfifo files and dx cat download stream (bash)
 title: Mkfifo and dx cat
