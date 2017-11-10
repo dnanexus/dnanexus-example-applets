@@ -6,6 +6,6 @@ Developers new to the [DNAnexus platform](https://platform.dnanexus.com/login) m
 - **Use the scale of the cloud**: take advantage of the DNAnexus platform's flexibility
 - **Are easy to use**: reduce support and enable collaboration.
 
-If it's your first time developing an app(let) be sure to read through the ["Getting started"]({{ site.url }}{{ site.baseurl }}{% link _posts/2017-02-08-overview.md %}) series. This series will introduce terms and concepts that tutorials and examples will build upon.
+If it's your first time developing an app(let) be sure to read through the [Getting started]({{ site.url }}{{ site.baseurl }}{% link _posts/2017-02-08-overview.md %}) series. This series will introduce terms and concepts that tutorials and examples will build upon.
 
 The [Tutorials]({{ site.url }}{{ site.baseurl }}{% link tutorials.html %}) page is not meant to show realistic everyday examples, but rather provide a strong starting point for app(let) developers. Tutorials will showcase simple and varied implementations of the SAMtools view command on the DNAnexus platform.
