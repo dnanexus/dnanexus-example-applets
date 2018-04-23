@@ -1,0 +1,43 @@
+{
+  "name": "samtools_count_binary_sh",
+  "title": "Precompiled Binary",
+  "summary": "SAMtools count implementation using a precompiled binary",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "mappings_bam",
+      "label": "Mapping",
+      "class": "file",
+      "patterns": ["*.bam"],
+      "help": "BAM format file."
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "counts_txt",
+      "class": "file",
+      "label": "Read count file",
+      "patterns": [
+        "*.txt"
+      ],
+      "help": "Output file with total counts as the first line."
+    }
+  ],
+  "runSpec": {
+    "interpreter": "bash",
+    "file": "src/samtools_count_binary_sh.sh",
+    "timeoutPolicy": {
+      "*": {
+        "hours": 3
+      }
+    },
+    "systemRequirements": {
+      "*": {
+        "instanceType": "mem1_ssd1_x4"
+      }
+    },
+    "distribution": "Ubuntu",
+    "release": "14.04"
+  }
+}

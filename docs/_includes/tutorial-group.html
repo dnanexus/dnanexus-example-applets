@@ -1,0 +1,60 @@
+{% assign name = include.cat[0] %}
+{% assign posts = include.cat[1] %}
+{% assign size = posts | size %}
+{% assign tutorials = posts | sort: "title" %}
+
+{% comment %}
+Inspiration: https://stackoverflow.com/questions/43529963/jekyll-split-an-array-into-subarrays-given-n-items 
+{% endcomment %}
+
+{% comment %}
+Strategy: Break array into subarrays.
+Decide whether size of collection is even or odd.
+For even we'll have 2 columns, for odd just 3 columns.
+
+Special case if array size is less than 4, set subarray size to 1
+{% endcomment %}
+
+{% assign arrSize = tutorials | size %}
+{% assign arrMod = arrSize | modulo: 2 %}
+
+{% if arrMod == 0 %}
+	{% assign subArraySize = 2 %}
+{% else %}
+	{% assign subArraySize = 3 %}
+{% endif %}
+
+{% assign multiArray = "" | split: "/" %}
+{% for element in tutorials %}
+
+  {% assign remainder = forloop.index | modulo: subArraySize %}
+
+  {% if remainder == 1 %}
+	{% assign subArray = "" | split: "/" %}
+  {% endif %}
+
+  {% assign subArray = subArray | push: element %}
+  {% if remainder == 0 or forloop.last %}
+    {% assign multiArray = multiArray | push: subArray %}
+  {% endif %}
+
+{% endfor %}
+
+<h4>
+	<a href="{{ site.url }}{{ site.baseurl }}/category/{{ name | slugify }}/">{{ name | replace: "-", " " | capitalize }}</a>
+</h4>
+<section class="categories">
+{% for Arr in multiArray %}
+	<section class="category">
+		<ul>
+		{% for tutorial in Arr %}
+			<li id="has-hidden-text">
+				<a href="{{ site.url }}{{ site.baseurl }}{{ tutorial.url }}">{% include document-icon.html icon=tutorial.type %}{{ tutorial.title }}
+				</a>
+				<div class="subtext">{{ tutorial.summary }}</div>
+			</li>
+		{% endfor %}
+		</ul>
+	</section>
+{% endfor %}
+</section>

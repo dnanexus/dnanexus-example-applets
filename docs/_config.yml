@@ -1,0 +1,119 @@
+# ----
+# Site
+
+title: DNAnexus Example Applets
+url: "https://damien-black.github.io/dnanexus-example-applets"
+baseurl: "/dnanexus-example-applets" # The location of those forward slashes is extremely important
+google_analytics_key:
+disqus_shortname:
+newsletter_action:
+
+# Values for the jekyll-seo-tag gem (https://github.com/jekyll/jekyll-seo-tag)
+logo: /siteicon.png
+description: "dnanexus-example-applets github page."
+author: DNAnexus
+twitter:
+  username: dnanexus
+social:
+  name: DNAnexus
+  links:
+    - https://platform.dnanexus.com
+    - https://twitter.com/dnanexus
+    - https://www.linkedin.com/company-beta/912957/
+    - https://github.com/DNAnexus
+
+# -----
+# Build
+# TODO by 09/15/17: Set a version of these gems, we no longer keep pace with github Jekyll
+
+permalink: /:categories/:title/
+
+gems:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-feed
+  - jekyll-archives
+  - jekyll-extract-element
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - LICENCE
+  - .gitignore
+  - scripts/
+  - log_temp_dir/
+
+collections:
+  sets:
+
+
+jekyll-archives:
+  enabled: ['categories']
+
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: "default"
+  -
+    scope:
+      type: "posts"
+    values:
+      layout: "post"
+      comments: true
+  -
+    scope:
+      type: "sets"
+    values:
+      _hide_content: true
+  -
+    scope:
+      path: "index.md"
+    values:
+      body_class: "show_hero_search"
+      header: "DNAnexus Tutorials"
+      header_blurb: "Developer walkthroughs and resources."
+  -
+    scope:
+      path: "tutorials.html"
+    values:
+      body_class: "show_hero_search"
+      header: "Tutorials"
+      header_blurb: "App(let) development guides and walkthroughs."
+  -
+    scope:
+      path: "example-applets.html"
+    values:
+      body_class: "show_hero_search"
+      header: "Examples"
+      header_blurb: "App(let) source code examples."
+# -----------------------
+# TODO: Video support is pretty neat, would like to add.
+#   Kept some of the code, but it needs to be worked in correctly (css).
+
+social_icons:
+  - Facebook
+  - Google Plus
+  - Instagram
+  - LinkedIn
+  - Pinterest
+  - Tumblr
+  - Twitter
+  - YouTube
+  - Email
+  - RSS
+  - DNAnexus
+
+types:
+  - Document
+  - Video
+
+_comments:
+
+# ----------
+# DNAnexus code syntax specifics
+# Rouge is the default (GitHub pages), but I like being explicit
+#   Adds a tiny bit to site build time, which shouldn't be an issue
+#   If it is delete this section.
