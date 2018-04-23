@@ -94,6 +94,7 @@ Copy and paste the `Server address` into a browser. Now you see your dev version
 
 We use a Rakefile, ruby version of a Makefile, found in `docs/RakeFile` to publish to `gh-pages` branch:
 ```bash
+# Make sure rvm is sourced
 cd {Repository root}/docs/
 rake site:publish
 ``` 
