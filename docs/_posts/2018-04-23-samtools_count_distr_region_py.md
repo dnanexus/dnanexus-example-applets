@@ -2,7 +2,7 @@
 categories:
 - python
 - distributed
-date: '2017-11-10'
+date: '2018-04-23'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/python/samtools_count_distr_region_py
 summary: Count number of reads in SAM or BAM format file using a distributed scatter
   gather approach.  Subjobs perform count in parallel based on contigs

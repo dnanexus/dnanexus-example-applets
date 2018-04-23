@@ -1,7 +1,7 @@
 ---
 categories:
 - bash
-date: '2017-11-10'
+date: '2018-04-23'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count
 summary: Basic SAMtools count implementation
 title: SAMtools count
@@ -13,13 +13,15 @@ This applet performs a basic `samtools view -c {bam}` command, referred to as "S
 For bash scripts, inputs to a job execution become environment variables. The inputs from our `dxapp.json` file are formatted as shown below:
 ```json
 {
-  "inputSpec": [{
-    "name": "mappings_bam",
-    "label": "Mapping",
-    "class": "file",
-    "patterns": ["*.bam"],
-    "help": "BAM format file."
-  }],
+  "inputSpec": [
+    {
+      "name": "mappings_bam",
+      "label": "Mapping",
+      "class": "file",
+      "patterns": ["*.bam"],
+      "help": "BAM format file."
+    }
+  ]
 }
 ```
 The object `mappings_bam`, a [DNAnexus link](https://wiki.dnanexus.com/FAQ#What-are-DNAnexus-links,-and-how-are-they-different-from-using-the-data-object-IDs%3F)
@@ -50,7 +52,7 @@ file ID.
 counts_txt_id=$(dx upload "${mappings_bam_prefix}.txt" --brief)
 ```
 
-{% include note.html content="While job containers are an integral part of the execution process a deeper discussion goes out of scope of a basic tutorial. Review the [Containers for Execution](https://wiki.dnanexus.com/API-Specification-v1.0.0/Containers-for-Execution) wiki page for more information." %}
+{% include note.html content="While job containers are an integral part of the execution process, a deeper discussion goes out of scope of a basic tutorial. Review the [Containers for Execution](https://wiki.dnanexus.com/API-Specification-v1.0.0/Containers-for-Execution) wiki page for more information." %}
 
 ## Associate With Output
 The output of an applet must be declared before the applet is even built. Looking back to the `dxapp.json` file, we see the following:

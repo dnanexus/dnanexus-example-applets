@@ -2,7 +2,7 @@
 categories:
 - parallel
 - bash
-date: '2017-11-10'
+date: '2018-04-23'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count_para_chr_busyproc_sh
 summary: Parallel SAMtools count based on regions
 title: Parallel by Region (sh)

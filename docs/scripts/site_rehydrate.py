@@ -29,7 +29,7 @@ def _get_section_parser(page_dict, logger):
     if SUPPORTED_INTERPRETERS.get(page_dict["interpreter"]):
         tutorial_parser = SectionParser(
             code_file_path=page_dict["src_code"],
-            ignore_comments=page_dict["ignore_comments"],
+            keep_comments=page_dict["keep_comments"],
             interpreter=page_dict["interpreter"], logger=logger)
     return tutorial_parser
 
@@ -41,7 +41,7 @@ def _rehydrate_site(user_args):
 
     user_input_dict = {
         "overwrite": user_args.overwrite,
-        "ignore_comments": user_args.skip_comments,
+        "keep_comments": user_args.keep_comments,
         "site_pages_dir": user_args.site_pages_dir
     }
     dxapp_files = find_all_matches(user_args.tutorials_dir, "dxapp.json")
@@ -156,7 +156,7 @@ def get_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--tutorials", help="Directory where tutorials are located", default=None, metavar="Tutorials directory", dest="tutorials_dir")
     parser.add_argument("--site-pages", help="Directory where site pages are located", default=None, metavar="Site Pages directory", dest="site_pages_dir")
-    parser.add_argument("--keep-comments", help="Ignore other comments in code when parsing sections.", action="store_false", dest="skip_comments")
+    parser.add_argument("--keep-comments", help="Keep comments in code when parsing sections.", action="store_false", dest="keep_comments")
     parser.add_argument("--overwrite-files", help="Overwrites old files with generated files", action="store_true", dest="overwrite")
 
     return parser
@@ -179,7 +179,7 @@ def create_jekyll_markdown_tutorial(page_dict):
                 summary: string summary in dxapp.json
                 interpreter: string Applet interpreter language
                 overwrite: bool is okay to overwrite dest file if it exist?
-                ignore_comments: bool is okay to ignore comments in files
+                keep_comments: bool to keep comments in files
                 site_pages_dir: destination site page
             }
 

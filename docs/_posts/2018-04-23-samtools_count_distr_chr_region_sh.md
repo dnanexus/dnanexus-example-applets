@@ -2,7 +2,7 @@
 categories:
 - distributed
 - bash
-date: '2017-11-10'
+date: '2018-04-23'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count_distr_chr_region_sh
 summary: Distributed SAMtools count for all contigs
 title: Distributed by Region (sh)

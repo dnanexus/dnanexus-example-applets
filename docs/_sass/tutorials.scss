@@ -56,14 +56,13 @@
 				height: 50px;
 				-webkit-transition: all .2s ease;
 			}
+		}
 
-			&:hover {
-				text-decoration: none;
-				svg {
-					fill: $link-hover-color;
-					width: 75px;
-					height: 75px;
-				}
+		&:hover {
+			svg {
+				fill: $link-hover-color;
+				width: 75px;
+				height: 75px;
 			}
 		}
 

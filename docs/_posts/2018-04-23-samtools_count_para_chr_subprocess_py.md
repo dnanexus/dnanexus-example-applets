@@ -2,7 +2,7 @@
 categories:
 - python
 - parallel
-date: '2017-11-10'
+date: '2018-04-23'
 github_link: https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials/python/samtools_count_para_chr_subprocess_py
 summary: Count number of reads from canonical chromosomes in SAM format file parallel,
   on multiple threads with subprocess

@@ -97,7 +97,7 @@ tutorial_page: True
 	</div>
 </div>
 
-<script src="{{ site.baseurl }}/js/main.js"></script>
+<script src="{{ site.url }}{{ site.baseurl }}/js/main.js"></script>
 
 <script>
 	var headings = document.querySelectorAll("h2[id]");
@@ -105,9 +105,12 @@ tutorial_page: True
 	console.log(headings);
 	for (var i = 0; i < headings.length; i++) {
 		var anchorLink = document.createElement("a");
-		anchorLink.innerText = "#";
 		anchorLink.href = "#" + headings[i].id;
 		anchorLink.classList.add("header-link");
+
+		var pinImage = document.createElement("img");
+		pinImage.setAttribute("src", "{{ site.url }}{{ site.baseurl }}/images/pin-20.png");
+		anchorLink.appendChild(pinImage);
 
 		headings[i].appendChild(anchorLink);
 	}

@@ -12,7 +12,7 @@ class SectionParser(object):
         'bash': get_bash_function_by_path,
         'python': get_python_function_by_path}
 
-    def __init__(self, code_file_path, logger, ignore_comments=True, interpreter=""):
+    def __init__(self, code_file_path, logger, keep_comments=True, interpreter=""):
         self.code = code_file_path
         self._active_section = None
         self._section_mapping = {}
@@ -22,7 +22,7 @@ class SectionParser(object):
         self.section_start, self.section_end = CODE_SECTION_SEARCH[interpreter]
         self.language = SUPPORTED_INTERPRETERS.get(interpreter, "")
         self.comment_chars = LANG_COMMENT.get(interpreter, [])
-        self.ignore_comments = ignore_comments
+        self.keep_comments = keep_comments
         self._tempsection = []
 
     @classmethod
@@ -113,7 +113,7 @@ class SectionParser(object):
             if any(pref_match):
                 return prefixes[pref_match.index(True)]
             return False
-        if not self.ignore_comments:
+        if not self.keep_comments:
             return False
 
         line = line.strip()
