@@ -1,7 +1,8 @@
 # Site generator script
 **/log_temp_dir/*
-**/_site/*
-**/.sass-cache/*
+/docs/_site/*
+/docs/.sass-cache/*
+/docs/_posts/*
 
 # General
 *~
