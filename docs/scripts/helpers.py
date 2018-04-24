@@ -82,7 +82,7 @@ def resolve_module(module_name, depth=0):
         depth += 1
         return resolve_module(module_name, depth=depth)
     else:
-        print('Import Depth {} reached before full {} module resolution'.format(depth, module_name))
+        print('Import Depth {} reached before full module resolution: {}'.format(depth, module_name))
         return module_import
 
 

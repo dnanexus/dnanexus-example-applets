@@ -6,7 +6,7 @@ require "jekyll"
 
 
 # Change this as needed
-GITHUB_REPONAME = "Damien-Black/dnanexus-example-applets"
+GITHUB_REPONAME = "dnanexus/dnanexus-example-applets"
 
 
 namespace :site do
