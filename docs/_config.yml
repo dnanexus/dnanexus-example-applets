@@ -2,7 +2,7 @@
 # Site
 
 title: DNAnexus Example Applets
-url: "https://http://dnanexus.github.io/dnanexus-example-applets"
+url: "https://dnanexus.github.io/dnanexus-example-applets"
 baseurl: "/dnanexus-example-applets" # The location of those forward slashes is extremely important
 google_analytics_key:
 disqus_shortname:
