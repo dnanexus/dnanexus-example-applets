@@ -43,6 +43,7 @@ exclude:
   - .gitignore
   - scripts/
   - log_temp_dir/
+  - manual_posts/
 
 collections:
   sets:

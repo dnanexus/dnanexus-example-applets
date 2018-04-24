@@ -10,8 +10,9 @@ import json
 import re
 import logging
 import fnmatch
+import shutil
 from os import walk, mkdir, listdir, remove
-from os.path import isdir, isfile, join, dirname, realpath, normpath
+from os.path import isdir, isfile, join, dirname, realpath, normpath, abspath
 from multiprocessing import Pool
 from itertools import izip
 from datetime import date
@@ -20,7 +21,8 @@ from SectionParserClass import SectionParser
 from global_helper_vars import TUTORIAL_TYPES_SEARCH, SUPPORTED_INTERPRETERS, NUM_CORES, AppObj
 
 
-BASE_URL = "https://github.com/Damien-Black/dnanexus-example-applets/tree/master/Tutorials"  # TODO: remove this, was for testing
+BASE_URL = "https://github.com/dnanexus/dnanexus-example-applets/tree/master/Tutorials"  # TODO: remove this, was for testing
+SCRIPT_DIR = dirname(realpath(__file__))
 # Add path to named AppObj tuple definition
 
 
@@ -162,6 +164,23 @@ def get_parser():
     return parser
 
 
+def _copy_manual_post(dest_dir=None, src_dir=None, overwrite=False):
+    """Copy over manually created posts to preexisting directory. src_dir defaults to script_dir/../manual_posts"""
+    src_dir = src_dir if src_dir else abspath(join(SCRIPT_DIR, "..", "manual_posts"))
+    dest_dir = dest_dir if dest_dir else abspath(join(SCRIPT_DIR, "..", "_posts"))
+    post_re = re.compile(r'\d\d\d\d\-\d\d\-\d\d\-(.+)\.md')
+    dest_dir_files = listdir(dest_dir)
+    for f in listdir(src_dir):
+        match = post_re.match(f)
+        if match is None:
+            continue
+        if any(match.group(1) in f_d for f_d in dest_dir_files) and not overwrite:
+            print("File preexist: {}".format(f))
+            continue
+        src_file = join(src_dir, f)
+        shutil.copy(src_file, dest_dir)
+
+
 def create_jekyll_markdown_tutorial(page_dict):
     """Creates a Jekyll site page
 
@@ -188,6 +207,10 @@ def create_jekyll_markdown_tutorial(page_dict):
     TODO Certain values in page_dict don't need to repeated in all dicts: site_pages_dir
             listdir(page_dict["site_pages_dir"]) can be called only once.
             If script runtime becomes an issue remove repeated calls.
+
+    Returns:
+        bool: True for successful markdown creation. False otherwise
+        str: Any errors/logs encountered
     """
     page_basename = page_dict["name"].strip()
     proc_logger = setup_logger(
@@ -296,16 +319,15 @@ def main():
     args = parser.parse_args()
 
     if args.tutorials_dir is None:
-        script_dir = dirname(realpath(__file__))
-        assumed_tutorial_path = join(script_dir, "..", "..", "Tutorials")
+        assumed_tutorial_path = join(SCRIPT_DIR, "..", "..", "Tutorials")
         args.tutorials_dir = normpath(assumed_tutorial_path)
     if args.site_pages_dir is None:
-        script_dir = dirname(realpath(__file__))
-        assumed_site_page_path = join(script_dir, "..", "_posts")
+        assumed_site_page_path = join(SCRIPT_DIR, "..", "_posts")
         args.site_pages_dir = normpath(assumed_site_page_path)
 
     assert validate_input_directories(args.tutorials_dir, args.site_pages_dir)
 
+    _copy_manual_post()
     _rehydrate_site(args)
 
 
