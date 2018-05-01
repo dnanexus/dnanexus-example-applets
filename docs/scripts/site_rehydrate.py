@@ -11,6 +11,7 @@ import re
 import logging
 import fnmatch
 import shutil
+import traceback
 from os import walk, mkdir, listdir, remove
 from os.path import isdir, isfile, join, dirname, realpath, normpath, abspath
 from multiprocessing import Pool
@@ -243,7 +244,7 @@ def create_jekyll_markdown_tutorial(page_dict):
                 section_parser=_get_section_parser(page_dict, logger=proc_logger),
                 logger=proc_logger)
     except Exception as e:
-        proc_logger.info("Exception: {msg}".format(msg=e))
+        proc_logger.info("Exception:\n{trace}".format(trace=traceback.format_exc()))
         return False, "Failed with Error:\n{err}\n Review logs in log_temp_dir directory: {logname}.".format(
             err=e.message, logname=page_basename)
 

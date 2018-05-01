@@ -1,15 +1,15 @@
 ---
 pipeline:
 
-    geenrate-post:
+    generate-post:
         image: 782066560884.dkr.ecr.us-east-2.amazonaws.com/example-applets-ghpage-builder:latest
         commands:
-            - python docs/scripts/site_rehydrate.py --overwrite-files
+            - bash -c "sudo ln -sf bash /bin/sh && python docs/scripts/site_rehydrate.py --overwrite-files"
 
     publish:
         image: 782066560884.dkr.ecr.us-east-2.amazonaws.com/example-applets-ghpage-builder:latest
         commands:
-            - bash -c "source /usr/local/rvm/scripts/rvm && rake site:publish"
+            - bash -c "source /usr/local/rvm/scripts/rvm && cd docs && rake site:publish"
 
 #        when:
 #          event: [local]

@@ -5,7 +5,9 @@ SectionParser:src/code parser class
 """
 from __future__ import print_function
 import os
+import imp
 import sys
+from uuid import uuid4
 from shutil import move
 import re
 from subprocess import check_output, CalledProcessError
@@ -59,11 +61,10 @@ def _temp_applet_src_alter(dirpath, module_path):
     yield
     file_comment_lines(
         re_searches=[DXPY_RUN_SEARCH, DXPY_DECORATOR], source_path=module_path, comment=False)
-    print("Removing temp PATH")  # How does this work with multiple processes?
     sys.path.remove(dirpath)
 
 
-def resolve_module(module_name, depth=0):
+def resolve_module(module_name, module_path, depth=0):
     """Attempt to import a module, mock failed imports as they occur.
 
     FIXME: del imports once module resolved
@@ -71,19 +72,23 @@ def resolve_module(module_name, depth=0):
     FIXME: Add proper Mock module and use that instead
     FIXME: After a duh moment, I realize I could just temporarily comment out r'^import.*' lines... duh
     Module mocking inspiration: https://stackoverflow.com/questions/8658043/how-to-mock-an-import
+    Also: https://stackoverflow.com/questions/6031584/importing-from-builtin-library-when-module-with-same-name-exists
     """
     try:
-        module_import = import_module(name=module_name)
+        custom_name = str(uuid4())
+        module = imp.load_source(custom_name, module_path)
+        return module
     except ImportError as ie:
         module_to_mock = IMPORT_ERROR_MATCHER.match(ie.message).group(1)
+        if depth >= 6:
+            raise ImportError(ie.message + "\nCould not resolve in {} tries".format(depth))
         if module_to_mock == module_name:
             raise ImportError('Circular dependency.')
+        if module_to_mock is None:
+            raise
         sys.modules[module_to_mock] = import_module('string')  # placeholder module for now, issues?
         depth += 1
-        return resolve_module(module_name, depth=depth)
-    else:
-        print('Import Depth {} reached before full module resolution: {}'.format(depth, module_name))
-        return module_import
+        return resolve_module(module_name, module_path, depth=depth)
 
 
 def get_python_function_by_path(path_to_src, func_name):
@@ -97,8 +102,12 @@ def get_python_function_by_path(path_to_src, func_name):
     module_name = module_py.rstrip('.py')
     with _temp_applet_src_alter(dirpath=py_path, module_path=path_to_src):
         with pushd_popd(py_path):
-            module_import = resolve_module(module_name=module_name)
-            func_obj = getattr(module_import, func_name)
+            module_import = resolve_module(module_name=module_name, module_path=path_to_src)
+            try:
+                func_obj = getattr(module_import, func_name)
+            except Exception:
+                print("MODULE obj: {}\nInput file path:{}\nAttr to import:{}".format(module_import, path_to_src, func_name))
+                raise
             return getsource(func_obj)
 
 
