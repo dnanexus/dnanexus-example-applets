@@ -9,7 +9,7 @@ pipeline:
     publish:
         image: 782066560884.dkr.ecr.us-east-2.amazonaws.com/example-applets-ghpage-builder:latest
         commands:
-            - bash -c "source /usr/local/rvm/scripts/rvm && cd docs && rake site:publish"
+            - bash -c "source /usr/local/rvm/scripts/rvm && cd docs && bundle install --deployment && rake site:publish"
 
 #        when:
 #          event: [local]
