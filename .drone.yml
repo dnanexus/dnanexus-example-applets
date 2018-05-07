@@ -9,8 +9,7 @@ pipeline:
     publish:
         image: 782066560884.dkr.ecr.us-east-2.amazonaws.com/example-applets-ghpage-builder:latest
         commands:
-            - bash -c "source /usr/local/rvm/scripts/rvm && cd docs && bundle install && git config --global user.name "drone-steve" && git config --global user.name "sosazuwa@dnanexus.com" && rake site:publish"
+            - git config --global user.name "drone-steve" && git config --global user.name "sosazuwa@dnanexus.com"
+            - bash -c "source /usr/local/rvm/scripts/rvm && cd docs && bundle install && rake site:publish"
 
-#        when:
-#          event: [local]
-#          status:  [ failure, success ]
+branches: master
