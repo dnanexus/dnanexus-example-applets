@@ -12,4 +12,4 @@ pipeline:
             - git config --global user.name "drone-steve" && git config --global user.name "sosazuwa@dnanexus.com"
             - bash -c "source /usr/local/rvm/scripts/rvm && cd docs && bundle install && rake site:publish"
 
-branches: master
+branches: [master, SCI-436-builds]
