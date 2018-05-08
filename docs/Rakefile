@@ -29,6 +29,7 @@ namespace :site do
       Dir.chdir tmp
 
       system "touch .nojekyll"  # Prevent Github from trying to render based on _folders
+      system "git config --global user.email 'sosazuwa@dnanexus.com' && git config --global user.name 'Drone test'"
       system "git init"
       system "git add -A"  # note -A used, untracked files are added
       message = "Site updated at #{Time.now.utc}"
