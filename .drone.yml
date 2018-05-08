@@ -10,6 +10,8 @@ pipeline:
         image: damienblack/example-applets-ghpage-builder:latest
         commands:
             - bash -c "source /usr/local/rvm/scripts/rvm && cd docs && bundle install && rake site:generate"
+            - echo $GITHUB_USERNAME
+        secrets: [ github_username, github_password ]
 
     publish:
         image: plugins/gh-pages
