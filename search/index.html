@@ -287,21 +287,6 @@
 				
 					,
 					
-					"bash-samtools-count-bashhelper-sh": {
-						"id": "bash-samtools-count-bashhelper-sh",
-						"title": "Bash Helpers",
-						"categories": "bash",
-						"url": " /bash/samtools_count_bashhelper_sh/",
-						"content": "This applet performs a basic SAMtools count with the aid of bash helper variables.\n\nDownload BAM Files\nInput files are downloaded using the dx-download-all-inputs command. The dx-download-all-inputs command will go through all inputs and download into folders with the pattern\n/home/dnanexus/in/[VARIABLE]/[file or subfolder with files].\ndx-download-all-inputs\n\n\n\nCreate Output Directory\n\nWe create an output directory in preparation for dx-upload-all-outputs DNAnexus command in the (Upload Results)[#Upload Result] section.\nmkdir -p out/counts_txt\n\n\n\nRun SAMtools View\n\nAfter executing the dx-download-all-inputs command, there are three helper variables created to aid in scripting. For this applet, the input variable name mappings_bam with platform filename my_mappings.bam will have a helper variables:\n# [VARIABLE]_path the absolute string path to the file.\n$ echo $mappings_bam_path\n/home/dnanexus/in/mappings_bam/my_mappings.bam\n# [VARIABLE]_prefix the file name minus the longest matching pattern in the dxapp.json file\n$ echo $mappings_bam_prefix\nmy_mappings\n# [VARIABLE]_name the file name from the platform\n$ echo $mappings_bam_name\nmy_mappings.bam\n\n\nWe use the bash helper variable mappings_bam_path to reference the location of a file after it has been downloaded using dx-download-all-inputs.\nsamtools view -c \"${mappings_bam_path}\" &gt; out/counts_txt/\"${mappings_bam_prefix}.txt\"\n\n\n\nUpload Result\n\nWe use the dx-upload-all-outputs command to upload data to the platform and specify\nit as the job’s output. The dx-upload-all-outputs command expects to find file paths matching the pattern\n/home/dnanexus/out/[VARIABLE]/*. It will upload matching files and then associate them as the output corresponding to [VARIABLE]. In this case,\nthe output is called counts_txt. Above we created the folders, and we can now place the outputs there.  \ndx-upload-all-outputs"
-					}
-					
-				
-			
-		
-			
-				
-					,
-					
 					"bash-samtools-count": {
 						"id": "bash-samtools-count",
 						"title": "SAMtools count",
