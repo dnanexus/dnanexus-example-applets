@@ -14,5 +14,6 @@ pipeline:
     publish:
         image: plugins/gh-pages
         pages_directory: docs/_site
+        secrets: [ github_username, github_password ]
 
 branches: [master, SCI-436-builds]
