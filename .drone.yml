@@ -6,9 +6,13 @@ pipeline:
         commands:
             - bash -c "sudo ln -sf bash /bin/sh && python docs/scripts/site_rehydrate.py --overwrite-files"
 
-    publish:
+    generate-static-site:
         image: damienblack/example-applets-ghpage-builder:latest
         commands:
-            - bash -c "source /usr/local/rvm/scripts/rvm && cd docs && bundle install && rake site:publish"
+            - bash -c "source /usr/local/rvm/scripts/rvm && cd docs && bundle install && rake site:generate"
+
+    publish:
+        image: plugins/gh-pages
+        pages_directory: docs/_site
 
 branches: [master, SCI-436-builds]
