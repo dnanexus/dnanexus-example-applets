@@ -41,6 +41,8 @@ To insert test in the Readme.md include markdown comments with the following com
 
 This inserts the text directly into the Markdown in the `${repo_root}/docs/_posts/` directory right before rendering the static site. This means you can insert any special formatting, HTML, or Jekyll [includes](https://jekyllrb.com/docs/includes/) you want. Look to the [mkfifo tutorial Readme.md](bash/samtools_count_catmkfifo_sh/Readme.md) for examples.
 
+Check out the [SAMtools distribution by region tutorial Readme.md](python/samtools_count_distr_region_py/Readme.md) for examples
+
 ### Inserting functions
 
 Functions declared in python, with `def func_name:`, or in bash, with `func_name() {...}` or `function func_name {...}` syntax, you can reference the function in the Readme.md.
