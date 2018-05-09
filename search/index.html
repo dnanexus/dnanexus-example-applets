@@ -152,21 +152,6 @@
 				
 					,
 					
-					"parallel-bash-samtools-count-para-chr-xargs-sh": {
-						"id": "parallel-bash-samtools-count-para-chr-xargs-sh",
-						"title": "Parallel xargs by Chr",
-						"categories": "parallel, bash",
-						"url": " /parallel/bash/samtools_count_para_chr_xargs_sh/",
-						"content": "This applet slices a BAM file by canonical chromosome then performs a parallelized samtools view -c using xargs. Type man xargs for general usage information.\n\nHow is the SAMtools dependency provided?\nThe SAMtools compiled binary is placed directory in the &lt;applet dir&gt;/resources directory. Any files found in the resources/ directory will be uploaded so that they will be present in the root directory of the worker. In our case:\n├── Applet dir\n│   ├── src\n│   ├── dxapp.json\n│   ├── resources\n│       ├── usr\n│           ├── bin\n│               ├── &lt; samtools binary &gt;\n\n\nWhen this applet is run on a worker, the resources/ folder will be placed in the worker’s root directory /:\n/\n├── usr\n│   ├── bin\n│       ├── &lt; samtools binary &gt;\n├── home\n│   ├── dnanexus\n\n\n/usr/bin is part of the $PATH variable, so in our script, we can reference the samtools command directly, as in samtools view -c ...\n\nParallel Run\nSplice BAM\nFirst, we download our BAM file and slice it by canonical chromosome, writing the *bam file names to another file.\n\nIn order to split a BAM by regions, we need to have a *.bai index. You can either create an app(let) which takes the *.bai as an input or generate a *.bai in the applet. In this tutorial, we generate the *.bai in the applet, sorting the BAM if necessary.\n\n  dx download \"${mappings_bam}\"\n\n  indexsuccess=true\n  bam_filename=\"${mappings_bam_name}\"\n  samtools index \"${mappings_bam_name}\" || indexsuccess=false\n  if [[ $indexsuccess == false ]]; then\n    samtools sort -o \"${mappings_bam_name}\" \"${mappings_bam_name}\"\n    samtools index \"${mappings_bam_name}\"\n    bam_filename=\"${mappings_bam_name}\"\n  fi\n\n\n  chromosomes=$(samtools view -H \"${bam_filename}\" | grep \"\\@SQ\" | awk -F '\\t' '{print $2}' | awk -F ':' '{if ($2 ~ /^chr[0-9XYM]+$|^[0-9XYM]/) {print $2}}')\n\n  for chr in $chromosomes; do\n    samtools view -b \"${bam_filename}\" \"${chr}\" -o \"bam_${chr}.\"bam\n    echo \"bam_${chr}.bam\"\n  done &gt; bamfiles.txt\n\n\n\nXargs SAMtools view\nIn the previous section, we recorded the name of each sliced BAM file into a record file. Now we will perform a samtools view -c on each slice using the record file as input.\n  counts_txt_name=\"${mappings_bam_prefix}_count.txt\"\n\n  sum_reads=$(&lt;bamfiles.txt xargs -I {} samtools view -c $view_options '{}' | awk '{s+=$1} END {print s}')\n  echo \"Total Count: ${sum_reads}\" &gt; \"${counts_txt_name}\"\n\n\n\nUpload results\nThe results file is uploaded using the standard bash process:\n\n  Upload a file to the job execution’s container.\n  Provide the DNAnexus link as a job’s output using the script dx-jobutil-add-output &lt;output name&gt;\n      counts_txt_id=$(dx upload \"${counts_txt_name}\" --brief)\n  dx-jobutil-add-output counts_txt \"${counts_txt_id}\" --class=file"
-					}
-					
-				
-			
-		
-			
-				
-					,
-					
 					"python-parallel-samtools-count-para-chr-subprocess-py": {
 						"id": "python-parallel-samtools-count-para-chr-subprocess-py",
 						"title": "Parallel by Chr (py)",
@@ -278,6 +263,21 @@
 						"categories": "bash",
 						"url": " /bash/samtools_count_binary_sh/",
 						"content": "This tutorial showcases packaging a precompiled binary in the resources/ directory of an app(let).\n\nPrecompiling a Binary\nIn this applet, the SAMtools binary was precompiled on an Ubuntu 14.04 machine. A user can do this compilation on an Ubuntu 14.04 machine of their own, or they can utilize the Cloud Workstation app to build and compile a binary. On the Cloud Workstation, the user can download the SAMtools source code and compile it in the worker environment, ensuring that the binary will run on future workers.\n\nSee Cloud Workstation in the App library for more information.\n\nResources Directory\nThe SAMtools precompiled binary is placed in the &lt;applet dir&gt;/resources/ directory. Any files found in the resources/ directory will be packaged, uploaded to the platform, and then unpackaged in the root directory \\ of the worker. In our case, the resources/ dir is structured as follows:\n├── Applet dir\n│   ├── src\n│   ├── dxapp.json\n│   ├── resources\n│       ├── usr\n│           ├── bin\n│               ├── &lt; samtools binary &gt;\n\n\nWhen this applet is run on a worker, the resources/ directory will be placed in the worker’s root directory /:\n/\n├── usr\n│   ├── bin\n│       ├── &lt; samtools binary &gt;\n├── home\n│   ├── dnanexus\n│   \t├── applet script\n\n\nWe are able to access the SAMtools command because the respective binary is visible from the default $PATH variable. The directory /usr/bin/ is part of the $PATH variable, so in our script we can reference the samtools command directly:\nsamtools view -c \"${mappings_bam_name}\" &gt; \"${mappings_bam_prefix}.txt\"\n\n\n\nSee the resources/ directory wiki page for more information."
+					}
+					
+				
+			
+		
+			
+				
+					,
+					
+					"bash-samtools-count-bashhelper-sh": {
+						"id": "bash-samtools-count-bashhelper-sh",
+						"title": "Bash Helpers",
+						"categories": "bash",
+						"url": " /bash/samtools_count_bashhelper_sh/",
+						"content": "This applet performs a basic SAMtools count with the aid of bash helper variables.\n\nDownload BAM Files\nInput files are downloaded using the dx-download-all-inputs command. The dx-download-all-inputs command will go through all inputs and download into folders with the pattern\n/home/dnanexus/in/[VARIABLE]/[file or subfolder with files].\ndx-download-all-inputs\n\n\n\nCreate Output Directory\n\nWe create an output directory in preparation for dx-upload-all-outputs DNAnexus command in the (Upload Results)[#Upload Result] section.\nmkdir -p out/counts_txt\n\n\n\nRun SAMtools View\n\nAfter executing the dx-download-all-inputs command, there are three helper variables created to aid in scripting. For this applet, the input variable name mappings_bam with platform filename my_mappings.bam will have a helper variables:\n# [VARIABLE]_path the absolute string path to the file.\n$ echo $mappings_bam_path\n/home/dnanexus/in/mappings_bam/my_mappings.bam\n# [VARIABLE]_prefix the file name minus the longest matching pattern in the dxapp.json file\n$ echo $mappings_bam_prefix\nmy_mappings\n# [VARIABLE]_name the file name from the platform\n$ echo $mappings_bam_name\nmy_mappings.bam\n\n\nWe use the bash helper variable mappings_bam_path to reference the location of a file after it has been downloaded using dx-download-all-inputs.\nsamtools view -c \"${mappings_bam_path}\" &gt; out/counts_txt/\"${mappings_bam_prefix}.txt\"\n\n\n\nUpload Result\n\nWe use the dx-upload-all-outputs command to upload data to the platform and specify\nit as the job’s output. The dx-upload-all-outputs command expects to find file paths matching the pattern\n/home/dnanexus/out/[VARIABLE]/*. It will upload matching files and then associate them as the output corresponding to [VARIABLE]. In this case,\nthe output is called counts_txt. Above we created the folders, and we can now place the outputs there.  \ndx-upload-all-outputs"
 					}
 					
 				
