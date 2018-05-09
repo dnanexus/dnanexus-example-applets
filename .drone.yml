@@ -2,19 +2,19 @@
 pipeline:
 
     generate-post:
-        image: damienblack/example-applets-ghpage-builder:latest
+        image: 782066560884.dkr.ecr.us-east-2.amazonaws.com/example-applets-ghpage-builder:latest
         commands:
             - bash -c "sudo ln -sf bash /bin/sh && python docs/scripts/site_rehydrate.py --overwrite-files"
 
     generate-static-site:
-        image: damienblack/example-applets-ghpage-builder:latest
+        image: 782066560884.dkr.ecr.us-east-2.amazonaws.com/example-applets-ghpage-builder:latest
         commands:
             - bash -c "source /usr/local/rvm/scripts/rvm && cd docs && bundle install && rake site:generate"
-        secrets: [ github_username, github_password ]
+            - touch docs/_site/.nojekyll  # Prevent gh-pages rendering random _folders instead
 
     publish:
         image: plugins/gh-pages
         pages_directory: docs/_site
         secrets: [ github_username, github_password ]
 
-branches: [master, SCI-436-builds]
+branches: [master]
