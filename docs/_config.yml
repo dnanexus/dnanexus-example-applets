@@ -38,7 +38,7 @@ gems:
 exclude:
   - Gemfile
   - Gemfile.lock
-  - README.md
+  - SITE_README.md
   - LICENCE
   - .gitignore
   - scripts/
