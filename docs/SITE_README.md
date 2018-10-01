@@ -106,6 +106,14 @@ There you have it! Once the RakeFile is done you should see an updated commit on
 
 ## Caveats
 
+### "RVM is not a function" error
+
+The answer lies in this [stack overflow post](https://stackoverflow.com/a/11105199).
+
+```
+source ~/.rvm/scripts/rvm
+```
+
 ### \_post/ directory
 
 Not all files in `{Repository root}/docs/_posts` are auto-generated! Some site only documents are kept there. So be careful when deleting files there. In the future, site specific files will be moved out ... in the future.
