@@ -8,7 +8,7 @@ group :jekyll_plugins do
 	gem 'jekyll-sitemap'
 	gem 'jekyll-seo-tag'
 	gem 'jekyll-feed'
-	gem 'jekyll-extract-element', :path => "/Users/sosazuwa/DOGMA/jekyll-extract-element"
+	gem 'jekyll-extract-element', :git => "https://github.com/Damien-Black/jekyll-extract-element.git"
 end
 
 group :security_specifics do

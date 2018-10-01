@@ -1,5 +1,6 @@
-PATH
-  remote: /Users/sosazuwa/DOGMA/jekyll-extract-element
+GIT
+  remote: https://github.com/Damien-Black/jekyll-extract-element.git
+  revision: 07b4bd4bb57bcb9227b8d5459c5d77c7d56c0aeb
   specs:
     jekyll-extract-element (0.0.8)
       jekyll (~> 3.7.4)
