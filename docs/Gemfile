@@ -1,12 +1,16 @@
 source 'https://rubygems.org'
 
-gem 'jekyll', '3.4.3'
+gem 'jekyll', '~> 3.7.4'
 
 group :jekyll_plugins do
-	gem 'github-pages'
+	gem 'github-pages', ">=192"
 	gem 'jekyll-archives'
 	gem 'jekyll-sitemap'
 	gem 'jekyll-seo-tag'
 	gem 'jekyll-feed'
-	gem 'jekyll-extract-element'
+	gem 'jekyll-extract-element', :git => "https://github.com/Damien-Black/jekyll-extract-element.git"
+end
+
+group :security_specifics do
+	gem 'ffi', '~> 1.9.24'
 end
