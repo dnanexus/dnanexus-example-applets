@@ -143,3 +143,12 @@ Jekyll::Site.new(Jekyll.configuration({
 We make use of [Sass](http://sass-lang.com/) to compile our css sheet. You can look at the main site to figure out how their compiler works, but one piece of advice right now.
 
 The compiler tries to put comments at the top of the compiled css file (last checked Nov 10, 2017). Meaning the order of your `@import` statements can be ignored.
+
+
+## TODOs
+
+### Move away from jekyll-extract-element
+
+Currently (as of 08/01/2018) [jekyll-extract-element](https://rubygems.org/gems/jekyll-extract-element) relies on old minor versions of `jekyll` and `nokogiri`, which causes security concerns. In lieu of continued maintenance of the gem, we should move away from this gem.
+
+We're currently using [a fork](https://github.com/Damien-Black/jekyll-extract-element), either we should bring it in our org or re-implement the simple logic for header extraction in our scripts, but integration with Liquid may be difficult.
