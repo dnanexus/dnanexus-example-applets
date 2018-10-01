@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="generator" content="Jekyll v3.4.3">
+		<meta name="generator" content="Jekyll v3.7.4">
 
 		<link rel="stylesheet" href="https://dnanexus.github.io/dnanexus-example-applets/css/screen.css">
 		<link rel="apple-touch-icon" href="https://dnanexus.github.io/dnanexus-example-applets/apple-touch-icon.png">
@@ -12,8 +12,9 @@
 		<link rel="icon" type="image/png" href="https://dnanexus.github.io/dnanexus-example-applets/images/favicon.ico">
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
 		<script type="text/javascript" src="https://dnanexus.github.io/dnanexus-example-applets/js/jquery.min.js"></script>
-		<!-- Begin Jekyll SEO tag v2.2.3 -->
+		<!-- Begin Jekyll SEO tag v2.5.0 -->
 <title>Mkfifo and dx cat | DNAnexus Example Applets</title>
+<meta name="generator" content="Jekyll v3.7.4" />
 <meta property="og:title" content="Mkfifo and dx cat" />
 <meta name="author" content="DNAnexus" />
 <meta property="og:locale" content="en_US" />
@@ -23,12 +24,12 @@
 <meta property="og:url" content="https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count_catmkfifo_sh/" />
 <meta property="og:site_name" content="DNAnexus Example Applets" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2018-05-09T00:00:00+00:00" />
+<meta property="article:published_time" content="2018-10-01T00:00:00+00:00" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@dnanexus" />
 <meta name="twitter:creator" content="@DNAnexus" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"BlogPosting","headline":"Mkfifo and dx cat","author":{"@type":"Person","name":"DNAnexus"},"datePublished":"2018-05-09T00:00:00+00:00","dateModified":"2018-05-09T00:00:00+00:00","description":"This applet performs a SAMtools count on an input file while minimizing disk usage. For additional details on using FIFO (named pipes) special files, run the command man fifo in your shell.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count_catmkfifo_sh/"},"url":"https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count_catmkfifo_sh/"}</script>
+{"description":"This applet performs a SAMtools count on an input file while minimizing disk usage. For additional details on using FIFO (named pipes) special files, run the command man fifo in your shell.","author":{"@type":"Person","name":"DNAnexus"},"@type":"BlogPosting","url":"https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count_catmkfifo_sh/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"headline":"Mkfifo and dx cat","dateModified":"2018-10-01T00:00:00+00:00","datePublished":"2018-10-01T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count_catmkfifo_sh/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://dnanexus.github.io/dnanexus-example-applets/feed.xml" title="DNAnexus Example Applets" />
@@ -152,13 +153,12 @@
 
 <h2 id="stream-bam-file-from-the-platform-to-a-worker">Stream BAM file from the platform to a worker</h2>
 <p>First, we establish a named pipe on the worker. Then, we stream to <em>stdin</em> of the named pipe and download the file as a stream from the platform using <a href="https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#cat"><code class="highlighter-rouge">dx cat</code></a>.</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>  mkdir workspace
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mkdir workspace
   <span class="nv">mappings_fifo_path</span><span class="o">=</span><span class="s2">"workspace/</span><span class="k">${</span><span class="nv">mappings_bam_name</span><span class="k">}</span><span class="s2">"</span>
   mkfifo <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_fifo_path</span><span class="k">}</span><span class="s2">"</span> <span class="c"># FIFO file is created</span>
-  dx cat <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam</span><span class="k">}</span><span class="s2">"</span> &gt; <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_fifo_path</span><span class="k">}</span><span class="s2">"</span> &amp;
+  dx <span class="nb">cat</span> <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam</span><span class="k">}</span><span class="s2">"</span> <span class="o">&gt;</span> <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_fifo_path</span><span class="k">}</span><span class="s2">"</span> &amp;
   <span class="nv">input_pid</span><span class="o">=</span><span class="s2">"</span><span class="nv">$!</span><span class="s2">"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <table>
   <thead>
@@ -179,15 +179,14 @@
 
 <h2 id="output-bam-file-read-count">Output BAM file read count</h2>
 <p>Now that we have created our FIFO special file representing the streamed BAM, we can just call the <code class="highlighter-rouge">samtools</code> command as we normally would. The <code class="highlighter-rouge">samtools</code> command reading the BAM would provide our BAM FIFO file with a <em>stdout</em>. However, keep in mind that we want to stream the output back to the platform. We must create a named pipe representing our output file too.</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>  mkdir -p ./out/counts_txt/
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mkdir <span class="nt">-p</span> ./out/counts_txt/
 
   <span class="nv">counts_fifo_path</span><span class="o">=</span><span class="s2">"./out/counts_txt/</span><span class="k">${</span><span class="nv">mappings_bam_prefix</span><span class="k">}</span><span class="s2">_counts.txt"</span>
 
   mkfifo <span class="s2">"</span><span class="k">${</span><span class="nv">counts_fifo_path</span><span class="k">}</span><span class="s2">"</span> <span class="c"># FIFO file is created, readcount.txt</span>
-  samtools view -c <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_fifo_path</span><span class="k">}</span><span class="s2">"</span> &gt; <span class="s2">"</span><span class="k">${</span><span class="nv">counts_fifo_path</span><span class="k">}</span><span class="s2">"</span> &amp;
+  samtools view <span class="nt">-c</span> <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_fifo_path</span><span class="k">}</span><span class="s2">"</span> <span class="o">&gt;</span> <span class="s2">"</span><span class="k">${</span><span class="nv">counts_fifo_path</span><span class="k">}</span><span class="s2">"</span> &amp;
   <span class="nv">process_pid</span><span class="o">=</span><span class="s2">"</span><span class="nv">$!</span><span class="s2">"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <table>
   <thead>
@@ -218,15 +217,14 @@ All files found in the path <code class="highlighter-rouge">~/out/&lt;output nam
 <p>Currently, we’ve established a stream from the platform, piped the stream into a <code class="highlighter-rouge">samtools</code> command, and finally outputting the results to another named pipe. However, our background process is still blocked since we lack a <em>stdout</em> for our output file. Luckily, creating an upload stream to the platform will resolve this.</p>
 
 <p>We can upload as a stream to the platform using the commands <a href="https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-upload-all-outputs"><code class="highlighter-rouge">dx-upload-all-outputs</code></a> or <a href="https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands?q=dx-upload-all-outputs#upload"><code class="highlighter-rouge">dx upload -</code></a>. Make sure to specify <code class="highlighter-rouge">--buffer-size</code> if needed.</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>  mkdir -p ./out/counts_txt/
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mkdir <span class="nt">-p</span> ./out/counts_txt/
 
   <span class="nv">counts_fifo_path</span><span class="o">=</span><span class="s2">"./out/counts_txt/</span><span class="k">${</span><span class="nv">mappings_bam_prefix</span><span class="k">}</span><span class="s2">_counts.txt"</span>
 
   mkfifo <span class="s2">"</span><span class="k">${</span><span class="nv">counts_fifo_path</span><span class="k">}</span><span class="s2">"</span> <span class="c"># FIFO file is created, readcount.txt</span>
-  samtools view -c <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_fifo_path</span><span class="k">}</span><span class="s2">"</span> &gt; <span class="s2">"</span><span class="k">${</span><span class="nv">counts_fifo_path</span><span class="k">}</span><span class="s2">"</span> &amp;
+  samtools view <span class="nt">-c</span> <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_fifo_path</span><span class="k">}</span><span class="s2">"</span> <span class="o">&gt;</span> <span class="s2">"</span><span class="k">${</span><span class="nv">counts_fifo_path</span><span class="k">}</span><span class="s2">"</span> &amp;
   <span class="nv">process_pid</span><span class="o">=</span><span class="s2">"</span><span class="nv">$!</span><span class="s2">"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <table>
   <thead>
@@ -256,35 +254,32 @@ All files found in the path <code class="highlighter-rouge">~/out/&lt;output nam
 
 <h2 id="wait-for-background-processes">Wait for background processes</h2>
 <p>Now that our background processes are no longer blocking the rest of the applet’s execution, we simply <code class="highlighter-rouge">wait</code> in the foreground for those processes to finish.</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>  <span class="nb">wait</span> -n  <span class="c"># "$input_pid"</span>
-  <span class="nb">wait</span> -n  <span class="c"># "$process_pid"</span>
-  <span class="nb">wait</span> -n  <span class="c"># "$upload_pid"</span>
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">wait</span> <span class="nt">-n</span>  <span class="c"># "$input_pid"</span>
+  <span class="nb">wait</span> <span class="nt">-n</span>  <span class="c"># "$process_pid"</span>
+  <span class="nb">wait</span> <span class="nt">-n</span>  <span class="c"># "$upload_pid"</span>
+</code></pre></div></div>
 
 <div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> If we didn’t wait the app script would running in the foreground would finish and terminate the job! We wouldn’t want that.</div>
 
 <h2 id="how-is-the-samtools-dependency-provided">How is the SAMtools dependency provided?</h2>
 <p>The SAMtools compiled binary is placed directly in the <code class="highlighter-rouge">&lt;applet dir&gt;/resources</code> directory. Any files found in the <code class="highlighter-rouge">resources/</code> directory will be uploaded so that they will be present in the worker’s root directory. In our case:</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>├── Applet dir
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├── Applet dir
 │   ├── src
 │   ├── dxapp.json
 │   ├── resources
 │       ├── usr
 │           ├── bin
 │               ├── &lt; samtools binary &gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>When this applet is run on a worker, the <code class="highlighter-rouge">resources/</code> folder will be placed in the worker’s root directory <code class="highlighter-rouge">/</code>:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>/
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/
 ├── usr
 │   ├── bin
 │       ├── &lt; samtools binary &gt;
 ├── home
 │   ├── dnanexus
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><code class="highlighter-rouge">/usr/bin</code> is part of the <code class="highlighter-rouge">$PATH</code> variable, so we can reference the samtools command directly in our script as <code class="highlighter-rouge">samtools view -c ...</code></p>
 

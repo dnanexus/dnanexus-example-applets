@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="generator" content="Jekyll v3.4.3">
+		<meta name="generator" content="Jekyll v3.7.4">
 
 		<link rel="stylesheet" href="https://dnanexus.github.io/dnanexus-example-applets/css/screen.css">
 		<link rel="apple-touch-icon" href="https://dnanexus.github.io/dnanexus-example-applets/apple-touch-icon.png">
@@ -12,8 +12,9 @@
 		<link rel="icon" type="image/png" href="https://dnanexus.github.io/dnanexus-example-applets/images/favicon.ico">
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
 		<script type="text/javascript" src="https://dnanexus.github.io/dnanexus-example-applets/js/jquery.min.js"></script>
-		<!-- Begin Jekyll SEO tag v2.2.3 -->
+		<!-- Begin Jekyll SEO tag v2.5.0 -->
 <title>Distributed by Region (py) | DNAnexus Example Applets</title>
+<meta name="generator" content="Jekyll v3.7.4" />
 <meta property="og:title" content="Distributed by Region (py)" />
 <meta name="author" content="DNAnexus" />
 <meta property="og:locale" content="en_US" />
@@ -23,12 +24,12 @@
 <meta property="og:url" content="https://dnanexus.github.io/dnanexus-example-applets/python/distributed/samtools_count_distr_region_py/" />
 <meta property="og:site_name" content="DNAnexus Example Applets" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2018-05-09T00:00:00+00:00" />
+<meta property="article:published_time" content="2018-10-01T00:00:00+00:00" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@dnanexus" />
 <meta name="twitter:creator" content="@DNAnexus" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"BlogPosting","headline":"Distributed by Region (py)","author":{"@type":"Person","name":"DNAnexus"},"datePublished":"2018-05-09T00:00:00+00:00","dateModified":"2018-05-09T00:00:00+00:00","description":"The applet will create a count of reads from a BAM format file. Documentation to create a distributed applet can be found on the DNAnexus wiki. This readme will focus on the details of this applet.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/python/distributed/samtools_count_distr_region_py/"},"url":"https://dnanexus.github.io/dnanexus-example-applets/python/distributed/samtools_count_distr_region_py/"}</script>
+{"description":"The applet will create a count of reads from a BAM format file. Documentation to create a distributed applet can be found on the DNAnexus wiki. This readme will focus on the details of this applet.","author":{"@type":"Person","name":"DNAnexus"},"@type":"BlogPosting","url":"https://dnanexus.github.io/dnanexus-example-applets/python/distributed/samtools_count_distr_region_py/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"headline":"Distributed by Region (py)","dateModified":"2018-10-01T00:00:00+00:00","datePublished":"2018-10-01T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/python/distributed/samtools_count_distr_region_py/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://dnanexus.github.io/dnanexus-example-applets/feed.xml" title="DNAnexus Example Applets" />
@@ -142,14 +143,13 @@
 
 <h2 id="how-is-the-samtools-dependency-provided">How is the SAMtools dependency provided?</h2>
 <p>The SAMtools dependency is resolved by declaring an <a href="https://help.ubuntu.com/14.04/serverguide/apt-get.html">Apt-Get</a> package in the <code class="highlighter-rouge">dxapp.json</code> <code class="highlighter-rouge">runSpec.execDepends</code>.</p>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="w">  </span><span class="s2">"runSpec"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="s2">"runSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="err">...</span><span class="w">
-    </span><span class="nt">"execDepends"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"samtools"</span><span class="p">}</span><span class="w">
+    </span><span class="s2">"execDepends"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"samtools"</span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
   </span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 <p>For additional information, please refer to the <a href="https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages"><code class="highlighter-rouge">execDepends</code> wiki page</a>.</p>
 
 <h2 id="entry-points">Entry Points</h2>
@@ -162,35 +162,33 @@
 </ul>
 
 <p>Entry points are executed on a new worker with their own system requirements. In this example, we <em>split</em> and <em>merge</em> our files on basic mem1_ssd1_x2 instances and perform our own, more intensive, <em>processing</em> step on a mem1_ssd1_x4 instance. Instance type can be set in the dxapp.json <code class="highlighter-rouge">runSpec.systemRequirements</code>:</p>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="w">  </span><span class="s2">"runSpec"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="s2">"runSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="err">...</span><span class="w">
-    </span><span class="nt">"systemRequirements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x2"</span><span class="w">
+    </span><span class="s2">"systemRequirements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x2"</span><span class="w">
       </span><span class="p">},</span><span class="w">
-      </span><span class="nt">"samtoolscount_bam"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x4"</span><span class="w">
+      </span><span class="s2">"samtoolscount_bam"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x4"</span><span class="w">
       </span><span class="p">},</span><span class="w">
-      </span><span class="nt">"combine_files"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x2"</span><span class="w">
+      </span><span class="s2">"combine_files"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x2"</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="err">...</span><span class="w">
-  </span><span class="err">}</span><span class="w">
-</span></code></pre>
-</div>
+  </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
 <h2 id="main">main</h2>
 <p>The <em>main</em> function scatters by region bins based on user input. If no <code class="highlighter-rouge">*.bai</code> file is present, the applet generates an index <code class="highlighter-rouge">*.bai</code>.</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>    <span class="n">regions</span> <span class="o">=</span> <span class="n">parseSAM_header_for_region</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">regions</span> <span class="o">=</span> <span class="n">parseSAM_header_for_region</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="n">split_regions</span> <span class="o">=</span> <span class="p">[</span><span class="n">regions</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">region_size</span><span class="p">]</span>
                      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">regions</span><span class="p">),</span> <span class="n">region_size</span><span class="p">)]</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">index_file</span><span class="p">:</span>
         <span class="n">mappings_bam</span><span class="p">,</span> <span class="n">index_file</span> <span class="o">=</span> <span class="n">create_index_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mappings_bam</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>Regions bins are passed to the <em>samtoolscount_bam</em> entry point using the <a href="http://autodoc.dnanexus.com/bindings/python/current/dxpy_apps.html?highlight=new_dxjob#dxpy.bindings.dxjob.new_dxjob"><code class="highlighter-rouge">dxpy.new_dxjob</code></a> function.</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>    <span class="k">print</span> <span class="s">'creating subjobs'</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">print</span> <span class="s">'creating subjobs'</span>
     <span class="n">subjobs</span> <span class="o">=</span> <span class="p">[</span><span class="n">dxpy</span><span class="o">.</span><span class="n">new_dxjob</span><span class="p">(</span>
                <span class="n">fn_input</span><span class="o">=</span><span class="p">{</span><span class="s">"region_list"</span><span class="p">:</span> <span class="n">split</span><span class="p">,</span>
                          <span class="s">"mappings_bam"</span><span class="p">:</span> <span class="n">mappings_bam</span><span class="p">,</span>
@@ -200,10 +198,9 @@
 
     <span class="n">fileDXLinks</span> <span class="o">=</span> <span class="p">[</span><span class="n">subjob</span><span class="o">.</span><span class="n">get_output_ref</span><span class="p">(</span><span class="s">"readcount_fileDX"</span><span class="p">)</span>
                    <span class="k">for</span> <span class="n">subjob</span> <span class="ow">in</span> <span class="n">subjobs</span><span class="p">]</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>Outputs from the <em>samtoolscount_bam</em> entry points are used as inputs for the <em>combine_files</em> entry point. The output of the <em>combine_files</em> entry point is used as the output of the main entry point.</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>    <span class="k">print</span> <span class="s">'combining outputs'</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">print</span> <span class="s">'combining outputs'</span>
     <span class="n">postprocess_job</span> <span class="o">=</span> <span class="n">dxpy</span><span class="o">.</span><span class="n">new_dxjob</span><span class="p">(</span>
         <span class="n">fn_input</span><span class="o">=</span><span class="p">{</span><span class="s">"countDXlinks"</span><span class="p">:</span> <span class="n">fileDXLinks</span><span class="p">,</span> <span class="s">"resultfn"</span><span class="p">:</span> <span class="n">filename</span><span class="p">},</span>
         <span class="n">fn_name</span><span class="o">=</span><span class="s">"combine_files"</span><span class="p">)</span>
@@ -214,12 +211,11 @@
     <span class="n">output</span><span class="p">[</span><span class="s">"count_file"</span><span class="p">]</span> <span class="o">=</span> <span class="n">countDXLink</span>
 
     <span class="k">return</span> <span class="n">output</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="samtoolscount_bam">samtoolscount_bam</h2>
 <p>This entry point downloads and creates a <code class="highlighter-rouge">samtools view -c</code> command for each region in the input bin. The dictionary returned from <a href=""><code class="highlighter-rouge">dxpy.download_all_inputs()</code></a> is used to reference input names and paths.</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">samtoolscount_bam</span><span class="p">(</span><span class="n">region_list</span><span class="p">,</span> <span class="n">mappings_bam</span><span class="p">,</span> <span class="n">index_file</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">samtoolscount_bam</span><span class="p">(</span><span class="n">region_list</span><span class="p">,</span> <span class="n">mappings_bam</span><span class="p">,</span> <span class="n">index_file</span><span class="p">):</span>
     <span class="s">"""Processing function.
 
     Arguments:
@@ -271,12 +267,11 @@
     <span class="n">readCountDXlink</span> <span class="o">=</span> <span class="n">dxpy</span><span class="o">.</span><span class="n">dxlink</span><span class="p">(</span><span class="n">readcountDXFile</span><span class="o">.</span><span class="n">get_id</span><span class="p">())</span>
 
     <span class="k">return</span> <span class="p">{</span><span class="s">"readcount_fileDX"</span><span class="p">:</span> <span class="n">readCountDXlink</span><span class="p">}</span>
-</code></pre>
-</div>
-<p>This entry point returns <code class="highlighter-rouge"><span class="p">{</span><span class="nt">"readcount_fileDX"</span><span class="p">:</span><span class="w"> </span><span class="err">readCountDXlink</span><span class="p">}</span></code>, a JBOR referencing an uploaded text file. This approach to scatter-gather stores the results in files and uploads/downloads the information as needed. This approach exaggerates a scatter-gather for tutorial purposes. You’re able to pass types other than <strong>file</strong> such as <strong>int</strong>.</p>
+</code></pre></div></div>
+<p>This entry point returns <code class="highlighter-rouge">{"readcount_fileDX": readCountDXlink}</code>, a JBOR referencing an uploaded text file. This approach to scatter-gather stores the results in files and uploads/downloads the information as needed. This approach exaggerates a scatter-gather for tutorial purposes. You’re able to pass types other than <strong>file</strong> such as <strong>int</strong>.</p>
 <h2 id="combine_files">combine_files</h2>
 <p>The <em>main</em> entry point triggers this subjob, providing the output of <em>samtoolscount_bam</em> as an input. This entry point gathers all the files generated by the <em>samtoolscount_bam</em> jobs and sums them.</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">combine_files</span><span class="p">(</span><span class="n">countDXlinks</span><span class="p">,</span> <span class="n">resultfn</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">combine_files</span><span class="p">(</span><span class="n">countDXlinks</span><span class="p">,</span> <span class="n">resultfn</span><span class="p">):</span>
     <span class="s">"""The 'gather' subjob of the applet.
 
     Arguments:
@@ -308,8 +303,7 @@
     <span class="n">countDXlink</span> <span class="o">=</span> <span class="n">dxpy</span><span class="o">.</span><span class="n">dxlink</span><span class="p">(</span><span class="n">countDXFile</span><span class="o">.</span><span class="n">get_id</span><span class="p">())</span>
 
     <span class="k">return</span> <span class="p">{</span><span class="s">"countDXLink"</span><span class="p">:</span> <span class="n">countDXlink</span><span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <div class="alert alert-warning" role="alert"><i class="fa fa-warning"></i> <b>Important:</b> While the <em>main</em> entry point triggers the <em>processing</em> and <em>gathering</em> entry points, keep in mind the <em>main</em> entry point <strong>doesn’t</strong> do any heavy lifting or <em>processing</em>. Notice in the <code class="highlighter-rouge">.runSpec</code> json <a href="#Entry-Points">above</a> we start with a lightwieght instance, <em>scale up</em> for the processing entry point, then finally <em>scale down</em> for the <em>gathering</em> step.</div>
 

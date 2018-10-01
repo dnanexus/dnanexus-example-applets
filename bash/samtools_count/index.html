@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="generator" content="Jekyll v3.4.3">
+		<meta name="generator" content="Jekyll v3.7.4">
 
 		<link rel="stylesheet" href="https://dnanexus.github.io/dnanexus-example-applets/css/screen.css">
 		<link rel="apple-touch-icon" href="https://dnanexus.github.io/dnanexus-example-applets/apple-touch-icon.png">
@@ -12,8 +12,9 @@
 		<link rel="icon" type="image/png" href="https://dnanexus.github.io/dnanexus-example-applets/images/favicon.ico">
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
 		<script type="text/javascript" src="https://dnanexus.github.io/dnanexus-example-applets/js/jquery.min.js"></script>
-		<!-- Begin Jekyll SEO tag v2.2.3 -->
+		<!-- Begin Jekyll SEO tag v2.5.0 -->
 <title>SAMtools count | DNAnexus Example Applets</title>
+<meta name="generator" content="Jekyll v3.7.4" />
 <meta property="og:title" content="SAMtools count" />
 <meta name="author" content="DNAnexus" />
 <meta property="og:locale" content="en_US" />
@@ -23,12 +24,12 @@
 <meta property="og:url" content="https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count/" />
 <meta property="og:site_name" content="DNAnexus Example Applets" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2018-05-09T00:00:00+00:00" />
+<meta property="article:published_time" content="2018-10-01T00:00:00+00:00" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@dnanexus" />
 <meta name="twitter:creator" content="@DNAnexus" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"BlogPosting","headline":"SAMtools count","author":{"@type":"Person","name":"DNAnexus"},"datePublished":"2018-05-09T00:00:00+00:00","dateModified":"2018-05-09T00:00:00+00:00","description":"This applet performs a basic samtools view -c {bam} command, referred to as “SAMtools count”, on the DNAnexus platform.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count/"},"url":"https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count/"}</script>
+{"description":"This applet performs a basic samtools view -c {bam} command, referred to as “SAMtools count”, on the DNAnexus platform.","author":{"@type":"Person","name":"DNAnexus"},"@type":"BlogPosting","url":"https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"headline":"SAMtools count","dateModified":"2018-10-01T00:00:00+00:00","datePublished":"2018-10-01T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://dnanexus.github.io/dnanexus-example-applets/feed.xml" title="DNAnexus Example Applets" />
@@ -140,25 +141,23 @@
 
 <h2 id="download-bam-files">Download BAM Files</h2>
 <p>For bash scripts, inputs to a job execution become environment variables. The inputs from our <code class="highlighter-rouge">dxapp.json</code> file are formatted as shown below:</p>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"inputSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"inputSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mappings_bam"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mapping"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"patterns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"*.bam"</span><span class="p">],</span><span class="w">
-      </span><span class="nt">"help"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAM format file."</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mappings_bam"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mapping"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"patterns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"*.bam"</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"help"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAM format file."</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 <p>The object <code class="highlighter-rouge">mappings_bam</code>, a <a href="https://wiki.dnanexus.com/FAQ#What-are-DNAnexus-links,-and-how-are-they-different-from-using-the-data-object-IDs%3F">DNAnexus link</a>
 containing the file ID of that file, will be available as an environmental variable in the applet’s execution. Use the command <code class="highlighter-rouge">dx download</code> to download the BAM file. By default, when we download a file,
 we will keep the filename of the object on the platform.</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>dx download <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam</span><span class="k">}</span><span class="s2">"</span>
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dx download <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam</span><span class="k">}</span><span class="s2">"</span>
+</code></pre></div></div>
 
 <h2 id="samtools-count">SAMtools Count</h2>
 <p>Here, we use the bash helper variable <a href="https://wiki.dnanexus.com/Developer-Tutorials/Sample-Code?bash#Bash-app-helper-variables"><code class="highlighter-rouge">mappings_bam_name</code></a>. For file inputs,
@@ -167,39 +166,35 @@ the filename of the object on the platform; because we downloaded the file using
 worker as well. We use another helper variable, <code class="highlighter-rouge">[VARIABLE]_prefix</code>, the filename
 of the object minus any suffixes specified in the input field patterns. From the input spec above,
 the only pattern present is <code class="highlighter-rouge">'["*.bam"]'</code>, so the platform will remove the trailing <em>“.bam”</em> and create the helper variable <code class="highlighter-rouge">[VARIABLE]_prefix</code> for our use.</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nv">readcount</span><span class="o">=</span><span class="k">$(</span>samtools view -c <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_name</span><span class="k">}</span><span class="s2">"</span><span class="k">)</span>
-<span class="nb">echo</span> <span class="s2">"Total reads: </span><span class="k">${</span><span class="nv">readcount</span><span class="k">}</span><span class="s2">"</span> &gt; <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_prefix</span><span class="k">}</span><span class="s2">.txt"</span>
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">readcount</span><span class="o">=</span><span class="k">$(</span>samtools view <span class="nt">-c</span> <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_name</span><span class="k">}</span><span class="s2">"</span><span class="k">)</span>
+<span class="nb">echo</span> <span class="s2">"Total reads: </span><span class="k">${</span><span class="nv">readcount</span><span class="k">}</span><span class="s2">"</span> <span class="o">&gt;</span> <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_prefix</span><span class="k">}</span><span class="s2">.txt"</span>
+</code></pre></div></div>
 
 <h2 id="upload-result">Upload Result</h2>
 <p>Use <a href="https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#upload"><code class="highlighter-rouge">dx upload</code></a> command to upload data to the platform. This will upload the file into the
 job container, a temporary project that holds onto files associated
 with the job. When running the command <code class="highlighter-rouge">dx upload</code> with the flag <code class="highlighter-rouge">--brief</code>, the command will return just the
 file ID.</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nv">counts_txt_id</span><span class="o">=</span><span class="k">$(</span>dx upload <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_prefix</span><span class="k">}</span><span class="s2">.txt"</span> --brief<span class="k">)</span>
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">counts_txt_id</span><span class="o">=</span><span class="k">$(</span>dx upload <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_prefix</span><span class="k">}</span><span class="s2">.txt"</span> <span class="nt">--brief</span><span class="k">)</span>
+</code></pre></div></div>
 
 <div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> While job containers are an integral part of the execution process, a deeper discussion goes out of scope of a basic tutorial. Review the <a href="https://wiki.dnanexus.com/API-Specification-v1.0.0/Containers-for-Execution">Containers for Execution</a> wiki page for more information.</div>
 
 <h2 id="associate-with-output">Associate With Output</h2>
 <p>The output of an applet must be declared before the applet is even built. Looking back to the <code class="highlighter-rouge">dxapp.json</code> file, we see the following:</p>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"counts_txt"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Read count file"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"patterns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"counts_txt"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Read count file"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"patterns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="s2">"*.txt"</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="nt">"help"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Output file with Total reads as the first line."</span><span class="w">
+  </span><span class="s2">"help"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Output file with Total reads as the first line."</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 <p>We declared a <strong>file</strong> type output named <code class="highlighter-rouge">counts_txt</code>. In the applet script, we must tell the system what file should be associated with the output <code class="highlighter-rouge">counts_txt</code>. On job completion, usually at the end of the script, this file will be copied from the temporary job container to the project that launched the job.</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>dx-jobutil-add-output counts_txt <span class="s2">"</span><span class="k">${</span><span class="nv">counts_txt_id</span><span class="k">}</span><span class="s2">"</span> --class<span class="o">=</span>file
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dx-jobutil-add-output counts_txt <span class="s2">"</span><span class="k">${</span><span class="nv">counts_txt_id</span><span class="k">}</span><span class="s2">"</span> <span class="nt">--class</span><span class="o">=</span>file
+</code></pre></div></div>
 
 		</div>
 		

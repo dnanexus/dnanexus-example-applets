@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="generator" content="Jekyll v3.4.3">
+		<meta name="generator" content="Jekyll v3.7.4">
 
 		<link rel="stylesheet" href="https://dnanexus.github.io/dnanexus-example-applets/css/screen.css">
 		<link rel="apple-touch-icon" href="https://dnanexus.github.io/dnanexus-example-applets/apple-touch-icon.png">
@@ -12,8 +12,9 @@
 		<link rel="icon" type="image/png" href="https://dnanexus.github.io/dnanexus-example-applets/images/favicon.ico">
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
 		<script type="text/javascript" src="https://dnanexus.github.io/dnanexus-example-applets/js/jquery.min.js"></script>
-		<!-- Begin Jekyll SEO tag v2.2.3 -->
+		<!-- Begin Jekyll SEO tag v2.5.0 -->
 <title>Parallel by Region (py) | DNAnexus Example Applets</title>
+<meta name="generator" content="Jekyll v3.7.4" />
 <meta property="og:title" content="Parallel by Region (py)" />
 <meta name="author" content="DNAnexus" />
 <meta property="og:locale" content="en_US" />
@@ -23,12 +24,12 @@
 <meta property="og:url" content="https://dnanexus.github.io/dnanexus-example-applets/python/parallel/samtools_count_para_reg_multiprocess_py/" />
 <meta property="og:site_name" content="DNAnexus Example Applets" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2018-05-09T00:00:00+00:00" />
+<meta property="article:published_time" content="2018-10-01T00:00:00+00:00" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@dnanexus" />
 <meta name="twitter:creator" content="@DNAnexus" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"BlogPosting","headline":"Parallel by Region (py)","author":{"@type":"Person","name":"DNAnexus"},"datePublished":"2018-05-09T00:00:00+00:00","dateModified":"2018-05-09T00:00:00+00:00","description":"This applet tutorial will perform a SAMtools count using parallel threads.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/python/parallel/samtools_count_para_reg_multiprocess_py/"},"url":"https://dnanexus.github.io/dnanexus-example-applets/python/parallel/samtools_count_para_reg_multiprocess_py/"}</script>
+{"description":"This applet tutorial will perform a SAMtools count using parallel threads.","author":{"@type":"Person","name":"DNAnexus"},"@type":"BlogPosting","url":"https://dnanexus.github.io/dnanexus-example-applets/python/parallel/samtools_count_para_reg_multiprocess_py/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"headline":"Parallel by Region (py)","dateModified":"2018-10-01T00:00:00+00:00","datePublished":"2018-10-01T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/python/parallel/samtools_count_para_reg_multiprocess_py/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://dnanexus.github.io/dnanexus-example-applets/feed.xml" title="DNAnexus Example Applets" />
@@ -148,21 +149,20 @@
 
 <h2 id="how-is-the-samtools-dependency-provided">How is the SAMtools dependency provided?</h2>
 <p>The SAMtools dependency is resolved by declaring an <a href="https://help.ubuntu.com/14.04/serverguide/apt-get.html">Apt-Get</a> package in the <code class="highlighter-rouge">dxapp.json</code> <code class="highlighter-rouge">runSpec.execDepends</code> field.</p>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"runSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"runSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="err">...</span><span class="w">
-    </span><span class="nt">"execDepends"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"samtools"</span><span class="p">}</span><span class="w">
+    </span><span class="s2">"execDepends"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"samtools"</span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
   </span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 <p>For additional information, please refer to the <a href="https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages">execDepends wiki page</a>.</p>
 
 <h2 id="download-inputs">Download Inputs</h2>
 
 <p>This applet downloads all inputs at once using <code class="highlighter-rouge">dxpy.download_all_inputs</code>:</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">inputs</span> <span class="o">=</span> <span class="n">dxpy</span><span class="o">.</span><span class="n">download_all_inputs</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">inputs</span> <span class="o">=</span> <span class="n">dxpy</span><span class="o">.</span><span class="n">download_all_inputs</span><span class="p">()</span>
 <span class="c"># download_all_inputs returns a dictionary that contains mapping from inputs to file locations.</span>
 <span class="c"># Additionaly, helper keys, value pairs are added to the dicitonary, similar to bash helper functions</span>
 <span class="n">inputs</span>
@@ -172,22 +172,20 @@
 <span class="c">#     mappings_sorted_bai_path: u'/home/dnanexus/in/mappings_sorted_bai/SRR504516.bam.bai'</span>
 <span class="c">#     mappings_sorted_bai_name: u'SRR504516.bam.bai'</span>
 <span class="c">#     mappings_sorted_bai_prefix: u'SRR504516'</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <h2 id="split-workload">Split workload</h2>
 <p>We parallely process by using the python <code class="highlighter-rouge">multiprocessing</code> module. A rather simple pattern you can follow to compute in a parallel manner is shown below:</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="s">"Number of cpus: {0}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cpu_count</span><span class="p">())</span>  <span class="c"># Get cpu count from multiprocessing</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span> <span class="s">"Number of cpus: {0}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cpu_count</span><span class="p">())</span>  <span class="c"># Get cpu count from multiprocessing</span>
 <span class="n">worker_pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="n">cpu_count</span><span class="p">())</span>  <span class="c"># Create a pool of workers, 1 for each core</span>
 <span class="n">results</span> <span class="o">=</span> <span class="n">worker_pool</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="n">run_cmd</span><span class="p">,</span> <span class="n">view_cmds</span><span class="p">)</span>  <span class="c"># map run_cmds to a collection</span>
                                                <span class="c"># Pool.map will handle orchestrating the job</span>
 <span class="n">worker_pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 <span class="n">worker_pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>  <span class="c"># Make sure to close and join workers when done</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>This convenient pattern allows you to quickly orchestrate jobs on a worker. For more detailed overview of the <code class="highlighter-rouge">multiprocessing</code> module, visit the <a href="https://docs.python.org/2/library/multiprocessing.html">python2.7 docs</a>.</p>
 
 <p>We create several helpers in our applet script to manage our workload. One helper you may have seen before is <code class="highlighter-rouge">run_cmd</code>; we use this function to manage or subprocess calls:</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">run_cmd</span><span class="p">(</span><span class="n">cmd_arr</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">run_cmd</span><span class="p">(</span><span class="n">cmd_arr</span><span class="p">):</span>
     <span class="s">"""Run shell command.
     Helper function to simplify the pool.map() call in our parallelization.
     Raises OSError if command specified (index 0 in cmd_arr) isn't valid
@@ -200,11 +198,10 @@
     <span class="n">exit_code</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">returncode</span>
     <span class="n">proc_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">,</span> <span class="n">exit_code</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">proc_tuple</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Before we can split our workload, we need to know what regions are present in our BAM input file. We handle this initial parsing in the <code class="highlighter-rouge">parse_sam_header_for_region</code> function:</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">parse_sam_header_for_region</span><span class="p">(</span><span class="n">bamfile_path</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">parse_sam_header_for_region</span><span class="p">(</span><span class="n">bamfile_path</span><span class="p">):</span>
     <span class="s">"""Helper function to match SN regions contained in SAM header
 
     Returns:
@@ -213,14 +210,13 @@
     <span class="n">header_cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s">'samtools'</span><span class="p">,</span> <span class="s">'view'</span><span class="p">,</span> <span class="s">'-H'</span><span class="p">,</span> <span class="n">bamfile_path</span><span class="p">]</span>
     <span class="k">print</span> <span class="s">'parsing SAM headers:'</span><span class="p">,</span> <span class="s">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">header_cmd</span><span class="p">)</span>
     <span class="n">headers_str</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">header_cmd</span><span class="p">)</span>
-    <span class="n">rgx</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'SN:(</span><span class="err">\</span><span class="s">S+)</span><span class="err">\</span><span class="s">s'</span><span class="p">)</span>
+    <span class="n">rgx</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'SN:(\S+)\s'</span><span class="p">)</span>
     <span class="n">regions</span> <span class="o">=</span> <span class="n">rgx</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">headers_str</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">regions</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Once our workload is split and we’ve started processing, we wait and review the status of each <code class="highlighter-rouge">Pool</code> worker. Then, we merge and output our results.</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># Write results to file</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Write results to file</span>
 <span class="n">resultfn</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s">'mappings_sorted_bam_name'</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">resultfn</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">resultfn</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">'_count.txt'</span>
@@ -238,11 +234,10 @@
 <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">output</span><span class="p">[</span><span class="s">"count_file"</span><span class="p">]</span> <span class="o">=</span> <span class="n">dxpy</span><span class="o">.</span><span class="n">dxlink</span><span class="p">(</span><span class="n">count_file</span><span class="p">)</span>
 <span class="k">return</span> <span class="n">output</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> The <code class="highlighter-rouge">run_cmd</code> function returns a tuple containing the stdout, stderr, and exit code of the subprocess call. We parse these outputs from our workers to determine whether the run failed or passed.</div>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">verify_pool_status</span><span class="p">(</span><span class="n">proc_tuples</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">verify_pool_status</span><span class="p">(</span><span class="n">proc_tuples</span><span class="p">):</span>
     <span class="s">"""
     Helper to verify worker succeeded.
 
@@ -258,8 +253,7 @@
             <span class="n">err_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">proc</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">if</span> <span class="n">err_msgs</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">dxpy</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">AppInternalError</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">err_msgs</span><span class="p">))</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 		</div>
 		

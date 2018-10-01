@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="generator" content="Jekyll v3.4.3">
+		<meta name="generator" content="Jekyll v3.7.4">
 
 		<link rel="stylesheet" href="https://dnanexus.github.io/dnanexus-example-applets/css/screen.css">
 		<link rel="apple-touch-icon" href="https://dnanexus.github.io/dnanexus-example-applets/apple-touch-icon.png">
@@ -12,8 +12,9 @@
 		<link rel="icon" type="image/png" href="https://dnanexus.github.io/dnanexus-example-applets/images/favicon.ico">
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
 		<script type="text/javascript" src="https://dnanexus.github.io/dnanexus-example-applets/js/jquery.min.js"></script>
-		<!-- Begin Jekyll SEO tag v2.2.3 -->
+		<!-- Begin Jekyll SEO tag v2.5.0 -->
 <title>Assessing Your Use Case | DNAnexus Example Applets</title>
+<meta name="generator" content="Jekyll v3.7.4" />
 <meta property="og:title" content="Assessing Your Use Case" />
 <meta name="author" content="DNAnexus" />
 <meta property="og:locale" content="en_US" />
@@ -28,7 +29,7 @@
 <meta name="twitter:site" content="@dnanexus" />
 <meta name="twitter:creator" content="@DNAnexus" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"BlogPosting","headline":"Assessing Your Use Case","author":{"@type":"Person","name":"DNAnexus"},"datePublished":"2017-08-02T00:00:00+00:00","dateModified":"2017-08-02T00:00:00+00:00","description":"What problem are you solving, is app development the right approach?","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/do-you-need-app/"},"url":"https://dnanexus.github.io/dnanexus-example-applets/do-you-need-app/"}</script>
+{"description":"What problem are you solving, is app development the right approach?","author":{"@type":"Person","name":"DNAnexus"},"@type":"BlogPosting","url":"https://dnanexus.github.io/dnanexus-example-applets/do-you-need-app/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"headline":"Assessing Your Use Case","dateModified":"2017-08-02T00:00:00+00:00","datePublished":"2017-08-02T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/do-you-need-app/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://dnanexus.github.io/dnanexus-example-applets/feed.xml" title="DNAnexus Example Applets" />
@@ -170,7 +171,7 @@
 <h2 id="alternatives-to-applets">Alternatives to Applets</h2>
 <p>Before you start implementing your own app(let), you should explore the <a href="https://platform.dnanexus.com/apps">DNAnexus App Library</a>. Our App Library, which we continuously update, contains common bioinformatics tools implemented on the platform. The Apps are robust and generalized in their implementation and often expose many options to the user. There may be cases where you want to make a slight tweak to an existing App, for this reason, we open source our Apps. Below is an example of getting the source code for the <a href="https://platform.dnanexus.com/app/bwa_mem_fastq_read_mapper"><code class="highlighter-rouge">BWA-MEM FASTQ Read Mapper</code></a> using <a href="https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#find-apps"><code class="highlighter-rouge">dx find apps</code></a>, <a href="https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#describe"><code class="highlighter-rouge">dx describe</code></a>, and <a href="https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#get"><code class="highlighter-rouge">dx get</code></a>:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>~ <span class="nv">$ </span>dx find apps | grep <span class="s2">"BWA-MEM FASTQ Read Mapper"</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~ <span class="nv">$ </span>dx find apps | <span class="nb">grep</span> <span class="s2">"BWA-MEM FASTQ Read Mapper"</span>
 x BWA-MEM FASTQ Read Mapper <span class="o">(</span>bwa_mem_fastq_read_mapper<span class="o">)</span>, v1.5.4
   <span class="c"># We will use the unique App name "bwa_mem_fastq_read_mapper" to get the app-id</span>
 ~ <span class="nv">$ </span>dx describe bwa_mem_fastq_read_mapper
@@ -189,8 +190,7 @@ Unpacking resources
 <span class="c"># We make necessary minor changes and rebuild</span>
 dx build bwa_mem_fastq_read_mapper
 <span class="c"># app-xxxx</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="swiss-army-knife">Swiss Army Knife</h2>
 
@@ -205,14 +205,14 @@ the Swiss Army Knife app.</p>
 inputs. In commands, it’s often useful to refer to input files using wildcards, like
 <code class="highlighter-rouge">*.bed</code>, so the command can be independent of the specific input files. It downloads all the files, runs the command, and uploads any new files. So, we could just add our BED file as an input and type in the appropriate command. From command line using <a href="https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#run"><code class="highlighter-rouge">dx run</code></a>:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>~ <span class="nv">$ </span>dx run swiss-army-knife
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~ <span class="nv">$ </span>dx run swiss-army-knife
 Entering interactive mode <span class="k">for </span>input selection.
 
 Input:   Command line <span class="o">(</span>cmd<span class="o">)</span>
 Class:   string
 
 Enter string value <span class="o">(</span><span class="s1">'?'</span> <span class="k">for </span>more options<span class="o">)</span>
-cmd: bedtools merge -i <span class="k">*</span>.bed &gt; merged.bed
+cmd: bedtools merge <span class="nt">-i</span> <span class="k">*</span>.bed <span class="o">&gt;</span> merged.bed
 
 Select an optional parameter to <span class="nb">set </span>by its <span class="c"># (^D or &lt;ENTER&gt; to finish):</span>
 
@@ -228,8 +228,7 @@ Enter file values, one at a <span class="nb">time</span> <span class="o">(</span
 </span>current directory, <span class="s1">'?'</span> <span class="k">for </span>more options<span class="o">)</span>
 <span class="k">in</span><span class="o">[</span>0]: /Bed-Files/target.bed
 <span class="c"># Add more files, confirm inputs, then run.</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The Swiss Army Knife app has a number of tools built-in that you can refer to in commands. The list of tools and more information are available on the <a href="https://platform.dnanexus.com/app/swiss-army-knife">Swiss Army Knife apps’ page</a>.</p>
 
@@ -247,9 +246,9 @@ access to files stored on the DNAnexus platform</li>
 
 <p><strong>Set up SSH access with <a href="https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#ssh_config"><code class="highlighter-rouge">dx ssh_config</code></a>:</strong></p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>dx ssh_config
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>dx ssh_config
 Select an SSH key pair to use when connecting to DNAnexus jobs. The public key will be saved to your
-DNAnexus account <span class="o">(</span>readable only by you<span class="o">)</span>. The private key will remain on this computer.                              
+DNAnexus account <span class="o">(</span>readable only by you<span class="o">)</span><span class="nb">.</span> The private key will remain on this computer.                              
 dx is already configured to use the SSH key pair at:
     /home/me/.dnanexus_config/ssh_id
     /home/me/.dnanexus_config/ssh_id.pub
@@ -257,14 +256,13 @@ dx is already configured to use the SSH key pair at:
 1<span class="o">)</span> Select or create another SSH key pair...                                                                                             
 Pick a numbered choice: 0
 Updated public key <span class="k">for </span>user user-xxxx
-Your account has been configured <span class="k">for </span>use with SSH. Use dx run with the --allow-ssh, --ssh,
-or --debug-on options to launch <span class="nb">jobs </span>and connect to them.
-</code></pre>
-</div>
+Your account has been configured <span class="k">for </span>use with SSH. Use dx run with the <span class="nt">--allow-ssh</span>, <span class="nt">--ssh</span>,
+or <span class="nt">--debug-on</span> options to launch <span class="nb">jobs </span>and connect to them.
+</code></pre></div></div>
 
 <p><strong>Run the app:</strong></p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>dx run app-cloud_workstation --allow-ssh                                                
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>dx run app-cloud_workstation <span class="nt">--allow-ssh</span>                                                
 Select an optional parameter to <span class="nb">set </span>by its <span class="c"># (^D or &lt;ENTER&gt; to finish):        </span>
 <span class="o">[</span>0] Maximum Session Length <span class="o">(</span>suffixes allowed: s, m, h, d, w, M, y<span class="o">)</span> <span class="o">(</span>max_session_length<span class="o">)</span> <span class="o">[</span><span class="nv">default</span><span class="o">=</span><span class="s2">"1h"</span><span class="o">]</span>                                 
 <span class="o">[</span>1] Files <span class="o">(</span>fids<span class="o">)</span>                                         
@@ -276,19 +274,16 @@ Confirm running the executable with this input <span class="o">[</span>Y/n]: y
 Calling app-F40jZqQ9fZF4ggVZ1qGYQz5z with output destination project-xxxx:/                                         
 Job ID: job-xxxx                                                                                                    
 Watch launched job now? <span class="o">[</span>Y/n] n
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><strong>SSH into the job running the app</strong></p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>dx ssh job-xxxx
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>dx ssh job-xxxx
+</code></pre></div></div>
 
 <p>The Cloud Workstation app takes a rather useful approach for exploratory development on the platform. Feel free to look at the app code for Cloud Workstation v1.0.3, which you can obtain with:</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>dx get app-F40jZqQ9fZF4ggVZ1qGYQz5z
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dx get app-F40jZqQ9fZF4ggVZ1qGYQz5z
+</code></pre></div></div>
 
 		</div>
 		

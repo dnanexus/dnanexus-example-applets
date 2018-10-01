@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="generator" content="Jekyll v3.4.3">
+		<meta name="generator" content="Jekyll v3.7.4">
 
 		<link rel="stylesheet" href="https://dnanexus.github.io/dnanexus-example-applets/css/screen.css">
 		<link rel="apple-touch-icon" href="https://dnanexus.github.io/dnanexus-example-applets/apple-touch-icon.png">
@@ -12,8 +12,9 @@
 		<link rel="icon" type="image/png" href="https://dnanexus.github.io/dnanexus-example-applets/images/favicon.ico">
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
 		<script type="text/javascript" src="https://dnanexus.github.io/dnanexus-example-applets/js/jquery.min.js"></script>
-		<!-- Begin Jekyll SEO tag v2.2.3 -->
+		<!-- Begin Jekyll SEO tag v2.5.0 -->
 <title>Subprocess module | DNAnexus Example Applets</title>
+<meta name="generator" content="Jekyll v3.7.4" />
 <meta property="og:title" content="Subprocess module" />
 <meta name="author" content="DNAnexus" />
 <meta property="og:locale" content="en_US" />
@@ -23,12 +24,12 @@
 <meta property="og:url" content="https://dnanexus.github.io/dnanexus-example-applets/python/samtools_count_subprocess_py/" />
 <meta property="og:site_name" content="DNAnexus Example Applets" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2018-05-09T00:00:00+00:00" />
+<meta property="article:published_time" content="2018-10-01T00:00:00+00:00" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@dnanexus" />
 <meta name="twitter:creator" content="@DNAnexus" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"BlogPosting","headline":"Subprocess module","author":{"@type":"Person","name":"DNAnexus"},"datePublished":"2018-05-09T00:00:00+00:00","dateModified":"2018-05-09T00:00:00+00:00","description":"How is the SAMtools dependency provided? The SAMtools dependency is resolved by declaring an Apt-Get dependency in the dxapp.json runSpec.execDepends. &quot;runSpec&quot;: { ... &quot;execDepends&quot;: [ {&quot;name&quot;: &quot;samtools&quot;} ] } For additional information, please refer to the execDepends wiki page.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/python/samtools_count_subprocess_py/"},"url":"https://dnanexus.github.io/dnanexus-example-applets/python/samtools_count_subprocess_py/"}</script>
+{"description":"How is the SAMtools dependency provided? The SAMtools dependency is resolved by declaring an Apt-Get dependency in the dxapp.json runSpec.execDepends. &quot;runSpec&quot;: { ... &quot;execDepends&quot;: [ {&quot;name&quot;: &quot;samtools&quot;} ] } For additional information, please refer to the execDepends wiki page.","author":{"@type":"Person","name":"DNAnexus"},"@type":"BlogPosting","url":"https://dnanexus.github.io/dnanexus-example-applets/python/samtools_count_subprocess_py/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"headline":"Subprocess module","dateModified":"2018-10-01T00:00:00+00:00","datePublished":"2018-10-01T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/python/samtools_count_subprocess_py/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://dnanexus.github.io/dnanexus-example-applets/feed.xml" title="DNAnexus Example Applets" />
@@ -138,14 +139,13 @@
 		<div class="tutorial-main">
 			<h2 id="how-is-the-samtools-dependency-provided">How is the SAMtools dependency provided?</h2>
 <p>The SAMtools dependency is resolved by declaring an <a href="https://help.ubuntu.com/14.04/serverguide/apt-get.html">Apt-Get</a> dependency in the <code class="highlighter-rouge">dxapp.json</code> runSpec.execDepends.</p>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="s2">"runSpec"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"runSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
      </span><span class="err">...</span><span class="w">
-     </span><span class="nt">"execDepends"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-       </span><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"samtools"</span><span class="p">}</span><span class="w">
+     </span><span class="s2">"execDepends"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+       </span><span class="p">{</span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"samtools"</span><span class="p">}</span><span class="w">
      </span><span class="p">]</span><span class="w">
    </span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 <p>For additional information, please refer to the <a href="https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages">execDepends wiki page</a>.</p>
 
 <h2 id="download-bam-files">Download BAM Files</h2>
@@ -176,7 +176,7 @@ is used, <code class="highlighter-rouge">shell=True</code> is required.</li>
 
 <div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> It’s good practice to use <code class="highlighter-rouge">shell=False</code> when possible, especially when user input is involved. That being said, know your use case, if you need to rely on shell features (even though Python offers modules to mimic these features!) use <code class="highlighter-rouge">shell=True</code>.</div>
 <p>In this tutorial, we use <code class="highlighter-rouge">shell=False</code>.</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>    <span class="n">count_txt_name</span> <span class="o">=</span> <span class="s">"{prefix}_count.txt"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="n">mappings_bam_name</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">])</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">count_txt_name</span> <span class="o">=</span> <span class="s">"{prefix}_count.txt"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="n">mappings_bam_name</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">])</span>
 
     <span class="n">samtools_view_cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s">"samtools"</span><span class="p">,</span> <span class="s">"view"</span><span class="p">,</span> <span class="s">"-c"</span><span class="p">,</span> <span class="n">mappings_bam_name</span><span class="p">]</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">count_txt_name</span><span class="p">,</span> <span class="s">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -186,17 +186,15 @@ is used, <code class="highlighter-rouge">shell=True</code> is required.</li>
             <span class="k">print</span> <span class="s">"Command failed: {cmd}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="n">cmd</span><span class="o">=</span><span class="n">cpe</span><span class="o">.</span><span class="n">cmd</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">cpe</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="upload-result">Upload Result</h2>
 <p>The <a href="http://autodoc.dnanexus.com/bindings/python/current/dxpy_dxfile.html?highlight=upload_local_file#dxpy.bindings.dxfile_functions.upload_local_file"><code class="highlighter-rouge">dxpy.upload_local_file(filename=&lt;filename&gt;)</code></a> function
 will upload the file to the job container, a temporary project which holds onto files
 associated with this job. <code class="highlighter-rouge">dxpy.upload_local_file</code> returns a DXFile object handle for the
 uploaded file.</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>    <span class="n">counts_txt</span> <span class="o">=</span> <span class="n">dxpy</span><span class="o">.</span><span class="n">upload_local_file</span><span class="p">(</span><span class="n">count_txt_name</span><span class="p">)</span>
-</code></pre>
-</div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">counts_txt</span> <span class="o">=</span> <span class="n">dxpy</span><span class="o">.</span><span class="n">upload_local_file</span><span class="p">(</span><span class="n">count_txt_name</span><span class="p">)</span>
+</code></pre></div></div>
 <p>We then provide the <a href="http://autodoc.dnanexus.com/bindings/python/current/dxpy_functions.html?highlight=dxlink#dxpy.bindings.dxdataobject_functions.dxlink">DXLink</a> for our uploaded file as the output of this job using the standard process in Python:</p>
 <ol>
   <li>Use <a href="http://autodoc.dnanexus.com/bindings/python/current/dxpy_functions.html?highlight=dxlink#dxpy.bindings.dxdataobject_functions.dxlink"><code class="highlighter-rouge">dxpy.dxlink(object_id=&lt;Uploaded DXfile object&gt;)</code></a></li>
@@ -204,12 +202,11 @@ uploaded file.</p>
   <li><code class="highlighter-rouge">return</code> the job output dictionary as the entry point function output</li>
 </ol>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>    <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">output</span><span class="p">[</span><span class="s">"counts_txt"</span><span class="p">]</span> <span class="o">=</span> <span class="n">dxpy</span><span class="o">.</span><span class="n">dxlink</span><span class="p">(</span><span class="n">counts_txt</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">output</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 		</div>
 		

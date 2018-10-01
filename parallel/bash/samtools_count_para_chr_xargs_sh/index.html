@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="generator" content="Jekyll v3.4.3">
+		<meta name="generator" content="Jekyll v3.7.4">
 
 		<link rel="stylesheet" href="https://dnanexus.github.io/dnanexus-example-applets/css/screen.css">
 		<link rel="apple-touch-icon" href="https://dnanexus.github.io/dnanexus-example-applets/apple-touch-icon.png">
@@ -12,23 +12,24 @@
 		<link rel="icon" type="image/png" href="https://dnanexus.github.io/dnanexus-example-applets/images/favicon.ico">
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
 		<script type="text/javascript" src="https://dnanexus.github.io/dnanexus-example-applets/js/jquery.min.js"></script>
-		<!-- Begin Jekyll SEO tag v2.2.3 -->
-<title>Precompiled Binary | DNAnexus Example Applets</title>
-<meta property="og:title" content="Precompiled Binary" />
+		<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Parallel xargs by Chr | DNAnexus Example Applets</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Parallel xargs by Chr" />
 <meta name="author" content="DNAnexus" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="This tutorial showcases packaging a precompiled binary in the resources/ directory of an app(let)." />
-<meta property="og:description" content="This tutorial showcases packaging a precompiled binary in the resources/ directory of an app(let)." />
-<link rel="canonical" href="https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count_binary_sh/" />
-<meta property="og:url" content="https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count_binary_sh/" />
+<meta name="description" content="This applet slices a BAM file by canonical chromosome then performs a parallelized samtools view -c using xargs. Type man xargs for general usage information." />
+<meta property="og:description" content="This applet slices a BAM file by canonical chromosome then performs a parallelized samtools view -c using xargs. Type man xargs for general usage information." />
+<link rel="canonical" href="https://dnanexus.github.io/dnanexus-example-applets/parallel/bash/samtools_count_para_chr_xargs_sh/" />
+<meta property="og:url" content="https://dnanexus.github.io/dnanexus-example-applets/parallel/bash/samtools_count_para_chr_xargs_sh/" />
 <meta property="og:site_name" content="DNAnexus Example Applets" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2018-05-09T00:00:00+00:00" />
+<meta property="article:published_time" content="2018-10-01T00:00:00+00:00" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@dnanexus" />
 <meta name="twitter:creator" content="@DNAnexus" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"BlogPosting","headline":"Precompiled Binary","author":{"@type":"Person","name":"DNAnexus"},"datePublished":"2018-05-09T00:00:00+00:00","dateModified":"2018-05-09T00:00:00+00:00","description":"This tutorial showcases packaging a precompiled binary in the resources/ directory of an app(let).","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count_binary_sh/"},"url":"https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count_binary_sh/"}</script>
+{"description":"This applet slices a BAM file by canonical chromosome then performs a parallelized samtools view -c using xargs. Type man xargs for general usage information.","author":{"@type":"Person","name":"DNAnexus"},"@type":"BlogPosting","url":"https://dnanexus.github.io/dnanexus-example-applets/parallel/bash/samtools_count_para_chr_xargs_sh/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"headline":"Parallel xargs by Chr","dateModified":"2018-10-01T00:00:00+00:00","datePublished":"2018-10-01T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/parallel/bash/samtools_count_para_chr_xargs_sh/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://dnanexus.github.io/dnanexus-example-applets/feed.xml" title="DNAnexus Example Applets" />
@@ -119,58 +120,90 @@
 		<ul>
 			
 			
-				<li><a href="#precompiling-a-binary">Precompiling a Binary</a></li>
+				<li><a href="#how-is-the-samtools-dependency-provided">How is the SAMtools dependency provided?</a></li>
 			
-				<li><a href="#resources-directory">Resources Directory</a></li>
+				<li><a href="#parallel-run">Parallel Run</a></li>
 			
 		</ul>
 	</div>
 	<section class="tutorial-content">
 		
-			<h1>Precompiled Binary</h1>
+			<h1>Parallel xargs by Chr</h1>
 		
 		
 		
 		<div class="tutorial-main">
-			<p>This tutorial showcases packaging a precompiled binary in the <code class="highlighter-rouge">resources/</code> directory of an app(let).</p>
+			<p>This applet slices a BAM file by canonical chromosome then performs a parallelized <code class="highlighter-rouge">samtools view -c</code> using xargs. Type <code class="highlighter-rouge">man xargs</code> for general usage information.</p>
 
-<h2 id="precompiling-a-binary">Precompiling a Binary</h2>
-<p>In this applet, the SAMtools binary was precompiled on an Ubuntu 14.04 machine. A user can do this compilation on an Ubuntu 14.04 machine of their own, or they can utilize the Cloud Workstation app to build and compile a binary. On the Cloud Workstation, the user can download the SAMtools source code and compile it in the worker environment, ensuring that the binary will run on future workers.</p>
-
-<p>See <a href="https://wiki.dnanexus.com/Developer-Tutorials/Cloud-Workstations">Cloud Workstation</a> in the App library for more information.</p>
-
-<h2 id="resources-directory">Resources Directory</h2>
-<p>The SAMtools precompiled binary is placed in the <code class="highlighter-rouge">&lt;applet dir&gt;/resources/</code> directory. Any files found in the <code class="highlighter-rouge">resources/</code> directory will be packaged, uploaded to the platform, and then unpackaged in the root directory <code class="highlighter-rouge">\</code> of the worker. In our case, the <code class="highlighter-rouge">resources/</code> dir is structured as follows:</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>├── Applet dir
+<h2 id="how-is-the-samtools-dependency-provided">How is the SAMtools dependency provided?</h2>
+<p>The SAMtools compiled binary is placed directory in the <code class="highlighter-rouge">&lt;applet dir&gt;/resources</code> directory. Any files found in the <code class="highlighter-rouge">resources/</code> directory will be uploaded so that they will be present in the root directory of the worker. In our case:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├── Applet dir
 │   ├── src
 │   ├── dxapp.json
 │   ├── resources
 │       ├── usr
 │           ├── bin
 │               ├── &lt; samtools binary &gt;
-</code></pre>
-</div>
-<p>When this applet is run on a worker, the <code class="highlighter-rouge">resources/</code> directory will be placed in the worker’s root directory <code class="highlighter-rouge">/</code>:</p>
-<div class="highlighter-rouge"><pre class="highlight"><code>/
+</code></pre></div></div>
+<p>When this applet is run on a worker, the <code class="highlighter-rouge">resources/</code> folder will be placed in the worker’s root directory <code class="highlighter-rouge">/</code>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/
 ├── usr
 │   ├── bin
 │       ├── &lt; samtools binary &gt;
 ├── home
 │   ├── dnanexus
-│   	├── applet script
-</code></pre>
-</div>
-<p>We are able to access the SAMtools command because the respective binary is visible from the default <code class="highlighter-rouge">$PATH</code> variable. The directory <code class="highlighter-rouge">/usr/bin/</code> is part of the <code class="highlighter-rouge">$PATH</code> variable, so in our script we can reference the samtools command directly:</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>samtools view -c <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_name</span><span class="k">}</span><span class="s2">"</span> &gt; <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_prefix</span><span class="k">}</span><span class="s2">.txt"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
+<p><code class="highlighter-rouge">/usr/bin</code> is part of the <code class="highlighter-rouge">$PATH</code> variable, so in our script, we can reference the samtools command directly, as in <code class="highlighter-rouge">samtools view -c ...</code></p>
 
-<p>See <a href="https://wiki.dnanexus.com/Developer-Tutorials/App-Build-Process#The-resources/-directory-and-its-use">the resources/ directory</a> wiki page for more information.</p>
+<h2 id="parallel-run">Parallel Run</h2>
+<h3 id="splice-bam">Splice BAM</h3>
+<p>First, we download our BAM file and slice it by canonical chromosome, writing the <code class="highlighter-rouge">*bam</code> file names to another file.</p>
+
+<p>In order to split a BAM by regions, we need to have a <code class="highlighter-rouge">*.bai</code> index. You can either create an app(let) which takes the <code class="highlighter-rouge">*.bai</code> as an input or generate a <code class="highlighter-rouge">*.bai</code> in the applet. In this tutorial, we generate the <code class="highlighter-rouge">*.bai</code> in the applet, sorting the BAM if necessary.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  dx download <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam</span><span class="k">}</span><span class="s2">"</span>
+
+  <span class="nv">indexsuccess</span><span class="o">=</span><span class="nb">true
+  </span><span class="nv">bam_filename</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_name</span><span class="k">}</span><span class="s2">"</span>
+  samtools index <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_name</span><span class="k">}</span><span class="s2">"</span> <span class="o">||</span> <span class="nv">indexsuccess</span><span class="o">=</span><span class="nb">false
+  </span><span class="k">if</span> <span class="o">[[</span> <span class="nv">$indexsuccess</span> <span class="o">==</span> <span class="nb">false</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
+    </span>samtools sort <span class="nt">-o</span> <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_name</span><span class="k">}</span><span class="s2">"</span> <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_name</span><span class="k">}</span><span class="s2">"</span>
+    samtools index <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_name</span><span class="k">}</span><span class="s2">"</span>
+    <span class="nv">bam_filename</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_name</span><span class="k">}</span><span class="s2">"</span>
+  <span class="k">fi
+
+
+  </span><span class="nv">chromosomes</span><span class="o">=</span><span class="k">$(</span>samtools view <span class="nt">-H</span> <span class="s2">"</span><span class="k">${</span><span class="nv">bam_filename</span><span class="k">}</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="s2">"</span><span class="se">\@</span><span class="s2">SQ"</span> | awk <span class="nt">-F</span> <span class="s1">'\t'</span> <span class="s1">'{print $2}'</span> | awk <span class="nt">-F</span> <span class="s1">':'</span> <span class="s1">'{if ($2 ~ /^chr[0-9XYM]+$|^[0-9XYM]/) {print $2}}'</span><span class="k">)</span>
+
+  <span class="k">for </span>chr <span class="k">in</span> <span class="nv">$chromosomes</span><span class="p">;</span> <span class="k">do
+    </span>samtools view <span class="nt">-b</span> <span class="s2">"</span><span class="k">${</span><span class="nv">bam_filename</span><span class="k">}</span><span class="s2">"</span> <span class="s2">"</span><span class="k">${</span><span class="nv">chr</span><span class="k">}</span><span class="s2">"</span> <span class="nt">-o</span> <span class="s2">"bam_</span><span class="k">${</span><span class="nv">chr</span><span class="k">}</span><span class="s2">."</span>bam
+    <span class="nb">echo</span> <span class="s2">"bam_</span><span class="k">${</span><span class="nv">chr</span><span class="k">}</span><span class="s2">.bam"</span>
+  <span class="k">done</span> <span class="o">&gt;</span> bamfiles.txt
+</code></pre></div></div>
+
+<h3 id="xargs-samtools-view">Xargs SAMtools view</h3>
+<p>In the previous section, we recorded the name of each sliced BAM file into a record file. Now we will perform a <code class="highlighter-rouge">samtools view -c</code> on each slice using the record file as input.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">counts_txt_name</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_prefix</span><span class="k">}</span><span class="s2">_count.txt"</span>
+
+  <span class="nv">sum_reads</span><span class="o">=</span><span class="k">$(</span>&lt;bamfiles.txt xargs <span class="nt">-I</span> <span class="o">{}</span> samtools view <span class="nt">-c</span> <span class="nv">$view_options</span> <span class="s1">'{}'</span> | awk <span class="s1">'{s+=$1} END {print s}'</span><span class="k">)</span>
+  <span class="nb">echo</span> <span class="s2">"Total Count: </span><span class="k">${</span><span class="nv">sum_reads</span><span class="k">}</span><span class="s2">"</span> <span class="o">&gt;</span> <span class="s2">"</span><span class="k">${</span><span class="nv">counts_txt_name</span><span class="k">}</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<h3 id="upload-results">Upload results</h3>
+<p>The results file is uploaded using the standard bash process:</p>
+<ol>
+  <li>Upload a file to the job execution’s container.</li>
+  <li>Provide the DNAnexus link as a job’s output using the script <code class="highlighter-rouge">dx-jobutil-add-output &lt;output name&gt;</code>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">counts_txt_id</span><span class="o">=</span><span class="k">$(</span>dx upload <span class="s2">"</span><span class="k">${</span><span class="nv">counts_txt_name</span><span class="k">}</span><span class="s2">"</span> <span class="nt">--brief</span><span class="k">)</span>
+  dx-jobutil-add-output counts_txt <span class="s2">"</span><span class="k">${</span><span class="nv">counts_txt_id</span><span class="k">}</span><span class="s2">"</span> <span class="nt">--class</span><span class="o">=</span>file
+</code></pre></div>    </div>
+  </li>
+</ol>
 
 		</div>
 		
 		<div class="tutorial-share">
-			<a class="modalOpen no-smooth" href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count_binary_sh">
+			<a class="modalOpen no-smooth" href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/Tutorials/bash/samtools_count_para_chr_xargs_sh">
 		<svg aria-labelledby="title" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><title>GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
 	
  View on GitHub</a>
@@ -212,19 +245,19 @@
 		<h2>Share</h2>
 		<p>Share this tutorial with your community.</p>
 		<ul>
-			<li><a class="twitter" target="_blank" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fbash%2Fsamtools_count_binary_sh%2F">
+			<li><a class="twitter" target="_blank" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fparallel%2Fbash%2Fsamtools_count_para_chr_xargs_sh%2F">
 		<svg class="twitter" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z" /></svg>
 	
  Twitter</a></li>
-			<li><a class="facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fbash%2Fsamtools_count_binary_sh%2F">
+			<li><a class="facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fparallel%2Fbash%2Fsamtools_count_para_chr_xargs_sh%2F">
 		<svg class="facebook" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="15.8 15.8 25 25"><path d="M32.8 24.7h-3.2v-2.1c0-0.8 0.5-1 0.9-1s2.3 0 2.3 0v-3.5l-3.1 0c-3.5 0-4.3 2.6-4.3 4.3v2.3h-2v3.6h2c0 4.6 0 10.2 0 10.2h4.2c0 0 0-5.6 0-10.2h2.8L32.8 24.7z"/></svg>
 	
  Facebook</a></li>
-			<li><a class="google-plus" target="_blank" href="https://plus.google.com/share?url=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fbash%2Fsamtools_count_binary_sh%2F">
+			<li><a class="google-plus" target="_blank" href="https://plus.google.com/share?url=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fparallel%2Fbash%2Fsamtools_count_para_chr_xargs_sh%2F">
 		<svg class="google-plus" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M23,11H21V9H19V11H17V13H19V15H21V13H23M8,11V13.4H12C11.8,14.4 10.8,16.4 8,16.4C5.6,16.4 3.7,14.4 3.7,12C3.7,9.6 5.6,7.6 8,7.6C9.4,7.6 10.3,8.2 10.8,8.7L12.7,6.9C11.5,5.7 9.9,5 8,5C4.1,5 1,8.1 1,12C1,15.9 4.1,19 8,19C12,19 14.7,16.2 14.7,12.2C14.7,11.7 14.7,11.4 14.6,11H8Z" /></svg>
 	
  Google+</a></li>
-			<li><a class="hacker-news" target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fbash%2Fsamtools_count_binary_sh%2F&t=Precompiled%20Binary">
+			<li><a class="hacker-news" target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fparallel%2Fbash%2Fsamtools_count_para_chr_xargs_sh%2F&t=Parallel%20xargs%20by%20Chr">
 		<svg class="hacker-news" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M18.8 3.3c-0.4 0.8-5.6 11.1-5.6 11.2 0 2 0 6.2 0 6.2 -0.1 0-2.2 0-2.3 0 0 0 0-5.9 0-6.2 0 0-5.5-10.9-5.6-11.1C5.3 3.3 5.3 3.3 5.3 3.3 5.3 3.3 5.3 3.3 5.3 3.3c0 0 0 0 0.1 0 0.9 0 1.7 0 2.6 0 0 0 0 0 0 0.1 0.1 0.1 4 8.3 4.1 8.3 0 0 4.2-8.3 4.3-8.4 0.8 0 1.6 0 2.4 0 0 0 0 0 0 0C18.8 3.3 18.8 3.3 18.8 3.3z"/></svg>
 	
  Hacker News</a></li>

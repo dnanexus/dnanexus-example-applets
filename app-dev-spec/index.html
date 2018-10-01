@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="generator" content="Jekyll v3.4.3">
+		<meta name="generator" content="Jekyll v3.7.4">
 
 		<link rel="stylesheet" href="https://dnanexus.github.io/dnanexus-example-applets/css/screen.css">
 		<link rel="apple-touch-icon" href="https://dnanexus.github.io/dnanexus-example-applets/apple-touch-icon.png">
@@ -12,8 +12,9 @@
 		<link rel="icon" type="image/png" href="https://dnanexus.github.io/dnanexus-example-applets/images/favicon.ico">
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
 		<script type="text/javascript" src="https://dnanexus.github.io/dnanexus-example-applets/js/jquery.min.js"></script>
-		<!-- Begin Jekyll SEO tag v2.2.3 -->
+		<!-- Begin Jekyll SEO tag v2.5.0 -->
 <title>Development Basics | DNAnexus Example Applets</title>
+<meta name="generator" content="Jekyll v3.7.4" />
 <meta property="og:title" content="Development Basics" />
 <meta name="author" content="DNAnexus" />
 <meta property="og:locale" content="en_US" />
@@ -28,7 +29,7 @@
 <meta name="twitter:site" content="@dnanexus" />
 <meta name="twitter:creator" content="@DNAnexus" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"BlogPosting","headline":"Development Basics","author":{"@type":"Person","name":"DNAnexus"},"datePublished":"2017-08-02T00:00:00+00:00","dateModified":"2017-08-02T00:00:00+00:00","description":"What it means to build an app or applet","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/app-dev-spec/"},"url":"https://dnanexus.github.io/dnanexus-example-applets/app-dev-spec/"}</script>
+{"description":"What it means to build an app or applet","author":{"@type":"Person","name":"DNAnexus"},"@type":"BlogPosting","url":"https://dnanexus.github.io/dnanexus-example-applets/app-dev-spec/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"headline":"Development Basics","dateModified":"2017-08-02T00:00:00+00:00","datePublished":"2017-08-02T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/app-dev-spec/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://dnanexus.github.io/dnanexus-example-applets/feed.xml" title="DNAnexus Example Applets" />
@@ -181,42 +182,40 @@
 <h2 id="inputs-and-outputs">Inputs and Outputs</h2>
 
 <p>You can envision an app(let) as a <a href="https://en.wikipedia.org/wiki/Black_box">black box</a> that takes an input and gives you an output. Throughout our documentation, you may see the term <code class="highlighter-rouge">I/O</code>, this just means “Input/Output”. We describe the input and output specification in the <code class="highlighter-rouge">dxapp.json</code> file’s <code class="highlighter-rouge">inputSpec</code> and <code class="highlighter-rouge">outputSpec</code> respectively:</p>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"inputSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"inputSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mappings_bam"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mapping"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"patterns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"*.bam"</span><span class="p">],</span><span class="w">
-      </span><span class="nt">"help"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAM format file."</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mappings_bam"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mapping"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"patterns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"*.bam"</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"help"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAM format file."</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="nt">"outputSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"outputSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"counts_txt"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Read count file"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"patterns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"counts_txt"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Read count file"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"patterns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"*.txt"</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nt">"help"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Output file with total counts as the first line."</span><span class="w">
+      </span><span class="s2">"help"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Output file with total counts as the first line."</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 <p>We offer a great deal of customization with I/O fields. The full details of what properties and values are available in I/O specifications can be found on our <a href="https://wiki.dnanexus.com/API-Specification-v1.0.0/Job-Input-and-Output">Job Input and Output</a> wiki page. When viewing tutorials and examples, build the app(let) for yourself and see how the I/O specification is presented on the platform.</p>
 
 <h2 id="dependencies">Dependencies</h2>
 
 <p>Before your app(let) executes there will certain preconditions you must resolve. One common dependency you’ll see in our tutorials is <a href="http://www.htslib.org/doc/samtools.html">SAMtools</a>. To resolve this dependency we often use the <code class="highlighter-rouge">execDepends</code> property in the <code class="highlighter-rouge">dxapp.json</code>.</p>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"execDepends"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"samtools"</span><span class="p">}</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"execDepends"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"samtools"</span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 <p>As you read through each tutorial pay close attention to how we resolve the SAMtools dependency. There are various approaches you can take; each better suited for specific use cases.</p>
 
 <h2 id="entry-points">Entry Points</h2>
@@ -226,37 +225,34 @@
 <p>You can envision entry points as standalone functions that are executed on their own worker, these sub-executions are what we call sub-jobs. They are defined in the <code class="highlighter-rouge">dxapp.json</code> file and referenced in your applet script:</p>
 <ul>
   <li><strong>dxapp.json</strong> we can set specs for each entry point
-    <div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-</span><span class="nt">"runSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="nt">"systemRequirements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x4"</span><span class="w">
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="s2">"runSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="s2">"systemRequirements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x4"</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"count_func"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x2"</span><span class="w">
+    </span><span class="s2">"count_func"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x2"</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"sum_reads"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x4"</span><span class="w">
+    </span><span class="s2">"sum_reads"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x4"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
-    </div>
+</span></code></pre></div>    </div>
   </li>
   <li><strong>Python</strong> scripts refer to them as decorators on functions
-    <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="nd">@dxpy.entry_point</span><span class="p">(</span><span class="s">'main'</span><span class="p">)</span>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@dxpy.entry_point</span><span class="p">(</span><span class="s">'main'</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="o">**</span><span class="n">job_inputs</span><span class="p">):</span>
   <span class="c"># do work</span>
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
   <li><strong>bash</strong> scripts refer to them as the function itself
-    <div class="language-bash highlighter-rouge"><pre class="highlight"><code>main<span class="o">()</span> <span class="o">{</span>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>main<span class="o">()</span> <span class="o">{</span>
   <span class="c"># do work</span>
 <span class="o">}</span>
-</code></pre>
-    </div>
+</code></pre></div>    </div>
     <p>Distributed computing, the primary use case of entry points, takes advantage of the logical separation of work in app(let) scripts. Because each entry point is executed on its own worker you are able to alter instance type and dependencies in the <code class="highlighter-rouge">systemRequirements</code> field of your <code class="highlighter-rouge">dxapp.json</code>. Our distributed tutorials will showcase how to take advantage of the options entry points offer.</p>
   </li>
 </ul>

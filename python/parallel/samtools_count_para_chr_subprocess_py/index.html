@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="generator" content="Jekyll v3.4.3">
+		<meta name="generator" content="Jekyll v3.7.4">
 
 		<link rel="stylesheet" href="https://dnanexus.github.io/dnanexus-example-applets/css/screen.css">
 		<link rel="apple-touch-icon" href="https://dnanexus.github.io/dnanexus-example-applets/apple-touch-icon.png">
@@ -12,8 +12,9 @@
 		<link rel="icon" type="image/png" href="https://dnanexus.github.io/dnanexus-example-applets/images/favicon.ico">
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
 		<script type="text/javascript" src="https://dnanexus.github.io/dnanexus-example-applets/js/jquery.min.js"></script>
-		<!-- Begin Jekyll SEO tag v2.2.3 -->
+		<!-- Begin Jekyll SEO tag v2.5.0 -->
 <title>Parallel by Chr (py) | DNAnexus Example Applets</title>
+<meta name="generator" content="Jekyll v3.7.4" />
 <meta property="og:title" content="Parallel by Chr (py)" />
 <meta name="author" content="DNAnexus" />
 <meta property="og:locale" content="en_US" />
@@ -23,12 +24,12 @@
 <meta property="og:url" content="https://dnanexus.github.io/dnanexus-example-applets/python/parallel/samtools_count_para_chr_subprocess_py/" />
 <meta property="og:site_name" content="DNAnexus Example Applets" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2018-05-09T00:00:00+00:00" />
+<meta property="article:published_time" content="2018-10-01T00:00:00+00:00" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@dnanexus" />
 <meta name="twitter:creator" content="@DNAnexus" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"BlogPosting","headline":"Parallel by Chr (py)","author":{"@type":"Person","name":"DNAnexus"},"datePublished":"2018-05-09T00:00:00+00:00","dateModified":"2018-05-09T00:00:00+00:00","description":"This applet tutorial will perform a SAMtools count using parallel threads.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/python/parallel/samtools_count_para_chr_subprocess_py/"},"url":"https://dnanexus.github.io/dnanexus-example-applets/python/parallel/samtools_count_para_chr_subprocess_py/"}</script>
+{"description":"This applet tutorial will perform a SAMtools count using parallel threads.","author":{"@type":"Person","name":"DNAnexus"},"@type":"BlogPosting","url":"https://dnanexus.github.io/dnanexus-example-applets/python/parallel/samtools_count_para_chr_subprocess_py/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"headline":"Parallel by Chr (py)","dateModified":"2018-10-01T00:00:00+00:00","datePublished":"2018-10-01T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/python/parallel/samtools_count_para_chr_subprocess_py/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://dnanexus.github.io/dnanexus-example-applets/feed.xml" title="DNAnexus Example Applets" />
@@ -149,14 +150,13 @@
 
 <h2 id="how-is-the-samtools-dependency-provided">How is the SAMtools dependency provided?</h2>
 <p>The SAMtools dependency is resolved by declaring an <a href="https://help.ubuntu.com/14.04/serverguide/apt-get.html">Apt-Get</a> package in the <code class="highlighter-rouge">dxapp.json</code> <code class="highlighter-rouge">runSpec.execDepends</code> field.</p>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="w">  </span><span class="s2">"runSpec"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="s2">"runSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="err">...</span><span class="w">
-    </span><span class="nt">"execDepends"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"samtools"</span><span class="p">}</span><span class="w">
+    </span><span class="s2">"execDepends"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"samtools"</span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
   </span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 <p>For additional information, please refer to the <a href="https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages"><code class="highlighter-rouge">execDepends</code> wiki page</a>.</p>
 
 <h2 id="download-bam-file">Download BAM file</h2>
@@ -169,26 +169,24 @@
 </ul>
 
 <p>The path, name, and prefix key-value pattern is repeated for all applet file class inputs specified in the dxapp.json. In this example, our dictionary has the following key-value pairs:</p>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="err">mappings_bam_path:</span><span class="w"> </span><span class="err">[u'/home/dnanexus/in/mappings_bam/SRR504516.bam']</span><span class="w">
-    </span><span class="err">mappings_bam_name:</span><span class="w"> </span><span class="err">[u'SRR504516.bam']</span><span class="w">
-    </span><span class="err">mappings_bam_prefix:</span><span class="w"> </span><span class="err">[u'SRR504516']</span><span class="w">
-    </span><span class="err">index_file_path:</span><span class="w"> </span><span class="err">[u'/home/dnanexus/in/index_file/SRR504516.bam.bai']</span><span class="w">
-    </span><span class="err">index_file_name:</span><span class="w"> </span><span class="err">[u'SRR504516.bam.bai']</span><span class="w">
-    </span><span class="err">index_file_prefix:</span><span class="w"> </span><span class="err">[u'SRR504516']</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="err">mappings_bam_path</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">u'/home/dnanexus/in/mappings_bam/SRR</span><span class="mi">504516</span><span class="err">.bam'</span><span class="p">]</span><span class="w">
+    </span><span class="err">mappings_bam_name</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">u'SRR</span><span class="mi">504516</span><span class="err">.bam'</span><span class="p">]</span><span class="w">
+    </span><span class="err">mappings_bam_prefix</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">u'SRR</span><span class="mi">504516</span><span class="err">'</span><span class="p">]</span><span class="w">
+    </span><span class="err">index_file_path</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">u'/home/dnanexus/in/index_file/SRR</span><span class="mi">504516</span><span class="err">.bam.bai'</span><span class="p">]</span><span class="w">
+    </span><span class="err">index_file_name</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">u'SRR</span><span class="mi">504516</span><span class="err">.bam.bai'</span><span class="p">]</span><span class="w">
+    </span><span class="err">index_file_prefix</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">u'SRR</span><span class="mi">504516</span><span class="err">'</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>    <span class="n">inputs</span> <span class="o">=</span> <span class="n">dxpy</span><span class="o">.</span><span class="n">download_all_inputs</span><span class="p">()</span>
+</span></code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">inputs</span> <span class="o">=</span> <span class="n">dxpy</span><span class="o">.</span><span class="n">download_all_inputs</span><span class="p">()</span>
     <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="s">'mappings_bam_path'</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="count-regions-in-parallel">Count Regions in Parallel</h2>
 <p>Before we can perform our parallel SAMtools count, we must determine the workload for each thread. We arbitrarily set our number of workers to <code class="highlighter-rouge">10</code> and set the workload per thread to <code class="highlighter-rouge">1</code> chromosome at a time. There are various ways to achieve multithreaded processing in python. For the sake of simplicity, we use <a href="https://docs.python.org/2/library/multiprocessing.html#module-multiprocessing.dummy"><code class="highlighter-rouge">multiprocessing.dummy</code></a>, a wrapper around Python’s threading module.
 <!-- INCLUDE: <div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> In addition to Python's `multiprocessing.dummy` 
  module, we simplify our multithreaded processing with several helper functions. We won't cover all the helper functions here, so feel free to review the applet source code in GitHub to see function implementations.</div> --></p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>    <span class="n">input_bam</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s">'mappings_bam_name'</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">input_bam</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s">'mappings_bam_name'</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="n">bam_to_use</span> <span class="o">=</span> <span class="n">create_index_file</span><span class="p">(</span><span class="n">input_bam</span><span class="p">)</span>
     <span class="k">print</span> <span class="s">"Dir info:"</span>
@@ -208,18 +206,16 @@
     <span class="n">t_pools</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 
     <span class="n">verify_pool_status</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>Each worker creates a <em>string</em> to be called in a <code class="highlighter-rouge">subprocess.Popen</code> call. We use the <code class="highlighter-rouge">multiprocessing.dummy.Pool.map(&lt;func&gt;, &lt;iterable&gt;)</code> function to call the helper function <code class="highlighter-rouge">run_cmd</code> for each <em>string</em> in the iterable of <em>view commands</em>. Because we perform our multithreaded processing using <code class="highlighter-rouge">subprocess.Popen</code>, we will not be alerted to any failed processes. We verify our closed workers in the <code class="highlighter-rouge">verify_pool_status</code> helper function.</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">verify_pool_status</span><span class="p">(</span><span class="n">proc_tuples</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">verify_pool_status</span><span class="p">(</span><span class="n">proc_tuples</span><span class="p">):</span>
     <span class="n">err_msgs</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">proc</span> <span class="ow">in</span> <span class="n">proc_tuples</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">proc</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">err_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">proc</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">if</span> <span class="n">err_msgs</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">dxpy</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">AppInternalError</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">err_msgs</span><span class="p">))</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <div class="alert alert-warning" role="alert"><i class="fa fa-warning"></i> <b>Important:</b> In this example we use <code class="highlighter-rouge">subprocess.Popen</code> to process and verify our results in <code class="highlighter-rouge">verify_pool_status</code>. In general, it is considered good practice to use python’s built-in subprocess convenience functions. In this case, <code class="highlighter-rouge">subprocess.check_call</code> would achieve the same goal.</div>
 
@@ -228,7 +224,7 @@
 <p>Each worker returns a read count of just one region in the BAM file. We sum and output the results as the job output. We use the dx-toolkit python SDK’s <a href="http://autodoc.dnanexus.com/bindings/python/current/dxpy_dxfile.html?highlight=upload_local_file#dxpy.bindings.dxfile_functions.upload_local_file"><code class="highlighter-rouge">dxpy.upload_local_file</code></a> function to upload and generate a DXFile corresponding to our result file.
 <!-- Gather results and generate applet output -->
 For python, job outputs have to be a dictionary of key-value pairs, with the keys being job output names as defined in the <code class="highlighter-rouge">dxapp.json</code> and the values being the output values for corresponding output classes. For files, the output type is a <a href="https://wiki.dnanexus.com/api-specification-v1.0.0/Details-and-Links#Linking">DXLink</a>. We use the <a href="http://autodoc.dnanexus.com/bindings/python/current/dxpy_functions.html?highlight=dxlink#dxpy.bindings.dxdataobject_functions.dxlink"><code class="highlighter-rouge">dxpy.dxlink</code></a> function to generate the appropriate DXLink value.</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>    <span class="n">resultfn</span> <span class="o">=</span> <span class="n">bam_to_use</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">'_count.txt'</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">resultfn</span> <span class="o">=</span> <span class="n">bam_to_use</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">'_count.txt'</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">resultfn</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">sum_reads</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">res</span><span class="p">,</span> <span class="n">reg</span> <span class="ow">in</span> <span class="n">izip</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">regions</span><span class="p">):</span>
@@ -242,8 +238,7 @@ For python, job outputs have to be a dictionary of key-value pairs, with the key
     <span class="n">output</span><span class="p">[</span><span class="s">"count_file"</span><span class="p">]</span> <span class="o">=</span> <span class="n">dxpy</span><span class="o">.</span><span class="n">dxlink</span><span class="p">(</span><span class="n">count_file</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">output</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 		</div>
 		

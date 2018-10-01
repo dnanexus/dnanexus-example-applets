@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="generator" content="Jekyll v3.4.3">
+		<meta name="generator" content="Jekyll v3.7.4">
 
 		<link rel="stylesheet" href="https://dnanexus.github.io/dnanexus-example-applets/css/screen.css">
 		<link rel="apple-touch-icon" href="https://dnanexus.github.io/dnanexus-example-applets/apple-touch-icon.png">
@@ -12,8 +12,9 @@
 		<link rel="icon" type="image/png" href="https://dnanexus.github.io/dnanexus-example-applets/images/favicon.ico">
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
 		<script type="text/javascript" src="https://dnanexus.github.io/dnanexus-example-applets/js/jquery.min.js"></script>
-		<!-- Begin Jekyll SEO tag v2.2.3 -->
+		<!-- Begin Jekyll SEO tag v2.5.0 -->
 <title>DNAnexus Tutorials | DNAnexus Example Applets</title>
+<meta name="generator" content="Jekyll v3.7.4" />
 <meta property="og:title" content="DNAnexus Tutorials" />
 <meta name="author" content="DNAnexus" />
 <meta property="og:locale" content="en_US" />
@@ -28,7 +29,7 @@
 <meta name="twitter:site" content="@dnanexus" />
 <meta name="twitter:creator" content="@DNAnexus" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"BlogPosting","headline":"DNAnexus Tutorials","author":{"@type":"Person","name":"DNAnexus"},"datePublished":"2017-08-02T00:00:00+00:00","dateModified":"2017-08-02T00:00:00+00:00","description":"Your first steps in App Development","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/overview/"},"url":"https://dnanexus.github.io/dnanexus-example-applets/overview/"}</script>
+{"description":"Your first steps in App Development","author":{"@type":"Person","name":"DNAnexus"},"@type":"BlogPosting","url":"https://dnanexus.github.io/dnanexus-example-applets/overview/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"headline":"DNAnexus Tutorials","dateModified":"2017-08-02T00:00:00+00:00","datePublished":"2017-08-02T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/overview/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://dnanexus.github.io/dnanexus-example-applets/feed.xml" title="DNAnexus Example Applets" />
@@ -181,30 +182,28 @@
 
 <p>dx-toolkit can be found on our wiki <a href="https://wiki.dnanexus.com/Downloads#DNAnexus-Platform-SDK">Downloads</a> page. Alternatively, it can be built from the <a href="https://github.com/dnanexus/dx-toolkit">github source code</a>.</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>~ <span class="nv">$ </span>curl -O https://wiki.dnanexus.com/images/files/dx-toolkit-v0.228.0-osx.tar.gz
-~ <span class="nv">$ </span>tar -xvf dx-toolkit-v0.228.0-osx.tar.gz
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~ <span class="nv">$ </span>curl <span class="nt">-O</span> https://wiki.dnanexus.com/images/files/dx-toolkit-v0.228.0-osx.tar.gz
+~ <span class="nv">$ </span><span class="nb">tar</span> <span class="nt">-xvf</span> dx-toolkit-v0.228.0-osx.tar.gz
   <span class="c"># A folder dx-toolkit/ will be created in the current directory</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="source-the-dx-toolkit-environment">source the dx-toolkit environment.</h2>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>~ <span class="nv">$ </span><span class="nb">source </span>dx-toolkit/environment
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~ <span class="nv">$ </span><span class="nb">source </span>dx-toolkit/environment
   <span class="c"># You are now ready to use dx commands</span>
-~ <span class="nv">$ </span>dx --version
+~ <span class="nv">$ </span>dx <span class="nt">--version</span>
   <span class="c"># Downloaded dx-toolkit version outputs</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="login-to-the-platform">Login to the platform</h2>
 
 <p>From the CLI use <a href="https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#login"><code class="highlighter-rouge">dx login</code></a>. You may wish to login with a <a href="https://wiki.dnanexus.com/Command-Line-Client/Login-and-Logout#Authentication-Tokens">token</a>.</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>~ <span class="nv">$ </span>dx login
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~ <span class="nv">$ </span>dx login
   Username:  <span class="c"># Platform username</span>
   Password:  <span class="c"># Platform password</span>
   <span class="c"># If this is your first-time login from the Command Line Interface then you will be prompted to select a project</span>
-  Note: Use dx <span class="k">select</span> --level VIEW or dx <span class="k">select</span> --public to <span class="k">select </span>from projects <span class="k">for
+  Note: Use dx <span class="k">select</span> <span class="nt">--level</span> VIEW or dx <span class="k">select</span> <span class="nt">--public</span> to <span class="k">select </span>from projects <span class="k">for
   </span>which you only have VIEW permissions.
 
   Available projects <span class="o">(</span>CONTRIBUTE or higher<span class="o">)</span>:
@@ -213,14 +212,13 @@
   
   Pick a numbered choice or <span class="s2">"m"</span> <span class="k">for </span>more options: 1
   Setting current project to: My Research Project
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="create-a-test-applet">Create a test applet</h2>
 
 <p><a href="https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-app-wizard"><code class="highlighter-rouge">dx-app-wizard</code></a> generates the directory structure required to build an app. For now, there will be no inputs or outputs we’ll just use the default options when prompted.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>~ $ dx-app-wizard
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~ $ dx-app-wizard
 DNAnexus App Wizard, API v1.0.0
 
 Basic Metadata
@@ -241,15 +239,13 @@ Please enter basic metadata fields that will be used to describe your app.  Opti
   ├── Readme.md
   └── Readme.developer.md
 # As you read out wiki and go through these tutorials you'll understand the role each file and directory plays in a developed app(let)
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="build-the-sample-applet">Build the sample app(let)</h2>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>~ <span class="nv">$ </span>dx build my_first_applet
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~ <span class="nv">$ </span>dx build my_first_applet
 <span class="o">{</span><span class="s2">"id"</span>: <span class="s2">"applet-xxxx"</span><span class="o">}</span> <span class="c"># This is the entity-ID of the applet created in the project</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>If you are able to perform the steps above, you’re ready to start creating app(let)s! Next time you or a colleague browse your project, they’ll see this newly created applet.</p>
 

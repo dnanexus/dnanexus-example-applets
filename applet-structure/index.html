@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="generator" content="Jekyll v3.4.3">
+		<meta name="generator" content="Jekyll v3.7.4">
 
 		<link rel="stylesheet" href="https://dnanexus.github.io/dnanexus-example-applets/css/screen.css">
 		<link rel="apple-touch-icon" href="https://dnanexus.github.io/dnanexus-example-applets/apple-touch-icon.png">
@@ -12,8 +12,9 @@
 		<link rel="icon" type="image/png" href="https://dnanexus.github.io/dnanexus-example-applets/images/favicon.ico">
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
 		<script type="text/javascript" src="https://dnanexus.github.io/dnanexus-example-applets/js/jquery.min.js"></script>
-		<!-- Begin Jekyll SEO tag v2.2.3 -->
+		<!-- Begin Jekyll SEO tag v2.5.0 -->
 <title>Basic Applet Structure | DNAnexus Example Applets</title>
+<meta name="generator" content="Jekyll v3.7.4" />
 <meta property="og:title" content="Basic Applet Structure" />
 <meta name="author" content="DNAnexus" />
 <meta property="og:locale" content="en_US" />
@@ -28,7 +29,7 @@
 <meta name="twitter:site" content="@dnanexus" />
 <meta name="twitter:creator" content="@DNAnexus" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"BlogPosting","headline":"Basic Applet Structure","author":{"@type":"Person","name":"DNAnexus"},"datePublished":"2017-08-02T00:00:00+00:00","dateModified":"2017-08-02T00:00:00+00:00","description":"Basics of the app(let) directory","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/applet-structure/"},"url":"https://dnanexus.github.io/dnanexus-example-applets/applet-structure/"}</script>
+{"description":"Basics of the app(let) directory","author":{"@type":"Person","name":"DNAnexus"},"@type":"BlogPosting","url":"https://dnanexus.github.io/dnanexus-example-applets/applet-structure/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"headline":"Basic Applet Structure","dateModified":"2017-08-02T00:00:00+00:00","datePublished":"2017-08-02T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/applet-structure/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://dnanexus.github.io/dnanexus-example-applets/feed.xml" title="DNAnexus Example Applets" />
@@ -168,7 +169,7 @@
 		
 		<div class="tutorial-main">
 			<p>Before you are able to <a href="https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#build"><code class="highlighter-rouge">dx build</code></a> an app(let) you must construct a valid app(let) directory. An app(let) directory skeleton looks like:</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>Applet directory
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Applet directory
 ├── src
 │   └── code.sh  <span class="c"># The applet script</span>
 │
@@ -177,41 +178,39 @@
 ├── dxapp.json
 ├── Readme.md
 └── Readme.developer.md
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="dxappjson">Dxapp.json</h2>
 <p>The <a href="https://wiki.dnanexus.com/dxapp.json">dxapp.json</a> file defines the interface of the applet and tells the platform how the app(let) should be run. As you may have guessed from the extension <code class="highlighter-rouge">*.json</code> an applet is defined in the <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> format. It will contain all the information necessary to build the app(let) on the platform. An example <code class="highlighter-rouge">dxapp.json</code> used in our SAMtools count tutorials:</p>
 
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"samtools_count"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SAMtools count"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"summary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Basic SAMtools count implementation"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"dxapi"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0.1"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"inputSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"samtools_count"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SAMtools count"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"summary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Basic SAMtools count implementation"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"dxapi"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0.1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"inputSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mappings_bam"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mapping"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"patterns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"*.bam"</span><span class="p">],</span><span class="w">
-      </span><span class="nt">"help"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAM format file."</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mappings_bam"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mapping"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"patterns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"*.bam"</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"help"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAM format file."</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="nt">"outputSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"outputSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"counts_txt"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Read count file"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"patterns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"counts_txt"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Read count file"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"patterns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"*.txt"</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nt">"help"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Output file with Total reads as the first line."</span><span class="w">
+      </span><span class="s2">"help"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Output file with Total reads as the first line."</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
 </span><span class="err">...</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <h2 id="applet-script">Applet Script</h2>
 

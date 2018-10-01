@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="generator" content="Jekyll v3.4.3">
+		<meta name="generator" content="Jekyll v3.7.4">
 
 		<link rel="stylesheet" href="https://dnanexus.github.io/dnanexus-example-applets/css/screen.css">
 		<link rel="apple-touch-icon" href="https://dnanexus.github.io/dnanexus-example-applets/apple-touch-icon.png">
@@ -12,8 +12,9 @@
 		<link rel="icon" type="image/png" href="https://dnanexus.github.io/dnanexus-example-applets/images/favicon.ico">
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
 		<script type="text/javascript" src="https://dnanexus.github.io/dnanexus-example-applets/js/jquery.min.js"></script>
-		<!-- Begin Jekyll SEO tag v2.2.3 -->
+		<!-- Begin Jekyll SEO tag v2.5.0 -->
 <title>Bash Helpers | DNAnexus Example Applets</title>
+<meta name="generator" content="Jekyll v3.7.4" />
 <meta property="og:title" content="Bash Helpers" />
 <meta name="author" content="DNAnexus" />
 <meta property="og:locale" content="en_US" />
@@ -23,12 +24,12 @@
 <meta property="og:url" content="https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count_bashhelper_sh/" />
 <meta property="og:site_name" content="DNAnexus Example Applets" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2018-05-09T00:00:00+00:00" />
+<meta property="article:published_time" content="2018-10-01T00:00:00+00:00" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@dnanexus" />
 <meta name="twitter:creator" content="@DNAnexus" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"BlogPosting","headline":"Bash Helpers","author":{"@type":"Person","name":"DNAnexus"},"datePublished":"2018-05-09T00:00:00+00:00","dateModified":"2018-05-09T00:00:00+00:00","description":"This applet performs a basic SAMtools count with the aid of bash helper variables.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count_bashhelper_sh/"},"url":"https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count_bashhelper_sh/"}</script>
+{"description":"This applet performs a basic SAMtools count with the aid of bash helper variables.","author":{"@type":"Person","name":"DNAnexus"},"@type":"BlogPosting","url":"https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count_bashhelper_sh/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"headline":"Bash Helpers","dateModified":"2018-10-01T00:00:00+00:00","datePublished":"2018-10-01T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/bash/samtools_count_bashhelper_sh/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://dnanexus.github.io/dnanexus-example-applets/feed.xml" title="DNAnexus Example Applets" />
@@ -141,35 +142,31 @@
 <h2 id="download-bam-files">Download BAM Files</h2>
 <p>Input files are downloaded using the <a href="https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-download-all-inputs"><code class="highlighter-rouge">dx-download-all-inputs</code></a> command. The <code class="highlighter-rouge">dx-download-all-inputs</code> command will go through all inputs and download into folders with the pattern
 <code class="highlighter-rouge">/home/dnanexus/in/[VARIABLE]/[file or subfolder with files]</code>.</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>dx-download-all-inputs
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dx-download-all-inputs
+</code></pre></div></div>
 
 <h2 id="create-output-directory">Create Output Directory</h2>
 
 <p>We create an output directory in preparation for <code class="highlighter-rouge">dx-upload-all-outputs</code> DNAnexus command in the (Upload Results)[#Upload Result] section.</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>mkdir -p out/counts_txt
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir <span class="nt">-p</span> out/counts_txt
+</code></pre></div></div>
 
 <h2 id="run-samtools-view">Run SAMtools View</h2>
 
 <p>After executing the <code class="highlighter-rouge">dx-download-all-inputs</code> command, there are three helper variables created to aid in scripting. For this applet, the input variable name <code class="highlighter-rouge">mappings_bam</code> with platform filename <code class="highlighter-rouge">my_mappings.bam</code> will have a helper variables:</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># [VARIABLE]_path the absolute string path to the file.</span>
-<span class="gp">$ </span><span class="nb">echo</span> <span class="nv">$mappings_bam_path</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># [VARIABLE]_path the absolute string path to the file.</span>
+<span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$mappings_bam_path</span>
 /home/dnanexus/in/mappings_bam/my_mappings.bam
 <span class="c"># [VARIABLE]_prefix the file name minus the longest matching pattern in the dxapp.json file</span>
-<span class="gp">$ </span><span class="nb">echo</span> <span class="nv">$mappings_bam_prefix</span>
+<span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$mappings_bam_prefix</span>
 my_mappings
 <span class="c"># [VARIABLE]_name the file name from the platform</span>
-<span class="gp">$ </span><span class="nb">echo</span> <span class="nv">$mappings_bam_name</span>
+<span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$mappings_bam_name</span>
 my_mappings.bam
-</code></pre>
-</div>
+</code></pre></div></div>
 <p>We use the bash helper variable <code class="highlighter-rouge">mappings_bam_path</code> to reference the location of a file after it has been downloaded using <code class="highlighter-rouge">dx-download-all-inputs</code>.</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>samtools view -c <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_path</span><span class="k">}</span><span class="s2">"</span> &gt; out/counts_txt/<span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_prefix</span><span class="k">}</span><span class="s2">.txt"</span>
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>samtools view <span class="nt">-c</span> <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_path</span><span class="k">}</span><span class="s2">"</span> <span class="o">&gt;</span> out/counts_txt/<span class="s2">"</span><span class="k">${</span><span class="nv">mappings_bam_prefix</span><span class="k">}</span><span class="s2">.txt"</span>
+</code></pre></div></div>
 
 <h2 id="upload-result">Upload Result</h2>
 
@@ -177,9 +174,8 @@ my_mappings.bam
 it as the job’s output. The <code class="highlighter-rouge">dx-upload-all-outputs</code> command expects to find file paths matching the pattern
 <code class="highlighter-rouge">/home/dnanexus/out/[VARIABLE]/*</code>. It will upload matching files and then associate them as the output corresponding to <code class="highlighter-rouge">[VARIABLE]</code>. In this case,
 the output is called <code class="highlighter-rouge">counts_txt</code>. <a href="#create-output-directory">Above</a> we created the folders, and we can now place the outputs there.  <!-- TODO: Add multiple dx upload all example --></p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>dx-upload-all-outputs
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dx-upload-all-outputs
+</code></pre></div></div>
 
 		</div>
 		

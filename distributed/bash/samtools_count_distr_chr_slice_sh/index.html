@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="generator" content="Jekyll v3.4.3">
+		<meta name="generator" content="Jekyll v3.7.4">
 
 		<link rel="stylesheet" href="https://dnanexus.github.io/dnanexus-example-applets/css/screen.css">
 		<link rel="apple-touch-icon" href="https://dnanexus.github.io/dnanexus-example-applets/apple-touch-icon.png">
@@ -12,8 +12,9 @@
 		<link rel="icon" type="image/png" href="https://dnanexus.github.io/dnanexus-example-applets/images/favicon.ico">
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
 		<script type="text/javascript" src="https://dnanexus.github.io/dnanexus-example-applets/js/jquery.min.js"></script>
-		<!-- Begin Jekyll SEO tag v2.2.3 -->
+		<!-- Begin Jekyll SEO tag v2.5.0 -->
 <title>Distributed by Chr (sh) | DNAnexus Example Applets</title>
+<meta name="generator" content="Jekyll v3.7.4" />
 <meta property="og:title" content="Distributed by Chr (sh)" />
 <meta name="author" content="DNAnexus" />
 <meta property="og:locale" content="en_US" />
@@ -23,12 +24,12 @@
 <meta property="og:url" content="https://dnanexus.github.io/dnanexus-example-applets/distributed/bash/samtools_count_distr_chr_slice_sh/" />
 <meta property="og:site_name" content="DNAnexus Example Applets" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2018-05-09T00:00:00+00:00" />
+<meta property="article:published_time" content="2018-10-01T00:00:00+00:00" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@dnanexus" />
 <meta name="twitter:creator" content="@DNAnexus" />
 <script type="application/ld+json">
-{"@context":"http://schema.org","@type":"BlogPosting","headline":"Distributed by Chr (sh)","author":{"@type":"Person","name":"DNAnexus"},"datePublished":"2018-05-09T00:00:00+00:00","dateModified":"2018-05-09T00:00:00+00:00","description":"Documentation to create a distributed applet can be found on the Developer Tutorials wiki page. This readme will focus on the details of this applet.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/distributed/bash/samtools_count_distr_chr_slice_sh/"},"url":"https://dnanexus.github.io/dnanexus-example-applets/distributed/bash/samtools_count_distr_chr_slice_sh/"}</script>
+{"description":"Documentation to create a distributed applet can be found on the Developer Tutorials wiki page. This readme will focus on the details of this applet.","author":{"@type":"Person","name":"DNAnexus"},"@type":"BlogPosting","url":"https://dnanexus.github.io/dnanexus-example-applets/distributed/bash/samtools_count_distr_chr_slice_sh/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"headline":"Distributed by Chr (sh)","dateModified":"2018-10-01T00:00:00+00:00","datePublished":"2018-10-01T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/distributed/bash/samtools_count_distr_chr_slice_sh/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://dnanexus.github.io/dnanexus-example-applets/feed.xml" title="DNAnexus Example Applets" />
@@ -142,18 +143,17 @@
 
 <h2 id="how-is-the-samtools-dependency-provided">How is the SAMtools dependency provided?</h2>
 <p>The SAMtools dependency is resolved by declaring an <a href="https://help.ubuntu.com/14.04/serverguide/apt-get.html">Apt-Get</a> package in the <code class="highlighter-rouge">dxapp.json</code> file’s <code class="highlighter-rouge">runSpec.execDepends</code>.</p>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
 </span><span class="err">...</span><span class="w">
-    </span><span class="nt">"runSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"runSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
   	</span><span class="err">...</span><span class="w">
-      </span><span class="nt">"execDepends"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"samtools"</span><span class="p">}</span><span class="w">
+      </span><span class="s2">"execDepends"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"samtools"</span><span class="p">}</span><span class="w">
       </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="err">...</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 <p>For additional information, please refer to the <a href="https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages"><code class="highlighter-rouge">execDepends</code></a> wiki page.</p>
 
 <h2 id="entry-points">Entry Points</h2>
@@ -166,99 +166,93 @@
 </ul>
 
 <p>Entry points are executed on a new worker with its own system requirements. The instance type can be set in the <code class="highlighter-rouge">dxapp.json</code> file’s <code class="highlighter-rouge">runSpec.systemRequirements</code>:</p>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"runSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"runSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="err">...</span><span class="w">
-    </span><span class="nt">"systemRequirements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x4"</span><span class="w">
+    </span><span class="s2">"systemRequirements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x4"</span><span class="w">
       </span><span class="p">},</span><span class="w">
-      </span><span class="nt">"count_func"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x2"</span><span class="w">
+      </span><span class="s2">"count_func"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x2"</span><span class="w">
       </span><span class="p">},</span><span class="w">
-      </span><span class="nt">"sum_reads"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x4"</span><span class="w">
+      </span><span class="s2">"sum_reads"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"instanceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mem1_ssd1_x4"</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="err">...</span><span class="w">
-  </span><span class="err">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 <h2 id="main">main</h2>
 <p>The <em>main</em> function slices the initial <code class="highlighter-rouge">*.bam</code> file and generates an index <code class="highlighter-rouge">*.bai</code> if needed. The input <code class="highlighter-rouge">*.bam</code> is the sliced into smaller <code class="highlighter-rouge">*.bam</code> files containing only reads from canonical chromosomes. First, the main function downloads the BAM file and gets the headers.</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>  dx download <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_sorted_bam</span><span class="k">}</span><span class="s2">"</span>
-  <span class="nv">chromosomes</span><span class="o">=</span><span class="k">$(</span>samtools view -H <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_sorted_bam_name</span><span class="k">}</span><span class="s2">"</span> | grep <span class="s2">"</span><span class="se">\@</span><span class="s2">SQ"</span> | awk -F <span class="s1">'\t'</span> <span class="s1">'{print $2}'</span> | awk -F <span class="s1">':'</span> <span class="s1">'{if ($2 ~ /^chr[0-9XYM]+$|^[0-9XYM]/) {print $2}}'</span><span class="k">)</span>
-</code></pre>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  dx download <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_sorted_bam</span><span class="k">}</span><span class="s2">"</span>
+  <span class="nv">chromosomes</span><span class="o">=</span><span class="k">$(</span>samtools view <span class="nt">-H</span> <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_sorted_bam_name</span><span class="k">}</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="s2">"</span><span class="se">\@</span><span class="s2">SQ"</span> | awk <span class="nt">-F</span> <span class="s1">'\t'</span> <span class="s1">'{print $2}'</span> | awk <span class="nt">-F</span> <span class="s1">':'</span> <span class="s1">'{if ($2 ~ /^chr[0-9XYM]+$|^[0-9XYM]/) {print $2}}'</span><span class="k">)</span>
+</code></pre></div></div>
 
 <p>Sliced <code class="highlighter-rouge">*.bam</code> files are uploaded and their file IDs are passed to the <em>count_func</em> entry point using the <a href="https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-jobutil-new-job"><code class="highlighter-rouge">dx-jobutil-new-job</code></a> command.</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_sorted_bai</span><span class="k">}</span><span class="s2">"</span> <span class="o">]</span>; <span class="k">then
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">if</span> <span class="o">[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_sorted_bai</span><span class="k">}</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
     </span>samtools index <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_sorted_bam_name</span><span class="k">}</span><span class="s2">"</span>
   <span class="k">else
-    </span>dx download <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_sorted_bai</span><span class="k">}</span><span class="s2">"</span> -o <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_sorted_bam_name</span><span class="k">}</span><span class="s2">"</span>.bai
+    </span>dx download <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_sorted_bai</span><span class="k">}</span><span class="s2">"</span> <span class="nt">-o</span> <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_sorted_bam_name</span><span class="k">}</span><span class="s2">"</span>.bai
   <span class="k">fi
 
   </span><span class="nv">count_jobs</span><span class="o">=()</span>
-  <span class="k">for </span>chr <span class="k">in</span> <span class="nv">$chromosomes</span>; <span class="k">do
+  <span class="k">for </span>chr <span class="k">in</span> <span class="nv">$chromosomes</span><span class="p">;</span> <span class="k">do
     </span><span class="nv">seg_name</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">mappings_sorted_bam_prefix</span><span class="k">}</span><span class="s2">_</span><span class="k">${</span><span class="nv">chr</span><span class="k">}</span><span class="s2">"</span>.bam
-    samtools view -b <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_sorted_bam_name</span><span class="k">}</span><span class="s2">"</span> <span class="s2">"</span><span class="k">${</span><span class="nv">chr</span><span class="k">}</span><span class="s2">"</span> &gt; <span class="s2">"</span><span class="k">${</span><span class="nv">seg_name</span><span class="k">}</span><span class="s2">"</span>
-    <span class="nv">bam_seg_file</span><span class="o">=</span><span class="k">$(</span>dx upload <span class="s2">"</span><span class="k">${</span><span class="nv">seg_name</span><span class="k">}</span><span class="s2">"</span> --brief<span class="k">)</span>
-    count_jobs+<span class="o">=(</span><span class="k">$(</span>dx-jobutil-new-job -isegmentedbam_file<span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">bam_seg_file</span><span class="k">}</span><span class="s2">"</span> -ichr<span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">chr</span><span class="k">}</span><span class="s2">"</span> count_func<span class="k">)</span><span class="o">)</span>
+    samtools view <span class="nt">-b</span> <span class="s2">"</span><span class="k">${</span><span class="nv">mappings_sorted_bam_name</span><span class="k">}</span><span class="s2">"</span> <span class="s2">"</span><span class="k">${</span><span class="nv">chr</span><span class="k">}</span><span class="s2">"</span> <span class="o">&gt;</span> <span class="s2">"</span><span class="k">${</span><span class="nv">seg_name</span><span class="k">}</span><span class="s2">"</span>
+    <span class="nv">bam_seg_file</span><span class="o">=</span><span class="k">$(</span>dx upload <span class="s2">"</span><span class="k">${</span><span class="nv">seg_name</span><span class="k">}</span><span class="s2">"</span> <span class="nt">--brief</span><span class="k">)</span>
+    count_jobs+<span class="o">=(</span><span class="k">$(</span>dx-jobutil-new-job <span class="nt">-isegmentedbam_file</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">bam_seg_file</span><span class="k">}</span><span class="s2">"</span> <span class="nt">-ichr</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">chr</span><span class="k">}</span><span class="s2">"</span> count_func<span class="k">)</span><span class="o">)</span>
   <span class="k">done</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Outputs from the <em>count_func</em> entry points are referenced as Job Based Object References (<a href="https://wiki.dnanexus.com/API-Specification-v1.0.0/Job-Input-and-Output#Job-Dependencies">JBOR</a>) and used as inputs for the <em>sum_reads</em> entry point.</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>  <span class="k">for </span>job <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">count_jobs</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span>; <span class="k">do
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">for </span>job <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">count_jobs</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span> <span class="k">do
     </span>readfiles+<span class="o">=(</span><span class="s2">"-ireadfiles=</span><span class="k">${</span><span class="nv">job</span><span class="k">}</span><span class="s2">:counts_txt"</span><span class="o">)</span>
   <span class="k">done
 
-  </span><span class="nv">sum_reads_job</span><span class="o">=</span><span class="k">$(</span>dx-jobutil-new-job <span class="s2">"</span><span class="k">${</span><span class="nv">readfiles</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span> -ifilename<span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">mappings_sorted_bam_prefix</span><span class="k">}</span><span class="s2">"</span> sum_reads<span class="k">)</span>
-</code></pre>
-</div>
+  </span><span class="nv">sum_reads_job</span><span class="o">=</span><span class="k">$(</span>dx-jobutil-new-job <span class="s2">"</span><span class="k">${</span><span class="nv">readfiles</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span> <span class="nt">-ifilename</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">mappings_sorted_bam_prefix</span><span class="k">}</span><span class="s2">"</span> sum_reads<span class="k">)</span>
+</code></pre></div></div>
 
 <p>The output of the <em>sum_reads</em> entry point is used as the output of the main entry point via JBOR reference using the command <a href="https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-jobutil-add-output"><code class="highlighter-rouge">dx-jobutil-add-output</code></a>.
 <!-- Upload chromosome_results.txt from sum_reads subjob as job output --></p>
 
 <h2 id="count_func">count_func</h2>
 <p>This entry point downloads and runs the command <code class="highlighter-rouge">samtools view -c</code> on the sliced <code class="highlighter-rouge">*.bam</code>. The generated <code class="highlighter-rouge">counts_txt</code> output file is uploaded as the entry point’s job output via the command <a href="https://wiki.dnanexus.com/Helpstrings-of-SDK-Command-Line-Utilities#dx-jobutil-add-output"><code class="highlighter-rouge">dx-jobutil-add-output</code></a>.</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>count_func <span class="o">()</span> 
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>count_func <span class="o">()</span> 
 <span class="o">{</span> 
-    <span class="nb">echo</span> <span class="s2">"Value of segmentedbam_file: '</span><span class="k">${</span><span class="nv">segmentedbam_file</span><span class="k">}</span><span class="s2">'"</span>;
-    <span class="nb">echo</span> <span class="s2">"Chromosome being counted '</span><span class="k">${</span><span class="nv">chr</span><span class="k">}</span><span class="s2">'"</span>;
-    dx download <span class="s2">"</span><span class="k">${</span><span class="nv">segmentedbam_file</span><span class="k">}</span><span class="s2">"</span>;
-    <span class="nv">readcount</span><span class="o">=</span><span class="k">$(</span>samtools view -c <span class="s2">"</span><span class="k">${</span><span class="nv">segmentedbam_file_name</span><span class="k">}</span><span class="s2">"</span><span class="k">)</span>;
-    <span class="nb">printf</span> <span class="s2">"</span><span class="k">${</span><span class="nv">chr</span><span class="k">}</span><span class="s2">:</span><span class="se">\t</span><span class="s2">%s</span><span class="se">\n</span><span class="s2">"</span> <span class="s2">"</span><span class="k">${</span><span class="nv">readcount</span><span class="k">}</span><span class="s2">"</span> &gt; <span class="s2">"</span><span class="k">${</span><span class="nv">segmentedbam_file_prefix</span><span class="k">}</span><span class="s2">.txt"</span>;
-    <span class="nv">readcount_file</span><span class="o">=</span><span class="k">$(</span>dx upload <span class="s2">"</span><span class="k">${</span><span class="nv">segmentedbam_file_prefix</span><span class="k">}</span><span class="s2">"</span>.txt --brief<span class="k">)</span>;
-    dx-jobutil-add-output counts_txt <span class="s2">"</span><span class="k">${</span><span class="nv">readcount_file</span><span class="k">}</span><span class="s2">"</span> --class<span class="o">=</span>file
+    <span class="nb">echo</span> <span class="s2">"Value of segmentedbam_file: '</span><span class="k">${</span><span class="nv">segmentedbam_file</span><span class="k">}</span><span class="s2">'"</span><span class="p">;</span>
+    <span class="nb">echo</span> <span class="s2">"Chromosome being counted '</span><span class="k">${</span><span class="nv">chr</span><span class="k">}</span><span class="s2">'"</span><span class="p">;</span>
+    dx download <span class="s2">"</span><span class="k">${</span><span class="nv">segmentedbam_file</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span>
+    <span class="nv">readcount</span><span class="o">=</span><span class="k">$(</span>samtools view <span class="nt">-c</span> <span class="s2">"</span><span class="k">${</span><span class="nv">segmentedbam_file_name</span><span class="k">}</span><span class="s2">"</span><span class="k">)</span><span class="p">;</span>
+    <span class="nb">printf</span> <span class="s2">"</span><span class="k">${</span><span class="nv">chr</span><span class="k">}</span><span class="s2">:</span><span class="se">\t</span><span class="s2">%s</span><span class="se">\n</span><span class="s2">"</span> <span class="s2">"</span><span class="k">${</span><span class="nv">readcount</span><span class="k">}</span><span class="s2">"</span> <span class="o">&gt;</span> <span class="s2">"</span><span class="k">${</span><span class="nv">segmentedbam_file_prefix</span><span class="k">}</span><span class="s2">.txt"</span><span class="p">;</span>
+    <span class="nv">readcount_file</span><span class="o">=</span><span class="k">$(</span>dx upload <span class="s2">"</span><span class="k">${</span><span class="nv">segmentedbam_file_prefix</span><span class="k">}</span><span class="s2">"</span>.txt <span class="nt">--brief</span><span class="k">)</span><span class="p">;</span>
+    dx-jobutil-add-output counts_txt <span class="s2">"</span><span class="k">${</span><span class="nv">readcount_file</span><span class="k">}</span><span class="s2">"</span> <span class="nt">--class</span><span class="o">=</span>file
 <span class="o">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="sum_reads">sum_reads</h2>
 <p>The <em>main</em> entry point triggers this subjob, providing the output of <em>count_func</em> as an input. This entry point gathers all the files generated by the <em>count_func</em> jobs and sums them.</p>
 
 <p>This function returns <code class="highlighter-rouge">read_sum_file</code> as the entry point output.</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>sum_reads <span class="o">()</span> 
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sum_reads <span class="o">()</span> 
 <span class="o">{</span> 
-    <span class="nb">set</span> -e -x -o pipefail;
-    <span class="nb">printf</span> <span class="s2">"Value of read file array %s"</span> <span class="s2">"</span><span class="k">${</span><span class="nv">readfiles</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span>;
-    <span class="nb">echo</span> <span class="s2">"Filename: </span><span class="k">${</span><span class="nv">filename</span><span class="k">}</span><span class="s2">"</span>;
-    <span class="nb">echo</span> <span class="s2">"Summing values in files and creating output read file"</span>;
-    <span class="k">for </span>read_f <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">readfiles</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span>;
+    <span class="nb">set</span> <span class="nt">-e</span> <span class="nt">-x</span> <span class="nt">-o</span> pipefail<span class="p">;</span>
+    <span class="nb">printf</span> <span class="s2">"Value of read file array %s"</span> <span class="s2">"</span><span class="k">${</span><span class="nv">readfiles</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span>
+    <span class="nb">echo</span> <span class="s2">"Filename: </span><span class="k">${</span><span class="nv">filename</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span>
+    <span class="nb">echo</span> <span class="s2">"Summing values in files and creating output read file"</span><span class="p">;</span>
+    <span class="k">for </span>read_f <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">readfiles</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span>
     <span class="k">do
-        </span><span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">read_f</span><span class="k">}</span><span class="s2">"</span>;
-        dx download <span class="s2">"</span><span class="k">${</span><span class="nv">read_f</span><span class="k">}</span><span class="s2">"</span> -o - &gt;&gt; chromosome_result.txt;
-    <span class="k">done</span>;
-    <span class="nv">count_file</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">filename</span><span class="k">}</span><span class="s2">_chromosome_count.txt"</span>;
-    <span class="nv">total</span><span class="o">=</span><span class="k">$(</span>awk <span class="s1">'{s+=$2} END {print s}'</span> chromosome_result.txt<span class="k">)</span>;
-    <span class="nb">echo</span> <span class="s2">"Total reads: </span><span class="k">${</span><span class="nv">total</span><span class="k">}</span><span class="s2">"</span> &gt;&gt; <span class="s2">"</span><span class="k">${</span><span class="nv">count_file</span><span class="k">}</span><span class="s2">"</span>;
-    <span class="nv">readfile_name</span><span class="o">=</span><span class="k">$(</span>dx upload <span class="s2">"</span><span class="k">${</span><span class="nv">count_file</span><span class="k">}</span><span class="s2">"</span> --brief<span class="k">)</span>;
-    dx-jobutil-add-output read_sum_file <span class="s2">"</span><span class="k">${</span><span class="nv">readfile_name</span><span class="k">}</span><span class="s2">"</span> --class<span class="o">=</span>file
+        </span><span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">read_f</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span>
+        dx download <span class="s2">"</span><span class="k">${</span><span class="nv">read_f</span><span class="k">}</span><span class="s2">"</span> <span class="nt">-o</span> - <span class="o">&gt;&gt;</span> chromosome_result.txt<span class="p">;</span>
+    <span class="k">done</span><span class="p">;</span>
+    <span class="nv">count_file</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">filename</span><span class="k">}</span><span class="s2">_chromosome_count.txt"</span><span class="p">;</span>
+    <span class="nv">total</span><span class="o">=</span><span class="k">$(</span>awk <span class="s1">'{s+=$2} END {print s}'</span> chromosome_result.txt<span class="k">)</span><span class="p">;</span>
+    <span class="nb">echo</span> <span class="s2">"Total reads: </span><span class="k">${</span><span class="nv">total</span><span class="k">}</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> <span class="s2">"</span><span class="k">${</span><span class="nv">count_file</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span>
+    <span class="nv">readfile_name</span><span class="o">=</span><span class="k">$(</span>dx upload <span class="s2">"</span><span class="k">${</span><span class="nv">count_file</span><span class="k">}</span><span class="s2">"</span> <span class="nt">--brief</span><span class="k">)</span><span class="p">;</span>
+    dx-jobutil-add-output read_sum_file <span class="s2">"</span><span class="k">${</span><span class="nv">readfile_name</span><span class="k">}</span><span class="s2">"</span> <span class="nt">--class</span><span class="o">=</span>file
 <span class="o">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 		</div>
 		
