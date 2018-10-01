@@ -17,4 +17,4 @@ pipeline:
         pages_directory: docs/_site
         secrets: [ github_username, github_password ]
 
-branches: [master]
+branches: [master, tag]
