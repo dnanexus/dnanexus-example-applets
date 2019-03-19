@@ -1,0 +1,11 @@
+{
+    "name": "shiny_asset",
+    "title": "Shiny Asset",
+    "description": "Libraries for building web apps with R Shiny",
+    "version": "0.0.1",
+    "distribution": "Ubuntu",
+    "release": "16.04",
+    "execDepends": [
+        {"name": "shiny", "package_manager": "cran"}
+    ]
+}

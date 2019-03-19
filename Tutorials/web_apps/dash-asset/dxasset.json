@@ -1,0 +1,17 @@
+{
+    "name": "dash_asset",
+    "title": "Dash Asset",
+    "description": "Libraries for building web apps with Dash from Plotly",
+    "version": "0.0.1",
+    "distribution": "Ubuntu",
+    "release": "16.04",
+    "execDepends": [
+        {"name": "dash", "version":"0.39.0", "package_manager": "pip"},
+        {"name": "dash-html-components", "version":"0.14.0", "package_manager": "pip"},
+        {"name": "dash-core-components", "version":"0.44.0", "package_manager": "pip"},
+        {"name": "dash-table", "version":"3.6.0", "package_manager": "pip"},
+        {"name": "dash-daq", "version":"0.1.0", "package_manager": "pip"},
+        {"name": "pandas", "version":"0.24.1", "package_manager": "pip"},
+        {"name": "numpy", "version":"1.16.2", "package_manager": "pip"}
+    ]
+}

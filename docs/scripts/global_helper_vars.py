@@ -8,7 +8,8 @@ AppObj = namedtuple('AppObj', ['readme_md', 'src_code', 'app_name', 'title', 'in
 
 TUTORIAL_TYPES_SEARCH = {
     "parallel": re.compile(r'.*para.*'),
-    "distributed": re.compile(r'.*distr.*')
+    "distributed": re.compile(r'.*distr.*'),
+    "web_app": re.compile(r'.*web.*')
 }
 
 SUPPORTED_INTERPRETERS = {  # dxapp.json supported interpreters. switch case setup
