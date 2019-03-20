@@ -16,6 +16,6 @@ Review the tutorials [TUTORIAL_README.md](Tutorials/TUTORIAL_README.md).
 
 Developer Applets on the platform are controlled internally. Email support@dnanexus.com with requests.
 
-## Updating the scripts (this Jekyll site)
+## Updating site scripts for this site
 
-Review the scripts [SITE_README.md](docs/SITE_README.md).
+Review the scripts and find instructions for running this site locally with Jekyll to test changes [SITE_README.md](docs/SITE_README.md).
