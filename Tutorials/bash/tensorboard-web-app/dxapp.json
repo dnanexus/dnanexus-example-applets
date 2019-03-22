@@ -1,0 +1,40 @@
+{
+  "name": "tensorboard-web-app",
+  "title": "TensorBoard Example Web App ",
+  "summary": "Demonstrates how to use TensorBoard on DNAnexus",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "httpsApp": {"ports":[443], "shared_access": "VIEW"},
+  "inputSpec": [],
+  "outputSpec": [],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 48
+      }
+    },
+    "interpreter": "bash",
+    "release": "14.04",
+    "distribution": "Ubuntu",
+    "file": "src/code.sh",
+    "assetDepends": [
+      {
+        "id": "record-FX41v48054QJK3zxBZ47Xb6P"
+      }
+    ]
+  },
+  "access": {
+    "network": [
+      "*"
+    ]
+  },
+  "regionalOptions": {
+    "aws:us-east-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_x4"
+        }
+      }
+    }
+  }
+}

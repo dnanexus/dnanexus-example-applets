@@ -37,19 +37,20 @@ tutorial_page: True
 				</div>
 			{% endif %}
 		{% endif %}
-		
-		<div class="tutorial-main">
-			{{ content }}
-		</div>
+
 		{% if page.github_link %}
 		<div class="tutorial-share">
-			<a class="modalOpen no-smooth" href="{{ page.github_link }}">{% include social-icon.html icon="GitHub" %} View on GitHub</a>
+			<a class="modalOpen no-smooth" href="{{ page.github_link }}" target="_blank">{% include social-icon.html icon="GitHub" %} View full source code on GitHub</a>
 		</div>
 		<!-- <div class="tutorial-share">
 			<a class="modalOpen no-smooth" href="#subscribe">{% include social-icon.html icon="Email" %} Subscribe</a>
 			<a class="modalOpen no-smooth" href="#share">{% include social-icon.html icon="Share" %} Share</a>
 		</div> -->
 		{% endif %}
+
+		<div class="tutorial-main">
+			{{ content }}
+		</div>
 	</section>
 </div>
 

@@ -1,0 +1,35 @@
+{
+  "name": "r-shiny-web-app",
+  "title": "R Shiny Example Web App",
+  "summary": "Demonstrates how to use R Shiny on DNAnexus",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "httpsApp": {"ports":[443], "shared_access": "VIEW"},
+  "inputSpec": [],
+  "outputSpec": [],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 48
+      }
+    },
+    "interpreter": "bash",
+    "release": "16.04",
+    "distribution": "Ubuntu",
+    "file": "src/code.sh",
+    "assetDepends": [
+      {
+        "id": "record-FX4ZV100JfBVQJV71fP12QpB"
+      }
+    ]
+  },
+  "regionalOptions": {
+    "aws:us-east-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_x4"
+        }
+      }
+    }
+  }
+}
