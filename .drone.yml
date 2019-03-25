@@ -2,12 +2,12 @@
 pipeline:
 
     generate-post:
-        image: 782066560884.dkr.ecr.us-east-2.amazonaws.com/example-applets-ghpage-builder:latest
+        image: registry.internal.dnanexus.com/docker-science/example-applets-ghpage-builder:1.0.0
         commands:
             - bash -c "sudo ln -sf bash /bin/sh && python docs/scripts/site_rehydrate.py --overwrite-files"
 
     generate-static-site:
-        image: 782066560884.dkr.ecr.us-east-2.amazonaws.com/example-applets-ghpage-builder:latest
+        image: registry.internal.dnanexus.com/docker-science/example-applets-ghpage-builder:1.0.0
         commands:
             - bash -c "source /usr/local/rvm/scripts/rvm && cd docs && bundle install && rake site:generate"
             - touch docs/_site/.nojekyll  # Prevent gh-pages rendering random _folders instead
