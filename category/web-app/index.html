@@ -13,23 +13,21 @@
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
 		<script type="text/javascript" src="https://dnanexus.github.io/dnanexus-example-applets/js/jquery.min.js"></script>
 		<!-- Begin Jekyll SEO tag v2.5.0 -->
-<title>Subprocess module | DNAnexus Example Applets</title>
+<title>web_app | DNAnexus Example Applets</title>
 <meta name="generator" content="Jekyll v3.7.4" />
-<meta property="og:title" content="Subprocess module" />
+<meta property="og:title" content="web_app" />
 <meta name="author" content="DNAnexus" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="How is the SAMtools dependency provided? The SAMtools dependency is resolved by declaring an Apt-Get dependency in the dxapp.json runSpec.execDepends. &quot;runSpec&quot;: { ... &quot;execDepends&quot;: [ {&quot;name&quot;: &quot;samtools&quot;} ] } For additional information, please refer to the execDepends wiki page." />
-<meta property="og:description" content="How is the SAMtools dependency provided? The SAMtools dependency is resolved by declaring an Apt-Get dependency in the dxapp.json runSpec.execDepends. &quot;runSpec&quot;: { ... &quot;execDepends&quot;: [ {&quot;name&quot;: &quot;samtools&quot;} ] } For additional information, please refer to the execDepends wiki page." />
-<link rel="canonical" href="https://dnanexus.github.io/dnanexus-example-applets/python/samtools_count_subprocess_py/" />
-<meta property="og:url" content="https://dnanexus.github.io/dnanexus-example-applets/python/samtools_count_subprocess_py/" />
+<meta name="description" content="dnanexus-example-applets github page." />
+<meta property="og:description" content="dnanexus-example-applets github page." />
+<link rel="canonical" href="https://dnanexus.github.io/dnanexus-example-applets/category/web-app/" />
+<meta property="og:url" content="https://dnanexus.github.io/dnanexus-example-applets/category/web-app/" />
 <meta property="og:site_name" content="DNAnexus Example Applets" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2018-10-01T00:00:00+00:00" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@dnanexus" />
 <meta name="twitter:creator" content="@DNAnexus" />
 <script type="application/ld+json">
-{"description":"How is the SAMtools dependency provided? The SAMtools dependency is resolved by declaring an Apt-Get dependency in the dxapp.json runSpec.execDepends. &quot;runSpec&quot;: { ... &quot;execDepends&quot;: [ {&quot;name&quot;: &quot;samtools&quot;} ] } For additional information, please refer to the execDepends wiki page.","author":{"@type":"Person","name":"DNAnexus"},"@type":"BlogPosting","url":"https://dnanexus.github.io/dnanexus-example-applets/python/samtools_count_subprocess_py/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"headline":"Subprocess module","dateModified":"2018-10-01T00:00:00+00:00","datePublished":"2018-10-01T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/python/samtools_count_subprocess_py/"},"@context":"http://schema.org"}</script>
+{"description":"dnanexus-example-applets github page.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"@type":"WebPage","url":"https://dnanexus.github.io/dnanexus-example-applets/category/web-app/","headline":"web_app","author":{"@type":"Person","name":"DNAnexus"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://dnanexus.github.io/dnanexus-example-applets/feed.xml" title="DNAnexus Example Applets" />
@@ -114,209 +112,64 @@
 
 		</header>
 		<section class="content">
-			<div class="wrapper wrap_left">
-				<div class="tutorial">
-	<div class="sidebar">
-		<ul>
-			
-			
-				<li><a href="#how-is-the-samtools-dependency-provided">How is the SAMtools dependency provided?</a></li>
-			
-				<li><a href="#download-bam-files">Download BAM Files</a></li>
-			
-				<li><a href="#run-samtools-view">Run samtools view</a></li>
-			
-				<li><a href="#upload-result">Upload Result</a></li>
-			
-		</ul>
-	</div>
-	<section class="tutorial-content">
-		
-			<h1>Subprocess module</h1>
-		
-		
-		
-		<div class="tutorial-main">
-			<h2 id="how-is-the-samtools-dependency-provided">How is the SAMtools dependency provided?</h2>
-<p>The SAMtools dependency is resolved by declaring an <a href="https://help.ubuntu.com/14.04/serverguide/apt-get.html">Apt-Get</a> dependency in the <code class="highlighter-rouge">dxapp.json</code> runSpec.execDepends.</p>
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"runSpec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-     </span><span class="err">...</span><span class="w">
-     </span><span class="s2">"execDepends"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-       </span><span class="p">{</span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"samtools"</span><span class="p">}</span><span class="w">
-     </span><span class="p">]</span><span class="w">
-   </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-<p>For additional information, please refer to the <a href="https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages">execDepends wiki page</a>.</p>
+			<div class="wrapper">
+				
+<h2 style="text-transform:capitalize;">web_app <span class="count">(3)</span></h2>
 
-<h2 id="download-bam-files">Download BAM Files</h2>
-
-<p>In order to download the input BAM file, we:</p>
-<ul>
-  <li>Establish a DXFile handle by providing a DXLink to dxpy.DXFile()
-    <ul>
-      <li><code class="highlighter-rouge">mappings_bam</code> is a DXLink containing the file-id of the input BAM.</li>
-      <li><code class="highlighter-rouge">DXFIle</code> objects inherit from <a href="http://autodoc.dnanexus.com/bindings/python/current/dxpy_bindings.html#dxpy.bindings.DXDataObject"><code class="highlighter-rouge">DXDataObjects</code></a>. A <code class="highlighter-rouge">DXDataObject</code> has the attribute ‘name’, the filename for an object on the platform. We will use the name attribute to retain the filename programmatically.</li>
-    </ul>
-  </li>
-  <li>Download the file to the worker by providing a file ID to <code class="highlighter-rouge">dxpy.download_dxfile</code>
-    <ul>
-      <li><code class="highlighter-rouge">DXFIle</code> handle’s <code class="highlighter-rouge">get_id()</code> function returns the file ID on the platform.</li>
-    </ul>
-  </li>
+<ul class="listing">
+	
+		<li >
+			<a href="https://dnanexus.github.io/dnanexus-example-applets/python/web_app/dash-web-app/">
+				<div class="icon">
+		<svg fill="#000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+			<path d="M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z"/>
+			<path d="M0 0h24v24H0z" fill="none"/>
+		</svg>
+</div>
+				<article>
+					<div>
+						<h3>Dash Example Web App</h3>
+						<p class="description"></p>
+					</div>
+				</article>
+			</a>
+		</li>
+	
+		<li >
+			<a href="https://dnanexus.github.io/dnanexus-example-applets/web_app/bash/r-shiny-web-app/">
+				<div class="icon">
+		<svg fill="#000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+			<path d="M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z"/>
+			<path d="M0 0h24v24H0z" fill="none"/>
+		</svg>
+</div>
+				<article>
+					<div>
+						<h3>R Shiny Example Web App</h3>
+						<p class="description"></p>
+					</div>
+				</article>
+			</a>
+		</li>
+	
+		<li >
+			<a href="https://dnanexus.github.io/dnanexus-example-applets/web_app/bash/tensorboard-web-app/">
+				<div class="icon">
+		<svg fill="#000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+			<path d="M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z"/>
+			<path d="M0 0h24v24H0z" fill="none"/>
+		</svg>
+</div>
+				<article>
+					<div>
+						<h3>TensorBoard Example Web App </h3>
+						<p class="description"></p>
+					</div>
+				</article>
+			</a>
+		</li>
+	
 </ul>
-
-<h2 id="run-samtools-view">Run <code class="highlighter-rouge">samtools view</code></h2>
-<p>The subprocess takes either a string or an array shell command to be executed.</p>
-<ul>
-  <li><code class="highlighter-rouge">shell=True</code> causes the subprocess to run the command program through shell.</li>
-  <li><code class="highlighter-rouge">shell=False</code> causes the subprocess to execute command program directly.
-The default shell parameter value is False. If an array command is used, <code class="highlighter-rouge">shell=False</code> is required. If a string command
-is used, <code class="highlighter-rouge">shell=True</code> is required.</li>
-</ul>
-
-<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> It’s good practice to use <code class="highlighter-rouge">shell=False</code> when possible, especially when user input is involved. That being said, know your use case, if you need to rely on shell features (even though Python offers modules to mimic these features!) use <code class="highlighter-rouge">shell=True</code>.</div>
-<p>In this tutorial, we use <code class="highlighter-rouge">shell=False</code>.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">count_txt_name</span> <span class="o">=</span> <span class="s">"{prefix}_count.txt"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="n">mappings_bam_name</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">])</span>
-
-    <span class="n">samtools_view_cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s">"samtools"</span><span class="p">,</span> <span class="s">"view"</span><span class="p">,</span> <span class="s">"-c"</span><span class="p">,</span> <span class="n">mappings_bam_name</span><span class="p">]</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">count_txt_name</span><span class="p">,</span> <span class="s">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="n">samtools_view_cmd</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span> <span class="k">as</span> <span class="n">cpe</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">"Command failed: {cmd}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">cmd</span><span class="o">=</span><span class="n">cpe</span><span class="o">.</span><span class="n">cmd</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">cpe</span>
-</code></pre></div></div>
-
-<h2 id="upload-result">Upload Result</h2>
-<p>The <a href="http://autodoc.dnanexus.com/bindings/python/current/dxpy_dxfile.html?highlight=upload_local_file#dxpy.bindings.dxfile_functions.upload_local_file"><code class="highlighter-rouge">dxpy.upload_local_file(filename=&lt;filename&gt;)</code></a> function
-will upload the file to the job container, a temporary project which holds onto files
-associated with this job. <code class="highlighter-rouge">dxpy.upload_local_file</code> returns a DXFile object handle for the
-uploaded file.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">counts_txt</span> <span class="o">=</span> <span class="n">dxpy</span><span class="o">.</span><span class="n">upload_local_file</span><span class="p">(</span><span class="n">count_txt_name</span><span class="p">)</span>
-</code></pre></div></div>
-<p>We then provide the <a href="http://autodoc.dnanexus.com/bindings/python/current/dxpy_functions.html?highlight=dxlink#dxpy.bindings.dxdataobject_functions.dxlink">DXLink</a> for our uploaded file as the output of this job using the standard process in Python:</p>
-<ol>
-  <li>Use <a href="http://autodoc.dnanexus.com/bindings/python/current/dxpy_functions.html?highlight=dxlink#dxpy.bindings.dxdataobject_functions.dxlink"><code class="highlighter-rouge">dxpy.dxlink(object_id=&lt;Uploaded DXfile object&gt;)</code></a></li>
-  <li>Set the value in the job output dictionary to the returned <code class="highlighter-rouge">DXLink</code></li>
-  <li><code class="highlighter-rouge">return</code> the job output dictionary as the entry point function output</li>
-</ol>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">output</span><span class="p">[</span><span class="s">"counts_txt"</span><span class="p">]</span> <span class="o">=</span> <span class="n">dxpy</span><span class="o">.</span><span class="n">dxlink</span><span class="p">(</span><span class="n">counts_txt</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">output</span>
-</code></pre></div></div>
-
-		</div>
-		
-		<div class="tutorial-share">
-			<a class="modalOpen no-smooth" href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/Tutorials/python/samtools_count_subprocess_py">
-		<svg aria-labelledby="title" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><title>GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-	
- View on GitHub</a>
-		</div>
-		<!-- <div class="tutorial-share">
-			<a class="modalOpen no-smooth" href="#subscribe">
-			<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-		
- Subscribe</a>
-			<a class="modalOpen no-smooth" href="#share">
-			<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-				<path d="M0 0h24v24H0z" fill="none"/>
-				<path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
-			</svg>
-		
- Share</a>
-		</div> -->
-		
-	</section>
-</div>
-
-
-
-<div id="subscribe" class="modalDialog">
-	<div>
-		<a title="Close" class="close">&times;</a>
-		<form action="" method="post">
-			<h2>Subscribe</h2>
-			<p>The latest tutorials sent straight to your inbox.</p>
-			<input type="email" name="EMAIL" placeholder="Email">
-			<input type="submit" value="Sign up">
-		</form>
-	</div>
-</div>
-
-<div id="share" class="modalDialog sharing">
-	<div>
-		<a title="Close" class="close">&times;</a>
-		<h2>Share</h2>
-		<p>Share this tutorial with your community.</p>
-		<ul>
-			<li><a class="twitter" target="_blank" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fpython%2Fsamtools_count_subprocess_py%2F">
-		<svg class="twitter" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z" /></svg>
-	
- Twitter</a></li>
-			<li><a class="facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fpython%2Fsamtools_count_subprocess_py%2F">
-		<svg class="facebook" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="15.8 15.8 25 25"><path d="M32.8 24.7h-3.2v-2.1c0-0.8 0.5-1 0.9-1s2.3 0 2.3 0v-3.5l-3.1 0c-3.5 0-4.3 2.6-4.3 4.3v2.3h-2v3.6h2c0 4.6 0 10.2 0 10.2h4.2c0 0 0-5.6 0-10.2h2.8L32.8 24.7z"/></svg>
-	
- Facebook</a></li>
-			<li><a class="google-plus" target="_blank" href="https://plus.google.com/share?url=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fpython%2Fsamtools_count_subprocess_py%2F">
-		<svg class="google-plus" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M23,11H21V9H19V11H17V13H19V15H21V13H23M8,11V13.4H12C11.8,14.4 10.8,16.4 8,16.4C5.6,16.4 3.7,14.4 3.7,12C3.7,9.6 5.6,7.6 8,7.6C9.4,7.6 10.3,8.2 10.8,8.7L12.7,6.9C11.5,5.7 9.9,5 8,5C4.1,5 1,8.1 1,12C1,15.9 4.1,19 8,19C12,19 14.7,16.2 14.7,12.2C14.7,11.7 14.7,11.4 14.6,11H8Z" /></svg>
-	
- Google+</a></li>
-			<li><a class="hacker-news" target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fpython%2Fsamtools_count_subprocess_py%2F&t=Subprocess%20module">
-		<svg class="hacker-news" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M18.8 3.3c-0.4 0.8-5.6 11.1-5.6 11.2 0 2 0 6.2 0 6.2 -0.1 0-2.2 0-2.3 0 0 0 0-5.9 0-6.2 0 0-5.5-10.9-5.6-11.1C5.3 3.3 5.3 3.3 5.3 3.3 5.3 3.3 5.3 3.3 5.3 3.3c0 0 0 0 0.1 0 0.9 0 1.7 0 2.6 0 0 0 0 0 0 0.1 0.1 0.1 4 8.3 4.1 8.3 0 0 4.2-8.3 4.3-8.4 0.8 0 1.6 0 2.4 0 0 0 0 0 0 0C18.8 3.3 18.8 3.3 18.8 3.3z"/></svg>
-	
- Hacker News</a></li>
-		</ul>
-	</div>
-</div>
-
-<script src="https://dnanexus.github.io/dnanexus-example-applets/js/main.js"></script>
-
-<script>
-	var headings = document.querySelectorAll("h2[id]");
-
-	console.log(headings);
-	for (var i = 0; i < headings.length; i++) {
-		var anchorLink = document.createElement("a");
-		anchorLink.href = "#" + headings[i].id;
-		anchorLink.classList.add("header-link");
-
-		var pinImage = document.createElement("img");
-		pinImage.setAttribute("src", "https://dnanexus.github.io/dnanexus-example-applets/images/pin-20.png");
-		anchorLink.appendChild(pinImage);
-
-		headings[i].appendChild(anchorLink);
-	}
-
-	$(".modalOpen").click(function() {
-		var id = $(this).attr("href");
-		$(id).addClass("show");
-
-		$(window).click(function() {
-			$(".show").removeClass("show");
-		});
-
-		$(id + " > div").click(function(event){
-			event.stopPropagation();
-		});
-		return false;
-	});
-
-	$(".close").click(function() {
-		$(".show").removeClass("show");
-		return false;
-	});
-
-	$(document).keyup(function(e) {
-		if (e.keyCode == 27) {
-			$(".show").removeClass("show");
-		}
-	});
-</script>
-
 			</div>
 		</section>
 
@@ -370,7 +223,7 @@ uploaded file.</p>
 					</a></li>
 			
 		</ul>
-		<p class="copyright">&copy; DNAnexus Example Applets 2018. All rights reserved.</p>
+		<p class="copyright">&copy; DNAnexus Example Applets 2019. All rights reserved.</p>
 	</div>
 </footer>
 		<script>

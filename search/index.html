@@ -27,7 +27,7 @@
 <meta name="twitter:site" content="@dnanexus" />
 <meta name="twitter:creator" content="@DNAnexus" />
 <script type="application/ld+json">
-{"description":"dnanexus-example-applets github page.","author":{"@type":"Person","name":"DNAnexus"},"@type":"WebPage","url":"https://dnanexus.github.io/dnanexus-example-applets/search/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"headline":"Search","@context":"http://schema.org"}</script>
+{"description":"dnanexus-example-applets github page.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"@type":"WebPage","url":"https://dnanexus.github.io/dnanexus-example-applets/search/","headline":"Search","author":{"@type":"Person","name":"DNAnexus"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://dnanexus.github.io/dnanexus-example-applets/feed.xml" title="DNAnexus Example Applets" />
@@ -123,12 +123,12 @@
 				
 					
 					
-					"python-samtools-count-subprocess-py": {
-						"id": "python-samtools-count-subprocess-py",
-						"title": "Subprocess module",
-						"categories": "python",
-						"url": " /python/samtools_count_subprocess_py/",
-						"content": "How is the SAMtools dependency provided?\nThe SAMtools dependency is resolved by declaring an Apt-Get dependency in the dxapp.json runSpec.execDepends.\n\"runSpec\": {\n     ...\n     \"execDepends\": [\n       {\"name\": \"samtools\"}\n     ]\n   }\n\nFor additional information, please refer to the execDepends wiki page.\n\nDownload BAM Files\n\nIn order to download the input BAM file, we:\n\n  Establish a DXFile handle by providing a DXLink to dxpy.DXFile()\n    \n      mappings_bam is a DXLink containing the file-id of the input BAM.\n      DXFIle objects inherit from DXDataObjects. A DXDataObject has the attribute ‘name’, the filename for an object on the platform. We will use the name attribute to retain the filename programmatically.\n    \n  \n  Download the file to the worker by providing a file ID to dxpy.download_dxfile\n    \n      DXFIle handle’s get_id() function returns the file ID on the platform.\n    \n  \n\n\nRun samtools view\nThe subprocess takes either a string or an array shell command to be executed.\n\n  shell=True causes the subprocess to run the command program through shell.\n  shell=False causes the subprocess to execute command program directly.\nThe default shell parameter value is False. If an array command is used, shell=False is required. If a string command\nis used, shell=True is required.\n\n\n Note: It’s good practice to use shell=False when possible, especially when user input is involved. That being said, know your use case, if you need to rely on shell features (even though Python offers modules to mimic these features!) use shell=True.\nIn this tutorial, we use shell=False.\n    count_txt_name = \"{prefix}_count.txt\".format(prefix=mappings_bam_name[:-4])\n\n    samtools_view_cmd = [\"samtools\", \"view\", \"-c\", mappings_bam_name]\n    with open(count_txt_name, \"w\") as f:\n        try:\n            subprocess.check_call(samtools_view_cmd, stdout=f)\n        except subprocess.CalledProcessError as cpe:\n            print \"Command failed: {cmd}\".format(\n                cmd=cpe.cmd)\n            raise cpe\n\n\nUpload Result\nThe dxpy.upload_local_file(filename=&lt;filename&gt;) function\nwill upload the file to the job container, a temporary project which holds onto files\nassociated with this job. dxpy.upload_local_file returns a DXFile object handle for the\nuploaded file.\n    counts_txt = dxpy.upload_local_file(count_txt_name)\n\nWe then provide the DXLink for our uploaded file as the output of this job using the standard process in Python:\n\n  Use dxpy.dxlink(object_id=&lt;Uploaded DXfile object&gt;)\n  Set the value in the job output dictionary to the returned DXLink\n  return the job output dictionary as the entry point function output\n\n\n    output = {}\n    output[\"counts_txt\"] = dxpy.dxlink(counts_txt)\n\n    return output"
+					"web-app-bash-tensorboard-web-app": {
+						"id": "web-app-bash-tensorboard-web-app",
+						"title": "TensorBoard Example Web App ",
+						"categories": "web_app, bash",
+						"url": " /web_app/bash/tensorboard-web-app/",
+						"content": "This example demonstrates how to run TensorBoard inside a DNAnexus applet.\n\nTensorBoard is a web application used to visualize and inspect what is going on inside TensorFlow training. To use TensorBoard, our training script in TensorFlow needs to include code that saves various data to a log directory where TensorBoard can then find the data to display it.\n\nThis example uses an example script from the TensorBoard authors. For more guidance on how to use TensorBoard, check out the tensorflow website (external link).\n\nCreating the web application\nThe applet code runs a training script, which is placed in resources/home/dnanexus/ to make it available in the current working directory of the worker, and then it starts tensorboard on port 443 (HTTPS).\n# Start the training script and put it into the background,\n# so the next line of code will run immediately\npython mnist_tensorboard_example.py --log_dir LOGS_FOR_TENSORBOARD &amp;\n\n# Run TensorBoard\ntensorboard  --logdir LOGS_FOR_TENSORBOARD --host 0.0.0.0 --port 443\n\nWe run the training script in the background to start TensorBoard immediately, which will let us see the results while training is still running. This is particularly important for long-running training scripts.\n\nNote that for all web apps, if everything is running smoothly and no errors are encountered (the ideal case), the line of code that starts the server will keep it running forever. The applet stops only when it is terminated. This also means that any lines of code after the server starts will not be executed.\n\nAs with all web apps, the dxapp.json must include \"httpsApp\": {\"ports\":[443], \"shared_access\": \"VIEW\"} to tell the worker to expose port 443.\n\nCreating an applet on DNAnexus\nBuild the asset with the libraries first:\ndx build_asset tensorflow_asset\n\n\nTake the record ID it outputs and add it to the dxapp.json for the applet.\n\"runSpec\": {\n\t...\n\t\"assetDepends\": [\n    {\n      \"id\": \"record-xxxx\n    }\n  ]\n\t...\n}\n\n\nThen build the applet\ndx build -f tensorboard-web-app\ndx run tensorboard-web-app\n\nOnce it spins up, you can go to that job’s designated URL based on its job ID, https://job-xxxx.dnanexus.cloud/, to see the result."
 					}
 					
 				
@@ -273,6 +273,21 @@
 				
 					,
 					
+					"bash-samtools-count-binary-sh": {
+						"id": "bash-samtools-count-binary-sh",
+						"title": "Precompiled Binary",
+						"categories": "bash",
+						"url": " /bash/samtools_count_binary_sh/",
+						"content": "This tutorial showcases packaging a precompiled binary in the resources/ directory of an app(let).\n\nPrecompiling a Binary\nIn this applet, the SAMtools binary was precompiled on an Ubuntu 14.04 machine. A user can do this compilation on an Ubuntu 14.04 machine of their own, or they can utilize the Cloud Workstation app to build and compile a binary. On the Cloud Workstation, the user can download the SAMtools source code and compile it in the worker environment, ensuring that the binary will run on future workers.\n\nSee Cloud Workstation in the App library for more information.\n\nResources Directory\nThe SAMtools precompiled binary is placed in the &lt;applet dir&gt;/resources/ directory. Any files found in the resources/ directory will be packaged, uploaded to the platform, and then unpackaged in the root directory \\ of the worker. In our case, the resources/ dir is structured as follows:\n├── Applet dir\n│   ├── src\n│   ├── dxapp.json\n│   ├── resources\n│       ├── usr\n│           ├── bin\n│               ├── &lt; samtools binary &gt;\n\nWhen this applet is run on a worker, the resources/ directory will be placed in the worker’s root directory /:\n/\n├── usr\n│   ├── bin\n│       ├── &lt; samtools binary &gt;\n├── home\n│   ├── dnanexus\n│   \t├── applet script\n\nWe are able to access the SAMtools command because the respective binary is visible from the default $PATH variable. The directory /usr/bin/ is part of the $PATH variable, so in our script we can reference the samtools command directly:\nsamtools view -c \"${mappings_bam_name}\" &gt; \"${mappings_bam_prefix}.txt\"\n\n\nSee the resources/ directory wiki page for more information."
+					}
+					
+				
+			
+		
+			
+				
+					,
+					
 					"bash-samtools-count-bashhelper-sh": {
 						"id": "bash-samtools-count-bashhelper-sh",
 						"title": "Bash Helpers",
@@ -303,12 +318,42 @@
 				
 					,
 					
+					"web-app-bash-r-shiny-web-app": {
+						"id": "web-app-bash-r-shiny-web-app",
+						"title": "R Shiny Example Web App",
+						"categories": "web_app, bash",
+						"url": " /web_app/bash/r-shiny-web-app/",
+						"content": "This is an example web applet that demonstrates how to build and run an R Shiny application on DNAnexus.\n\nCreating the web application\nInside the dxapp.json, you would add \"httpsApp\": {\"ports\":[443], \"shared_access\": \"VIEW\"} to tell the worker to expose this port.\n\nR Shiny needs two scripts, server.R and ui.R, which should be under resources/home/dnanexus/my_app/. When a job starts based on this applet, the resources directory is copied onto the worker, and since the ~/ path on the worker is /home/dnanexus, that means you now have ~/my_app with those two scripts inside.\n\nFrom the main applet script code.sh, we simply start shiny pointing to ~/my_app repo, serving its mini-application on port 443.\n\nmain() {\n  R -e \"shiny::runApp('~/my_app', host='0.0.0.0', port=443)\"\n}\n\n\nNote that for all web apps, if everything is running smoothly and no errors are encountered (the ideal case), the line of code that starts the server will keep it running forever. The applet stops only when it is terminated. This also means that any lines of code after the server starts will not be executed.\n\nModifying this example for your own applet\nTo make your own applet with R Shiny, simply copy the source code from this example and modify server.R and ui.R inside resources/home/dnanexus/my_app.\n\nHow to rebuild the shiny asset\ndx build_asset shiny-asset\n\nThis will output a record ID record-xxxx that you can then put into the applet’s dxapp.json in place of the existing one:\n\"runSpec\": {\n\t...\n\t\"assetDepends\": [\n    {\n      \"id\": \"record-xxxx\n    }\n  ]\n\t...\n}\n\n\nBuild the applet\nNow build and run the applet itself:\ndx build -f dash-web-app\ndx run dash-web-app\n\nOnce it spins up, you can go to that job’s designated URL based on its job ID, https://job-xxxx.dnanexus.cloud/, to see the result."
+					}
+					
+				
+			
+		
+			
+				
+					,
+					
 					"python-pysam-count": {
 						"id": "python-pysam-count",
 						"title": "Pysam",
 						"categories": "python",
 						"url": " /python/pysam_count/",
 						"content": "This applet performs a SAMtools count on an input BAM using Pysam, a python wrapper for SAMtools.\n\nHow is Pysam provided?\n\nPysam is provided through a pip install using the pip package manager in the dxapp.json’s runSpec.execDepends property:\n\n\n{\n \"runSpec\": {\n    ...\n    \"execDepends\": [\n      {\"name\": \"pysam\",\n         \"package_manager\": \"pip\",\n         \"version\": \"0.9.1.4\"\n      }\n    ]\n    ...\n }\n\n\nThe execDepends value is a JSON array of dependencies to resolve before the applet source code is run. In this applet, we specify pip as our package manager and pysam version 0.9.1.4 as the dependency to resolve. Pysam is installed to /usr/local/lib/python2.7/dist-packages and can be imported by our python script.\n\nDownloading Inputs\nThe fields mappings_sorted_bam and mappings_sorted_bai are passed to the main function as parameters for our job. These parameters are dictionary objects with key-value pair {\"$dnanexus_link\": \"&lt;file&gt;-&lt;xxxx&gt;\"}. We handle file objects from the platform through DXFile handles. If an index file is not supplied, then a *.bai index will be created.\n    print mappings_sorted_bai\n    print mappings_sorted_bam\n\n    mappings_sorted_bam = dxpy.DXFile(mappings_sorted_bam)\n    sorted_bam_name = mappings_sorted_bam.name\n    dxpy.download_dxfile(mappings_sorted_bam.get_id(),\n                         sorted_bam_name)\n    ascii_bam_name = unicodedata.normalize(  # Pysam requires ASCII not Unicode string.\n        'NFKD', sorted_bam_name).encode('ascii', 'ignore')\n\n    if mappings_sorted_bai is not None:\n        mappings_sorted_bai = dxpy.DXFile(mappings_sorted_bai)\n        dxpy.download_dxfile(mappings_sorted_bai.get_id(),\n                             mappings_sorted_bai.name)\n    else:\n        pysam.index(ascii_bam_name)\n\n\nWorking with Pysam\nPysam provides several methods that mimic SAMtools commands. In our applet example, we want to focus only on canonical chromosomes. Pysam’s object representation of a BAM file is pysam.AlignmentFile.\n    mappings_obj = pysam.AlignmentFile(ascii_bam_name, \"rb\")\n    regions = get_chr(mappings_obj, canonical_chr)\n\n\nThe helper function get_chr\ndef get_chr(bam_alignment, canonical=False):\n    \"\"\"Helper function to return canonical chromosomes from SAM/BAM header\n\n    Arguments:\n        bam_alignment (pysam.AlignmentFile): SAM/BAM pysam object\n        canonical (boolean): Return only canonical chromosomes\n    Returns:\n        regions (list[str]): Region strings\n    \"\"\"\n    regions = []\n    headers = bam_alignment.header\n    seq_dict = headers['SQ']\n\n    if canonical:\n        re_canonical_chr = re.compile(r'^chr[0-9XYM]+$|^[0-9XYM]')\n        for seq_elem in seq_dict:\n            if re_canonical_chr.match(seq_elem['SN']):\n                regions.append(seq_elem['SN'])\n    else:\n        regions = [''] * len(seq_dict)\n        for i, seq_elem in enumerate(seq_dict):\n            regions[i] = seq_elem['SN']\n\n    return regions\n\n\nOnce we establish a list of canonical chromosomes, we can iterate over them and perform Pysam’s version of samtools view -c, pysam.AlignmentFile.count.\n    total_count = 0\n    count_filename = \"{bam_prefix}_counts.txt\".format(\n        bam_prefix=ascii_bam_name[:-4])\n\n    with open(count_filename, \"w\") as f:\n        for region in regions:\n            temp_count = mappings_obj.count(region=region)\n            f.write(\"{region_name}: {counts}\\n\".format(\n                region_name=region, counts=temp_count))\n            total_count += temp_count\n\n        f.write(\"Total reads: {sum_counts}\".format(sum_counts=total_count))\n\n\nUploading Outputs\nOur summarized counts are returned as the job output. We use the dx-toolkit python SDK’s dxpy.upload_local_file function to upload and generate a DXFile corresponding to our tabulated result file.\n    counts_txt = dxpy.upload_local_file(count_filename)\n    output = {}\n    output[\"counts_txt\"] = dxpy.dxlink(counts_txt)\n\n    return output\n\n\nPython job outputs have to be a dictionary of key-value pairs, with the keys being job output names as defined in the dxapp.json file and the values being the output values for corresponding output classes. For files, the output type is a DXLink. We use the dxpy.dxlink function to generate the appropriate DXLink value."
+					}
+					
+				
+			
+		
+			
+				
+					,
+					
+					"python-web-app-dash-web-app": {
+						"id": "python-web-app-dash-web-app",
+						"title": "Dash Example Web App",
+						"categories": "python, web_app",
+						"url": " /python/web_app/dash-web-app/",
+						"content": "This is an example web app made with Dash, which in turn uses Flask underneath.\n\nCreating the web application\nAfter configuring an app with Dash, we start the server on port 443.\napp.run_server(host='0.0.0.0', port=443)\n\nInside the dxapp.json, you would add \"httpsApp\": {\"ports\":[443], \"shared_access\": \"VIEW\"} to tell the worker to expose this port.\n\nNote that for all web apps, if everything is running smoothly and no errors are encountered (the ideal case), the line of code that starts the server will keep it running forever. The applet stops only when it is terminated. This also means that any lines of code after the server starts will not be executed.\n\nThe rest of these instructions apply to building any applet with dependencies stored in an asset.\n\nCreating an applet on DNAnexus\nSource dx-toolkit and log in, then run dx-app-wizard with default options.\n\nCreating the asset\ndash-asset specifies all the packages and versions we need.\nWe take these from the Dash installation guide (https://dash.plot.ly/installation)\npip install dash==0.39.0  # The core dash backend\npip install dash-html-components==0.14.0  # HTML components\npip install dash-core-components==0.44.0  # Supercharged components\npip install dash-table==3.6.0  # Interactive DataTable component (new!)\npip install dash-daq==0.1.0  # DAQ components (newly open-sourced!)\n\n\nWe put these into dash-asset/dxasset.json:\n{\n  ...\n  \"execDepends\": [\n    {\"name\": \"dash\", \"version\":\"0.39.0\", \"package_manager\": \"pip\"},\n\t\t{\"name\": \"dash-html-components\", \"version\":\"0.14.0\", \"package_manager\": \"pip\"},\n\t\t{\"name\": \"dash-core-components\", \"version\":\"0.44.0\", \"package_manager\": \"pip\"},\n\t\t{\"name\": \"dash-table\", \"version\":\"3.6.0\", \"package_manager\": \"pip\"},\n\t\t{\"name\": \"dash-daq\", \"version\":\"0.1.0\", \"package_manager\": \"pip\"}\n  ],\n\t...\n}\n\n\nBuild the asset:\ndx build_asset dash-asset\n\n\nUse the asset from the applet\nAdd this asset to the applet’s dxapp.json:\n\"runSpec\": {\n\t...\n\t\"assetDepends\": [\n    {\n      \"id\": \"record-xxxx\n    }\n  ]\n\t...\n}\n\n\nBuild the applet\nNow build and run the applet itself:\ndx build -f dash-web-app\ndx run dash-web-app\n\nYou can always use dx ssh job-xxxx to ssh into the worker and inspect what’s going on or experiment with quick changes \nThen go to that job’s special URL https://job-xxxx.dnanexus.cloud/ and see the result!\n\nOptional local testing\nThe main code is in dash-web-app/resources/home/dnanexus/my_app.py with a local launcher script called local_test.py in the same folder. This allows us to launch the same core code in the applet locally to quickly iterate. This is optional because you can also do all testing on the platform itself.\n\nInstall locally the same libraries listed above.\n\nTo launch the web app locally:\ncd dash-web-app/resources/home/dnanexus/\npython local_test.py\n\nOnce it spins up, you can go to that job’s designated URL based on its job ID, https://job-xxxx.dnanexus.cloud/, to see the result."
 					}
 					
 				
@@ -446,7 +491,7 @@
 					</a></li>
 			
 		</ul>
-		<p class="copyright">&copy; DNAnexus Example Applets 2018. All rights reserved.</p>
+		<p class="copyright">&copy; DNAnexus Example Applets 2019. All rights reserved.</p>
 	</div>
 </footer>
 		<script>

@@ -13,23 +13,23 @@
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400italic,400,300italic,300,700,700italic|Open+Sans:400italic,600italic,700italic,700,600,400|Inconsolata:400,700">
 		<script type="text/javascript" src="https://dnanexus.github.io/dnanexus-example-applets/js/jquery.min.js"></script>
 		<!-- Begin Jekyll SEO tag v2.5.0 -->
-<title>Assessing Your Use Case | DNAnexus Example Applets</title>
+<title>TensorBoard Example Web App | DNAnexus Example Applets</title>
 <meta name="generator" content="Jekyll v3.7.4" />
-<meta property="og:title" content="Assessing Your Use Case" />
+<meta property="og:title" content="TensorBoard Example Web App" />
 <meta name="author" content="DNAnexus" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="What problem are you solving, is app development the right approach?" />
-<meta property="og:description" content="What problem are you solving, is app development the right approach?" />
-<link rel="canonical" href="https://dnanexus.github.io/dnanexus-example-applets/do-you-need-app/" />
-<meta property="og:url" content="https://dnanexus.github.io/dnanexus-example-applets/do-you-need-app/" />
+<meta name="description" content="This example demonstrates how to run TensorBoard inside a DNAnexus applet." />
+<meta property="og:description" content="This example demonstrates how to run TensorBoard inside a DNAnexus applet." />
+<link rel="canonical" href="https://dnanexus.github.io/dnanexus-example-applets/web_app/bash/tensorboard-web-app/" />
+<meta property="og:url" content="https://dnanexus.github.io/dnanexus-example-applets/web_app/bash/tensorboard-web-app/" />
 <meta property="og:site_name" content="DNAnexus Example Applets" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2017-08-02T00:00:00+00:00" />
+<meta property="article:published_time" content="2019-03-25T00:00:00+00:00" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@dnanexus" />
 <meta name="twitter:creator" content="@DNAnexus" />
 <script type="application/ld+json">
-{"description":"What problem are you solving, is app development the right approach?","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"@type":"BlogPosting","url":"https://dnanexus.github.io/dnanexus-example-applets/do-you-need-app/","headline":"Assessing Your Use Case","dateModified":"2017-08-02T00:00:00+00:00","datePublished":"2017-08-02T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/do-you-need-app/"},"author":{"@type":"Person","name":"DNAnexus"},"@context":"http://schema.org"}</script>
+{"description":"This example demonstrates how to run TensorBoard inside a DNAnexus applet.","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://dnanexus.github.io/dnanexus-example-applets/siteicon.png"},"name":"DNAnexus"},"@type":"BlogPosting","url":"https://dnanexus.github.io/dnanexus-example-applets/web_app/bash/tensorboard-web-app/","headline":"TensorBoard Example Web App","dateModified":"2019-03-25T00:00:00+00:00","datePublished":"2019-03-25T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://dnanexus.github.io/dnanexus-example-applets/web_app/bash/tensorboard-web-app/"},"author":{"@type":"Person","name":"DNAnexus"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://dnanexus.github.io/dnanexus-example-applets/feed.xml" title="DNAnexus Example Applets" />
@@ -120,172 +120,84 @@
 		<ul>
 			
 			
-				<li><a href="#alternatives-to-applets">Alternatives to Applets</a></li>
+				<li><a href="#creating-the-web-application">Creating the web application</a></li>
 			
-				<li><a href="#swiss-army-knife">Swiss Army Knife</a></li>
-			
-				<li><a href="#cloud-workstation">Cloud Workstation</a></li>
+				<li><a href="#creating-an-applet-on-dnanexus">Creating an applet on DNAnexus</a></li>
 			
 		</ul>
 	</div>
 	<section class="tutorial-content">
 		
-			
-			
-			
-			<div class="series">
-				<h3>Get Started - Assessing Your Use Case</h3>
-				<p>What problem are you solving, is app development the right approach?</p>
-				<div class="btn-group btn-group-sm" aria-label="Large button group" role="group">
-	
-	<button class="btn btn-success" onclick="window.location = 'https://dnanexus.github.io/dnanexus-example-applets/overview/'">
-		1. DNAnexus Tutorials
-	</button>
-	
-	<button class="btn btn-success active" onclick="window.location = 'https://dnanexus.github.io/dnanexus-example-applets/do-you-need-app/'">
-		2. Assessing Your Use Case
-	</button>
-	
-	<button class="btn btn-success" onclick="window.location = 'https://dnanexus.github.io/dnanexus-example-applets/applet-structure/'">
-		3. Basic Applet Structure
-	</button>
-	
-	<button class="btn btn-success" onclick="window.location = 'https://dnanexus.github.io/dnanexus-example-applets/app-dev-spec/'">
-		4. Development Basics
-	</button>
-	
-	<button class="btn btn-success" onclick="window.location = 'https://dnanexus.github.io/dnanexus-example-applets/next-steps/'">
-		5. Next Steps
-	</button>
-	
-</div>
-			</div>
+			<h1>TensorBoard Example Web App </h1>
 		
 		
 
+		
+		<div class="tutorial-share">
+			<a class="modalOpen no-smooth" href="https://github.com/dnanexus/dnanexus-example-applets/tree/master/Tutorials/bash/tensorboard-web-app" target="_blank">
+		<svg aria-labelledby="title" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><title>GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+	
+ View full source code on GitHub</a>
+		</div>
+		<!-- <div class="tutorial-share">
+			<a class="modalOpen no-smooth" href="#subscribe">
+			<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+		
+ Subscribe</a>
+			<a class="modalOpen no-smooth" href="#share">
+			<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+				<path d="M0 0h24v24H0z" fill="none"/>
+				<path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+			</svg>
+		
+ Share</a>
+		</div> -->
 		
 
 		<div class="tutorial-main">
-			<p>Before embarking on a new journey it’s important to ask, <em>“Where am I going?”</em> and <em>“What am I looking for?”</em>. This page takes a step back and assesses alternative solutions and approaches that may get you to the real answer you want.</p>
+			<p>This example demonstrates how to run TensorBoard inside a DNAnexus applet.</p>
 
-<p>Look before you leap.</p>
+<p>TensorBoard is a web application used to visualize and inspect what is going on inside TensorFlow training. To use TensorBoard, our training script in TensorFlow needs to include code that saves various data to a log directory where TensorBoard can then find the data to display it.</p>
 
-<h2 id="alternatives-to-applets">Alternatives to Applets</h2>
-<p>Before you start implementing your own app(let), you should explore the <a href="https://platform.dnanexus.com/apps">DNAnexus App Library</a>. Our App Library, which we continuously update, contains common bioinformatics tools implemented on the platform. The Apps are robust and generalized in their implementation and often expose many options to the user. There may be cases where you want to make a slight tweak to an existing App, for this reason, we open source our Apps. Below is an example of getting the source code for the <a href="https://platform.dnanexus.com/app/bwa_mem_fastq_read_mapper"><code class="highlighter-rouge">BWA-MEM FASTQ Read Mapper</code></a> using <a href="https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#find-apps"><code class="highlighter-rouge">dx find apps</code></a>, <a href="https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#describe"><code class="highlighter-rouge">dx describe</code></a>, and <a href="https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#get"><code class="highlighter-rouge">dx get</code></a>:</p>
+<p>This example uses an example script from the TensorBoard authors. For more guidance on how to use TensorBoard, check out the tensorflow website (<a href="https://www.tensorflow.org/guide/summaries_and_tensorboard">external link</a>).</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~ <span class="nv">$ </span>dx find apps | <span class="nb">grep</span> <span class="s2">"BWA-MEM FASTQ Read Mapper"</span>
-x BWA-MEM FASTQ Read Mapper <span class="o">(</span>bwa_mem_fastq_read_mapper<span class="o">)</span>, v1.5.4
-  <span class="c"># We will use the unique App name "bwa_mem_fastq_read_mapper" to get the app-id</span>
-~ <span class="nv">$ </span>dx describe bwa_mem_fastq_read_mapper
-Result 1:
-ID                  app-xxxx  <span class="c"># get this ID</span>
-Class               app
-Billed to           org-dnanexus
-Name                bwa_mem_fastq_read_mapper
-...
-~ <span class="nv">$ </span>dx get app-xxxx
-Creating <span class="s2">"./bwa_mem_fastq_read_mapper"</span> output directory
-Downloading application data
-Unpacking resources
-<span class="c"># Now we have the populated app(let) directory structure for BWA-MEM</span>
-<span class="c"># In the folder bwa_mem_fastq_read_mapper/</span>
-<span class="c"># We make necessary minor changes and rebuild</span>
-dx build bwa_mem_fastq_read_mapper
-<span class="c"># app-xxxx</span>
+<h2 id="creating-the-web-application">Creating the web application</h2>
+<p>The applet code runs a training script, which is placed in <code class="highlighter-rouge">resources/home/dnanexus/</code> to make it available in the current working directory of the worker, and then it starts tensorboard on port 443 (HTTPS).</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Start the training script and put it into the background,
+# so the next line of code will run immediately
+python mnist_tensorboard_example.py --log_dir LOGS_FOR_TENSORBOARD &amp;
+
+# Run TensorBoard
+tensorboard  --logdir LOGS_FOR_TENSORBOARD --host 0.0.0.0 --port 443
+</code></pre></div></div>
+<p>We run the training script in the background to start TensorBoard immediately, which will let us see the results while training is still running. This is particularly important for long-running training scripts.</p>
+
+<p>Note that for all web apps, if everything is running smoothly and no errors are encountered (the ideal case), the line of code that starts the server will keep it running forever. The applet stops only when it is terminated. This also means that any lines of code after the server starts will not be executed.</p>
+
+<p>As with all web apps, the <code class="highlighter-rouge">dxapp.json</code> must include <code class="highlighter-rouge">"httpsApp": {"ports":[443], "shared_access": "VIEW"}</code> to tell the worker to expose port 443.</p>
+
+<h2 id="creating-an-applet-on-dnanexus">Creating an applet on DNAnexus</h2>
+<p>Build the asset with the libraries first:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dx build_asset tensorflow_asset
 </code></pre></div></div>
 
-<h2 id="swiss-army-knife">Swiss Army Knife</h2>
-
-<p>For running quick one-liners on a worker we recommend the swiss army knife.</p>
-
-<p>For example, you might want to merge overlapping entries in a BED file
-using a <code class="highlighter-rouge">bedtools</code> command. You could create an applet that has a BED file input
-and a merged BED file output, or you could just type the command and run it using
-the Swiss Army Knife app.</p>
-
-<p>The Swiss Army Knife app takes an arbitrary list of files and a command string as
-inputs. In commands, it’s often useful to refer to input files using wildcards, like
-<code class="highlighter-rouge">*.bed</code>, so the command can be independent of the specific input files. It downloads all the files, runs the command, and uploads any new files. So, we could just add our BED file as an input and type in the appropriate command. From command line using <a href="https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#run"><code class="highlighter-rouge">dx run</code></a>:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~ <span class="nv">$ </span>dx run swiss-army-knife
-Entering interactive mode <span class="k">for </span>input selection.
-
-Input:   Command line <span class="o">(</span>cmd<span class="o">)</span>
-Class:   string
-
-Enter string value <span class="o">(</span><span class="s1">'?'</span> <span class="k">for </span>more options<span class="o">)</span>
-cmd: bedtools merge <span class="nt">-i</span> <span class="k">*</span>.bed <span class="o">&gt;</span> merged.bed
-
-Select an optional parameter to <span class="nb">set </span>by its <span class="c"># (^D or &lt;ENTER&gt; to finish):</span>
-
- <span class="o">[</span>0] Input files <span class="o">(</span><span class="k">in</span><span class="o">)</span>
- <span class="o">[</span>1] Optional Docker image identifier <span class="o">(</span>image<span class="o">)</span>
-
-Optional param <span class="c">#: 0</span>
-
-Input:   Input files <span class="o">(</span><span class="k">in</span><span class="o">)</span>
-Class:   array:file
-
-Enter file values, one at a <span class="nb">time</span> <span class="o">(</span>^D or &lt;ENTER&gt; to finish, &lt;TAB&gt; twice <span class="k">for </span>compatible files <span class="k">in
-</span>current directory, <span class="s1">'?'</span> <span class="k">for </span>more options<span class="o">)</span>
-<span class="k">in</span><span class="o">[</span>0]: /Bed-Files/target.bed
-<span class="c"># Add more files, confirm inputs, then run.</span>
+<p>Take the record ID it outputs and add it to the dxapp.json for the applet.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"runSpec": {
+	...
+	"assetDepends": [
+    {
+      "id": "record-xxxx
+    }
+  ]
+	...
+}
 </code></pre></div></div>
 
-<p>The Swiss Army Knife app has a number of tools built-in that you can refer to in commands. The list of tools and more information are available on the <a href="https://platform.dnanexus.com/app/swiss-army-knife">Swiss Army Knife apps’ page</a>.</p>
-
-<h2 id="cloud-workstation">Cloud Workstation</h2>
-<p>For exploratory development or analysis, we recommend Cloud Workstation. The <a href="https://wiki.dnanexus.com/Developer-Tutorials/Cloud-Workstations">Cloud Workstation</a> app creates a DNAnexus worker for a specified period of time that
-, if you have <a href="https://wiki.dnanexus.com/developer-tutorials/connecting-to-jobs">configured and enabled SSH</a>, you can SSH into. Useful when you want to:</p>
-<ul>
-  <li>Work interactively on a remote computer that has fast
-access to files stored on the DNAnexus platform</li>
-  <li>Work in an environment that has fast access to the internet</li>
-  <li>Work on a machine with high processing power or high storage.</li>
-</ul>
-
-<p>Running the Cloud Workstation app from the terminal:</p>
-
-<p><strong>Set up SSH access with <a href="https://wiki.dnanexus.com/Command-Line-Client/Index-of-dx-Commands#ssh_config"><code class="highlighter-rouge">dx ssh_config</code></a>:</strong></p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>dx ssh_config
-Select an SSH key pair to use when connecting to DNAnexus jobs. The public key will be saved to your
-DNAnexus account <span class="o">(</span>readable only by you<span class="o">)</span><span class="nb">.</span> The private key will remain on this computer.                              
-dx is already configured to use the SSH key pair at:
-    /home/me/.dnanexus_config/ssh_id
-    /home/me/.dnanexus_config/ssh_id.pub
-0<span class="o">)</span> Use this SSH key pair
-1<span class="o">)</span> Select or create another SSH key pair...                                                                                             
-Pick a numbered choice: 0
-Updated public key <span class="k">for </span>user user-xxxx
-Your account has been configured <span class="k">for </span>use with SSH. Use dx run with the <span class="nt">--allow-ssh</span>, <span class="nt">--ssh</span>,
-or <span class="nt">--debug-on</span> options to launch <span class="nb">jobs </span>and connect to them.
+<p>Then build the applet</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dx build -f tensorboard-web-app
+dx run tensorboard-web-app
 </code></pre></div></div>
-
-<p><strong>Run the app:</strong></p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>dx run app-cloud_workstation <span class="nt">--allow-ssh</span>                                                
-Select an optional parameter to <span class="nb">set </span>by its <span class="c"># (^D or &lt;ENTER&gt; to finish):        </span>
-<span class="o">[</span>0] Maximum Session Length <span class="o">(</span>suffixes allowed: s, m, h, d, w, M, y<span class="o">)</span> <span class="o">(</span>max_session_length<span class="o">)</span> <span class="o">[</span><span class="nv">default</span><span class="o">=</span><span class="s2">"1h"</span><span class="o">]</span>                                 
-<span class="o">[</span>1] Files <span class="o">(</span>fids<span class="o">)</span>                                         
-              
-Optional param <span class="c">#:</span>
-Using input JSON:
-<span class="o">{}</span>                                                                                                                                      
-Confirm running the executable with this input <span class="o">[</span>Y/n]: y                                                                                 
-Calling app-F40jZqQ9fZF4ggVZ1qGYQz5z with output destination project-xxxx:/                                         
-Job ID: job-xxxx                                                                                                    
-Watch launched job now? <span class="o">[</span>Y/n] n
-</code></pre></div></div>
-
-<p><strong>SSH into the job running the app</strong></p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>dx ssh job-xxxx
-</code></pre></div></div>
-
-<p>The Cloud Workstation app takes a rather useful approach for exploratory development on the platform. Feel free to look at the app code for Cloud Workstation v1.0.3, which you can obtain with:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dx get app-F40jZqQ9fZF4ggVZ1qGYQz5z
-</code></pre></div></div>
+<p>Once it spins up, you can go to that job’s designated URL based on its job ID, https://job-xxxx.dnanexus.cloud/, to see the result.</p>
 
 		</div>
 	</section>
@@ -311,19 +223,19 @@ Watch launched job now? <span class="o">[</span>Y/n] n
 		<h2>Share</h2>
 		<p>Share this tutorial with your community.</p>
 		<ul>
-			<li><a class="twitter" target="_blank" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fdo-you-need-app%2F">
+			<li><a class="twitter" target="_blank" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fweb_app%2Fbash%2Ftensorboard-web-app%2F">
 		<svg class="twitter" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z" /></svg>
 	
  Twitter</a></li>
-			<li><a class="facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fdo-you-need-app%2F">
+			<li><a class="facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fweb_app%2Fbash%2Ftensorboard-web-app%2F">
 		<svg class="facebook" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="15.8 15.8 25 25"><path d="M32.8 24.7h-3.2v-2.1c0-0.8 0.5-1 0.9-1s2.3 0 2.3 0v-3.5l-3.1 0c-3.5 0-4.3 2.6-4.3 4.3v2.3h-2v3.6h2c0 4.6 0 10.2 0 10.2h4.2c0 0 0-5.6 0-10.2h2.8L32.8 24.7z"/></svg>
 	
  Facebook</a></li>
-			<li><a class="google-plus" target="_blank" href="https://plus.google.com/share?url=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fdo-you-need-app%2F">
+			<li><a class="google-plus" target="_blank" href="https://plus.google.com/share?url=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fweb_app%2Fbash%2Ftensorboard-web-app%2F">
 		<svg class="google-plus" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M23,11H21V9H19V11H17V13H19V15H21V13H23M8,11V13.4H12C11.8,14.4 10.8,16.4 8,16.4C5.6,16.4 3.7,14.4 3.7,12C3.7,9.6 5.6,7.6 8,7.6C9.4,7.6 10.3,8.2 10.8,8.7L12.7,6.9C11.5,5.7 9.9,5 8,5C4.1,5 1,8.1 1,12C1,15.9 4.1,19 8,19C12,19 14.7,16.2 14.7,12.2C14.7,11.7 14.7,11.4 14.6,11H8Z" /></svg>
 	
  Google+</a></li>
-			<li><a class="hacker-news" target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fdo-you-need-app%2F&t=Assessing%20Your%20Use%20Case">
+			<li><a class="hacker-news" target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fdnanexus.github.io%2Fdnanexus-example-applets%2Fweb_app%2Fbash%2Ftensorboard-web-app%2F&t=TensorBoard%20Example%20Web%20App%20">
 		<svg class="hacker-news" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M18.8 3.3c-0.4 0.8-5.6 11.1-5.6 11.2 0 2 0 6.2 0 6.2 -0.1 0-2.2 0-2.3 0 0 0 0-5.9 0-6.2 0 0-5.5-10.9-5.6-11.1C5.3 3.3 5.3 3.3 5.3 3.3 5.3 3.3 5.3 3.3 5.3 3.3c0 0 0 0 0.1 0 0.9 0 1.7 0 2.6 0 0 0 0 0 0 0.1 0.1 0.1 4 8.3 4.1 8.3 0 0 4.2-8.3 4.3-8.4 0.8 0 1.6 0 2.4 0 0 0 0 0 0 0C18.8 3.3 18.8 3.3 18.8 3.3z"/></svg>
 	
  Hacker News</a></li>
