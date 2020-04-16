@@ -1,0 +1,47 @@
+{
+  "name": "dx_shiny",
+  "title": "Shiny Server",
+  "summary": "Shiny Server on DNAnexus",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "httpsApp": { "ports": [443], "shared_access": "VIEW" },
+  "inputSpec": [
+    {
+      "name": "app_gz",
+      "label": "Gzip archive of my Shiny app",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.gz"
+      ],
+      "help": ""
+    }
+  ],
+  "outputSpec": [],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 48
+      }
+    },
+    "interpreter": "bash",
+    "release": "16.04",
+    "distribution": "Ubuntu",
+    "file": "src/dx_shiny.sh"
+  },
+  "access": {
+    "project": "CONTRIBUTE",
+    "network": [
+      "*"
+    ]
+  },
+  "regionalOptions": {
+    "aws:us-east-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x4"
+        }
+      }
+    }
+  }
+}

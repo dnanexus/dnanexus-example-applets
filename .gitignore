@@ -6,3 +6,4 @@
 
 # General
 *.pyc
+.DS_Store
