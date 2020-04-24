@@ -1,7 +1,7 @@
-The applet will create a count of reads from a BAM format file. Documentation to create a distributed applet can be found on the [DNAnexus wiki](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App). This readme will focus on the details of this applet.
+The applet will create a count of reads from a BAM format file. Documentation to create a distributed applet can be found on the [DNAnexus documentation site](https://documentation.dnanexus.com/faqs/developing-apps-and-applets#how-do-i-parallelize-my-app). This readme will focus on the details of this applet.
 
 ## How is the SAMtools dependency provided?
-The SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the `dxapp.json` `runSpec.execDepends`.
+The SAMtools dependency is resolved by declaring an [Apt-Get](http://manpages.ubuntu.com/manpages/xenial/man8/apt-get.8.html) package in the `dxapp.json` `runSpec.execDepends`.
 ```json
   "runSpec": {
     ...
@@ -10,10 +10,10 @@ The SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubunt
     ]
   }
 ```
-For additional information, please refer to the [`execDepends` wiki page](https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages).
+For additional information, please refer to the [`execDepends` wiki page](https://documentation.dnanexus.com/getting-started/tutorials/developer-tutorials/bash/git-dependency#how-is-the-samtools-dependency-added).
 
 ## Entry Points
-Distributed python-interpreter apps use python decorators on functions to [declare entry points](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App#Adding-Entry-Points-to-Your-Code). This app has the following entry points as decorated functions:
+Distributed python-interpreter apps use python decorators on functions to declare entry points. This app has the following entry points as decorated functions:
 
 * *main* 
 * *samtoolscount_bam*

@@ -9,7 +9,7 @@ In order to take full advantage of the scalability that cloud computing offers, 
 This applet tutorial code is extremely similar to the [_Parallel Threads SAMtools count tutorial_](/python_parallel_tutorial.html#samtools_count_para_chr_subprocess_py), except `multiprocessing` is used instead of `multiprocessing.dummy`.
 
 ## How is the SAMtools dependency provided?
-The SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the `dxapp.json` `runSpec.execDepends` field.
+The SAMtools dependency is resolved by declaring an [Apt-Get](http://manpages.ubuntu.com/manpages/xenial/man8/apt-get.8.html) package in the `dxapp.json` `runSpec.execDepends` field.
 ```json
 {
   "runSpec": {
@@ -39,7 +39,7 @@ inputs
 ## Split workload
 We parallely process by using the python `multiprocessing` module. A rather simple pattern you can follow to compute in a parallel manner is shown below:
 ```python
-print "Number of cpus: {0}".format(cpu_count())  # Get cpu count from multiprocessing
+print("Number of cpus: {0}".format(cpu_count()))  # Get cpu count from multiprocessing
 worker_pool = Pool(processes=cpu_count())  # Create a pool of workers, 1 for each core
 results = worker_pool.map(run_cmd, view_cmds)  # map run_cmds to a collection
                                                # Pool.map will handle orchestrating the job
@@ -62,7 +62,7 @@ resultfn = (
     else resultfn + '_count.txt')
 with open(resultfn, 'w') as f:
     sum_reads = 0
-    for res, reg in izip(results, regions):
+    for res, reg in zip(results, regions):
         read_count = int(res[0])
         sum_reads += read_count
         f.write("Region {0}: {1}\n".format(reg, read_count))
