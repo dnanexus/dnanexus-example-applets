@@ -62,7 +62,7 @@ def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
     dxpy.download_dxfile(mappings_sorted_bam.get_id(),
                          sorted_bam_name)
     ascii_bam_name = unicodedata.normalize(  # Pysam requires ASCII not Unicode string.
-        'NFKD', sorted_bam_name).encode('ascii', 'ignore')
+        'NFKD', sorted_bam_name).encode('ascii', 'ignore').decode('ascii')
 
     if mappings_sorted_bai is not None:
         mappings_sorted_bai = dxpy.DXFile(mappings_sorted_bai)
