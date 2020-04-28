@@ -10,12 +10,12 @@ The SAMtools dependency is resolved by declaring an [Apt-Get](http://manpages.ub
     ]
   }
 ```
-For additional information, please refer to the [`execDepends` wiki page](https://documentation.dnanexus.com/getting-started/tutorials/developer-tutorials/bash/git-dependency#how-is-the-samtools-dependency-added).
+For additional information, please refer to the [`execDepends` documentation](https://documentation.dnanexus.com/developer/api/running-analyses/io-and-run-specifications#run-specification).
 
 ## Entry Points
 Distributed python-interpreter apps use python decorators on functions to declare entry points. This app has the following entry points as decorated functions:
 
-* *main* 
+* *main*
 * *samtoolscount_bam*
 * *combine_files*
 
@@ -46,7 +46,7 @@ Outputs from the *samtoolscount_bam* entry points are used as inputs for the *co
 <!-- SECTION: Gather (Post-processing) -->
 
 ## samtoolscount_bam
-This entry point downloads and creates a `samtools view -c` command for each region in the input bin. The dictionary returned from [`dxpy.download_all_inputs()`]() is used to reference input names and paths.
+This entry point downloads and creates a `samtools view -c` command for each region in the input bin. The dictionary returned from `dxpy.download_all_inputs()` is used to reference input names and paths.
 <!-- FUNCTION: samtoolscount_bam -->
 This entry point returns `{"readcount_fileDX": readCountDXlink}`, a JBOR referencing an uploaded text file. This approach to scatter-gather stores the results in files and uploads/downloads the information as needed. This approach exaggerates a scatter-gather for tutorial purposes. You're able to pass types other than **file** such as **int**.
 ## combine_files
