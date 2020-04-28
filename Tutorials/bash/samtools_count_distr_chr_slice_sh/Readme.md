@@ -1,4 +1,4 @@
-This readme describes the impelementation of a distributed applet.
+This readme describes the implementation of a distributed applet.
 
 ## How is the SAMtools dependency provided?
 The SAMtools dependency is resolved by declaring an [Apt-Get](http://manpages.ubuntu.com/manpages/xenial/man8/apt-get.8.html) package in the `dxapp.json` `runSpec.execDepends` field.
