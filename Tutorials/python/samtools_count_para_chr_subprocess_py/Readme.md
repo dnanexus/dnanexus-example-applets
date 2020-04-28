@@ -5,10 +5,10 @@ In order to take full advantage of the scalability that cloud computing offers, 
 2. Download BAM file
 3. Count regions in parallel
 
-This applet tutorial code is similar to the [_Parallel Cores SAMtools count tutorial_](/python_parallel_tutorial.html#samtools_count_para_reg_subprocess_py), except `multiprocessing.dummy` is used instead of `multiprocessing`.
+This applet tutorial code is similar to the [_Parallel Cores SAMtools count tutorial_](https://github.com/dnanexus/dnanexus-example-applets/tree/master/Tutorials/python/samtools_count_para_reg_multiprocess_py), except `multiprocessing.dummy` is used instead of `multiprocessing`.
 
 ## How is the SAMtools dependency provided?
-The SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the `dxapp.json` `runSpec.execDepends` field.
+The SAMtools dependency is resolved by declaring an [Apt-Get](http://manpages.ubuntu.com/manpages/xenial/man8/apt-get.8.html) package in the `dxapp.json` `runSpec.execDepends`.
 ```json
   "runSpec": {
     ...
@@ -17,7 +17,7 @@ The SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubunt
     ]
   }
 ```
-For additional information, please refer to the [`execDepends` wiki page](https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages).
+For additional information, please refer to the [`execDepends` documentation](https://documentation.dnanexus.com/getting-started/tutorials/developer-tutorials/bash/git-dependency#how-is-the-samtools-dependency-added).
 
 ## Download BAM file
 
@@ -40,7 +40,7 @@ The path, name, and prefix key-value pattern is repeated for all applet file cla
 <!-- SECTION: Download Inputs -->
 
 ## Count Regions in Parallel
-Before we can perform our parallel SAMtools count, we must determine the workload for each thread. We arbitrarily set our number of workers to `10` and set the workload per thread to `1` chromosome at a time. There are various ways to achieve multithreaded processing in python. For the sake of simplicity, we use [`multiprocessing.dummy`](https://docs.python.org/2/library/multiprocessing.html#module-multiprocessing.dummy), a wrapper around Python's threading module.
+Before we can perform our parallel SAMtools count, we must determine the workload for each thread. We arbitrarily set our number of workers to `10` and set the workload per thread to `1` chromosome at a time. There are various ways to achieve multithreaded processing in python. For the sake of simplicity, we use [`multiprocessing.dummy`](https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing.dummy), a wrapper around Python's threading module.
 <!-- INCLUDE: {% include note.html content="In addition to Python's `multiprocessing.dummy` 
  module, we simplify our multithreaded processing with several helper functions. We won't cover all the helper functions here, so feel free to review the applet source code in GitHub to see function implementations." %} -->
 <!-- SECTION: Parallel by Chromosome using Subprocess.Popen -->
@@ -52,5 +52,5 @@ Each worker creates a *string* to be called in a `subprocess.Popen` call. We use
 
 Each worker returns a read count of just one region in the BAM file. We sum and output the results as the job output. We use the dx-toolkit python SDK's [`dxpy.upload_local_file`](http://autodoc.dnanexus.com/bindings/python/current/dxpy_dxfile.html?highlight=upload_local_file#dxpy.bindings.dxfile_functions.upload_local_file) function to upload and generate a DXFile corresponding to our result file.
 <!-- Gather results and generate applet output -->
-For python, job outputs have to be a dictionary of key-value pairs, with the keys being job output names as defined in the `dxapp.json` and the values being the output values for corresponding output classes. For files, the output type is a [DXLink](https://wiki.dnanexus.com/api-specification-v1.0.0/Details-and-Links#Linking). We use the [`dxpy.dxlink`](http://autodoc.dnanexus.com/bindings/python/current/dxpy_functions.html?highlight=dxlink#dxpy.bindings.dxdataobject_functions.dxlink) function to generate the appropriate DXLink value.
+For python, job outputs have to be a dictionary of key-value pairs, with the keys being job output names as defined in the `dxapp.json` and the values being the output values for corresponding output classes. For files, the output type is a [DXLink](https://documentation.dnanexus.com/user/helpstrings-of-sdk-command-line-utilities#dx-jobutil-dxlink). We use the [`dxpy.dxlink`](http://autodoc.dnanexus.com/bindings/python/current/dxpy_functions.html?highlight=dxlink#dxpy.bindings.dxdataobject_functions.dxlink) function to generate the appropriate DXLink value.
 <!-- SECTION: Gather results and generate applet output -->

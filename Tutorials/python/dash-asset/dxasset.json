@@ -5,6 +5,7 @@
     "version": "0.0.1",
     "distribution": "Ubuntu",
     "release": "16.04",
+    "runSpecVersion": "1",
     "execDepends": [
         {"name": "dash", "version":"0.39.0", "package_manager": "pip"},
         {"name": "dash-html-components", "version":"0.14.0", "package_manager": "pip"},

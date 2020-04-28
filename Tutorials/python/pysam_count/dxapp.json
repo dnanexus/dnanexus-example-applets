@@ -46,12 +46,12 @@
     }
   ],
   "runSpec": {
-    "interpreter": "python2.7",
+    "interpreter": "python3",
     "file": "src/code.py",
     "execDepends": [
       {"name": "pysam",
-         "package_manager": "pip",
-         "version": "0.9.1.4"}
+         "package_manager": "pip3",
+         "version": "0.15.4"}
     ],
   "timeoutPolicy": {
     "*": {
@@ -64,7 +64,8 @@
       }
     },
     "distribution": "Ubuntu",
-    "release": "14.04"
+    "release": "16.04",
+    "version": "1"
   },
   "access": {
     "network": ["*"]

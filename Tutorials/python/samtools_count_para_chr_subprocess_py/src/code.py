@@ -1,17 +1,14 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 import dxpy
 import subprocess
 import shutil
-from itertools import izip
 from multiprocessing.dummy import Pool as ThreadPool
 import re
 
-
 class NotIndexedException(Exception):
     pass
-
 
 # SECTION: Find Regions
 def parseSAM_header_for_region(bamfile_path):
@@ -22,9 +19,8 @@ def parseSAM_header_for_region(bamfile_path):
         list of regions in SAM header
     """
     header_cmd = ['samtools', 'view', '-H', bamfile_path]
-    print 'parsing SAM headers'
-    print " ".join(header_cmd)
-    headers_str = subprocess.check_output(header_cmd)
+    print('parsing SAM headers')
+    headers_str = subprocess.check_output(header_cmd).decode("utf-8")
     rgx = re.compile(r'SN:(\S+)\s')
     regions = rgx.findall(headers_str)
     return regions
@@ -51,7 +47,7 @@ def run_cmd(cmd_arr):
             returncode=exit_code,
             cmd=" ".join(cmd_arr),
             output=stdout)
-    elif 'is not sorted' in stderr:
+    elif 'is not sorted' in stderr.decode("utf-8"):
         raise NotIndexedException("BAM file is not indexed")
     proc_tuple = (stdout, stderr, exit_code)
     return proc_tuple
@@ -62,13 +58,13 @@ def create_index_file(bam_filename):
     """Create Index file.
     Sorts BAM if needed.
     """
-    print "Creating Index file."
+    print("Creating Index file.")
     cmd_index = ['samtools', 'index', bam_filename]
     sorted_filename = bam_filename
     try:
         run_cmd(cmd_index)
     except NotIndexedException:
-        print "Sorting BAM"
+        print("Sorting BAM")
         sorted_filename = '{prefix}{suffix}'.format(
             prefix=bam_filename[:-4], suffix='.sorted.bam')
         cmd_sort = ['samtools',
@@ -98,7 +94,7 @@ def verify_pool_status(proc_tuples):
         if proc[2] != 0:
             err_msgs.append(proc[1])
     if err_msgs:
-        raise dxpy.exceptions.AppInternalError("\n".join(err_msgs))
+        raise dxpy.exceptions.AppInternalError(b"\n".join(err_msgs))
 
 
 # SECTION: Region Command
@@ -110,7 +106,7 @@ def create_region_view_cmd(input_bam, region):
 
 @dxpy.entry_point('main')
 def main(mappings_bam):
-    print u'Creating workspace directory to store downloaded files'
+    print('Creating workspace directory to store downloaded files')
     os.mkdir(u'workspace')
     os.chdir(u'workspace')
 
@@ -140,8 +136,8 @@ def main(mappings_bam):
     input_bam = inputs['mappings_bam_name'][0]
 
     bam_to_use = create_index_file(input_bam)
-    print "Dir info:"
-    print os.listdir(os.getcwd())
+    print("Dir info:")
+    print(os.listdir(os.getcwd()))
 
     # Regions to parallize
     regions = parseSAM_header_for_region(bam_to_use)
@@ -151,7 +147,7 @@ def main(mappings_bam):
         for region
         in regions]
 
-    print 'Parallel counts'
+    print('Parallel counts')
     t_pools = ThreadPool(10)
     results = t_pools.map(run_cmd, view_cmds)
     t_pools.close()
@@ -172,7 +168,7 @@ def main(mappings_bam):
     resultfn = bam_to_use[:-4] + '_count.txt'
     with open(resultfn, 'w') as f:
         sum_reads = 0
-        for res, reg in izip(results, regions):
+        for res, reg in zip(results, regions):
             read_count = int(res[0])
             sum_reads += read_count
             f.write("Region {0}: {1}\n".format(reg, read_count))

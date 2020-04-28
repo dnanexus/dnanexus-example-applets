@@ -1,8 +1,9 @@
-This applet performs a basic SAMtools count on a series of sliced (by canonical chromosome) BAM files in parallel using `wait` (Ubuntu 14.04+).
+This applet performs a basic SAMtools count on a series of sliced (by canonical chromosome) BAM files in parallel using `wait` Linux command.
 
 ## How is the SAMtools dependency provided?
-The SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the `dxapp.json` `runSpec.execDepends`.
+The SAMtools dependency is resolved by declaring an [Apt-Get](http://manpages.ubuntu.com/manpages/xenial/man8/apt-get.8.html) package in the `dxapp.json` `runSpec.execDepends` field.
 ```json
+{
   "runSpec": {
     ...
     "execDepends": [
@@ -10,7 +11,7 @@ The SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubunt
     ]
   }
 ```
-For additional information, please refer to the [`execDepends` wiki page](https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages).
+For additional information, please refer to the [`execDepends` documentation ](https://documentation.dnanexus.com/developer/api/running-analyses/io-and-run-specifications#run-specification).
 
 ## Debugging
 The command `set -e -x -o pipefail` will assist you in debugging this applet:

@@ -45,7 +45,7 @@
     }
   ],
   "runSpec": {
-    "interpreter": "python2.7",
+    "interpreter": "python3",
     "file": "src/code.py",
     "timeoutPolicy": {
       "*": {
@@ -65,6 +65,7 @@
     },
     "execDepends": [{"name": "samtools"}],
     "distribution": "Ubuntu",
-    "release": "14.04"
+    "release": "16.04",
+    "version": "1"
   }
 }

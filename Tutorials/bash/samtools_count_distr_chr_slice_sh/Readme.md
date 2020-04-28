@@ -1,20 +1,17 @@
-Documentation to create a distributed applet can be found on the [Developer Tutorials wiki page](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App). This readme will focus on the details of this applet.
+This readme describes the implementation of a distributed applet.
 
 ## How is the SAMtools dependency provided?
-The SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the `dxapp.json` file's `runSpec.execDepends`.
+The SAMtools dependency is resolved by declaring an [Apt-Get](http://manpages.ubuntu.com/manpages/xenial/man8/apt-get.8.html) package in the `dxapp.json` `runSpec.execDepends` field.
 ```json
 {
-...
-    "runSpec": {
-  	...
-      "execDepends": [
-        {"name": "samtools"}
-      ]
-    }
-...
-}
+  "runSpec": {
+    ...
+    "execDepends": [
+      {"name": "samtools"}
+    ]
+  }
 ```
-For additional information, please refer to the [`execDepends`](https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages) wiki page.
+For additional information, please refer to the [`execDepends` documentation ](https://documentation.dnanexus.com/developer/api/running-analyses/io-and-run-specifications#run-specification).
 
 ## Entry Points
 Distributed bash-interpreter apps use bash functions to [declare entry points](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App#Adding-Entry-Points-to-Your-Code). This app has the following entry points specified as bash functions:

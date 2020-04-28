@@ -6,10 +6,10 @@ In order to take full advantage of the scalability that cloud computing offers, 
 3. Split workload
 4. Count regions in parallel
 
-This applet tutorial code is extremely similar to the [_Parallel Threads SAMtools count tutorial_](/python_parallel_tutorial.html#samtools_count_para_chr_subprocess_py), except `multiprocessing` is used instead of `multiprocessing.dummy`.
+This applet tutorial code is similar to the [_Parallel Threads SAMtools count tutorial_](https://github.com/dnanexus/dnanexus-example-applets/tree/master/Tutorials/python/samtools_count_para_chr_subprocess_py), except `multiprocessing` is used instead of `multiprocessing.dummy`.
 
 ## How is the SAMtools dependency provided?
-The SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the `dxapp.json` `runSpec.execDepends` field.
+The SAMtools dependency is resolved by declaring an [Apt-Get](http://manpages.ubuntu.com/manpages/xenial/man8/apt-get.8.html) package in the `dxapp.json` `runSpec.execDepends` field.
 ```json
 {
   "runSpec": {
@@ -19,7 +19,7 @@ The SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubunt
     ]
   }
 ```
-For additional information, please refer to the [execDepends wiki page](https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages).
+For additional information, please refer to the [`execDepends` documentation ](https://documentation.dnanexus.com/developer/api/running-analyses/io-and-run-specifications#run-specification).
 
 ## Download Inputs
 
@@ -39,14 +39,14 @@ inputs
 ## Split workload
 We parallely process by using the python `multiprocessing` module. A rather simple pattern you can follow to compute in a parallel manner is shown below:
 ```python
-print "Number of cpus: {0}".format(cpu_count())  # Get cpu count from multiprocessing
+print("Number of cpus: {0}".format(cpu_count()))  # Get cpu count from multiprocessing
 worker_pool = Pool(processes=cpu_count())  # Create a pool of workers, 1 for each core
 results = worker_pool.map(run_cmd, view_cmds)  # map run_cmds to a collection
                                                # Pool.map will handle orchestrating the job
 worker_pool.close()
 worker_pool.join()  # Make sure to close and join workers when done
 ```
-This convenient pattern allows you to quickly orchestrate jobs on a worker. For more detailed overview of the `multiprocessing` module, visit the [python2.7 docs](https://docs.python.org/2/library/multiprocessing.html).
+This convenient pattern allows you to quickly orchestrate jobs on a worker. For more detailed overview of the `multiprocessing` module, visit the [python3 docs](https://docs.python.org/3/library/multiprocessing.html).
 <!-- INCLUDE: We create several helpers in our applet script to manage our workload. One helper you may have seen before is `run_cmd`; we use this function to manage or subprocess calls:-->
 <!-- FUNCTION: run_cmd -->
 <!-- INCLUDE: Before we can split our workload, we need to know what regions are present in our BAM input file. We handle this initial parsing in the `parse_sam_header_for_region` function:-->
@@ -62,7 +62,7 @@ resultfn = (
     else resultfn + '_count.txt')
 with open(resultfn, 'w') as f:
     sum_reads = 0
-    for res, reg in izip(results, regions):
+    for res, reg in zip(results, regions):
         read_count = int(res[0])
         sum_reads += read_count
         f.write("Region {0}: {1}\n".format(reg, read_count))

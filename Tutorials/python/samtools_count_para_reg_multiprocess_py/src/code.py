@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # This app performs a SAMtools count via the following implementation:
 #   - dxpy.download_all_inputs is used.
@@ -9,9 +9,7 @@ import dxpy
 import subprocess
 import shutil
 from multiprocessing import Pool, cpu_count
-from itertools import izip
 import re
-
 
 def create_region_view_cmd(input_bam, region):
     view_cmd = ['samtools', 'view', '-c', input_bam, region]
@@ -25,8 +23,8 @@ def parse_sam_header_for_region(bamfile_path):
         regions (list[string]): list of regions in bam header
     """
     header_cmd = ['samtools', 'view', '-H', bamfile_path]
-    print 'parsing SAM headers:', " ".join(header_cmd)
-    headers_str = subprocess.check_output(header_cmd)
+    print('parsing SAM headers:', " ".join(header_cmd))
+    headers_str = subprocess.check_output(header_cmd).decode("utf-8")
     rgx = re.compile(r'SN:(\S+)\s')
     regions = rgx.findall(headers_str)
     return regions
@@ -62,7 +60,7 @@ def verify_pool_status(proc_tuples):
             all_succeed = False
             err_msgs.append(proc[1])
     if err_msgs:
-        raise dxpy.exceptions.AppInternalError("\n".join(err_msgs))
+        raise dxpy.exceptions.AppInternalError(b"\n".join(err_msgs))
 
 
 @dxpy.entry_point('main')
@@ -70,7 +68,7 @@ def main(mappings_sorted_bam, mappings_sorted_bai):
 
     # Not required.  Making sure all files generated will be
     # in an easy to find location if ssh is needed.
-    print u'Creating workspace directory to store downloaded files'
+    print(u'Creating workspace directory to store downloaded files')
     os.mkdir(u'workspace')
     os.chdir(u'workspace')
 
@@ -113,7 +111,7 @@ def main(mappings_sorted_bam, mappings_sorted_bai):
     # We process first then verify the results of processing. Throwing an
     # AppInternalError if any commands failed. Review the verify_pool_status()
     # function for details as to how job error logging works.
-    print "Number of cpus: {0}".format(cpu_count())
+    print("Number of cpus: {0}".format(cpu_count()))
     worker_pool = Pool(processes=cpu_count())
     results = worker_pool.map(run_cmd, view_cmds)
     worker_pool.close()
@@ -129,7 +127,7 @@ def main(mappings_sorted_bam, mappings_sorted_bai):
         else resultfn + '_count.txt')
     with open(resultfn, 'w') as f:
         sum_reads = 0
-        for res, reg in izip(results, regions):
+        for res, reg in zip(results, regions):
             read_count = int(res[0])
             sum_reads += read_count
             f.write("Region {0}: {1}\n".format(reg, read_count))

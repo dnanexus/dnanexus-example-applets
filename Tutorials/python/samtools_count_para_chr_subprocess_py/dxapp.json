@@ -28,13 +28,13 @@
     }
   ],
   "runSpec": {
-    "interpreter": "python2.7",
+    "interpreter": "python3",
     "file": "src/code.py",
-  "timeoutPolicy": {
-    "*": {
-      "hours": 12
-    }
-  },
+    "timeoutPolicy": {
+      "*": {
+        "hours": 12
+      }
+    },
     "systemRequirements": {
       "*": {
         "instanceType": "mem1_ssd1_x4"
@@ -42,6 +42,7 @@
     },
     "execDepends": [{"name": "samtools"}],
     "distribution": "Ubuntu",
-    "release": "14.04"
+    "release": "16.04",
+    "version": "1"
   }
 }

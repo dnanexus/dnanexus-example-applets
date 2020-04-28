@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # samtoolscount_chrompara_distr.py
 
 """SAMtools count distributed by regions
@@ -50,7 +50,7 @@ def run_cmd(cmd_arr):
             returncode=exit_code,
             cmd=" ".join(cmd_arr),
             output=stdout)
-    elif 'is not sorted' in stderr:
+    elif 'is not sorted' in stderr.decode("utf-8"):
         raise NotIndexedException("BAM file is not indexed")
     proc_tuple = (stdout, stderr, exit_code)
     return proc_tuple
@@ -60,14 +60,14 @@ def create_index_file(bam_filename, bam_dxlink):
     """Create Index file.
     Sorts BAM if needed
     """
-    print "Creating Index file."
+    print("Creating Index file.")
     index_filename = "{bam}.bai".format(bam=bam_filename)
     cmd_index = ['samtools', 'index', bam_filename]
     sorted_filename = bam_filename
     try:
         run_cmd(cmd_index)
     except NotIndexedException:
-        print "Sorting BAM"
+        print("Sorting BAM")
         sorted_filename = bam_filename[:-4] + '.sorted.bam'
         cmd_sort = [
             'samtools',
@@ -75,7 +75,7 @@ def create_index_file(bam_filename, bam_dxlink):
             bam_filename,
             bam_filename[:-4] + '.sorted']
         run_cmd(cmd_sort)
-        print "Indexing BAM"
+        print("Indexing BAM")
         index_cmd = ['samtools', 'index', sorted_filename]
         index_filename = "{sorted_bam_name}.bai".format(
             sorted_bam_name=sorted_filename)
@@ -93,8 +93,8 @@ def parseSAM_header_for_region(bamfile_path):
         regions (list[string]): List of regions in BAM header
     """
     header_cmd = ['samtools', 'view', '-H', bamfile_path]
-    print 'parsing SAM headers'
-    headers_str = subprocess.check_output(header_cmd)
+    print('parsing SAM headers')
+    headers_str = subprocess.check_output(header_cmd).decode("utf-8")
     rgx = re.compile(r'SN:(\S+)\s')
     regions = rgx.findall(headers_str)
     return regions
@@ -214,7 +214,7 @@ def main(mappings_bam, region_size, index_file=None):
     Returns:
         output (dict): Contains key "count_file" with value DXLink to job output file.
     """
-    print 'Creating workspace directory to store downloaded files'
+    print('Creating workspace directory to store downloaded files')
     os.mkdir(u'workspace')
     os.chdir(u'workspace')
 
@@ -234,7 +234,7 @@ def main(mappings_bam, region_size, index_file=None):
     #
     regions = parseSAM_header_for_region(filename)
     split_regions = [regions[i:i + region_size]
-                     for i in xrange(0, len(regions), region_size)]
+                     for i in range(0, len(regions), region_size)]
 
     if not index_file:
         mappings_bam, index_file = create_index_file(filename, mappings_bam)
@@ -256,7 +256,7 @@ def main(mappings_bam, region_size, index_file=None):
     #    create optimized instance types.  dxpy.new_dxjob takes the optional
     #    parameter: instance_type
     #
-    print 'creating subjobs'
+    print('creating subjobs')
     subjobs = [dxpy.new_dxjob(
                fn_input={"region_list": split,
                          "mappings_bam": mappings_bam,
@@ -275,7 +275,7 @@ def main(mappings_bam, region_size, index_file=None):
     # Create dictionary to be returned as output for the job
     # Dictionary must contain keys matching outputs set in dxapp.json
     #
-    print 'combining outputs'
+    print('combining outputs')
     postprocess_job = dxpy.new_dxjob(
         fn_input={"countDXlinks": fileDXLinks, "resultfn": filename},
         fn_name="combine_files")

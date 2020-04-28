@@ -1,7 +1,7 @@
-The applet will create a count of reads from a BAM format file. Documentation to create a distributed applet can be found on the [DNAnexus wiki](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App). This readme will focus on the details of this applet.
+The applet will create a count of reads from a BAM format file. Documentation to create a distributed applet can be found on the [DNAnexus documentation site](https://documentation.dnanexus.com/faqs/developing-apps-and-applets#how-do-i-parallelize-my-app). This readme will focus on the details of this applet.
 
 ## How is the SAMtools dependency provided?
-The SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubuntu.com/14.04/serverguide/apt-get.html) package in the `dxapp.json` `runSpec.execDepends`.
+The SAMtools dependency is resolved by declaring an [Apt-Get](http://manpages.ubuntu.com/manpages/xenial/man8/apt-get.8.html) package in the `dxapp.json` `runSpec.execDepends`.
 ```json
   "runSpec": {
     ...
@@ -10,12 +10,12 @@ The SAMtools dependency is resolved by declaring an [Apt-Get](https://help.ubunt
     ]
   }
 ```
-For additional information, please refer to the [`execDepends` wiki page](https://wiki.dnanexus.com/Execution-Environment-Reference#Software-Packages).
+For additional information, please refer to the [`execDepends` documentation](https://documentation.dnanexus.com/developer/api/running-analyses/io-and-run-specifications#run-specification).
 
 ## Entry Points
-Distributed python-interpreter apps use python decorators on functions to [declare entry points](https://wiki.dnanexus.com/Developer-Tutorials/Parallelize-Your-App#Adding-Entry-Points-to-Your-Code). This app has the following entry points as decorated functions:
+Distributed python-interpreter apps use python decorators on functions to declare entry points. This app has the following entry points as decorated functions:
 
-* *main* 
+* *main*
 * *samtoolscount_bam*
 * *combine_files*
 
@@ -46,7 +46,7 @@ Outputs from the *samtoolscount_bam* entry points are used as inputs for the *co
 <!-- SECTION: Gather (Post-processing) -->
 
 ## samtoolscount_bam
-This entry point downloads and creates a `samtools view -c` command for each region in the input bin. The dictionary returned from [`dxpy.download_all_inputs()`]() is used to reference input names and paths.
+This entry point downloads and creates a `samtools view -c` command for each region in the input bin. The dictionary returned from `dxpy.download_all_inputs()` is used to reference input names and paths.
 <!-- FUNCTION: samtoolscount_bam -->
 This entry point returns `{"readcount_fileDX": readCountDXlink}`, a JBOR referencing an uploaded text file. This approach to scatter-gather stores the results in files and uploads/downloads the information as needed. This approach exaggerates a scatter-gather for tutorial purposes. You're able to pass types other than **file** such as **int**.
 ## combine_files

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # This app performs a Pysam count:
 #   - Bam file is required
@@ -54,15 +54,15 @@ def main(mappings_sorted_bam, canonical_chr, mappings_sorted_bai=None):
     #
     # DXFIle.name attribute is converted to ASCII since Pysam does not handle Unicode strings.
     #
-    print mappings_sorted_bai
-    print mappings_sorted_bam
+    print(mappings_sorted_bai)
+    print(mappings_sorted_bam)
 
     mappings_sorted_bam = dxpy.DXFile(mappings_sorted_bam)
     sorted_bam_name = mappings_sorted_bam.name
     dxpy.download_dxfile(mappings_sorted_bam.get_id(),
                          sorted_bam_name)
     ascii_bam_name = unicodedata.normalize(  # Pysam requires ASCII not Unicode string.
-        'NFKD', sorted_bam_name).encode('ascii', 'ignore')
+        'NFKD', sorted_bam_name).encode('ascii', 'ignore').decode('ascii')
 
     if mappings_sorted_bai is not None:
         mappings_sorted_bai = dxpy.DXFile(mappings_sorted_bai)
