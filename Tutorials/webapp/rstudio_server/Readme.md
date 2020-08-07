@@ -11,9 +11,7 @@ The app relies on the following technologies:
 We use the image from the Rocker project and its default setup instructions. If you would like to tweak RStudio settings , please refer to https://hub.docker.com/r/rocker/rstudio/ .
 
 ##### 2. dxFUSE
-To mount the parent DNAnexus project as a local directory, we used dxFUSE ( https://github.com/dnanexus/dxfuse/ ).
-The project will appearattached as a directory at `` 
-We will also Enter dxFUSE ( https://github.com/dnanexus/dxfuse/ ). This is our new open-source project, still in Beta mode. It allows us to mount one or more DNAnexus projects as local folders. We can use it for our scenario. 
+To mount the parent DNAnexus project as a local directory, we used dxFUSE ( https://github.com/dnanexus/dxfuse/ ). The project files will appear in the home directory. 
 
 <!-- /dx-header -->
 
