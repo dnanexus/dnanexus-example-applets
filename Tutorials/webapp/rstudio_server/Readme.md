@@ -46,20 +46,34 @@ dx upload rstudio.docker.gz
 
 
 ##### 5. Build and deploy RStudio web applet
-```bash
-# Navigate to the directory with the source code of this applet
-# If you cloned the whole repository then it will be
-# /dnanexus-example-applets/Tutorials/webapp/rstudio_server
-cd .../rstudio_server
 
-# Build the applet
-# Please note that your current directory must be the directory with this applet's code.
+Navigate to the directory with the source code of this applet. If you cloned the whole repository then the path will be `/dnanexus-example-applets/Tutorials/webapp/rstudio_server`.
+
+In the following command, replace `.../rstudio_server` with the correct path to the applet's directory:
+```bash
+cd .../rstudio_server
+```
+
+The contents of the underlying directory must look like this:
+```
+└── rstudio_server
+    ├── Readme.developer.md
+    ├── Readme.md
+    ├── dxapp.json
+    ├── resources
+    ├── src
+    │   └── rstudio_server.sh
+    └── test
+```
+
+Now build and deploy the applet:
+```bash
 dx build .
 ```
 
-If this is the first time of running this command, the applet will be built and placed in the current directory of your DNAnexus project.
+If this is the **first time** of running this command, the applet will be built and placed in the current directory of your DNAnexus project.
 
-If there is a previously built applet with the same name in the current directory, the build command will throw error that the applet already exists at this path. In this case, run `dx build -f .` instead to overwrite the old version of the applet. If you prefer to archive old versions of built applets, add `-a` argument instead of `-f`. This will move the existing applet to `/.Applet_archive` directory of your DNAnexus project, add a timestamp to it, and replace it with the new applet in the current directory. For help about the build process, `run dx build -h` or go to our Documentation page.
+**If there is a previously built applet with the same name in the current directory, the build command will throw error** that the applet already exists at this path. In this case, run `dx build -f .` instead to overwrite the old version of the applet. If you prefer to archive old versions of built applets, add `-a` argument instead of `-f`. This will move the existing applet to `/.Applet_archive` directory of your DNAnexus project, add a timestamp to it, and replace it with the new applet in the current directory. For help about the build process, `run dx build -h` or go to our Documentation page at https://documentation.dnanexus.com/developer/apps/app-build-process .
 
 
 ##### 6. Start the RStudio DNAnexus web applet
