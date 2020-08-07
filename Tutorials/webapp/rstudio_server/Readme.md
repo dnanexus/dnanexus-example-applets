@@ -1,12 +1,19 @@
 <!-- dx-header -->
 # RStudio Server (DNAnexus Platform App)
 
-RStudio Server on DNAnexus
+This is an example code of wrapping the RStudio Server software into a DNAnexus platform's web applet.
 
-This is an example code of wrapping the RStudio Server software into a DNAnexus platform applet
- that can then be run as a web app.
+The main source file is `src/rstudio_server.sh`. So, modify this file to change the behavior of the applet.
 
-The RStudio image and setup instructions: https://hub.docker.com/r/rocker/rstudio/
+## Used technologies
+The app relies on the following technologies:
+##### 1. RStudio Server's docker image 
+We use the image from the Rocker project and its default setup instructions. If you would like to tweak RStudio settings , please refer to https://hub.docker.com/r/rocker/rstudio/ .
+
+##### 2. dxFUSE
+To mount the parent DNAnexus project as a local directory, we used dxFUSE ( https://github.com/dnanexus/dxfuse/ ).
+The project will appearattached as a directory at `` 
+We will also Enter dxFUSE ( https://github.com/dnanexus/dxfuse/ ). This is our new open-source project, still in Beta mode. It allows us to mount one or more DNAnexus projects as local folders. We can use it for our scenario. 
 
 <!-- /dx-header -->
 
@@ -15,6 +22,8 @@ The RStudio image and setup instructions: https://hub.docker.com/r/rocker/rstudi
 
 
 ##### 1. Pull ready-to-use RStudio docker image from Docker Hub to your local computer by running in terminal:
+We are going to pull the image locally and upload it to the DNAnexus project instead of pulling the image directly from the Docker Hub. Caching the image in the project causes applet to load faster, as well as eliminates possibility that the applet will fail to load if the internet connection between DNAnexus and Docker Hub has problems.
+ 
 ```bash
 docker pull rocker/rstudio
 ```
@@ -64,8 +73,8 @@ NOTE 1: If you don't see the URL for a while, even though the job is running, ju
 
 
 ##### 7. Use the app
-Click on the app's URL that appears in the "Worker URL" column of the Monitor tab. A new  web browser tab will open and display the login page of the RStudio Server. Enter `rstudio` as username and `yourpasswordhere` as password, log into the server, and enjoy! :-)
+Click on the app's URL that appears in the "Worker URL" column of the Monitor tab. A new  web browser tab will open and display the login page of the RStudio Server. Enter `rstudio` as username and `pass` as password, log into the server, and enjoy! :-)
 
-NOTE 1: If you prefer to set a different password for your RStudio Server, change it in the file `rstudio_server.sh` of this source code.
+_NOTE 1:_ If you prefer to set a different password for your RStudio Server, change it in the file `rstudio_server.sh` of this source code.
 
-NOTE: If you got "502 Bad Gateway" browser error when you loaded the page, please wait about a minute or so and reload the page. This happens when the web server part is ready and the URL is available but internally the RStudio Server's docker container has not finished loading and is not ready to listen to web connections yet.
+_NOTE 2:_ If you got "502 Bad Gateway" browser error when you loaded the page, please wait about a minute or so and reload the page. This happens when the web server part is ready and the URL is available but internally the RStudio Server's docker container has not finished loading and is not ready to listen to web connections yet.

@@ -27,9 +27,14 @@ main() {
     docker load -i rstudio.docker.gz
 
     # Run the docker image. Attach your app's folder as a volume.
-    docker run --rm -p 443:8787 -v $HOME:/home/rstudio \
-      -e PASSWORD=yourpasswordhere \
-      -v $PROJ_PATH:/srv/project/ \
+    docker run --rm -p 443:8787 \
+      -e PASSWORD=pass \
+      -v ${PROJ_PATH}:/home/rstudio \
       rocker/rstudio
+    # Here:
+    # `-p 443:8787` maps RStudio's internal port 8787 to the external HTTPS
+    # `-e PASSWORD=pass` sets password for the user `rstudio`; this is essential
+    # `-v ${PROJ_PATH}:/home/rstudio` mounts the parent project to RStudio's home directory
+    # `rocker/rstudio` is loaded docker image name
 
 }

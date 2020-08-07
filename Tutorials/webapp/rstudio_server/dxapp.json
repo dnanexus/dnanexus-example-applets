@@ -14,7 +14,7 @@
   "outputSpec": [],
   "runSpec": {
     "version": "0",
-    "file": "src/code.sh",
+    "file": "src/rstudio_server.sh",
     "release": "16.04",
     "interpreter": "bash",
     "timeoutPolicy": {
