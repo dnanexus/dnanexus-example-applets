@@ -102,8 +102,8 @@ This RStudio server setup allows you to read your files quickly from your parent
 
 
 # FAQ
-##### I am getting libxml2 error while installing the Tidyverse. How do I solve it?
-Failure to load tidyverse is caused by a missing system-level `libxml2` library which apparently is not part of the Rocker image. To solve this, run in Terminal:
+##### How do I install Tidyverse?
+If you try to install Tidyverse library and load it, you may get an error about a missing libxml2 library, which apparently is not part of the Rocker image. To solve this, run in Terminal:
 ```bash
 sudo apt install libxml2
 ```
@@ -115,16 +115,28 @@ install.packages("tidyverse")
 library(tidyverse)
 ```
 
+There is also another Docker image that you can use. In the Step 1 above, run
+```bash
+docker pull rocker/tidyverse
+```
+instead of
+```bash
+docker pull rocker/rstudio
+```
+This image contains pre-installed Tidyverse . Read more at:
+https://github.com/rocker-org/rocker/wiki and https://hub.docker.com/r/rocker/rstudio/
+
 ##### How do I turn on log in window?
-If you want to see the Log In window every time you start a new RStudio server, modify the docker run command in the `rstudio_server.sh` file by adding `-e PASSWORD=pass` and removing `-e DISABLE_AUTH=true`.
+If you want to see the Log In window every time you start a new RStudio server (which I definitely don't), modify the docker run command in the `rstudio_server.sh` file by removing `-e DISABLE_AUTH=true`.
 
 Now it would look like this:
 ```bash
-docker run --rm -p 443:8787 \
-      -e PASSWORD=pass \
-      -e ROOT=TRUE \
-      -v ${PROJ_PATH}:/home/rstudio/project \
-      rocker/rstudio
+docker run --rm \
+  -p 443:8787 \
+  -e ROOT=TRUE \
+  -e PASSWORD=pass \
+  -v ${PROJ_PATH}:/home/rstudio/project \
+  rocker/rstudio
 ```
 Please note that the username will be `rsutio` and `pass` will be your password, as set in the command line. 
 

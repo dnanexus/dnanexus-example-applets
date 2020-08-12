@@ -27,17 +27,18 @@ main() {
     docker load -i rstudio.docker.gz
 
     # Run the docker image. Attach your app's folder as a volume.
-    docker run --rm -p 443:8787 \
-      -e DISABLE_AUTH=true \
+    docker run --rm \
+      -p 443:8787 \
       -e ROOT=TRUE \
+      -e PASSWORD=pass \
+      -e DISABLE_AUTH=true \
       -v ${PROJ_PATH}:/home/rstudio/project \
       rocker/rstudio
     # Here:
     # `-p 443:8787` maps RStudio's internal port 8787 to the external HTTPS
-    # -e ROOT=TRUE allows you to run commands with `sudo`
+    # `-e ROOT=TRUE` allows you to run commands with `sudo`
+    # `-e PASSWORD=pass` defines password for the default user `rstudio`
+    # `-e DISABLE_AUTH=true` turns off the Log In window and logs into server directly
     # `-v ${PROJ_PATH}:/home/rstudio/project` mounts the parent project to the `project` under your home directory
-    # `rocker/rstudio` is loaded docker image name
-    #
-    # Optionall parameters
-    # add `-e PASSWORD=pass` and remove `-e DISABLE_AUTH=true` to turn on the Log In window
+    # `rocker/rstudio` is loaded docker image name; the Rocker project has derivative images too e.g. rocker/tidyverse
 }
