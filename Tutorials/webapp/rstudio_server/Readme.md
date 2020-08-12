@@ -126,17 +126,3 @@ docker pull rocker/rstudio
 This image contains pre-installed Tidyverse . Read more at:
 https://github.com/rocker-org/rocker/wiki and https://hub.docker.com/r/rocker/rstudio/
 
-##### How do I turn on log in window?
-If you want to see the Log In window every time you start a new RStudio server (which I definitely don't), modify the docker run command in the `rstudio_server.sh` file by removing `-e DISABLE_AUTH=true`.
-
-Now it would look like this:
-```bash
-docker run --rm \
-  -p 443:8787 \
-  -e ROOT=TRUE \
-  -e PASSWORD=pass \
-  -v ${PROJ_PATH}:/home/rstudio/project \
-  rocker/rstudio
-```
-Please note that the username will be `rsutio` and `pass` will be your password, as set in the command line. 
-
