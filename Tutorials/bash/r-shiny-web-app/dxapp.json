@@ -14,12 +14,13 @@
       }
     },
     "interpreter": "bash",
-    "release": "16.04",
+    "release": "20.04",
+    "version": "0",
     "distribution": "Ubuntu",
     "file": "src/code.sh",
     "assetDepends": [
       {
-        "id": "record-FX4ZV100JfBVQJV71fP12QpB"
+        "id": "record-G1181xj00V7b07V3J82bzYj9"
       }
     ]
   },
