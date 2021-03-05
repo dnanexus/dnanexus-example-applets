@@ -38,7 +38,7 @@ This will output a record ID `record-xxxx` that you can then put into the applet
 ### Build the applet
 Now build and run the applet itself:
 ```
-dx build -f dash-web-app
-dx run dash-web-app
+dx build -f r-shiny-web-app
+dx run r-shiny-web-app
 ```
 Once it spins up, you can go to that job's designated URL based on its job ID, https://job-xxxx.dnanexus.cloud/, to see the result.
