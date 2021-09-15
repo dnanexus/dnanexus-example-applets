@@ -6,13 +6,13 @@ batch_size=int(sys.argv[2])
 
 def _parse_dx_delim(delim_line):
     '''parse each list of delim output from dx find into NAME, ID, SIZE, and FOLDER'''
-    size=_parse_size(delim_line[2])
     id=delim_line[-1]
     split_path=delim_line[3].split('/')
     folder='/'+'/'.join(split_path[:-1])
     name=split_path[-1]
+    #folder and name is not used in this example, but they can be useful for some scenerio
 
-    return name,id,size,folder
+    return name,id,folder
 
 
 
@@ -26,9 +26,9 @@ for batch_number in range(number_of_batch):
     batch_mapped_files=''
     for member in range(batch_size):
         delim_line = lines[input_number].strip().split('\t')
-        name, id, size, folder = _parse_dx_delim(delim_line)
+        name, id, folder = _parse_dx_delim(delim_line)
         batch_mapped_files += '-imapped_read={} '.format(id)
-        final_folder='/HLA_process' + str(batch_number)
+        final_folder='/HLA_process/' + str(batch_number)
         input_number+=1
         if input_number == sample_number:
             break
