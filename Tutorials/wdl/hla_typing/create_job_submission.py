@@ -33,9 +33,7 @@ for batch_number in range(number_of_batch):
         if input_number == sample_number:
             break
 
-    print('dx run /arcas_hla_cram_instance_bundle \
-          -ireference=genome_reference/GRCh38_full_analysis_set_plus_decoy_hla.fa {batch_mapped_files} \
-          --tag 200K_exome_HLA_analysis --tag original --tag batch_n_{batch_number} \
-          --folder="{final_folder}" --priority normal\
-          -y --brief \
-          '.format(batch_mapped_files=batch_mapped_files,batch_number=batch_number,final_folder=final_folder))
+    print('dx run /arcas_hla_cram_instance_bundle -ireference=genome_reference/GRCh38_full_analysis_set_plus_decoy_hla.fa\
+     {batch_mapped_files} --tag 200K_exome_HLA_analysis --tag original --tag batch_n_{batch_number} \
+    --folder="{final_folder}" --priority normal \
+    -y --brief'.format(batch_mapped_files=batch_mapped_files,batch_number=batch_number,final_folder=final_folder))
