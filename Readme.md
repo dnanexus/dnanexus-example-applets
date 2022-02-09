@@ -1,6 +1,6 @@
-Developers new to the [DNAnexus platform](https://platform.dnanexus.com/login) may find it easier to learn by doing. This page contains a collection of simple tutorials and examples intended to showcase common tasks and methodologies when creating an app(let) on the DNAnexus platform.
+Developers new to the [DNAnexus platform](https://platform.dnanexus.com/login) may find it easier to learn by doing. This page contains a collection of simple tutorials intended to showcase common tasks and methodologies when creating an app(let) on the DNAnexus platform.
 
-The tutorial pages are not meant to show everyday examples, but rather provide a strong starting point for app(let) developers. A user seeking realistic examples can examine DNAnexus-developed app(let)s in the Examples pages or the [Developer Applets](https://platform.dnanexus.com/projects/B406G0x2fz2B3GVk65200003/data/) resource project (platform login required). After reading through the tutorials and examples, you should be able to develop app(let)s that:
+The tutorial pages are not meant to show everyday examples, but rather provide a strong starting point for app(let) developers. A user seeking realistic examples can examine DNAnexus-developed app(let)s in the [Developer Applets](https://platform.dnanexus.com/projects/B406G0x2fz2B3GVk65200003/data/) resource project (platform login required). After reading through the tutorials, you should be able to develop app(let)s that:
 
 - **Run efficiently**: make use of cloud computing methodologies
 - **Are easy to debug**: let developers understand and resolve issues
