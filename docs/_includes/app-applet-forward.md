@@ -1,5 +1,0 @@
-## Applets vs Apps
-
-Throughout these tutorials we'll refer to *Apps* and *Applets* interchangeably as *App(let)s*. During the development process the distinction isn't as relevant, here is an explanation of the *App/Applet* distinction
-
-> Applets and apps are both executables that can be run in the platform. The main difference is that applets are data objects, which live in projects, while apps do not live in a project and can be published to allow other users to run them.<br/><br/>The procedure for creating applets or apps is essentially the same, with the exception of the final build step where you specify whether it should be created as an applet or an app. (You can also convert an existing applet to an app.) As a result, we may use the two terms interchangeably in tutorials like this one.

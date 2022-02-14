@@ -1,7 +1,0 @@
-<div class="btn-group btn-group-sm" aria-label="Large button group" role="group">
-	{% for item in include.listings %}
-	<button class="btn btn-success{% if item.url == page.url %} active{% endif %}" onclick="window.location = '{{ item.url | absolute_url }}'">
-		{% if include.numbered %}{{ forloop.index }}. {% endif %}{{ item.title }}
-	</button>
-	{% endfor %}
-</div>
